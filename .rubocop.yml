@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
     - Gemfile
-    - phpcop.gemspec
+    - gem-janus.gemspec
   TargetRubyVersion: 2.3
 
 Style/Encoding:
@@ -9,3 +9,6 @@ Style/Encoding:
 
 Style/FrozenStringLiteralComment:
   EnforcedStyle: always
+
+Metrics/LineLength:
+  Max: 99

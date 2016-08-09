@@ -1,0 +1,11 @@
+AllCops:
+  Exclude:
+    - Gemfile
+    - phpcop.gemspec
+  TargetRubyVersion: 2.3
+
+Style/Encoding:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always

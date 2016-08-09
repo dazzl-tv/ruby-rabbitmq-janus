@@ -1,9 +1,9 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'gem/janus/version'
+require 'janus/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'gem-janus'
+  spec.name          = 'janus'
   spec.version       = Gem::Janus::VERSION
   spec.authors       = ['VAILLANT Jeremy']
   spec.email         = ['jeremy.vaillant@dazzl.tv']

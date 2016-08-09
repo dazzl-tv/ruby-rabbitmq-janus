@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
     - Gemfile
-    - gem-janus.gemspec
+    - janus.gemspec
   TargetRubyVersion: 2.3
 
 Style/Encoding:
@@ -11,4 +11,4 @@ Style/FrozenStringLiteralComment:
   EnforcedStyle: always
 
 Metrics/LineLength:
-  Max: 99
+  Max: 90

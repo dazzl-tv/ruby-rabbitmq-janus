@@ -1,6 +1,4 @@
 server:
-  reload_at_startup: true
-  - protocol: http
-    host: '127.0.0.1'
-    port: 8088
-    path: janus
+  host: '127.0.0.1'
+  port: 5672
+  vhost: '/'

@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - Gemfile
     - rrj.gemspec
+    - bin/**/*
   TargetRubyVersion: 2.3
 
 Style/Encoding:

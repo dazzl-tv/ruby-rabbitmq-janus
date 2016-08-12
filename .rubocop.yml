@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
     - Gemfile
-    - janus.gemspec
+    - rrj.gemspec
   TargetRubyVersion: 2.3
 
 Style/Encoding:

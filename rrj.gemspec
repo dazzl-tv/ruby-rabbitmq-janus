@@ -1,15 +1,15 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'janus/version'
+require 'rrj/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'janus'
-  spec.version       = Gem::Janus::VERSION
+  spec.name          = 'rrj'
+  spec.version       = Gem::RRJ::VERSION
   spec.authors       = ['VAILLANT Jeremy']
   spec.email         = ['jeremy.vaillant@dazzl.tv']
 
-  spec.summary       = 'Connecting to a server janus'
-  spec.description   = 'Connecting to a server for janus Dazzl.tv'
+  spec.summary       = 'Rails RabbitMQ Janus.'
+  spec.description   = 'Connecting to a server rabbitmq server for sending and receiving datas to janus gateway.'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'

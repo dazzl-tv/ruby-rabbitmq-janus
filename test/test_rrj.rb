@@ -2,8 +2,8 @@
 require 'minitest/autorun'
 require 'rrj'
 
-class RJJTest < Minitest::Test
+class RRJTest < Minitest::Test
   def test_say_hello
-    assert_equal 'Helloooo ...', RJJ.new
+    assert_equal 'Helloooo ...', RRJ.new
   end
 end

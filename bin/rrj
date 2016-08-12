@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'rrj'
+puts RRJ.new(ARGV[0])

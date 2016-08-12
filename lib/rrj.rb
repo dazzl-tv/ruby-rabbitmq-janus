@@ -6,9 +6,11 @@ require 'rrj/init'
 
 require 'rrj/error'
 
-# Base of gem
 module RRJ
-  def self.initialize(msg)
-    puts msg
+  # Primary class
+  class RRJ
+    def initialize
+      'Yopi yop'
+    end
   end
 end

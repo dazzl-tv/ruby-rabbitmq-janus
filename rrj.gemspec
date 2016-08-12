@@ -4,7 +4,7 @@ require 'rrj/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'rrj'
-  spec.version       = Gem::RRJ::VERSION
+  spec.version       = RRJ::VERSION
   spec.authors       = ['VAILLANT Jeremy']
   spec.email         = ['jeremy.vaillant@dazzl.tv']
 

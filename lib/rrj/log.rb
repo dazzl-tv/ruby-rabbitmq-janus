@@ -17,11 +17,13 @@ module RRJ
     end
 
     def write(message, level = DEFAULT_LEVEL)
+      msg = Time.now.strftime('%Y/%m/%d %H:%M:%S') + ' : ' + message
+
       case level
       when :info
-        @logs.info message
+        @logs.info msg
       when :warn
-        @logs.warn message
+        @logs.warn msg
       end
     end
   end

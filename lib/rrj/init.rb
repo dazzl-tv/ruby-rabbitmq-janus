@@ -8,6 +8,9 @@ module RRJ
     attr_reader :connection, :channel, :queue, :logs
 
     def initialize
+      @logs = RRJ::Log.new
+      @logs.write('Start gem')
+
       @settings = Config.new
 
       @connection = Bunny.new

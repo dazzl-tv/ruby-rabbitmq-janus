@@ -5,21 +5,23 @@ require 'bunny'
 module RRJ
   # Initialize gem
   class RRJ
-    attr_reader :connection, :channel, :queue, :logs
+    attr_reader :rabbit, :logs, :settings
 
     def initialize
-      @logs = RRJ::Log.new
-      @logs.write('Start gem')
+      @logs = Log.new
 
-      @settings = Config.new
+      load_configuration_gem
+      load_connection_rabbitmq
+    end
 
-      @connection = Bunny.new
-      @connection.start
+    private
 
-      @channel = @connection.create_channel
-      @queue = @channel.queue('from-janus')
+    def load_configuration_gem
+      @settings = Config.new(@logs)
+    end
 
-      listen_messages
+    def load_connection_rabbitmq
+      @rabbit = RabbitMQ.new(@settings, @logs)
     end
 
     def listen_messages

@@ -5,3 +5,4 @@ require 'rrj/config'
 require 'rrj/init'
 
 require 'rrj/error'
+require 'rrj/log'

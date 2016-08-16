@@ -5,14 +5,16 @@ require 'bunny'
 module RRJ
   # Initialize gem
   class RRJ
-    attr_reader :connection, :channel, :queue
+    attr_reader :connection, :channel, :queue, :logs
 
     def initialize
+      @settings = Config.new
+
       @connection = Bunny.new
       @connection.start
 
       @channel = @connection.create_channel
-      @queue = @channel.queue('dazzl_queue_from_42')
+      @queue = @channel.queue('from-janus')
 
       listen_messages
     end

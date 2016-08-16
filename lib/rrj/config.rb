@@ -6,17 +6,14 @@ require 'logging'
 module RRJ
   # Configuration of gem
   class Config
-    attr_reader :options
+    attr_reader :options, :logs
 
     DEFAULT_PATH = File.realpath(File.join(File.dirname(__FILE__), '..', '..'))
     DEFAULT_CONF = File.join(DEFAULT_PATH, 'config', 'default.yml')
     CUSTOMIZE_CONF = '.rrj.yml'
 
-    def initialize
-      @logs = Logging.logger['[RRJ]']
-      @logs.level = :info
-      @logs.add_appenders Logging.appenders.file('log/janus.log')
-
+    def initialize(logs)
+      @logs = logs
       @options = load_configuration(DEFAULT_CONF)
       override_configuration(File.join(Dir.pwd, CUSTOMIZE_CONF))
     end
@@ -24,8 +21,7 @@ module RRJ
     private
 
     def load_configuration(file)
-      @logs.info 'Load configuration file :'
-      @logs.info file
+      @logs.write "Loading configuration file : #{file}"
       YAML.load(File.read(file))
     end
 

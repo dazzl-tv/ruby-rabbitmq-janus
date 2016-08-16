@@ -4,5 +4,7 @@ require 'rrj/version'
 require 'rrj/config'
 require 'rrj/init'
 
+require 'rrj/rabbitmq'
+
 require 'rrj/error'
 require 'rrj/log'

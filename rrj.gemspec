@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.42.0'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
+  spec.add_runtime_dependency 'logging', '~> 2.1'
 end

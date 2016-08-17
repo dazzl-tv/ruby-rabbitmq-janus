@@ -1,13 +1,19 @@
 # frozen_string_literal: true
 
 module RRJ
-  # Class for manipulate logs
+  # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+  # Class for wrtting logs. Define level used (:warn, :info, :debug).
   class Log
-    attr_writer :log
-
+    # Define folder to writing logs
     DEFAULT_LOG_DIR = 'log'
+
+    # Define file name to writting logs
     DEFAULT_LOG_NAME = 'rails-rabbit-janus.log'
+
+    # Define head for each line in log
     DEFAULT_HEAD_LOG = '[RRJ]'
+
+    # Define a default level to gem
     DEFAULT_LEVEL = :info
 
     def initialize
@@ -23,6 +29,7 @@ module RRJ
       @logs.write("\n")
     end
 
+    # Write a message in log file.
     def write(message, level = DEFAULT_LEVEL)
       msg = Time.now.strftime('%Y/%m/%d %H:%M:%S') + ' : ' + message
 

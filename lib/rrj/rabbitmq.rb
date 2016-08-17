@@ -5,7 +5,7 @@ require 'bunny'
 module RRJ
   # Class for connection with RabbitMQ Server
   class RabbitMQ
-    attr_reader :connection, :logs, :settings, :queue, :channel
+    attr_reader :connection, :logs, :settings, :queue, :channel, :janus
 
     def initialize(configuration, logs)
       @settings = configuration
@@ -14,15 +14,10 @@ module RRJ
       start_communication
     end
 
-    def create_message
-    end
-
-    def listen_messages
-      puts "[#{@queue.name}]"
+    def listen
+      @connection.start
       begin
-        @queue.subscribe(manual_ack: true, block: true) do |_info, properties, body|
-          puts "[x] Received #{properties}::#{body}"
-        end
+        @janus.listen_queue
       rescue Interrupt => _
         @connection.close
       end
@@ -34,7 +29,11 @@ module RRJ
       @connection = Bunny.new(read_options_server)
       @connection.start
       @channel = @connection.create_channel
-      @queue = @channel.queue('from-janus')
+      @queue = @channel.queue('to-janus')
+
+      @janus = Janus.new(@queue, @channel, @logs)
+      @janus.create_message
+      @janus.info_message
 
       @connection.close
     end

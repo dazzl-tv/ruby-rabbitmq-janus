@@ -23,16 +23,5 @@ module RRJ
     def load_connection_rabbitmq
       @rabbit = RabbitMQ.new(@settings, @logs)
     end
-
-    def listen_messages
-      puts "[#{@queue.name}]"
-      begin
-        @queue.subscribe(manual_ack: true, block: true) do |_info, properties, body|
-          puts "[x] Received #{properties}::#{body}"
-        end
-      rescue Interrupt => _
-        @connection.close
-      end
-    end
   end
 end

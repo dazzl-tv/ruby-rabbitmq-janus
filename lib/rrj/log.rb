@@ -7,7 +7,7 @@ module RRJ
     # Define folder to writing logs
     DEFAULT_LOG_DIR = 'log'
 
-    # Define file name to writting logs
+    # Define file name to writing logs
     DEFAULT_LOG_NAME = 'rails-rabbit-janus.log'
 
     # Define head for each line in log
@@ -30,9 +30,10 @@ module RRJ
     end
 
     # Write a message in log file.
+    # @param message [String] Message writing in logs
+    # @param level [Symbol] Level to message (:info, :warn, :debug)
     def write(message, level = DEFAULT_LEVEL)
       msg = Time.now.strftime('%Y/%m/%d %H:%M:%S') + ' : ' + message
-
       case level
       when :info
         @logs.info msg

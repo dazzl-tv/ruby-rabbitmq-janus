@@ -30,11 +30,17 @@ module RRJ
 
     private
 
+    # Load configuration file yaml
+    # @param [String] Path to configuration file (with name)
+    # @return [Yaml] Configuration file
     def load_configuration(file)
       @logs.write "Loading configuration file : #{file}"
       YAML.load(File.read(file))
     end
 
+    # Load customize configuration file if exist
+    # @return [Yaml] Configuration file
+    # @param [String] Path to configuration file (with name)
     def override_configuration(file)
       @options = load_configuration(file) if File.exist?(file)
     end

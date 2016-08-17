@@ -16,6 +16,7 @@ module RRJ
     # Define a default level to gem
     DEFAULT_LEVEL = :info
 
+    # Returns a new instance to Log
     def initialize
       @logs = Logging.logger[DEFAULT_HEAD_LOG]
       @logs.level = DEFAULT_LEVEL

@@ -14,6 +14,14 @@ module RRJ
       load_connection_rabbitmq
     end
 
+    def interaction_send
+      @rabbit.send
+    end
+
+    def interaction_listen
+      @rabbit.listen
+    end
+
     private
 
     def load_configuration_gem

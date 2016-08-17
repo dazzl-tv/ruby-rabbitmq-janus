@@ -11,6 +11,9 @@ Gem::Specification.new do |spec|
   spec.summary       = RRJ::SUMMARY
   spec.description   = RRJ::DESCRIPTION
 
+  spec.homepage      = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'
+  spec.license       = 'MIT'
+
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'bin'
   spec.executables   = 'rrj'

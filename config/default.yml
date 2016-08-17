@@ -1,9 +1,17 @@
+# RabbitMQ server info
 server:
-  host: '127.0.0.1'
+  # Precise RabbitMQ host
+  host: 'localhost'
+  # Precise RabbitMQ port
   port: 5672
+  # Precise RabbitMQ vhost
   vhost: '/'
-  user: dazzl_admin
-  password: koMpmVU8
+  # Precise RabbitMQ user
+  user: guest
+  # Precise RabbitMQ password
+  password: guest
+
+# RabbitMQ Queue information
 queues:
   queue_from: from-janus
   queue_to: to-janus

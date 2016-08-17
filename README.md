@@ -1,3 +1,6 @@
+# ruby-rabbitmq-janus
+Ruby Gem for Dazzl Backend/Janus integration using RabbitMQ message queue
+
 # Gem : RRJ
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rrj`. To experiment with that code, run `bin/console` for an interactive prompt.

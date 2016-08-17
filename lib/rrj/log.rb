@@ -16,8 +16,11 @@ module RRJ
       @logs.add_appenders Logging.appenders.file(DEFAULT_LOG_DIR + '/' + DEFAULT_LOG_NAME)
 
       @logs.write('====================================')
+      @logs.write("\n")
       @logs.write('### Start gem Rails Rabbit Janus ###')
+      @logs.write("\n")
       @logs.write('====================================')
+      @logs.write("\n")
     end
 
     def write(message, level = DEFAULT_LEVEL)

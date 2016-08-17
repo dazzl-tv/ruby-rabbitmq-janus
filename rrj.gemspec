@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['VAILLANT Jeremy']
   spec.email         = ['jeremy.vaillant@dazzl.tv']
 
-  spec.summary       = 'Rails RabbitMQ Janus.'
-  spec.description   = 'Connecting to a server rabbitmq server for sending and receiving datas to janus gateway.'
+  spec.summary       = RRJ::SUMMARY
+  spec.description   = RRJ::DESCRIPTION
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'bin'

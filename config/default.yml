@@ -2,7 +2,8 @@ server:
   host: '127.0.0.1'
   port: 5672
   vhost: '/'
-  queue_from: from-janus
-  queue_to: to-janus
   user: dazzl_admin
   password: koMpmVU8
+queues:
+  queue_from: from-janus
+  queue_to: to-janus

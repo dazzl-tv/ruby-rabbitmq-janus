@@ -22,6 +22,7 @@ module RRJ
     # Define a default override file configuration
     CUSTOMIZE_CONF = '.rrj.yml'
 
+    # Initialize configuration file default or customize if exist
     def initialize(logs)
       @logs = logs
       @options = load_configuration(DEFAULT_CONF)

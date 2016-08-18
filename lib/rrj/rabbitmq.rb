@@ -28,10 +28,9 @@ module RRJ
     def initialize(configuration, logs)
       @settings = configuration
       @logs = logs
-      send_message
     end
 
-    # Send a message
+    # Send message
     def send_message
       @connection = Bunny.new(read_options_server)
       @connection.start
@@ -42,12 +41,22 @@ module RRJ
       @connection.close
     end
 
+    # Listen queue
+    def listen_queue
+      @connection = Bunny.new(read_options_server)
+      @connection.start
+
+      @janus = Janus.new(@connection, @logs)
+      @janus.listen_messages
+
+      @connection.close
+    end
+
     private
 
-    # Use configuration to yaml file for connect gem to RabbitMQ server
+    # Use configuration information to connect RabbitMQ
     def read_options_server
       hash = {}
-      @logs.write 'Prepare connection with RabbitMQ server : '
       @settings.options.fetch('server').each do |key, server|
         hash.merge!(key.to_sym => server.to_s)
       end

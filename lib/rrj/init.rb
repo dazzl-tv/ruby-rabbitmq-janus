@@ -22,6 +22,16 @@ module RRJ
       load_rabbitmq
     end
 
+    def send_message_test
+      @logs.write 'Publish message to queue to-janus'
+      @rabbit.send_message
+    end
+
+    def listen_message_test
+      @logs.write 'Listen message to queue from-janus'
+      @rabbit.listen_queue
+    end
+
     private
 
     # Loading Conf object

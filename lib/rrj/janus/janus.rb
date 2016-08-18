@@ -18,52 +18,29 @@ module RRJ
     attr_reader :queue, :channel, :logs, :transaction
 
     # Returns a new instance of Janus
-    # @param queue [String] Name of queue used
-    # @param channel [String] Name of channel used
+    # @param connection [String] Connection to RabbitMQ server
     # @param logs [RRJ::Log] Instance to log
-    def initialize(queue, channel, logs)
-      @queue = queue
-      @channel = channel
+    def initialize(connection, logs)
+      @connection = connection
       @logs = logs
-    end
-
-    # @deprecated
-    def create_message
-      @logs.write 'Create message'
-      x = @channel.topic('from-janus')
-      msg = message_create
-      @logs.write msg
-      x.publish(msg)
-    end
-
-    # @deprecated
-    def info_message
-      @logs.write 'Info message'
-      msg = message_info
-      @logs.write msg
-      x = @channel.topic('from-janus')
-      x.publish(msg)
-    end
-
-    # @deprecated
-    def listen_queue
-      @logs.write "Listen QUEUE [#{@queue.name}]"
-      @queue.subscribe(manual_ack: true, block: true) do |_info, properties, body|
-        @logs.write "[x] Received #{properties}::#{body}"
-      end
-    end
-
-    private
-
-    # @deprecated
-    def message_create
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(8).join
-      { janus: 'create', transaction:  @transaction }.to_json
     end
 
+    # Send a message
     # @deprecated
-    def message_info
-      { janus: 'info', transaction:  @transaction }.to_json
+    def send_message
+      @channel = @connection.create_channel
+      message_info = MessageJanus.message(:server_info)
+
+      @logs.write 'To janus'
+      x = @channel.topic('from-janus')
+      x.publish(message_info)
+
+      @logs.write 'From janus'
+      x = @channel.topic('to-janus')
+      x.publish(message_info)
+
+      @logs.write(message_info)
     end
   end
 end

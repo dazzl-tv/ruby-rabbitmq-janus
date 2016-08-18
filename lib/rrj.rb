@@ -6,6 +6,7 @@ require 'rrj/init'
 
 require 'rrj/rabbitmq'
 require 'rrj/janus/janus'
+require 'rrj/janus/message'
 
 require 'rrj/error'
 require 'rrj/log'

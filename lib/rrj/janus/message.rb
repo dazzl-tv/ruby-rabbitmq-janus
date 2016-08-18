@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require 'securerandom'
 
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -9,7 +10,7 @@ module RRJ
   #   @return [String] represente a random string (letter uppercase and number) with
   #   length to 10
   class MessageJanus
-    attr_reader :transaction
+    attr_reader :transaction, :correlation_id
 
     # Type message janus
     TYPE = %w(
@@ -20,6 +21,7 @@ module RRJ
 
     def initialize
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
+      @correlation_id = SecureRandom.uuid
     end
 
     # Write a message for janus format
@@ -32,17 +34,6 @@ module RRJ
       hash = { janus: type, transaction: @transaction }
       hash.merge(body: body) unless body.empty?
       hash.to_json
-    end
-
-    private
-
-    # Write message for return server info
-    def message_server_info
-    end
-
-    # Write default message
-    def message_default
-      message_server_info
     end
   end
 end

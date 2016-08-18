@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'json'
-require 'securerandom'
 
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -12,10 +11,8 @@ module RRJ
   #   @return [Bunny::Channel] Represent a channel for one connection with RabbitMQ
   # @!attribute [r] logs
   #   @return [RRJ::Log] Log to gem
-  # @!attribute [r] id
-  #   @return [String]
   class Janus
-    attr_reader :queue, :channel, :logs, :id
+    attr_reader :queue, :channel, :logs
 
     # Returns a new instance of Janus
     # @param connection [String] Connection to RabbitMQ server
@@ -28,15 +25,16 @@ module RRJ
     # Send a message
     def send_message
       @channel = @connection.create_channel
-      @id = SecureRandom.uuid
 
       @x = @channel.default_exchange
       @server_queue = 'to-janus'
       @reply_queue = @channel.queue('', exclusive: true)
 
-      @x.publish(message_info_to_string,
+      msg = MessageJanus::Info.new
+
+      @x.publish(msg.msg,
                  routing_key: 'to-janus',
-                 correlation_id: @id,
+                 correlation_id: msg.correlation_id,
                  content_type: 'application/json',
                  reply_to: @reply_queue.name)
     end

@@ -30,18 +30,8 @@ module RRJ
 
     # Send a message
     def send_message
-      @channel = @connection.create_channel
-
-      @x = @channel.default_exchange
-      @reply_queue = @channel.queue('', exclusive: true)
-
-      msg = Info.new(@logs)
-
-      @x.publish(msg.msg,
-                 routing_key: ROUTING,
-                 correlation_id: msg.correlation_id,
-                 content_type: CONTENT_TYPE,
-                 reply_to: @reply_queue.name)
+      send_message_info
+      send_message_create
     end
 
     # Listen message to queue
@@ -57,9 +47,28 @@ module RRJ
 
     private
 
-    def message_info_to_string
-      message_info = MessageJanus.new
-      message_info.msg(:info).to_s
+    def send_message_info
+      @channel = @connection.create_channel
+      @x = @channel.default_exchange
+      @reply_queue = @channel.queue('', exclusive: true)
+      msg = Info.new(@logs)
+      @x.publish(msg.msg,
+                 routing_key: ROUTING,
+                 correlation_id: msg.correlation_id,
+                 content_type: CONTENT_TYPE,
+                 reply_to: @reply_queue.name)
+    end
+
+    def send_message_create
+      @channel = @connection.create_channel
+      @x = @channel.default_exchange
+      @reply_queue = @channel.queue('', exclusive: true)
+      msg = Create.new(@logs)
+      @x.publish(msg.msg,
+                 routing_key: ROUTING,
+                 correlation_id: msg.correlation_id,
+                 content_type: CONTENT_TYPE,
+                 reply_to: @reply_queue.name)
     end
   end
 end

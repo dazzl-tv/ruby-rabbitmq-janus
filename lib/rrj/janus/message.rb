@@ -6,35 +6,31 @@ require 'securerandom'
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Model for Janus message sending or received to rabbitmq server
-  # @!attribute [r] transaction
-  #   @return [String] represente a random string (letter uppercase and number) with
-  #   length to 10
   class MessageJanus
-    attr_reader :transaction, :correlation_id
+    # Type message sending
+    CONTENT_TYPE = 'application/json'
 
-    # Type message janus
-    TYPE = %w(
-      :ack :attach :create :destroy :detach :event :error
-      :hangup :info :keepalive :media :message :server_info
-      :success :trickle :webrtcup
-    ).freeze
+    # Queue to message sending
+    ROUTING = 'to-janus'
 
-    def initialize(logs)
+    # @param channel [Bunny::Session] Channel to RabbitMQ send message
+    # @param logs [RRJ::Log] Log instance
+    def initialize(channel, logs)
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
       @correlation_id = SecureRandom.uuid
+      @channel = channel
       @logs = logs
     end
 
-    # Write a message for janus format
-    # @see TYPE
-    # @param [Symbol] type Define type message sending
-    # @param [Hash] body The body to message sending
-    # @option body [Boolean] :audio Frame audio
-    # @return [JSON] Message sending to RabbitMQ server
-    def msg(type, body = {})
-      hash = { janus: type, transaction: @transaction }
-      hash.merge(body: body) unless body.empty?
-      hash.to_json
+    # Send a message to RabbitMQ server
+    def send
+      @x = @channel.default_exchange
+      @reply_queue = @channel.queue('', exclusive: true)
+      @x.publish(msg,
+                 routing_key: ROUTING,
+                 correlation_id: @correlation_id,
+                 content_type: CONTENT_TYPE,
+                 reply_to: @reply_queue.name)
     end
   end
 end

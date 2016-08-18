@@ -20,11 +20,13 @@ module RRJ
       load_rabbitmq
     end
 
+    # @deprecated Just for test development
     def send_message_test
       @logs.write 'Publish message to queue to-janus', :info
       @rabbit.send_message
     end
 
+    # @deprecated Just for test development
     def listen_message_test
       @logs.write 'Listen message to queue from-janus', :info
       @rabbit.listen_queue

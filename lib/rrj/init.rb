@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'bunny'
-
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem

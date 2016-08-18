@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'logging'
 
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -20,7 +19,7 @@ module RRJ
     DEFAULT_CONF = File.join(DEFAULT_PATH, 'config', 'default.yml')
 
     # Define a default override file configuration
-    CUSTOMIZE_CONF = '.rrj.yml'
+    CUSTOMIZE_CONF = 'config/ruby-rabbitmq-janus.yml'
 
     # Initialize configuration file default or customize if exist
     # @param logs [RRJ::Log] Load RRJ::Log to gem

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'logging'
+
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for wrtting logs. Define level used (:warn, :info, :debug).

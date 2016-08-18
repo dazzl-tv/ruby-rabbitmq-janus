@@ -11,4 +11,4 @@
 *.gem
 
 log
-.rrj.yml
+config/ruby-rabbitmq-janus.yml

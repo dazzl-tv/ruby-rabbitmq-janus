@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'rrj'
-puts RRJ.new(ARGV[0])
+
+t = RRJ::RRJ.new
+t.send_message_test

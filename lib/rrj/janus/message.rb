@@ -8,10 +8,8 @@ module RRJ
   # @!attribute [r] transaction
   #   @return [String] represente a random string (letter uppercase and number) with
   #   length to 10
-  # @!attribute [r] body
-  #   @return [String] Body to message
   class MessageJanus
-    attr_reader :transaction, :body
+    attr_reader :transaction
 
     # Type message janus
     TYPE = %w(
@@ -20,15 +18,18 @@ module RRJ
       :success :trickle :webrtcup
     ).freeze
 
+    def initialize
+      @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
+    end
+
     # Write a message for janus format
     # @see TYPE
     # @param [Symbol] type Define type message sending
     # @param [Hash] body The body to message sending
     # @option body [Boolean] :audio Frame audio
     # @return [JSON] Message sending to RabbitMQ server
-    def message(type, body = {})
-      transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
-      hash = { janus: type, transaction: transaction }
+    def msg(type, body = {})
+      hash = { janus: type, transaction: @transaction }
       hash.merge(body: body) unless body.empty?
       hash.to_json
     end

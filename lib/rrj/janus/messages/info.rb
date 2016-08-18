@@ -6,6 +6,7 @@ module RRJ
   class Info < MessageJanus
     # Precise type message
     TYPE = :info
+
     # Write message type :info
     # @return [JSON] JSON request with type info
     def msg

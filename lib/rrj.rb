@@ -8,8 +8,8 @@ require 'rrj/rabbitmq'
 
 require 'rrj/janus/janus'
 require 'rrj/janus/message'
-require 'rrj/janus/message_janus_info'
-require 'rrj/janus/message_janus_create'
+require 'rrj/janus/messages/info'
+require 'rrj/janus/messages/create'
 
 require 'rrj/error'
 require 'rrj/log'

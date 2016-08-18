@@ -39,9 +39,9 @@ module RRJ
       @channel = @connection.create_channel
       @queue = @channel.queue('from-janus')
       @queue.subscribe(block: true) do |delivery_info, properties, body|
-        @logs.write "[x] devlivery_info : #{delivery_info}"
-        @logs.write "[x] body : #{body}"
-        @logs.write "[x] properties: #{properties}"
+        @logs.write "[x] devlivery_info : #{delivery_info}", :debug
+        @logs.write "[x] body : #{body}", :debug
+        @logs.write "[x] properties: #{properties}", :debug
       end
     end
 

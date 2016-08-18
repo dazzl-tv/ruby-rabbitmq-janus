@@ -35,7 +35,7 @@ module RRJ
     # @param file [String] Path to configuration file (with name)
     # @return [Yaml] Configuration file
     def load_configuration(file)
-      @logs.write "Loading configuration file : #{file}"
+      @logs.write "Loading configuration file : #{file}", :info
       YAML.load(File.read(file))
     end
 

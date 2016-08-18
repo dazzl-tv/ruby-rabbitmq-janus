@@ -14,8 +14,8 @@ module RRJ
     # Define file name to writing logs
     DEFAULT_LOG_NAME = 'rails-rabbit-janus.log'
 
-    # Define a default level to gem (:debug :info :warn :error :fatal :unknow)
-    DEFAULT_LEVEL = :info
+    # Define a default level to gem (:debug :info :warn :error :unknow)
+    DEFAULT_LEVEL = :debug
 
     # Returns a new instance to Log
     def initialize
@@ -36,10 +36,11 @@ module RRJ
     # @param level [Symbol] Level to message (:info, :warn, :debug)
     def write(message, level = DEFAULT_LEVEL)
       case level
-      when :info
-        @logs.info message
-      when :warn
-        @logs.warn message
+      when :debug then @logs.debug message
+      when :info then @logs.info message
+      when :warn then @logs.warn message
+      when :error then @logs.error message
+      when :unknow then @logs.unknow message
       end
     end
   end

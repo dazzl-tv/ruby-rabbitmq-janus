@@ -21,12 +21,12 @@ module RRJ
     end
 
     def send_message_test
-      @logs.write 'Publish message to queue to-janus'
+      @logs.write 'Publish message to queue to-janus', :info
       @rabbit.send_message
     end
 
     def listen_message_test
-      @logs.write 'Listen message to queue from-janus'
+      @logs.write 'Listen message to queue from-janus', :info
       @rabbit.listen_queue
     end
 

@@ -4,6 +4,8 @@ module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for wrtting logs. Define level used (:warn, :info, :debug).
   class Log
+    include Singleton
+
     # Define folder to writing logs
     DEFAULT_LOG_DIR = 'log'
 

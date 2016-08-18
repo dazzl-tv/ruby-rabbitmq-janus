@@ -16,7 +16,7 @@ module RRJ
 
     # Returns a new instance of RRJ
     def initialize
-      @logs = Log.new
+      @logs = Log.instance
 
       load_configuration
       load_rabbitmq

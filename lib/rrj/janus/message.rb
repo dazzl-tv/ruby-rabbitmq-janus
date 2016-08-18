@@ -19,9 +19,10 @@ module RRJ
       :success :trickle :webrtcup
     ).freeze
 
-    def initialize
+    def initialize(logs)
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
       @correlation_id = SecureRandom.uuid
+      @logs = logs
     end
 
     # Write a message for janus format

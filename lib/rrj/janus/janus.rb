@@ -14,6 +14,12 @@ module RRJ
   class Janus
     attr_reader :queue, :channel, :logs
 
+    # Type message sending
+    CONTENT_TYPE = 'application/json'
+
+    # Queue to message sending
+    ROUTING = 'to-janus'
+
     # Returns a new instance of Janus
     # @param connection [String] Connection to RabbitMQ server
     # @param logs [RRJ::Log] Instance to log
@@ -27,15 +33,14 @@ module RRJ
       @channel = @connection.create_channel
 
       @x = @channel.default_exchange
-      @server_queue = 'to-janus'
       @reply_queue = @channel.queue('', exclusive: true)
 
-      msg = MessageJanus::Info.new
+      msg = Info.new(@logs)
 
       @x.publish(msg.msg,
-                 routing_key: 'to-janus',
+                 routing_key: ROUTING,
                  correlation_id: msg.correlation_id,
-                 content_type: 'application/json',
+                 content_type: CONTENT_TYPE,
                  reply_to: @reply_queue.name)
     end
 

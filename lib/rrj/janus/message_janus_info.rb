@@ -5,8 +5,9 @@ module RRJ
   # Create an message with type :info
   class Info < MessageJanus
     # Write message type :info
+    # @return [JSON] JSON request with type info
     def msg
-      { janus: :info, transaction: @transaction }.to_s
+      { janus: :info, transaction: @transaction }.to_json
     end
   end
 end

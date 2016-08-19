@@ -15,6 +15,9 @@ module RRJ
     # Queue to message sending
     ROUTING = 'to-janus'
 
+    # Plugin unique name
+    PLUGIN = 'janus.plugin.dazzl.videocontrol'
+
     # @param channel [Bunny::Session] Channel to RabbitMQ send message
     # @param logs [RRJ::Log] Log instance
     def initialize

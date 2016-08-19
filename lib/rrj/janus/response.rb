@@ -18,6 +18,7 @@ module RRJ
       @correlation_id = correlation_id
     end
 
+    # Read a response to janus (in RabbitMQ queue)
     def receive(channel)
       @queue = channel.queue(ROUTING)
       @queue.subscribe do |_delivery_info, _properties, body|

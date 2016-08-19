@@ -30,14 +30,17 @@ module RRJ
       @logs.info(welcome)
     end
 
+    # Write a message in log with a warn level
     def warn(message)
       @logs.warn(message)
     end
 
+    # Write a message in log with a info level
     def info(message)
       @logs.info(message)
     end
 
+    # Write a message in log with a debug level
     def debug(message)
       @logs.debug(message)
     end

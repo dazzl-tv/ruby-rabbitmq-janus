@@ -20,18 +20,6 @@ module RRJ
       load_rabbitmq
     end
 
-    # @deprecated Just for test development
-    def send_message_test
-      @logs.info 'Publish message to queue to-janus'
-      @rabbit.send_message
-    end
-
-    # @deprecated Just for test development
-    def listen_message_test
-      @logs.info 'Listen message to queue from-janus'
-      @rabbit.listen_queue
-    end
-
     private
 
     # Loading Conf object

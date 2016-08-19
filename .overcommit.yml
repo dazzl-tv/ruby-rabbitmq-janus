@@ -3,3 +3,6 @@ PreCommit:
     enabled: true
   Reek:
     enabled: true
+PrePush:
+  RSpec:
+    enabled: true

@@ -1,3 +1,5 @@
 PreCommit:
   RuboCop:
     enabled: true
+  Reek:
+    enabled: true

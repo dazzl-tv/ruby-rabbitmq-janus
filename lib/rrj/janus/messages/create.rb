@@ -10,13 +10,15 @@ module RRJ
   #       "transaction" : "sBJNyUhH6Vc6"
   #   }
   class MessageCreate < MessageJanus
-    # Precise type message
-    TYPE = :create
+    def initialize
+      super
+      @type = :create
+    end
 
     # Write message type :create
     # @return [JSON] JSON request with type create
     def msg
-      { janus: TYPE, transaction: @transaction }.to_json
+      { janus: @type, transaction: @transaction }.to_json
     end
   end
 end

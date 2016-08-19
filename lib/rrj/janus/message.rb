@@ -6,8 +6,12 @@ require 'securerandom'
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server
+  # @!attribute [r] correlation_id
+  #   Represent an unique identifier to communication between in RabbitMQ queue janus
+  # @!attribute [r] type
+  #   Is a type of message (:info, :create)
   class MessageJanus
-    attr_reader :correlation_id
+    attr_reader :correlation_id, :type
 
     # Type message sending
     CONTENT_TYPE = 'application/json'

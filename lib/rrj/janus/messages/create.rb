@@ -2,7 +2,13 @@
 
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-  # Create an message with type :create
+  # Create an message with type :create.
+  # This message create a session betwen janus and customer
+  # @example JSON sending
+  #   {
+  #       "janus" : "create",
+  #       "transaction" : "sBJNyUhH6Vc6"
+  #   }
   class MessageCreate < MessageJanus
     # Precise type message
     TYPE = :create

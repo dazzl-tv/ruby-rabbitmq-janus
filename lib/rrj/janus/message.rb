@@ -18,8 +18,6 @@ module RRJ
     # Plugin unique name
     PLUGIN = 'janus.plugin.dazzl.videocontrol'
 
-    # @param channel [Bunny::Session] Channel to RabbitMQ send message
-    # @param logs [RRJ::Log] Log instance
     def initialize
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
       @correlation_id = SecureRandom.uuid

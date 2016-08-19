@@ -3,7 +3,7 @@
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Create an message with type :create
-  class Create < MessageJanus
+  class MessageCreate < MessageJanus
     # Precise type message
     TYPE = :create
 

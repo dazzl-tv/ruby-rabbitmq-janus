@@ -3,7 +3,7 @@
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Create an message with type :info
-  class Info < MessageJanus
+  class MessageInfo < MessageJanus
     # Precise type message
     TYPE = :info
 

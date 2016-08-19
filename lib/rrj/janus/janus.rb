@@ -15,13 +15,22 @@ module RRJ
       @logs = logs
     end
 
-    # Send a message
-    def send_message
-      i = Info.new(@channel, @logs)
-      i.send
+    # Send a info message
+    # @deprecated Just for test
+    def send_info_message
+      info_message = MessageInfo.new
+      info_message.send(@channel)
+      info_response = ResponseInfo.new
+      @logs.write info_response.receive(@channel), :warn
+    end
 
-      c = Create.new(@channel, @log)
-      c.send
+    # Send a message
+    # @deprecated Just for test
+    def send_create_message
+      create_message = MessageCreate.new
+      create_message.send(@channel)
+      create_response = ResponseJanus.new
+      @logs.write create_response.receive(@channel), :warn
     end
 
     # Listen message to queue
@@ -30,9 +39,11 @@ module RRJ
       @channel = @connection.create_channel
       @queue = @channel.queue('from-janus')
       @queue.subscribe(block: true) do |delivery_info, properties, body|
-        @logs.write "[x] devlivery_info : #{delivery_info}", :debug
-        @logs.write "[x] body : #{body}", :debug
-        @logs.write "[x] properties: #{properties}", :debug
+        message = \
+          "[x] devlivery_info : #{delivery_info}\n" \
+          "[x] body : #{body}\n" \
+          "[x] properties: #{properties}"
+        @logs.write message, :debug
       end
     end
   end

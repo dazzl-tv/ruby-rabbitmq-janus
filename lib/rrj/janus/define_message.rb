@@ -11,7 +11,7 @@ module RRJ
     end
 
     def type_message(type)
-      @message[type]
+      @messages[type.to_sym]
     end
   end
 end

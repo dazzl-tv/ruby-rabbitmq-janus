@@ -31,9 +31,9 @@ module RRJ
     end
 
     # Send message
-    def send_message
+    def send_message(type)
       open_server_rabbitmq
-      @janus.send_create_message
+      @janus.send_message(type)
       close_server_rabbitmq
     end
 

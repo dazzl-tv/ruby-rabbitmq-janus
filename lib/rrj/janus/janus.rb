@@ -13,6 +13,19 @@ module RRJ
       @connection = connection
       @channel = @connection.create_channel
       @logs = logs
+      @msg = DefineMessage.new
+    end
+
+    # Send a message with type
+    def send_message(type)
+      case @msg.type_message(type)
+      when :info
+        MessageInfo.new
+      when :create
+        MessageCreate.new
+      end
+    rescue StandartException
+      @logs.warn 'Error message type.'
     end
   end
 end

@@ -10,7 +10,7 @@ module RRJ
   # @!attribute [r] logs
   #   @return [RRJ::Log] Object instance to logs gem.
   class Config
-    attr_reader :options, :logs
+    attr_reader :options
 
     # Define a default path to file configuration
     DEFAULT_PATH = File.realpath(File.join(File.dirname(__FILE__), '..', '..'))
@@ -35,7 +35,7 @@ module RRJ
     # @param file [String] Path to configuration file (with name)
     # @return [Yaml] Configuration file
     def load_configuration(file)
-      @logs.write "Loading configuration file : #{file}", :info
+      @logs.info("Loading configuration file : #{file}")
       YAML.load(File.read(file))
     end
 

@@ -21,7 +21,7 @@ module RRJ
       info_message = MessageInfo.new
       info_message.send(@channel)
       info_response = ResponseInfo.new
-      @logs.write info_response.receive(@channel), :warn
+      @logs.warn info_response.receive(@channel)
     end
 
     # Send a message
@@ -30,7 +30,7 @@ module RRJ
       create_message = MessageCreate.new
       create_message.send(@channel)
       create_response = ResponseJanus.new
-      @logs.write create_response.receive(@channel), :warn
+      @logs.warn create_response.receive(@channel)
     end
 
     # Listen message to queue
@@ -43,7 +43,7 @@ module RRJ
           "[x] devlivery_info : #{delivery_info}\n" \
           "[x] body : #{body}\n" \
           "[x] properties: #{properties}"
-        @logs.write message, :debug
+        @logs.debug message
       end
     end
   end

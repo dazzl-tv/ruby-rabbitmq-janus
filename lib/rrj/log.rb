@@ -14,7 +14,7 @@ module RRJ
     # Define file name to writing logs
     DEFAULT_LOG_NAME = 'rails-rabbit-janus.log'
 
-    # Define a default level to gem (:debug :info :warn :error :unknow)
+    # Define a default level to gem (:warn, :info, :debug)
     DEFAULT_LEVEL = :debug
 
     # Returns a new instance to Log
@@ -23,25 +23,23 @@ module RRJ
       @logs.level = DEFAULT_LEVEL
       @logs.add_appenders Logging.appenders.file(DEFAULT_LOG_DIR + '/' + DEFAULT_LOG_NAME)
 
-      welcome = \
+      welcome = "\n"\
         "====================================\n" \
         "### Start gem Rails Rabbit Janus ###\n" \
-        "====================================\n"
-
-      @logs.write(welcome)
+        '===================================='
+      @logs.info(welcome)
     end
 
-    # Write a message in log file.
-    # @param message [String] Message writing in logs
-    # @param level [Symbol] Level to message (:info, :warn, :debug)
-    def write(message, level = DEFAULT_LEVEL)
-      case level
-      when :debug then @logs.debug message
-      when :info then @logs.info message
-      when :warn then @logs.warn message
-      when :error then @logs.error message
-      when :unknow then @logs.unknow message
-      end
+    def warn(message)
+      @logs.warn(message)
+    end
+
+    def info(message)
+      @logs.info(message)
+    end
+
+    def debug(message)
+      @logs.debug(message)
     end
   end
 end

@@ -22,13 +22,13 @@ module RRJ
 
     # @deprecated Just for test development
     def send_message_test
-      @logs.write 'Publish message to queue to-janus', :info
+      @logs.info 'Publish message to queue to-janus'
       @rabbit.send_message
     end
 
     # @deprecated Just for test development
     def listen_message_test
-      @logs.write 'Listen message to queue from-janus', :info
+      @logs.info 'Listen message to queue from-janus'
       @rabbit.listen_queue
     end
 

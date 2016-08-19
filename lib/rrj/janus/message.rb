@@ -10,20 +10,15 @@ module RRJ
   #   Represent an unique identifier to communication between in RabbitMQ queue janus
   # @!attribute [r] type
   #   Is a type of message (:info, :create)
+  # @!attribute [r] plugin
+  #   Name of plugin used by janus
   class MessageJanus
-    attr_reader :correlation_id, :type
+    attr_reader :correlation_id, :type, :plugin
 
-    # Type message sending
-    CONTENT_TYPE = 'application/json'
-
-    # Queue to message sending
-    ROUTING = 'to-janus'
-
-    # Plugin unique name
-    PLUGIN = 'janus.plugin.dazzl.videocontrol'
-
+    # Prepare transaction, correlation_id and plugin
     def initialize
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
+      @plugin = 'janus.plugin.dazzl.videocontrol'
       @correlation_id = SecureRandom.uuid
     end
 
@@ -32,9 +27,9 @@ module RRJ
       @message = channel.default_exchange
       @reply_queue = channel.queue('', exclusive: true)
       @message.publish(msg,
-                       routing_key: ROUTING,
+                       routing_key: 'to-janus',
                        correlation_id: @correlation_id,
-                       content_type: CONTENT_TYPE,
+                       content_type: 'application/json',
                        reply_to: @reply_queue.name)
     end
   end

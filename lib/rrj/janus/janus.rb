@@ -20,7 +20,7 @@ module RRJ
     def send_info_message
       info_message = MessageInfo.new
       info_message.send(@channel)
-      info_response = ResponseInfo.new
+      info_response = ResponseInfo.new(info_message.correlation_id)
       @logs.warn info_response.receive(@channel)
     end
 
@@ -29,8 +29,8 @@ module RRJ
     def send_create_message
       create_message = MessageCreate.new
       create_message.send(@channel)
-      create_response = ResponseJanus.new
-      @logs.warn create_response.receive(@channel)
+      create_response = ResponseCreate.new(create_message.correlation_id)
+      @logs.warn create_response.receive(@channel, @logs)
     end
 
     # Listen message to queue

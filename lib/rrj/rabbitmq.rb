@@ -32,27 +32,33 @@ module RRJ
 
     # Send message
     def send_message
-      @connection = Bunny.new(read_options_server)
-      @connection.start
-
-      @janus = Janus.new(@connection, @logs)
+      open_server_rabbitmq
       @janus.send_message
-
-      @connection.close
+      close_server_rabbitmq
     end
 
     # Listen queue
     def listen_queue
-      @connection = Bunny.new(read_options_server)
-      @connection.start
-
-      @janus = Janus.new(@connection, @logs)
+      open_server_rabbitmq
       @janus.listen_messages
-
-      @connection.close
+      close_server_rabbitmq
     end
 
     private
+
+    # Establish connection with RabbitMQ server
+    # @return [RRJ::Janus] Janus object for manipulating data sending and receiving to
+    #   rabbitmq server
+    def open_server_rabbitmq
+      @connection = Bunny.new(read_options_server)
+      @connection.start
+      @janus = Janus.new(@connection, @logs)
+    end
+
+    # Close connection to rabbitmq server
+    def close_server_rabbitmq
+      @connection.close
+    end
 
     # Use configuration information to connect RabbitMQ
     def read_options_server

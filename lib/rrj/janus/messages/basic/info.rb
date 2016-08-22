@@ -9,16 +9,9 @@ module RRJ
   #       "janus" : "info",
   #       "transaction" : "sBJNyUhH6Vc6"
   #   }
-  class MessageInfo < MessageJanus
+  class MessageInfo < MessageBasicJanus
     def initialize
-      super
-      @type = :info
-    end
-
-    # Write message type :info
-    # @return [JSON] JSON request with type info
-    def msg
-      { janus: @type, transaction: @transaction }.to_json
+      super(:info)
     end
   end
 end

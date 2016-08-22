@@ -30,18 +30,9 @@ module RRJ
       @logs = logs
     end
 
-    # Send message
-    def send_message(type)
-      open_server_rabbitmq
-      @janus.send_message(type)
-      close_server_rabbitmq
-    end
-
-    # Listen queue
-    def listen_queue
-      open_server_rabbitmq
-      @janus.listen_messages
-      close_server_rabbitmq
+    # Sending a message
+    def sending_a_message(type)
+      send_message @janus.send_message(type)
     end
 
     private
@@ -67,6 +58,26 @@ module RRJ
         hash.merge!(key.to_sym => server.to_s)
       end
       hash
+    end
+
+    # Sending a message with opening and closing connection to RabbitMQ server
+    def send_message(message)
+      # Open connection to RabbitMQ server
+      open_server_rabbitmq
+      # Execute sending message
+      yield message
+      # Closing connection to RabbitMQ server
+      close_server_rabbitmq
+    end
+
+    # Listen a queue
+    def lisnten_queue(listen)
+      # Open connection to RabbitMQ server
+      open_server_rabbitmq
+      # Execute sending message
+      yield listen
+      # Closing connection to RabbitMQ server
+      close_server_rabbitmq
     end
   end
 end

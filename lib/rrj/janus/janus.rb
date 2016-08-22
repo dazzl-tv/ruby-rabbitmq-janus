@@ -21,19 +21,13 @@ module RRJ
       @logs.info "Send message type : #{type}"
       # Create message
       so = @msg.type_message(type)
-      sending(so)
-    end
+      sending(so, type)
 
-    def sending(so)
       # Send message
       so.send(@channel)
 
-      if type =~ :create
-        # Writing in log information to message sending
-        transaction = so.transaction
-        correlation = so.correlation_id
-        sending_destroy(transaction, correlation)
-      end
+      # Writing in log information to message sending
+      sending_destroy(so.transaction, so.correlation_id)
     end
 
     def sending_destroy(transaction, correlation)

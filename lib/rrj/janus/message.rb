@@ -12,14 +12,10 @@ module RRJ
   #   Is a type of message (:info, :create)
   # @!attribute [r] plugin
   #   Name of plugin used by janus
+  # @!attribute [r] transaction
+  #   Transaction identifier used by janus
   class MessageJanus
     attr_reader :correlation_id, :type, :plugin, :transaction
-
-    # Prepare transaction, correlation_id and plugin
-    def initialize
-      @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
-      @correlation_id = SecureRandom.uuid
-    end
 
     # Send a message to RabbitMQ server
     def send(channel)

@@ -10,8 +10,6 @@ module RRJ
   #       "transaction" : "sBJNyUhH6Vc6"
   #   }
   class MessageAttach < MessageJanus
-    attr_reader :session
-
     def initialize(transaction, correlation_id, session)
       @type = :attach
       @transaction = transaction

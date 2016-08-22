@@ -10,10 +10,11 @@ module RRJ
   #       "transaction" : "sBJNyUhH6Vc6"
   #   }
   class MessageDestroy < MessageJanus
-    def initialize(transaction, correlation_id)
+    def initialize(transaction, correlation_id, session)
       @type = :destroy
       @transaction = transaction
       @correlation_id = correlation_id
+      @session = session
       set_plugin
     end
 

@@ -22,5 +22,12 @@ module RRJ
       # Send message
       @message.send(@channel)
     end
+
+    def read_message(message)
+      @message = message
+      @logs.info 'Read message'
+      msg = @message.read(@channel)
+      @logs.debug msg
+    end
   end
 end

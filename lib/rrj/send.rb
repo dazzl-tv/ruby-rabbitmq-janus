@@ -5,7 +5,10 @@ module RRJ
   class RRJ
     # Send a message type :info
     def sending_a_message_info
-      @rabbit.send_message(MessageInfo.new)
+      # Send a message
+      info = @rabbit.send_message(MessageInfo.new)
+      # Read a message
+      @rabbit.read_message(ResponseInfo.new(info))
     end
 
     # Send a message type :create

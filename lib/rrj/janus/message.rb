@@ -15,7 +15,7 @@ module RRJ
   # @!attribute [r] transaction
   #   Transaction identifier used by janus
   class MessageJanus
-    attr_reader :correlation_id, :type, :plugin, :transaction
+    attr_reader :correlation_id, :type, :plugin, :transaction, :information
 
     # Send a message to RabbitMQ server
     def send(channel)

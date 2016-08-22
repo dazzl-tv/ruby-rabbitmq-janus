@@ -18,5 +18,13 @@ module RRJ
         transaction: @transaction
       }.to_json
     end
+
+    def information
+      {
+        correlation_id: @correlation_id,
+        transaction: @transaction,
+        reply_to: @reply_queue.name
+      }
+    end
   end
 end

@@ -2,7 +2,7 @@
 
 module RRJ
   # Refractoring RRJ class
-  module Send
+  class RRJ
     # Send a message type :info
     def sending_a_message_info
       @rabbit.send_message(MessageInfo.new)

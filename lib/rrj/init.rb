@@ -10,8 +10,6 @@ module RRJ
   # @!attribute [r] settings
   #   @return [RRJ::Config] Object Config to gem
   class RRJ
-    extend Send
-
     # Returns a new instance of RRJ
     def initialize
       @logs = Log.instance

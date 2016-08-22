@@ -2,7 +2,9 @@
 require 'rrj/version'
 
 require 'rrj/config'
+
 require 'rrj/init'
+require 'rrj/send'
 
 require 'rrj/rabbitmq'
 

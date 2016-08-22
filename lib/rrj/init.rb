@@ -18,9 +18,20 @@ module RRJ
       load_rabbitmq
     end
 
-    def sending_a_message
-      @rabbit.send_message(:info)
-      @rabbit.send_message(:create)
+    def sending_a_message_info
+      @rabbit.send_message(MessageInfo.new)
+    end
+
+    def sending_a_message_create
+      message = MessageCreate.new
+      @rabbit.send_message(message)
+      @logs.warn message.inspect.to_yaml
+    end
+
+    def sending_a_message_destroy(opts = {})
+      message = MessageDestroy.new(opts)
+      @rabbit.send_message(message)
+      @logs.warn message.inspect.to_yaml
     end
 
     private

@@ -6,8 +6,6 @@ require 'rrj/init'
 
 require 'rrj/rabbitmq'
 
-require 'rrj/janus/define_message'
-
 require 'rrj/janus/janus'
 require 'rrj/janus/message'
 require 'rrj/janus/messages/basic'

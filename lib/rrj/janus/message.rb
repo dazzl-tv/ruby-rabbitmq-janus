@@ -17,6 +17,10 @@ module RRJ
   class MessageJanus
     attr_reader :correlation_id, :type, :plugin, :transaction
 
+    def initialize
+      puts 'MessageCreate initialize'
+    end
+
     # Send a message to RabbitMQ server
     def send(channel)
       @message = channel.default_exchange

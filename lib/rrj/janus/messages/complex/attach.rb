@@ -11,8 +11,8 @@ module RRJ
   #       "transaction" : "sBJNyUhH6Vc6"
   #   }
   class MessageAttach < MessageComplexJanus
-    def initialize(transaction, correlation_id, session)
-      super(:attach, transaction, correlation_id, session)
+    def initialize(opts = {})
+      super(:attach, opts)
     end
   end
 end

@@ -11,6 +11,7 @@ module RRJ
   #   }
   class MessageInfo < MessageBasicJanus
     def initialize
+      puts 'MessageInfo initialize'
       super(:info)
     end
   end

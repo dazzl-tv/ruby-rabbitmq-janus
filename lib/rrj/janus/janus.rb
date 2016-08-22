@@ -12,15 +12,12 @@ module RRJ
     def initialize(connection, logs)
       @channel = connection.create_channel
       @logs = logs
-      @abstract_message = DefineMessage.new(@logs)
     end
 
     # Send a message with type
-    def send_message(type)
-      @logs.info "Create message : #{type}"
-
-      # Create message
-      @message = @abstract_message.type_message(type, @logs)
+    def send_message(message)
+      @message = message
+      @logs.info "Create message : #{@message.type}"
 
       # Send message
       @message.send(@channel)

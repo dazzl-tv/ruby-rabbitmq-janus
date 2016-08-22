@@ -11,8 +11,8 @@ module RRJ
   #       "transaction" : "sBJNyUhH6Vc6"
   #   }
   class MessageDestroy < MessageComplexJanus
-    def initialize(transaction, correlation_id, session)
-      super(:destroy, transaction, correlation_id, session)
+    def initialize(opts = {})
+      super(:destroy, opts)
     end
   end
 end

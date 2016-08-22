@@ -9,7 +9,7 @@ module RRJ
     attr_reader :session
 
     # Send a message with transaction, correlation_id and session exisiting
-    def initialize(type, opts)
+    def initialize(type, opts = {})
       @transaction = opts[:transaction]
       @correlation_id = opts[:correlation_id]
       @session = opts[:session]

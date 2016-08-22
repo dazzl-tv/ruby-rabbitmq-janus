@@ -19,9 +19,15 @@ module RRJ
     # Send a message with type
     def send_message(type)
       @logs.info "Send message type : #{type}"
+      # Create message
       so = @msg.type_message(type)
+      # Send message
       so.send(@channel)
-      @logs.debug so
+
+      if type == :create
+        destroy = MessageDestroy.new(so.transaction, so.correlation_id)
+        destroy.msg
+      end
     end
   end
 end

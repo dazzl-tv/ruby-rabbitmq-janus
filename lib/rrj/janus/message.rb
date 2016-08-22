@@ -25,7 +25,6 @@ module RRJ
     def send(channel)
       @message = channel.default_exchange
       @reply_queue = channel.queue('', exclusive: true)
-      @logs.debug msg
       @message.publish(msg,
                        routing_key: 'to-janus',
                        correlation_id: @correlation_id,
@@ -36,7 +35,8 @@ module RRJ
     private
 
     def set_plugin
-      @plugin = 'janus.plugin.dazzl.videocontrol'
+      # @plugin = 'janus.plugin.dazzl.videocontrol'
+      @plugin = 'janus.plugin.echotest'
     end
   end
 end

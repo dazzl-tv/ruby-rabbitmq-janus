@@ -7,8 +7,7 @@ module RRJ
     def initialize
       @messages = {
         info: MessageInfo.new,
-        create: MessageCreate.new,
-        destroy: MessageDestroy.new
+        create: MessageCreate.new
       }
     end
 

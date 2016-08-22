@@ -21,13 +21,29 @@ module RRJ
       @logs.info "Send message type : #{type}"
       # Create message
       so = @msg.type_message(type)
+      sending(so)
+    end
+
+    def sending(so)
       # Send message
       so.send(@channel)
 
-      if type == :create
-        destroy = MessageDestroy.new(so.transaction, so.correlation_id)
-        destroy.msg
+      if type =~ :create
+        # Writing in log information to message sending
+        transaction = so.transaction
+        correlation = so.correlation_id
+        sending_destroy(transaction, correlation)
       end
+    end
+
+    def sending_destroy(transaction, correlation)
+      @logs.debug "Transaction - #{transaction}"
+      @logs.debug "Correlation - #{correlation}"
+
+      # Destroy the session
+      @logs.debug 'Send message type :destroy'
+      destroy = MessageDestroy.new(transaction, correlation)
+      destroy.msg
     end
   end
 end

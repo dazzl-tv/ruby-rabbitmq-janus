@@ -52,9 +52,10 @@ module RRJ
       # Create object for creating message JSON
       @janus = Janus.new(@connection, @logs)
       # Execute sending message
-      @janus.read_message(type)
+      msg = @janus.read_message(type)
       # Closing connection to RabbitMQ server
       close_server_rabbitmq
+      msg
     end
 
     private

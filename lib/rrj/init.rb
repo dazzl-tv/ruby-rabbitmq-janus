@@ -10,14 +10,17 @@ module RRJ
   # @!attribute [r] settings
   #   @return [RRJ::Config] Object Config to gem
   class RRJ
-    attr_reader :rabbit, :logs, :settings
-
     # Returns a new instance of RRJ
     def initialize
       @logs = Log.instance
 
       load_configuration
       load_rabbitmq
+    end
+
+    def sending_a_message
+      @rabbit.send_message(:info)
+      @rabbit.send_message(:create)
     end
 
     private

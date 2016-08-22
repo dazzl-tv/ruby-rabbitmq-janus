@@ -10,24 +10,23 @@ module RRJ
     # @param connection [String] Connection to RabbitMQ server
     # @param logs [RRJ::Log] Instance to log
     def initialize(connection, logs)
-      @connection = connection
-      @channel = @connection.create_channel
+      @channel = connection.create_channel
       @logs = logs
-      @msg = DefineMessage.new
+      @abstract_message = DefineMessage.new(@logs)
     end
 
     # Send a message with type
     def send_message(type)
-      @logs.info "Send message type : #{type}"
+      @logs.info "Create message : #{type}"
+
       # Create message
-      so = @msg.type_message(type)
-      sending(so, type)
+      @message = @abstract_message.type_message(type, @logs)
 
       # Send message
-      so.send(@channel)
+      @message.send(@channel)
 
       # Writing in log information to message sending
-      sending_destroy(so.transaction, so.correlation_id)
+      # sending_destroy(so.transaction, so.correlation_id)
     end
 
     def sending_destroy(transaction, correlation)

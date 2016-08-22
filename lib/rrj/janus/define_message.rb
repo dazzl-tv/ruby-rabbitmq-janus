@@ -4,7 +4,8 @@ module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class DefineMessage
     # Initialize all message posibility to sending a janus server
-    def initialize
+    def initialize(logs)
+      @logs = logs
       @create_an_message_type = {
         basic: [:create, :info],
         complex: [:attach, :destroy]
@@ -27,11 +28,13 @@ module RRJ
 
     # Return a message ask
     def type_message_basic(type)
+      @logs.info "Message basic - type #{type}"
       @messages_basic = {
         info: MessageInfo.new,
         create: MessageCreate.new
       }
-      @messages_basic[type.to_sym]
+      @msg = @messages_basic[type.to_sym]
+      @logs.debug @msg
     end
 
     # Return a complex message
@@ -40,6 +43,7 @@ module RRJ
     # @option opts_requests [String] :correlation_id Identifier correlation
     # @option opts_requests [String] :session Identifier session
     def type_message_complex(type, opts_request = {})
+      @logs.info "Message complex - type #{type}"
       @messages_complex = {
         destroy: MessageDestroy.new(opts_request),
         attach: MessageAttach.new(opts_request)

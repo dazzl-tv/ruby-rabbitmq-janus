@@ -6,6 +6,7 @@ module RRJ
   class MessageBasicJanus < MessageJanus
     # Prepare transaction, correlation_id and type
     def initialize(type)
+      puts 'MessageBasicJanus initialize'
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
       @correlation_id = SecureRandom.uuid
       @type = type

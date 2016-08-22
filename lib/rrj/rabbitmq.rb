@@ -28,11 +28,19 @@ module RRJ
     def initialize(configuration, logs)
       @settings = configuration
       @logs = logs
+      @connection = Bunny.new(read_options_server)
     end
 
-    # Sending a message
-    def sending_a_message(type)
-      send_message @janus.send_message(type)
+    # Sending a message with opening and closing connection to RabbitMQ server
+    def send_message(type)
+      # Open connection to RabbitMQ server
+      open_server_rabbitmq
+      # Create object for creating message JSON
+      @janus = Janus.new(@connection, @logs)
+      # Execute sending message
+      @janus.send_message(type)
+      # Closing connection to RabbitMQ server
+      close_server_rabbitmq
     end
 
     private
@@ -41,9 +49,7 @@ module RRJ
     # @return [RRJ::Janus] Janus object for manipulating data sending and receiving to
     #   rabbitmq server
     def open_server_rabbitmq
-      @connection = Bunny.new(read_options_server)
       @connection.start
-      @janus = Janus.new(@connection, @logs)
     end
 
     # Close connection to rabbitmq server
@@ -58,26 +64,6 @@ module RRJ
         hash.merge!(key.to_sym => server.to_s)
       end
       hash
-    end
-
-    # Sending a message with opening and closing connection to RabbitMQ server
-    def send_message(message)
-      # Open connection to RabbitMQ server
-      open_server_rabbitmq
-      # Execute sending message
-      yield message
-      # Closing connection to RabbitMQ server
-      close_server_rabbitmq
-    end
-
-    # Listen a queue
-    def lisnten_queue(listen)
-      # Open connection to RabbitMQ server
-      open_server_rabbitmq
-      # Execute sending message
-      yield listen
-      # Closing connection to RabbitMQ server
-      close_server_rabbitmq
     end
   end
 end

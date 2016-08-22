@@ -11,6 +11,7 @@ module RRJ
   #   }
   class MessageCreate < MessageBasicJanus
     def initialize
+      puts 'MessageCreate initialize'
       super(:create)
     end
   end

@@ -21,19 +21,6 @@ module RRJ
 
       # Send message
       @message.send(@channel)
-
-      # Writing in log information to message sending
-      # sending_destroy(so.transaction, so.correlation_id)
-    end
-
-    def sending_destroy(transaction, correlation)
-      @logs.debug "Transaction - #{transaction}"
-      @logs.debug "Correlation - #{correlation}"
-
-      # Destroy the session
-      @logs.debug 'Send message type :destroy'
-      destroy = MessageDestroy.new(transaction, correlation)
-      destroy.msg
     end
   end
 end

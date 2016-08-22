@@ -20,7 +20,7 @@ module RRJ
   # @!attribute [r] janus
   #   @return [RRJ::Janus] Object for manipulate janus data
   class RabbitMQ
-    attr_reader :connection, :logs, :settings, :queue, :channel, :janus
+    attr_reader :connection, :logs, :settings, :queue, :channel, :janus, :response
 
     # Return a new instance to RabbitMQ
     # @param configuration [RRJ::Config] Configuration file to gem

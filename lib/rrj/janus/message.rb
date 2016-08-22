@@ -17,10 +17,6 @@ module RRJ
   class MessageJanus
     attr_reader :correlation_id, :type, :plugin, :transaction
 
-    def initialize
-      puts 'MessageCreate initialize'
-    end
-
     # Send a message to RabbitMQ server
     def send(channel)
       @message = channel.default_exchange
@@ -34,6 +30,7 @@ module RRJ
 
     private
 
+    # Define plugin used
     def set_plugin
       # @plugin = 'janus.plugin.dazzl.videocontrol'
       @plugin = 'janus.plugin.echotest'

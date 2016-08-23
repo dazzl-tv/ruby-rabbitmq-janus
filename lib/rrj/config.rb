@@ -7,8 +7,6 @@ module RRJ
   # Loading a yaml file for apply a configuration to gem.
   # @!attribute [r] options
   #   @return  [RRJ::Config] Options to gem.
-  # @!attribute [r] logs
-  #   @return [RRJ::Log] Object instance to logs gem.
   class Config
     attr_reader :options
 

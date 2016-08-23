@@ -11,13 +11,12 @@ module RRJ
     def initialize(opts = {})
       @correlation_id = opts[:correlation_id]
       @transaction = opts[:transaction]
-      @reply_queue_name = 'from-janus'
     end
 
     # Read a response to janus (in RabbitMQ queue)
-    def read(channel)
+    def read(channel, queue_from)
       @channel = channel
-      the_queue = @channel.queue(@reply_queue_name)
+      the_queue = @channel.queue(queue_from)
       the_queue.subscribe(block: true, manual_ack: true) do |info, prop, pay|
         listen(info, prop, pay)
       end

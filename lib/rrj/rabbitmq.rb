@@ -36,7 +36,7 @@ module RRJ
       # Open connection to RabbitMQ server
       open_server_rabbitmq
       # Create object for creating message JSON
-      @janus = Janus.new(@connection, @logs)
+      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
       # Execute sending message
       @janus.send_message(type)
       # Closing connection to RabbitMQ server
@@ -50,7 +50,7 @@ module RRJ
       # Open connection to RabbitMQ server
       open_server_rabbitmq
       # Create object for creating message JSON
-      @janus = Janus.new(@connection, @logs)
+      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
       # Execute sending message
       msg = @janus.read_message(type)
       # Closing connection to RabbitMQ server

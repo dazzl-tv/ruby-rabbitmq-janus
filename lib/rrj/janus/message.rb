@@ -24,11 +24,11 @@ module RRJ
     end
 
     # Send a message to RabbitMQ server
-    def send(channel)
+    def send(channel, queue_to)
       @message = channel.default_exchange
       @reply_queue = channel.queue('', exclusive: true)
       @message.publish(msg,
-                       routing_key: 'to-janus',
+                       routing_key: queue_to,
                        correlation_id: @correlation_id,
                        content_type: 'application/json',
                        reply_to: @reply_queue.name)

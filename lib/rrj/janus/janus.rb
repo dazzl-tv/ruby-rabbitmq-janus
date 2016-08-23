@@ -25,7 +25,6 @@ module RRJ
 
     def read_message(message)
       @message = message
-      @logs.info 'Read message'
       @message.read(@channel)
     end
   end

@@ -23,6 +23,7 @@ module RRJ
       @message.send(@channel)
     end
 
+    # Read a response
     def read_message(message)
       @message = message
       @message.read(@channel)

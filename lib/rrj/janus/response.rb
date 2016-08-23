@@ -7,6 +7,7 @@ module RRJ
   # Response Janus received to RabbitMQ server
   class ResponseJanus
     attr_reader :response
+
     def initialize(opts = {})
       @correlation_id = opts[:correlation_id]
       @transaction = opts[:transaction]

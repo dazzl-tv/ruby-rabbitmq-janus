@@ -31,6 +31,7 @@ module RRJ
       @rabbit.read_message(response.new(msg))
     end
 
+    # Method for refractoring all messages sending with options given to message
     def sending_a_message_opts(message, response, opts = {})
       # send a message
       @rabbit.send_message(message.new(opts))

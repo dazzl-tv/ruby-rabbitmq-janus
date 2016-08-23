@@ -20,6 +20,7 @@ require 'rrj/janus/response'
 require 'rrj/janus/responses/info'
 require 'rrj/janus/responses/create'
 require 'rrj/janus/responses/destroy'
+require 'rrj/janus/responses/success'
 
 require 'rrj/error'
 require 'rrj/log'

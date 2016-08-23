@@ -3,23 +3,15 @@
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Read a response for message type :create
+  # @example JSON response
+  #   {
+  #     "janus": "server_info",
+  #     "transaction": "sBJNyUhH6vc6"
+  #     ...
+  #   }
   class ResponseCreate < ResponseJanus
-    # Customize a message reading in RabbitMQ queue
-    def receive(channel, _logs)
-      @queue = channel.queue(ROUTING)
-      @queue.subscribe(block: true, manual_ack: false) do |info, properties, body|
-        if properties.correlation_id == @correlation_id
-          # logs.info 'Response :'
-          # logs.debug body
-          # logs.debug properties
-          # logs.debug delivery_info
-          @response = JSON.parse(body)
-          # logs.info 'End response'
-          # Stop block if response is return
-          channel.consumers[info.consumer_tag].cancel
-        end
-      end
-      @response['data']
+    def initialize(opts = {})
+      super(opts)
     end
   end
 end

@@ -55,6 +55,7 @@ module RRJ
       msg = @janus.read_message(type)
       # Closing connection to RabbitMQ server
       close_server_rabbitmq
+      # Return a response to message
       msg
     end
 

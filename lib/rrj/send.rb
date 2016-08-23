@@ -24,6 +24,7 @@ module RRJ
 
     private
 
+    # Method for refractoring all messages sending
     def sending_a_message(message, response)
       # send a message
       msg = @rabbit.send_message(message.new)

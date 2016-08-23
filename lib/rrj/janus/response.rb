@@ -25,6 +25,7 @@ module RRJ
 
     private
 
+    # Listen a response to queue
     def listen(delivery_info, properties, payload)
       if @correlation_id == properties[:correlation_id]
         @response = payload

@@ -30,8 +30,7 @@ module RRJ
       @message.publish(msg,
                        routing_key: queue_to,
                        correlation_id: @correlation_id,
-                       content_type: 'application/json',
-                       reply_to: @reply_queue.name)
+                       content_type: 'application/json')
     end
 
     private

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module RRJ
-  # @quathor VAILLANT Jeremy
+  # @author VAILLANT Jeremy
   # Read a response for message type :destroy
-  # @exemple response
+  # @example response
   #   {
   #     "janus": "server_info",
   #     "transaction": "sBJNyUhH6vc6"

@@ -17,9 +17,8 @@ module RRJ
     # Send a message type :create
     # @return [RRJ::Response] Return a response to request
     def sending_a_message_destroy(opts = {})
-      message = MessageDestroy.new(opts)
-      @rabbit.send_message(message)
-      @logs.warn message.inspect.to_yaml
+      @logs.info "OPTS session : #{opts['data']['id']}"
+      sending_a_message_opts(MessageDestroy, ResponseDestroy, opts)
     end
 
     private
@@ -30,6 +29,13 @@ module RRJ
       msg = @rabbit.send_message(message.new)
       # read a response
       @rabbit.read_message(response.new(msg))
+    end
+
+    def sending_a_message_opts(message, response, opts = {})
+      # send a message
+      @rabbit.send_message(message.new(opts))
+      # read a response
+      @rabbit.read_message(response.new(opts))
     end
   end
 end

@@ -10,10 +10,8 @@ module RRJ
 
     # Send a message with transaction, correlation_id and session exisiting
     def initialize(type, opts = {})
-      @transaction = opts[:transaction]
-      @correlation_id = opts[:correlation_id]
-      @session = opts[:session]
-      @type = type
+      super(type)
+      @session = opts['data']['id']
     end
 
     # Write a complex JSON message

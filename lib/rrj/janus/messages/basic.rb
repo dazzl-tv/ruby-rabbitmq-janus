@@ -6,9 +6,7 @@ module RRJ
   class MessageBasicJanus < MessageJanus
     # Prepare transaction, correlation_id and type
     def initialize(type)
-      @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
-      @correlation_id = SecureRandom.uuid
-      @type = type
+      super(type)
     end
 
     # Write a basic JSON message
@@ -19,6 +17,7 @@ module RRJ
       }.to_json
     end
 
+    # Give information about session created
     def information
       {
         correlation_id: @correlation_id,

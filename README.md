@@ -26,7 +26,7 @@ gem 'rrj', :git => 'git@github.com:dazzl-tv/ruby-rabbitmq-janus.git'
 
 ### Configuration
 
-If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.yml)
+If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.md)
 
 ### Usage
 

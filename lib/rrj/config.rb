@@ -13,10 +13,8 @@ module RRJ
     # Define a default path to file configuration
     DEFAULT_PATH = File.realpath(File.join(File.dirname(__FILE__), '..', '..'))
 
-    FILE_CONF = 'config/default.yml'
-
     # Define a default name to file configuration
-    DEFAULT_CONF = File.join(DEFAULT_PATH, FILE_CONF)
+    DEFAULT_CONF = 'config/default.yml'
 
     # Define a default override file configuration
     CUSTOMIZE_CONF = 'config/ruby-rabbitmq-janus.yml'
@@ -25,7 +23,7 @@ module RRJ
     # @param logs [RRJ::Log] Load RRJ::Log to gem
     def initialize(logs)
       @logs = logs
-      @options = load_configuration(DEFAULT_CONF)
+      @options = load_configuration(File.join(DEFAULT_PATH, DEFAULT_CONF))
       override_configuration(File.join(Dir.pwd, CUSTOMIZE_CONF))
     end
 

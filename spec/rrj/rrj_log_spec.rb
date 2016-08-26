@@ -2,17 +2,17 @@
 
 require 'spec_helper'
 
-describe '::Log' do
+describe 'RRJ::Log' do
   it 'Has a default log folder' do
-    expect(RRJ::Log::DEFAULT_LOG_DIR).not_to be nil
+    expect(RRJ::Log::DEFAULT_LOG_DIR).to eq 'log'
   end
 
   it 'Has a default log name' do
-    expect(RRJ::Log::DEFAULT_LOG_NAME).not_to be nil
+    expect(RRJ::Log::DEFAULT_LOG_NAME).to eq 'rails-rabbit-janus.log'
   end
 
   it 'Has a default level' do
-    expect(RRJ::Log::DEFAULT_LEVEL).not_to be nil
+    expect(RRJ::Log::DEFAULT_LEVEL).to eq :debug
   end
 
   it 'Create an instance of RRJ::Log' do

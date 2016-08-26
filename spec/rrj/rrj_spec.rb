@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe '::RRJ' do
+describe 'RRJ::RRJ' do
   it 'Has a version number' do
     expect(RRJ::VERSION).not_to be nil
   end

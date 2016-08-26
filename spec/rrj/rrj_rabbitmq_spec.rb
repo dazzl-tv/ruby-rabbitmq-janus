@@ -2,27 +2,18 @@
 
 require 'spec_helper'
 
-describe '::RabitMQ' do
-  let(:log) { RRJ::Log.instance }
-  let(:config) { RRJ::Config.new(:log) }
-  let(:rabbit) { RRJ::RabbitMQ.new(:config, :log) }
+describe 'RRJ::RabitMQ' do
+  before(:context) do
+    @log = RRJ::Log.instance
+    @config = RRJ::Config.new(@log)
+    @rabbit = RRJ::RabbitMQ.new(@config, @log)
+  end
 
   it 'Connection to RabbitMQ Server' do
-    expect(:rabbit).not_to be nil
+    expect(@rabbit.send(:open_server_rabbitmq).class).to eq Bunny::Session
   end
 
-  context 'Sending a message' do
-    let(:sending) { :rabbit.send_message }
-
-    it 'Sending a message to RabbitMQ server' do
-      expect(:sending).not_to be nil
-    end
-  end
-
-  context 'Receiving a message to RabbitMQ server' do
-    let(:receiving) { :rabit.listen_queue }
-    it 'Listen a queue to RabbitMQ Server' do
-      expect(:receiving).not_to be nil
-    end
+  it 'Close connection RabbitMQ Server' do
+    expect(@rabbit.send(:close_server_rabbitmq)).to eq :closed
   end
 end

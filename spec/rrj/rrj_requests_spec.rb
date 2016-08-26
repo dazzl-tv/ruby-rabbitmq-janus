@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe '::RRJ#sending_a_message' do
+describe 'RRJ::RRJ#sending_a_message' do
   let(:transaction) { RRJ::RRJ.new }
 
   context 'when send a info message' do

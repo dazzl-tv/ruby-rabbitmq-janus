@@ -13,8 +13,10 @@ module RRJ
     # Define a default path to file configuration
     DEFAULT_PATH = File.realpath(File.join(File.dirname(__FILE__), '..', '..'))
 
+    FILE_CONF = 'config/default.yml'
+
     # Define a default name to file configuration
-    DEFAULT_CONF = File.join(DEFAULT_PATH, 'config', 'default.yml')
+    DEFAULT_CONF = File.join(DEFAULT_PATH, FILE_CONF)
 
     # Define a default override file configuration
     CUSTOMIZE_CONF = 'config/ruby-rabbitmq-janus.yml'

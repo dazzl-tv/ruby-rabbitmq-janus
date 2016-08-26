@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rspec'
+require 'spec_helper'
 
 describe '::Log' do
   it 'Has a default log folder' do

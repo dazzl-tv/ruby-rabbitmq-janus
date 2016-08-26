@@ -25,6 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.9.5'
   spec.add_development_dependency 'reek', '~> 4.2', '>= 4.2.4'
   spec.add_development_dependency 'fuubar', '~> 2.2'
+  spec.add_development_dependency 'aruba', '~> 0.14.2'
+  spec.add_development_dependency 'pry-byebug', '~> 3.4'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
   spec.add_runtime_dependency 'logging', '~> 2.1'

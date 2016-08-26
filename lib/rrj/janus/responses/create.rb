@@ -17,7 +17,7 @@ module RRJ
     end
 
     # Read a response to janus (in RabbitMQ queue)
-    def read(channel)
+    def read(channel, queue_from)
       super
       add_correlation_id
     end

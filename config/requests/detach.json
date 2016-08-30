@@ -2,5 +2,5 @@
   "janus": "detach",
   "session_id": "<number>",
   "handle_id": "<number>",
-  "transaction": "123456789azerty"
+  "transaction": "<string>"
 }

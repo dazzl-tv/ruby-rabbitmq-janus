@@ -25,9 +25,10 @@ module RRJ
     # Return a new instance to RabbitMQ
     # @param configuration [RRJ::Config] Configuration file to gem
     # @param logs [RRJ::Log] Log to gem
-    def initialize(configuration, logs)
+    def initialize(configuration, requests, logs)
       @settings = configuration
       @logs = logs
+      @requests = requests
       @connection = Bunny.new(read_options_server)
     end
 

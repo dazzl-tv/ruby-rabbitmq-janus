@@ -7,13 +7,12 @@ module RRJ
   # @!attribute [r] requests
   #   @return [RRJ::Request] Array to request
   class Requests
-    attr_reader :requests
-
     # Define folder to request
     PATH_REQUEST = 'config/requests/'
 
     # Load all requests in folder
     def initialize(logs)
+      @requests = {}
       logs.info "Loading all requests in : #{PATH_REQUEST}"
       Dir[File.join(PATH_REQUEST, '*')].count do |file|
         if File.file?(file)

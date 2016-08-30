@@ -14,25 +14,9 @@ module RRJ
     def initialize
       @logs = Log.instance
 
-      load_configuration
-      load_requests
-      load_rabbitmq
-    end
-
-    private
-
-    # Loading Conf object
-    def load_configuration
       @settings = Config.new(@logs)
-    end
-
-    def load_requests
       @requests = Requests.new(@logs)
-    end
-
-    # Loading RabbiMQ object
-    def load_rabbitmq
-      @rabbit = RabbitMQ.new(@settings, @logs)
+      @rabbit = RabbitMQ.new(@settings, @requests, @logs)
     end
   end
 end

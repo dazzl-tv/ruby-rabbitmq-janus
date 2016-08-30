@@ -15,6 +15,17 @@ module RRJ
     # Load all requests in folder
     def initialize(logs)
       @logs = logs
+      @request = []
+      Dir[File.join(PATH_REQUEST, '**', '*')].count do |file|
+        loading_request(file) if File.file?(file)
+      end
+    end
+
+    private
+
+    def loading_request(file)
+      @logs.info file.name
+      @request.push file
     end
   end
 end

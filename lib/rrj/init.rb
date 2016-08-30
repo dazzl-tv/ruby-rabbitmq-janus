@@ -15,6 +15,7 @@ module RRJ
       @logs = Log.instance
 
       load_configuration
+      load_requests
       load_rabbitmq
     end
 
@@ -23,6 +24,10 @@ module RRJ
     # Loading Conf object
     def load_configuration
       @settings = Config.new(@logs)
+    end
+
+    def load_requests
+      @requests = Requests.new(@logs)
     end
 
     # Loading RabbiMQ object

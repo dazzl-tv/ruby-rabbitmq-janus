@@ -6,7 +6,6 @@ require 'rrj/config'
 require 'rrj/init'
 require 'rrj/messages'
 
-require 'rrj/request'
 require 'rrj/requests'
 
 require 'rrj/rabbitmq'

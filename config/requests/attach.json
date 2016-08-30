@@ -1,0 +1,6 @@
+{
+  "janus": "attach",
+  "session_id": number_session_id,
+  "transaction": "123456789azerty",
+  "plugin": "janus.plugin.dazzl.videocontrol"
+}

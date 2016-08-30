@@ -1,0 +1,5 @@
+{
+  "janus": "destroy",
+  "session_id": number_session_id,
+  "transaction": "123456789azerty"
+}

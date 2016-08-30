@@ -1,0 +1,6 @@
+{
+  "janus": "detach",
+  "session_id": number_session_id,
+  "handle_id": number_handle_id,
+  "transaction": "123456789azerty"
+}

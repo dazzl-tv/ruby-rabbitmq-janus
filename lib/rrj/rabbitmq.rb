@@ -8,12 +8,20 @@ module RRJ
   class RabbitMQ
     # Return a new instance to RabbitMQ
     # @param configuration [RRJ::Config] Configuration file to gem
+    # @param requests [Hash] Request sending to RabbitMQ
     # @param logs [RRJ::Log] Log to gem
     def initialize(configuration, requests, logs)
       @settings = configuration
       @logs = logs
       @requests = requests
       @connection = Bunny.new(read_options_server)
+    end
+
+    def send(request_type)
+      open_server_rabbitmq
+      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
+      @janus.send(@requests[request_type.to_s])
+      close_server_rabbitmq
     end
 
     # Sending a message with opening and closing connection to RabbitMQ server

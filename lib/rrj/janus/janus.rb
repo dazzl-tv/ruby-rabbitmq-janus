@@ -15,6 +15,11 @@ module RRJ
       @logs = logs
     end
 
+    def send(request)
+      message = MessageJanus.new
+      message.send(request, @channel, @queues['queue_to'])
+    end
+
     # Send a message with type
     def send_message(message)
       @message = message

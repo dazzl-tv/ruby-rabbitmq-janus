@@ -7,6 +7,8 @@ module RRJ
   # @!attribute [r] requests
   #   @return [RRJ::Request] Array to request
   class Requests
+    attr_reader :requests
+
     # Define folder to request
     PATH_REQUEST = 'config/requests/'
 
@@ -21,7 +23,6 @@ module RRJ
           each_folder(File.basename(file))
         end
       end
-      @requests
     end
 
     private

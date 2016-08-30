@@ -6,39 +6,43 @@ require 'securerandom'
 module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server
-  # @!attribute [r] correlation_id
-  #   Represent an unique identifier to communication between in RabbitMQ queue janus
-  # @!attribute [r] type
-  #   Is a type of message (:info, :create)
-  # @!attribute [r] plugin
-  #   Name of plugin used by janus
-  # @!attribute [r] transaction
-  #   Transaction identifier used by janus
   class MessageJanus
-    attr_reader :type, :information
-
-    def initialize(type)
+    def initialize
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
-      @correlation_id = SecureRandom.uuid
-      @type = type
+      @correlation = SecureRandom.uuid
+      @my_request = nil
     end
 
     # Send a message to RabbitMQ server
-    def send(channel, queue_to)
+    def send(json, channel, queue_to)
       @message = channel.default_exchange
       @reply_queue = channel.queue('', exclusive: true)
-      @message.publish(msg,
+      @message.publish(test_request_and_replace(json),
                        routing_key: queue_to,
-                       correlation_id: @correlation_id,
+                       correlation_id: @correlation,
                        content_type: 'application/json')
     end
 
     private
 
-    # Define plugin used
-    def set_plugin
-      # @plugin = 'janus.plugin.dazzl.videocontrol'
-      @plugin = 'janus.plugin.echotest'
+    def test_request_and_replace(json_file)
+      @my_request = JSON.parse(File.read(json_file))
+      replace_transaction
+      replace_session
+      replace_handle
+      @my_request.to_json
+    end
+
+    def replace_transaction
+      @my_request['transaction'] = @transaction if @my_request['transaction']
+    end
+
+    def replace_session
+      @my_request['session_id'] = 123_456_789 if @my_request['session_id']
+    end
+
+    def replace_handle
+      @my_request['handle_id'] = 123_456_789 if @my_request['handle_id']
     end
   end
 end

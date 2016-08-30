@@ -16,7 +16,12 @@ module RRJ
 
       @settings = Config.new(@logs)
       @requests = Requests.new(@logs)
-      @rabbit = RabbitMQ.new(@settings, @requests, @logs)
+      @rabbit = RabbitMQ.new(@settings, @requests.requests, @logs)
+    end
+
+    # Send a message with a template JSON
+    def message_template(template_used = 'info')
+      @rabbit.send(template_used)
     end
   end
 end

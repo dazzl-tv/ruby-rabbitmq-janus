@@ -15,17 +15,14 @@ module RRJ
     # Load all requests in folder
     def initialize(logs)
       @logs = logs
-      @request = []
+      @requests = {}
+
+      @logs.info "Loading all requests in : #{PATH_REQUEST}"
+
       Dir[File.join(PATH_REQUEST, '**', '*')].count do |file|
-        loading_request(file) if File.file?(file)
+        @requests[File.basename(file, '.json').to_sym] = File.path(file)
       end
-    end
-
-    private
-
-    def loading_request(file)
-      @logs.info file.name
-      @request.push file
+      @requests
     end
   end
 end

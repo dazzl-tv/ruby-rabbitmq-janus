@@ -53,45 +53,6 @@ destroy_response = transaction_template_response(destroy)
 => {"janus"=>"success", "session_id"=>7123088323743398, "transaction"=>"PKS63VJD8C"}
 ```
 
-```json
-# Result log
-{
-  "janus": "server_info",
-  "transaction": "M37VTSI5XN",
-  "name": "Janus WebRTC Gateway",
-  "version": 12,
-  "version_string": "0.1.2",
-  "author": "Meetecho s.r.l.",
-  "log-to-stdout": "true",
-  "log-to-file": "false",
-  "data_channels": "true",
-  "server-name": "MyJanusInstance",
-  "local-ip": "172.19.0.4",
-  "ipv6": "false",
-  "ice-tcp": "false",
-  "api_secret": "false",
-  "auth_token": "false",
-  "transports": {
-    "janus.transport.rabbitmq": {
-      "name": "JANUS RabbitMQ transport plugin",
-      "author": "Meetecho s.r.l.",
-      "description": "This transport plugin adds RabbitMQ support to the Janus API via rabbitmq-c.",
-      "version_string": "0.0.1",
-      "version": 1
-    },
-  },
-  "plugins": {
-    "janus.plugin.textroom": {
-      "name": "JANUS TextRoom plugin",
-      "author": "Meetecho s.r.l.",
-      "description": "This is a plugin implementing a text-only room for Janus, using DataChannels.",
-      "version_string": "0.0.2",
-      "version": 2
-    }
-  }
-}
-```
-
 ## Development
 ### RSpec test
 

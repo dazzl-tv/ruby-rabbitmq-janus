@@ -7,10 +7,11 @@ module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server
   class MessageJanus
-    def initialize
+    def initialize(opts)
       @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
       @correlation = SecureRandom.uuid
       @my_request = nil
+      @opts = opts
     end
 
     # Send a message to RabbitMQ server
@@ -39,7 +40,7 @@ module RRJ
     end
 
     def replace_session
-      @my_request['session_id'] = 123_456_789 if @my_request['session_id']
+      @my_request['session_id'] = @opts['data']['id'] if @my_request['session_id']
     end
 
     def replace_handle

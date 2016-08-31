@@ -18,9 +18,9 @@ module RRJ
       @response = nil
     end
 
-    def ask_request(request_type)
+    def ask_request(request_type, opts)
       execute_request do
-        @response = @janus.send(@requests[request_type.to_s])
+        @response = @janus.send(@requests[request_type.to_s], opts)
       end
     end
 

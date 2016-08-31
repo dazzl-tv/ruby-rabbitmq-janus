@@ -15,8 +15,8 @@ module RRJ
       @logs = logs
     end
 
-    def send(request)
-      message = MessageJanus.new
+    def send(request, opts)
+      message = MessageJanus.new(opts)
       @logs.info "Request template sending : #{request}"
       message.send(request, @channel, @queues['queue_to'])
     end

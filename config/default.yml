@@ -1,15 +1,15 @@
 # Configuration file for gem
 server:
   # Precise RabbitMQ host - Default 'localhost'
-  host: 'localhost'
+  host: localhost
   # Precise RabbitMQ port - Default 'port'
   port: 5672
   # Precise RabbitMQ vhost - Default '/'
-  vhost: '/'
+  vhost: /
   # Precise RabbitMQ user - Default 'guest'
-  user: 'guest'
+  user: guest
   # Precise RabbitMQ password - Default 'guest'
-  password: 'guest'
+  password: guest
 
 # RabbitMQ Queue information
 queues:
@@ -17,3 +17,9 @@ queues:
   queue_from: from-janus
   # Queue sending a message for janus server
   queue_to: to-janus
+
+# Janus plugin used
+janus:
+  # Create an array to plugin
+  plugins:
+    - janus.plugin.echotest

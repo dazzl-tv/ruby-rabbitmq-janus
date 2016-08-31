@@ -2,5 +2,5 @@
   "janus": "attach",
   "session_id": "<number>",
   "transaction": "<string>",
-  "plugin": "janus.plugin.dazzl.videocontrol"
+  "plugin": "<plugin[0]>"
 }

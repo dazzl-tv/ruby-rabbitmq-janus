@@ -27,5 +27,8 @@ module RRJ
     def message_template_response(info_request)
       @rabbit.ask_response(info_request)
     end
+
+    alias ask message_template_ask
+    alias response message_template_response
   end
 end

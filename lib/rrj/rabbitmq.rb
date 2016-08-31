@@ -26,7 +26,7 @@ module RRJ
 
     def ask_response(info_request)
       execute_request do
-        @response = @janus.read(info_request)
+        @response = @janus.read(info_request, @connection)
       end
     end
 
@@ -57,7 +57,6 @@ module RRJ
       open_server_rabbitmq
       @janus = Janus.new(@connection, @settings.options['queues'], @logs)
       yield
-      close_server_rabbitmq
       @response
     end
   end

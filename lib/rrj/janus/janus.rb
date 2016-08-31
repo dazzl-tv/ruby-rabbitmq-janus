@@ -24,20 +24,5 @@ module RRJ
       response = ResponseJanus.new
       response.send(info_message, @channel, @queue['queue_from'])
     end
-
-    # Send a message with type
-    def send_message(message)
-      @message = message
-      @logs.info "Create message : #{@message.type}"
-
-      # Send message
-      @message.send(@channel, @queues['queue_to'])
-    end
-
-    # Read a response
-    def read_message(message)
-      @message = message
-      @message.read(@channel, @queues['queue_from'])
-    end
   end
 end

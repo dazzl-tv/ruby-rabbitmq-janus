@@ -32,10 +32,25 @@ If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/
 
 Exemple usage :
 ```ruby
-# Send a message type 'info'
-info = RRJ::RRJ.new
-response = info.send_a_message_info
-render formats: :json, plain: response
+# Initialize gem
+transaction = RRJ::RRJ.new
+
+# Send a message type 'create'
+create = transaction.message_template_ask('create')
+=> {"janus"=>"create",
+ "transaction"=>"U5MZ8IYNLF",
+ "correlation"=>"6e77d355-6c3e-450c-89ad-a5daeb8e006a"}
+create_response = transaction.message_template_response(create)
+=> {"janus"=>"success", "transaction"=>"U5MZ8IYNLF", "data"=>{"id"=>7123088323743398}}
+
+# Destroy session created
+destroy = transaction.message_template_ask('destroy')
+=> {"janus"=>"destroy",
+ "session_id"=>7123088323743398,
+ "transaction"=>"PKS63VJD8C",
+ "correlation"=>"6e34d8d6-814a-4633-bcab-be3e24cc6260"}
+destroy_response = transaction_template_response(destroy)
+=> {"janus"=>"success", "session_id"=>7123088323743398, "transaction"=>"PKS63VJD8C"}
 ```
 
 ```json

@@ -5,6 +5,8 @@ PreCommit:
     enabled: true
   YamlSyntax:
     enabled: true
+  JsonSyntax:
+    enabled: true
 PrePush:
   RSpec:
     enabled: true

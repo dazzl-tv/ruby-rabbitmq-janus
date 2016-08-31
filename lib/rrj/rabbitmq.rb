@@ -18,12 +18,14 @@ module RRJ
       @response = nil
     end
 
+    # Connect to server RabbitMQ and post a message in queue ('to-janus' by default)
     def ask_request(request_type, opts)
       execute_request do
         @response = @janus.send(@requests[request_type.to_s], opts)
       end
     end
 
+    # Connect to server RabbitMQ and read a message in queue ('from-janus' by default)
     def ask_response(info_request)
       execute_request do
         @response = @janus.read(info_request, @connection)
@@ -53,10 +55,12 @@ module RRJ
       hash
     end
 
+    # Execute request
     def execute_request
       open_server_rabbitmq
       @janus = Janus.new(@connection, @settings.options['queues'], @logs)
       yield
+      close_server_rabbitmq
       @response
     end
   end

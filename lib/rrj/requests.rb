@@ -27,6 +27,7 @@ module RRJ
 
     private
 
+    # Run folder contains templates json
     def each_folder(subfolder)
       Dir[File.join(PATH_REQUEST + subfolder, '*')].count do |file|
         if File.file?(file)
@@ -37,10 +38,15 @@ module RRJ
       end
     end
 
+    # Add template json to requests array
+    # @param file [File]
     def read_file(file)
       @requests[File.basename(file, '.json').to_s] = File.path(file)
     end
 
+    # Add template json to requests array with a path
+    # @param folder [Dir]
+    # @param file [File]
     def read_folder(folder, file)
       @requests[folder + File.basename(file, '.json').to_s] = File.path(file)
     end

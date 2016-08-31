@@ -30,8 +30,8 @@ module RRJ
     private
 
     # Load configuration file yaml
-    # @param file [String] Path to configuration file (with name)
     # @return [Yaml] Configuration file
+    # @param file [String] Path to configuration file (with name)
     def load_configuration(file)
       @logs.info("Loading configuration file : #{file}")
       YAML.load(File.read(file))

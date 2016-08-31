@@ -12,7 +12,7 @@ module RRJ
 
     # Read a response to janus (in RabbitMQ queue)
     # @return [Hash] resultat to request
-    def read(_json, channel, queue_from)
+    def read(channel, queue_from)
       @channel = channel
       the_queue = @channel.queue(queue_from)
       the_queue.subscribe(block: true, manual_ack: true) do |info, prop, pay|

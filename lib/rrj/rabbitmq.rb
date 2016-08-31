@@ -21,9 +21,7 @@ module RRJ
       execute_request do
         @janus = Janus.new(@connection, @settings.options['queues'], @logs)
         my_request_information = @janus.send(@requests[request_type.to_s])
-        # ask response
-        @logs.debug my_request_information
-        # @janus.read(my_request_information)
+        @janus.read(my_request_information)
       end
     end
 

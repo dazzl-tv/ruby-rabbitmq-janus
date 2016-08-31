@@ -17,12 +17,14 @@ module RRJ
 
     def send(request)
       message = MessageJanus.new
+      @logs.info "Request template sending : #{request}"
       message.send(request, @channel, @queues['queue_to'])
     end
 
     def read(info_message)
-      response = ResponseJanus.new
-      response.send(info_message, @channel, @queue['queue_from'])
+      response = ResponseJanus.new(info_message)
+      @logs.info "Information request search : #{info_message}"
+      response.read(@channel, @queues['queue_from'])
     end
   end
 end

@@ -6,6 +6,7 @@ module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Communication to RabbitMQ with format for Janus message
   class Janus
+    attr_reader :the_consumer
     # Returns a new instance of Janus
     # @param connection [String] Connection to RabbitMQ server
     # @param logs [RRJ::Log] Instance to log
@@ -13,6 +14,7 @@ module RRJ
       @channel = connection.create_channel
       @queues = queues
       @logs = logs
+      @the_consumer = Bunny::Consumer.new(@channel, @channel.queue(@queues['queue_from']))
     end
 
     def send(request)
@@ -22,9 +24,11 @@ module RRJ
     end
 
     def read(info_message)
-      response = ResponseJanus.new(info_message)
+      response = ResponseJanus.new(self, @channel, info_message)
+      @logs.debug 'The consumer'
+      @logs.debug the_consumer.inspect.to_yaml
       @logs.info "Information request search : #{info_message}"
-      response.read(@channel, @queues['queue_from'])
+      response.read(@queues['queue_from'])
     end
   end
 end

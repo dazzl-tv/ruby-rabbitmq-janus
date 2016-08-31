@@ -21,11 +21,11 @@ module RRJ
 
     # Send a message with a template JSON
     def message_template_ask(template_used = 'info')
-      @logs.info "Send message type : #{template_used}"
-      @rabbit.send(template_used)
+      @rabbit.ask_request(template_used)
     end
 
-    def message_template_response
+    def message_template_response(info_request)
+      @rabbit.ask_response(info_request)
     end
   end
 end

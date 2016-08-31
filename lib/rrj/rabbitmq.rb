@@ -15,13 +15,18 @@ module RRJ
       @logs = logs
       @requests = requests
       @connection = Bunny.new(read_options_server)
+      @response = nil
     end
 
-    def send(request_type)
+    def ask_request(request_type)
       execute_request do
-        @janus = Janus.new(@connection, @settings.options['queues'], @logs)
-        my_request_information = @janus.send(@requests[request_type.to_s])
-        @janus.read(my_request_information)
+        @response = @janus.send(@requests[request_type.to_s])
+      end
+    end
+
+    def ask_response(info_request)
+      execute_request do
+        @response = @janus.read(info_request)
       end
     end
 
@@ -50,8 +55,10 @@ module RRJ
 
     def execute_request
       open_server_rabbitmq
+      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
       yield
       close_server_rabbitmq
+      @response
     end
   end
 end

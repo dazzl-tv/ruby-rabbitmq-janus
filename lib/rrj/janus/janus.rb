@@ -20,6 +20,11 @@ module RRJ
       message.send(request, @channel, @queues['queue_to'])
     end
 
+    def read(info_message)
+      response = ResponseJanus.new
+      response.send(info_message, @channel, @queue['queue_from'])
+    end
+
     # Send a message with type
     def send_message(message)
       @message = message

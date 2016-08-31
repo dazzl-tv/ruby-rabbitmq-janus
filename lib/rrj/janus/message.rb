@@ -21,6 +21,7 @@ module RRJ
                        routing_key: queue_to,
                        correlation_id: @correlation,
                        content_type: 'application/json')
+      return_info_message
     end
 
     private
@@ -34,7 +35,7 @@ module RRJ
     end
 
     def replace_transaction
-      @my_request['transaction'] = @transaction if @my_request['transaction']
+      @my_request['transaction'] = @transaction
     end
 
     def replace_session
@@ -43,6 +44,10 @@ module RRJ
 
     def replace_handle
       @my_request['handle_id'] = 123_456_789 if @my_request['handle_id']
+    end
+
+    def return_info_message
+      @my_request.merge('correlation' => @correlation)
     end
   end
 end

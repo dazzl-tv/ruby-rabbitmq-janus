@@ -18,38 +18,13 @@ module RRJ
     end
 
     def send(request_type)
-      open_server_rabbitmq
-      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
-      @janus.send(@requests[request_type.to_s])
-      close_server_rabbitmq
-    end
-
-    # Sending a message with opening and closing connection to RabbitMQ server
-    def send_message(type)
-      # Open connection to RabbitMQ server
-      open_server_rabbitmq
-      # Create object for creating message JSON
-      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
-      # Execute sending message
-      @janus.send_message(type)
-      # Closing connection to RabbitMQ server
-      close_server_rabbitmq
-      # Return information to message sending
-      type.information
-    end
-
-    # Reading a message with opening and closing connection to RabbitMQ server
-    def read_message(type)
-      # Open connection to RabbitMQ server
-      open_server_rabbitmq
-      # Create object for creating message JSON
-      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
-      # Execute sending message
-      msg = @janus.read_message(type)
-      # Closing connection to RabbitMQ server
-      close_server_rabbitmq
-      # Return a response to message
-      msg
+      execute_request do
+        @janus = Janus.new(@connection, @settings.options['queues'], @logs)
+        my_request_information = @janus.send(@requests[request_type.to_s])
+        # ask response
+        @logs.debug my_request_information
+        # @janus.read(my_request_information)
+      end
     end
 
     private
@@ -73,6 +48,12 @@ module RRJ
         hash.merge!(key.to_sym => server.to_s)
       end
       hash
+    end
+
+    def execute_request
+      open_server_rabbitmq
+      yield
+      close_server_rabbitmq
     end
   end
 end

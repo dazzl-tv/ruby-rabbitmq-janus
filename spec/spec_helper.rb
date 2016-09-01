@@ -2,6 +2,7 @@
 #
 require 'bundler/setup'
 require 'rrj'
+require 'request'
 require 'pry'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)

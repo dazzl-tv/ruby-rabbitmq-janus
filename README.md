@@ -53,6 +53,12 @@ destroy_response = transaction_template_response(destroy)
 => {"janus"=>"success", "session_id"=>7123088323743398, "transaction"=>"PKS63VJD8C"}
 ```
 
+The methods message_template_ask and message_template_response have an aliases :wink:
+```ruby
+message_template_ask => ask
+message_template_response => response
+```
+
 ## Development
 ### RSpec test
 

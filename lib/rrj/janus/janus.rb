@@ -9,15 +9,16 @@ module RRJ
     # Returns a new instance of Janus
     # @param connection [String] Connection to RabbitMQ server
     # @param logs [RRJ::Log] Instance to log
-    def initialize(connection, queues, logs)
+    def initialize(connection, options, logs)
       @channel = connection.create_channel
-      @queues = queues
+      @queues = options['queues']
+      @plugins = options['janus']['plugins']
       @logs = logs
     end
 
     # Send a message to RabbitMQ
     def send(request, opts)
-      message = MessageJanus.new(opts)
+      message = MessageJanus.new(@plugins, opts)
       @logs.info "Request template sending : #{request}"
       message.send(request, @channel, @queues['queue_to'])
     end

@@ -13,7 +13,7 @@
   "ipv6": "false",
   "ice-tcp": "false",
   "api_secret": "false",
-  "auth_token": "false",
+  "auth_token": false,
   "transports": {
     "janus.transport.rabbitmq": {
       "name": "JANUS RabbitMQ transport plugin",
@@ -45,13 +45,6 @@
     }
   },
   "plugins": {
-    "janus.plugin.dazzl.videocontrol": {
-      "name": "DAZZL Video Control Room plugin for Janus",
-      "author": "Laurent Cogné",
-      "description": "This is a plugin implementing a video control room for Janus, that is an audio/video router.",
-      "version_string": "0.0.1",
-      "version": 1
-    },
     "janus.plugin.textroom": {
       "name": "JANUS TextRoom plugin",
       "author": "Meetecho s.r.l.",

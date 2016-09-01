@@ -8,11 +8,10 @@ module RRJ
   # Message Janus sending to rabbitmq server
   class MessageJanus
     # Initialiaze a message posting to RabbitMQ
-    def initialize(opts)
-      @transaction = [*('A'..'Z'), *('0'..'9')].sample(10).join
+    def initialize(plugins, opts)
       @correlation = SecureRandom.uuid
-      @my_request = nil
       @opts = opts
+      @plugins = plugins
     end
 
     # Send a message to RabbitMQ server
@@ -31,15 +30,20 @@ module RRJ
     # Prepare a hash request and replace information necessary for janus
     def test_request_and_replace(json_file)
       @my_request = JSON.parse(File.read(json_file))
+      replaces
+      @my_request.to_json
+    end
+
+    def replaces
       replace_transaction
       replace_session
+      replace_plugin
       replace_handle
-      @my_request.to_json
     end
 
     # Replace a transaction field with an String format
     def replace_transaction
-      @my_request['transaction'] = @transaction
+      @my_request['transaction'] = [*('A'..'Z'), *('0'..'9')].sample(10).join
     end
 
     # Replace a session_id field with an Integer
@@ -50,6 +54,15 @@ module RRJ
     # Replace a handle field with an Integer
     def replace_handle
       @my_request['handle_id'] = 123_456_789 if @my_request['handle_id']
+    end
+
+    # Replace plugin used for transaction
+    def replace_plugin
+      my_plugin = @my_request['plugin']
+      if my_plugin
+        key_plugin = my_plugin.delete('<plugin[').delete(']').to_i
+        my_plugin['plugin'] = @plugins[key_plugin]
+      end
     end
 
     # Prepare an Hash with information necessary to read a response in RabbitMQ queue

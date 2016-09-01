@@ -2,8 +2,8 @@
 #
 require 'bundler/setup'
 require 'rrj'
-require 'request'
 require 'pry'
+require 'json-schema-rspec'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
@@ -20,4 +20,9 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
   config.include Aruba::Api
+  config.include JSON::SchemaMatchers
+
+  Dir[File.join('spec/support/schemas/', '*.json')].count do |file|
+    config.json_schemas[File.basename(file, '.json').to_sym] = file
+  end
 end

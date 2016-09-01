@@ -58,7 +58,7 @@ module RRJ
     # Execute request
     def execute_request
       open_server_rabbitmq
-      @janus = Janus.new(@connection, @settings.options['queues'], @logs)
+      @janus = Janus.new(@connection, @settings.options, @logs)
       yield
       close_server_rabbitmq
       @response

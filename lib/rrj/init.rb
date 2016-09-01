@@ -11,12 +11,12 @@ module RRJ
   #   @return [RRJ::Config] Object Config to gem
   class RRJ
     # Returns a new instance of RRJ
-    def initialize
+    def initialize(id_consumer = SecureRandom.uuid)
       @logs = Log.instance
 
       @settings = Config.new(@logs)
       @requests = Requests.new(@logs)
-      @rabbit = RabbitMQ.new(@settings, @requests.requests, @logs)
+      @rabbit = RabbitMQ.new(@settings, @requests.requests, @logs, id_consumer)
     end
 
     # Send a message, to RabbitMQ, with a template JSON

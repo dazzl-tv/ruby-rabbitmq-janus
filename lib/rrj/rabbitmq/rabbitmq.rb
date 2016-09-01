@@ -10,12 +10,13 @@ module RRJ
     # @param configuration [RRJ::Config] Configuration file to gem
     # @param requests [Hash] Request sending to RabbitMQ
     # @param logs [RRJ::Log] Log to gem
-    def initialize(configuration, requests, logs)
+    def initialize(configuration, requests, logs, id_consumer)
       @settings = configuration
       @logs = logs
       @requests = requests
       @connection = Bunny.new(read_options_server)
       @response = nil
+      @id_consumer = id_consumer
     end
 
     # Connect to server RabbitMQ and post a message in queue ('to-janus' by default)
@@ -60,7 +61,7 @@ module RRJ
     # Execute request
     def execute_request
       open_server_rabbitmq
-      @janus = Janus.new(@connection, @settings.options, @logs)
+      @janus = Janus.new(@connection, @settings.options, @logs, @id_consumer)
       yield
       close_server_rabbitmq
       @response

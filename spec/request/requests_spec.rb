@@ -7,8 +7,10 @@ describe 'RRJ::RRJ' do
     let(:transaction) { RRJ::RRJ.new }
 
     let(:request_info) { transaction.ask }
+    let(:response_info) { transaction.ask(request_info) }
     it 'send a request info' do
-      expect(request_info.class).to eq Hash
+      # expect(request_info).to eq Hash
+      JSON::Validator.validate(File.read('support/schemas/info.json'), response_info)
     end
 
     let(:response_info) { transaction.response(request_info) }

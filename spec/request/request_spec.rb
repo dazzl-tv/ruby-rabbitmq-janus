@@ -16,11 +16,11 @@ describe 'RRJ::RRJ' do
   let(:attach_response) { transaction.response(attach_request) }
 
   # Request type detach
-  let(:detach_request) { transaction.ask('detach', create_response) }
+  let(:detach_request) { transaction.ask('detach', attach_response) }
   let(:detach_response) { transaction.response(detach_request) }
 
   # Request type destroy
-  let(:destroy_request) { transaction.ask('destroy', create_response) }
+  let(:destroy_request) { transaction.ask('destroy', detach_response) }
   let(:destroy_response) { transaction.response(destroy_request) }
 
   describe '.response' do

@@ -20,7 +20,7 @@ module RRJ
       the_queue.subscribe(option_sub) do |info, prop, pay|
         listen(info, prop, pay)
       end
-      JSON.parse(@response)
+      return_response_json
     end
 
     private
@@ -31,6 +31,20 @@ module RRJ
         @response = payload
         @connection.close
       end
+    end
+
+    def return_response_json
+      @response = JSON.parse(@response)
+      case @opts['janus']
+      when 'create'
+        @response.merge('session_id' => resp)
+      when 'attach'
+        @response.merge('handle_id' => resp)
+      end
+    end
+
+    def resp
+      @response['data']['id']
     end
   end
 end

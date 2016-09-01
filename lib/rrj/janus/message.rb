@@ -36,9 +36,11 @@ module RRJ
 
     def replaces
       replace_transaction
-      replace_session
-      replace_plugin
-      replace_handle
+      if @opts
+        replace_element('session_id')
+        replace_plugin
+        replace_element('handle_id')
+      end
     end
 
     # Replace a transaction field with an String format
@@ -47,27 +49,31 @@ module RRJ
     end
 
     # Replace a session_id field with an Integer
-    def replace_session
-      @my_request['session_id'] = @opts['data']['id'] if @my_request['session_id']
-    end
-
-    # Replace a handle field with an Integer
-    def replace_handle
-      @my_request['handle_id'] = 123_456_789 if @my_request['handle_id']
+    def replace_element(value)
+      add_return(value, value_data_or_precise(value)) if @my_request[value]
     end
 
     # Replace plugin used for transaction
     def replace_plugin
       my_plugin = @my_request['plugin']
       if my_plugin
-        key_plugin = my_plugin.delete('<plugin[').delete(']').to_i
-        my_plugin['plugin'] = @plugins[key_plugin]
+        my_plugin = @plugins[my_plugin.delete('<plugin[').delete(']').to_i]
+        add_return('plugin', my_plugin)
       end
     end
 
     # Prepare an Hash with information necessary to read a response in RabbitMQ queue
     def return_info_message
       @my_request.merge('correlation' => @correlation)
+    end
+
+    def add_return(key, value)
+      @my_request[key] = value
+      @my_request.merge(key => value)
+    end
+
+    def value_data_or_precise(key)
+      @opts[key] || @opts['data']['id']
     end
   end
 end

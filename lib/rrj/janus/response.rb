@@ -16,7 +16,7 @@ module RRJ
     # Read a response to janus (in RabbitMQ queue)
     # @return [Hash] resultat to request
     def read(queue_from)
-      option_sub = { block: true, manual_ack: true }
+      option_sub = { block: true, manual_ack: false, exclusive: false }
       the_queue = @channel.queue(queue_from, auto_delete: false)
       the_queue.subscribe(option_sub) do |info, prop, pay|
         listen(info, prop, pay)

@@ -17,7 +17,7 @@ module RRJ
     # @return [Hash] resultat to request
     def read(queue_from)
       option_sub = { block: true, manual_ack: false, exclusive: false }
-      the_queue = @channel.queue(queue_from, auto_delete: false)
+      the_queue = @channel.queue(queue_from)
       the_queue.subscribe(option_sub) do |info, prop, pay|
         listen(info, prop, pay)
       end
@@ -27,10 +27,9 @@ module RRJ
     private
 
     # Listen a response to queue
-    def listen(delivery_info, properties, payload)
+    def listen(_delivery_info, properties, payload)
       if @opts['correlation'] == properties[:correlation_id]
         @response = payload
-        @channel.acknowledge(delivery_info.delivery_tag, false)
         @connection.close
       end
     end

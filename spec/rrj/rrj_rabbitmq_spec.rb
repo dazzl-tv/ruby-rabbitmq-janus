@@ -7,7 +7,7 @@ describe 'RRJ::RabitMQ' do
     @log = RRJ::Log.instance
     @config = RRJ::Config.new(@log)
     @request = RRJ::Requests.new(@log)
-    @rabbit = RRJ::RabbitMQ.new(@config, @request.requests, @log, SecureRandom.uuid)
+    @rabbit = RRJ::RabbitMQ.new(@config, @request.requests, @log)
   end
 
   it 'Connection to RabbitMQ Server' do

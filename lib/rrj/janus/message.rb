@@ -8,10 +8,11 @@ module RRJ
   # Message Janus sending to rabbitmq server
   class MessageJanus
     # Initialiaze a message posting to RabbitMQ
-    def initialize(plugins, opts)
+    def initialize(plugins, logs, opts)
       @correlation = SecureRandom.uuid
       @opts = opts
       @plugins = plugins
+      @logs = logs
     end
 
     # Send a message to RabbitMQ server
@@ -65,6 +66,8 @@ module RRJ
     # Prepare an Hash with information necessary to read a response in RabbitMQ queue
     def return_info_message
       @my_request.merge('correlation' => @correlation)
+      @logs.debug @my_request
+      @my_request
     end
 
     def add_return(key, value)

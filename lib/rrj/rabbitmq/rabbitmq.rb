@@ -29,8 +29,6 @@ module RRJ
     def ask_response(info_request)
       execute_request do
         @response = @janus.read(info_request, @connection)
-        # @logs.debug "Request sending ::::: #{info_request}"
-        # @logs.debug "Request sending ::::: #{@response}"
       end
     end
 

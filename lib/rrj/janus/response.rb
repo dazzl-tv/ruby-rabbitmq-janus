@@ -6,10 +6,11 @@ module RRJ
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Response Janus received to RabbitMQ server
   class ResponseJanus
-    def initialize(channel, connection, opts = {})
+    def initialize(channel, connection, logs, opts = {})
       @channel = channel
       @connection = connection
       @opts = opts
+      @logs = logs
     end
 
     # Read a response to janus (in RabbitMQ queue)
@@ -42,6 +43,8 @@ module RRJ
       when 'attach'
         @response.merge('handle_id' => resp)
       end
+      @logs.debug @response
+      @response
     end
 
     def resp

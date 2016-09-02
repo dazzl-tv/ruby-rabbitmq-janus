@@ -31,9 +31,11 @@ module RRJ
       response.read(@queues['queue_from'])
     end
 
+    private
+
     def create_consumer(id_consumer)
-      options = { channel: @channel, queue: @queues['to-janus'] }
-      @consumer = Consumer.new(@logs, id_consumer, options)
+      options = { channel: @channel, queue: @queues['queue_to'] }
+      @consumer = Consumer.new(id_consumer, options)
     end
   end
 end

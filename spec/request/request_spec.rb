@@ -25,23 +25,38 @@ describe 'RRJ::RRJ' do
 
   describe '.response' do
     it_behaves_like 'request simple', :info do
+      let(:request) { info_request }
       let(:response) { info_response }
     end
 
     it_behaves_like 'request simple', :create do
+      let(:request) { create_request }
       let(:response) { create_response }
     end
 
     it_behaves_like 'request simple', :attach do
+      let(:request) { attach_request }
       let(:response) { attach_response }
     end
 
     it_behaves_like 'request simple', :detach do
+      let(:request) { detach_request }
       let(:response) { detach_response }
     end
 
     it_behaves_like 'request simple', :destroy do
+      let(:request) { destroy_request }
       let(:response) { destroy_response }
+    end
+
+    # Delete session after request executed
+    after :example do
+      let(:destroy_request) { transaction.ask('destroy', request) }
+      let(:destroy_response) { transaction.response(destroy_request) }
+
+      it_behaves_like 'request simple', :destroy do
+        let(:response) { destroy_response }
+      end
     end
   end
 end

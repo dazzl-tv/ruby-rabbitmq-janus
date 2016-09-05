@@ -1,0 +1,10 @@
+{
+  "janus": "message",
+  "session_id": "<number>",
+  "handle_id": "<number>",
+  "transaction": "<string>",
+  "body": {
+    "request": "exists",
+    "channel": "<string>"
+  }
+}

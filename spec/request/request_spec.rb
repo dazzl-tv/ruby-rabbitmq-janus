@@ -48,15 +48,5 @@ describe 'RRJ::RRJ' do
       let(:request) { destroy_request }
       let(:response) { destroy_response }
     end
-
-    # Delete session after request executed
-    after :example do
-      let(:destroy_request) { transaction.ask('destroy', request) }
-      let(:destroy_response) { transaction.response(destroy_request) }
-
-      it_behaves_like 'request simple', :destroy do
-        let(:response) { destroy_response }
-      end
-    end
   end
 end

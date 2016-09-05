@@ -22,6 +22,7 @@ module RRJ
     def ask_request(request_type, opts)
       execute_request do
         @response = @janus.send(@requests[request_type.to_s], opts)
+        close_server_rabbitmq
       end
     end
 
@@ -60,7 +61,6 @@ module RRJ
       open_server_rabbitmq
       @janus = Janus.new(@connection, @settings.options, @logs)
       yield
-      close_server_rabbitmq
       @response
     end
   end

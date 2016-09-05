@@ -65,14 +65,14 @@ module RRJ
 
     # Prepare an Hash with information necessary to read a response in RabbitMQ queue
     def return_info_message
-      @my_request.merge('correlation' => @correlation)
+      @my_request['correlation'] = @correlation
       @logs.debug @my_request
       @my_request
     end
 
     def add_return(key, value)
       @my_request[key] = value
-      @my_request.merge(key => value)
+      @my_request.merge!(key => value)
     end
 
     def value_data_or_precise(key)

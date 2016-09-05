@@ -38,9 +38,9 @@ module RRJ
       @response = JSON.parse(@response)
       case @opts['janus']
       when 'create'
-        @response.merge('session_id' => resp)
+        merge('session_id')
       when 'attach'
-        @response.merge('handle_id' => resp)
+        merge('handle_id')
       end
       @logs.debug @response
       @response
@@ -48,6 +48,10 @@ module RRJ
 
     def resp
       @response['data']['id']
+    end
+
+    def merge(key)
+      @responser[key] = resp
     end
   end
 end

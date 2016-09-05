@@ -23,3 +23,9 @@ janus:
   # Create an array to plugin
   plugins:
     - janus.plugin.echotest
+
+# Options gem
+gem:
+  # Option for logging
+  log:
+    level: 'debug'

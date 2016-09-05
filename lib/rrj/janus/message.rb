@@ -39,7 +39,7 @@ module RRJ
       if @opts
         replace_element('session_id')
         replace_plugin
-        replace_element('handle_id')
+        replace_element(@opts['handle_id'] ? 'handle_id' : 'sender', 'handle_id')
       end
     end
 
@@ -49,8 +49,9 @@ module RRJ
     end
 
     # Replace a session_id field with an Integer
-    def replace_element(value)
-      add_return(value, value_data_or_precise(value)) if @my_request[value]
+    def replace_element(value, value_replace = value)
+      add_return(value_replace, value_data_or_precise(value)) \
+        if @my_request[value_replace]
     end
 
     # Replace plugin used for transaction

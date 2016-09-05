@@ -25,6 +25,7 @@ module RRJ
       @logs = logs
       @options = load_configuration(File.join(DEFAULT_PATH, DEFAULT_CONF))
       override_configuration(File.join(Dir.pwd, CUSTOMIZE_CONF))
+      precise_log_level
     end
 
     private
@@ -42,6 +43,10 @@ module RRJ
     # @param file [String] Path to configuration file (with name)
     def override_configuration(file)
       @options = load_configuration(file) if File.exist?(file)
+    end
+
+    def precise_log_level
+      @logs.level = @options['gem']['log']['level']
     end
   end
 end

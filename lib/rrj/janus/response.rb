@@ -51,7 +51,7 @@ module RRJ
     end
 
     def merge(key)
-      @responser[key] = resp
+      @response[key] = resp
     end
   end
 end

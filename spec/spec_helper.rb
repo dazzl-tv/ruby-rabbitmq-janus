@@ -25,4 +25,8 @@ RSpec.configure do |config|
   Dir[File.join('spec/support/schemas/', '*.json')].count do |file|
     config.json_schemas[File.basename(file, '.json').to_sym] = file
   end
+
+  Dir[File.join('spec/support/schemas/channel/', '*.json')].count do |file|
+    config.json_schemas["channel_#{File.basename(file, '.json')}".to_sym] = file
+  end
 end

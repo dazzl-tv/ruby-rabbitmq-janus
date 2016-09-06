@@ -11,9 +11,12 @@ describe 'RRJ::RRJ' do
   let(:destroy_request) { transaction.ask('destroy', create_response) }
   let(:destroy_response) { transaction.response(destroy_request) }
 
-  describe '.response' do
+  describe '.response', type: :create do
     it_behaves_like 'request simple', :create do
-      let(:request) { destroy_request }
+      let(:response) { create_response }
+    end
+
+    it_behaves_like 'request simple', :destroy do
       let(:response) { destroy_response }
     end
   end

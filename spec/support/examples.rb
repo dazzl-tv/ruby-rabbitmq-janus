@@ -10,9 +10,9 @@ end
 # bundle exec rspec --tag type:info
 shared_examples 'request simple' do |type|
   let(:transaction) { RRJ::RRJ.new }
-  let(:option_control) { { strict: true, validate_schema: true } }
+  let(:option_control) { {} }
 
   it "type #{type}" do
-    expect(response).to match_json_schema(type)
+    expect(response).to match_json_schema(type, option_control)
   end
 end

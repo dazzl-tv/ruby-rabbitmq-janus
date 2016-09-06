@@ -1,6 +1,5 @@
 {
   "type": "object",
-  "required": ["a"],
   "properties": {
     "janus": { "type": "string", "pattern": "success" },
     "session_id": { "type": "integer" },

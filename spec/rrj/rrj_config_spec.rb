@@ -8,10 +8,4 @@ describe 'RRJ::Config', type: :config do
 
     it_behaves_like 'file is found'
   end
-
-  context 'when customize configuration' do
-    let(:file) { "../../#{RRJ::Config::CUSTOMIZE_CONF}" }
-
-    it_behaves_like 'file is found'
-  end
 end

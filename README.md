@@ -1,5 +1,5 @@
 # ruby-rabbitmq-janus
-Ruby Gem for Dazzl Backend/Janus integration using RabbitMQ message queue.
+Ruby Gem for Janus WebRTC Gateway integration using RabbitMQ message queue
 
 This gem is used to communicate to a server Janus through RabbitMQ software (
 Message-oriented middleware). It waiting a messages to Rails API who send to RabbitMQ
@@ -21,7 +21,7 @@ in a queue for gem. Once the received message is decoded and returned through th
 
 Use bitbucket for installing gem in your Gemfile
 ```ruby
-gem 'rrj', :git => 'git@bitbucket.org:dazzl-tv/ruby-rabbitmq-janus.git'
+gem 'ruby-rabbitmq-janus', '~> 0.1.0'
 ```
 
 ### Configuration
@@ -65,6 +65,9 @@ message_template_response => response
 ```linux
 bundle exec rspec
 ```
+
+TIPS: for rspec install janus and rabbitmq server configured by default for user
+ rabbitmq and use plugin echotest for janus server.
 
 ### Documentation
 

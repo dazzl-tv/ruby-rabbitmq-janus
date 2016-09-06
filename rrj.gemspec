@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rrj/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rrj'
+  spec.name          = 'ruby-rabbitmq-janus'
   spec.version       = RRJ::VERSION
   spec.authors       = ['VAILLANT Jeremy']
   spec.email         = ['jeremy.vaillant@dazzl.tv']

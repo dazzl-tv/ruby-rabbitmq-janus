@@ -66,8 +66,8 @@ message_template_response => response
 bundle exec rspec
 ```
 
-TIPS: for rspec install janus server configured by default for user rabbitmq and use
- plugin echotest.
+TIPS: for rspec install janus and rabbitmq server configured by default for user
+ rabbitmq and use plugin echotest for janus server.
 
 ### Documentation
 

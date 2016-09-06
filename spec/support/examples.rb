@@ -12,7 +12,7 @@ shared_examples 'request simple' do |type|
   let(:transaction) { RRJ::RRJ.new }
   let(:option_control) { { strict: true, validate_schema: true } }
 
-  it "type #{type}", type: type do
-    expect(response).to match_json_schema(type, option_control)
+  it "type #{type}" do
+    expect(response).to match_json_schema(type)
   end
 end

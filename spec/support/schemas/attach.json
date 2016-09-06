@@ -1,3 +1,20 @@
 {
-
+  "type": "object",
+  "required": ["a"],
+  "properties": {
+    "janus": { "type": "string", "pattern": "success" },
+    "session_id": { "type": "integer" },
+    "transaction": { "type":  "string" },
+    "data": {
+      "id": { "type": "integer" }
+    },
+    "handle_id": { "type": "integer" }
+  },
+  "required": [
+    "janus",
+    "session_id",
+    "transaction",
+    "data",
+    "handle_id"
+  ]
 }

@@ -1,0 +1,18 @@
+server:
+  host: localhost
+  port: 5672
+  vhost: /
+  user: dazzl_admin
+  password: koMpmVU8
+
+queues:
+  queue_from: from-janus
+  queue_to: to-janus
+
+janus:
+  plugins:
+    - janus.plugin.dazzl.videocontrol
+
+gem:
+  log:
+    level: 'debug'

@@ -3,13 +3,15 @@
 require 'spec_helper'
 
 describe 'RRJ::RRJ' do
-  # Request type info
-  let(:info_request) { transaction.ask }
-  let(:info_response) { transaction.response(info_request) }
-
   describe '.response', type: :info do
-    it_behaves_like 'request simple', :info do
-      let(:response) { info_response }
+    let(:transaction) { RRJ::RRJ.new }
+
+    # Request type info
+    let(:info_request) { transaction.ask }
+    let(:info_response) { transaction.response(info_request) }
+
+    it 'type info' do
+      expect(info_response).to match_json_schema(:info)
     end
   end
 end

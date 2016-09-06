@@ -23,7 +23,9 @@ RSpec.configure do |config|
   config.include JSON::SchemaMatchers
 
   Dir[File.join('spec/support/schemas/', '*.json')].count do |file|
-    config.json_schemas[File.basename(file, '.json').to_sym] = file
+    json_file = JSON.parse(File.read(file))
+    json_name = File.basename(file, '.json').to_sym
+    config.json_schemas[json_name] = json_file
   end
 
   Dir[File.join('spec/support/schemas/channel/', '*.json')].count do |file|

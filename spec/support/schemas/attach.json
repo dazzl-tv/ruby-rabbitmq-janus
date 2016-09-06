@@ -5,6 +5,7 @@
     "session_id": { "type": "integer" },
     "transaction": { "type":  "string" },
     "data": {
+      "type": "Hash",
       "id": { "type": "integer" }
     },
     "handle_id": { "type": "integer" }

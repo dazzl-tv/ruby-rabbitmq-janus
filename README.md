@@ -21,7 +21,7 @@ in a queue for gem. Once the received message is decoded and returned through th
 
 Use bitbucket for installing gem in your Gemfile
 ```ruby
-gem 'rrj', :git => 'git@bitbucket.org:dazzl-tv/ruby-rabbitmq-janus.git'
+gem 'ruby-rabbitmq-janus', '~> 0.1.0'
 ```
 
 ### Configuration

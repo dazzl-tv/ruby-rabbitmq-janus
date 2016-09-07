@@ -2,16 +2,16 @@
 
 require 'spec_helper'
 
-describe 'RRJ::RRJ' do
+describe 'RubyRabbitmqJanus::RRJ' do
   it 'Has a version number' do
-    expect(RRJ::VERSION).not_to be nil
+    expect(RubyRabbitmqJanus::VERSION).not_to be nil
   end
 
   it 'Has a description' do
-    expect(RRJ::DESCRIPTION).not_to be nil
+    expect(RubyRabbitmqJanus::DESCRIPTION).not_to be nil
   end
 
   it 'Has a summary description' do
-    expect(RRJ::SUMMARY).not_to be nil
+    expect(RubyRabbitmqJanus::SUMMARY).not_to be nil
   end
 end

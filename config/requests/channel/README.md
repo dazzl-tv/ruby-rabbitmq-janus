@@ -2,7 +2,7 @@
 
 How to use gem for channels
 
-For each example initialize a gem with command : `t = RRJ::RRJ.new`
+For each example initialize a gem with command : `t = RubyRabbitmqJanus::RRJ.new`
 
 ## List channels
 

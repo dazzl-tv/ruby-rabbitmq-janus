@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 # Define constant to gem.
-module RRJ
+module RubyRabbitmqJanus
   # Define version to gem
   VERSION = '0.1.0'
 

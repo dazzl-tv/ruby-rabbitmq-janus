@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Load files json in config/request.
   # This file is used for sending a request to RabbitMQ
   # @!attribute [r] requests
-  #   @return [RRJ::Request] Array to request
+  #   @return [RubyRabbitmqJanus::Request] Array to request
   class Requests
     attr_reader :requests
 

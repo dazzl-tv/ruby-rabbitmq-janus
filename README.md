@@ -22,7 +22,7 @@ in a queue for gem. Once the received message is decoded and returned through th
 
 Use bitbucket for installing gem in your Gemfile
 ```ruby
-gem 'ruby-rabbitmq-janus', '~> 0.1.0'
+gem 'ruby_rabbitmq_janus'
 ```
 
 ### Configuration

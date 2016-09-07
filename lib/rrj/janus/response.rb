@@ -2,7 +2,7 @@
 
 require 'json'
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Response Janus received to RabbitMQ server
   class ResponseJanus
@@ -11,6 +11,7 @@ module RRJ
       @connection = connection
       @opts = opts
       @logs = logs
+      @response = nil
     end
 
     # Read a response to janus (in RabbitMQ queue)

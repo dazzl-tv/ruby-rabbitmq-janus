@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe 'RRJ::RRJ' do
+describe 'RubyRabbitmqJanus::RRJ' do
   describe '.response', type: :info do
-    let(:transaction) { RRJ::RRJ.new }
+    let(:transaction) { RubyRabbitmqJanus::RRJ.new }
 
     # Request type info
     let(:info_request) { transaction.ask }

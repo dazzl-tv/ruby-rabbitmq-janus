@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe 'RRJ::Config', type: :config do
+describe 'RubyRabbitmqJanus::Config', type: :config do
   context 'when default configuration' do
-    let(:file) { "../../#{RRJ::Config::DEFAULT_CONF}" }
+    let(:file) { "../../#{RubyRabbitmqJanus::Config::DEFAULT_CONF}" }
 
     it_behaves_like 'file is found'
   end

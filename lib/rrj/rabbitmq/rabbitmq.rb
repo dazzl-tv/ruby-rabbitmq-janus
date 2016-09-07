@@ -2,7 +2,7 @@
 
 require 'bunny'
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for connection with RabbitMQ Server
   class RabbitMQ
@@ -16,6 +16,7 @@ module RRJ
       @requests = requests
       @connection = Bunny.new(read_options_server)
       @response = nil
+      @janus = nil
     end
 
     # Connect to server RabbitMQ and post a message in queue ('to-janus' by default)

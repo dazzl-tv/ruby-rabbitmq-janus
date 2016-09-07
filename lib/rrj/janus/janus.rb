@@ -2,7 +2,7 @@
 
 require 'json'
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Communication to RabbitMQ with format for Janus message
   class Janus

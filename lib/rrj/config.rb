@@ -2,11 +2,11 @@
 
 require 'yaml'
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Loading a yaml file for apply a configuration to gem.
   # @!attribute [r] options
-  #   @return  [RRJ::Config] Options to gem.
+  #   @return  [RubyRabbitmqJanus::Config] Options to gem.
   class Config
     attr_reader :options
 
@@ -20,7 +20,7 @@ module RRJ
     CUSTOMIZE_CONF = 'config/ruby-rabbitmq-janus.yml'
 
     # Initialize configuration file default or customize if exist
-    # @param logs [RRJ::Log] Load RRJ::Log to gem
+    # @param logs [RubyRabbitmqJanus::Log] Load RubyRabbitmqJanus::Log to gem
     def initialize(logs)
       @logs = logs
       @options = load_configuration(File.join(DEFAULT_PATH, DEFAULT_CONF))

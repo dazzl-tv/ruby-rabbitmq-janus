@@ -2,7 +2,7 @@
 
 require 'logging'
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for wrtting logs. Define level used (:warn, :info, :debug).
   class Log

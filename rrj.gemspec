@@ -3,13 +3,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rrj/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'ruby-rabbitmq-janus'
-  spec.version       = RRJ::VERSION
+  spec.name          = 'ruby_rabbitmq_janus'
+  spec.version       = RubyRabbitmqJanus::VERSION
   spec.authors       = ['VAILLANT Jeremy']
   spec.email         = ['jeremy.vaillant@dazzl.tv']
 
-  spec.summary       = RRJ::SUMMARY
-  spec.description   = RRJ::DESCRIPTION
+  spec.summary       = RubyRabbitmqJanus::SUMMARY
+  spec.description   = RubyRabbitmqJanus::DESCRIPTION
 
   spec.homepage      = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'
   spec.license       = 'MIT'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Define errors to gems
   class Error

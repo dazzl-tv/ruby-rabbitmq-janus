@@ -34,7 +34,7 @@ If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/
 Exemple usage :
 ```ruby
 # Initialize gem
-transaction = RRJ::RRJ.new
+transaction = RubyRabbitmqJanus::RRJ.new
 
 # Send a message type 'create'
 create = transaction.message_template_ask('create')

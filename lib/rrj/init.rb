@@ -1,22 +1,23 @@
 # frozen_string_literal: true
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem
   # @!attribute [r] rabbit
-  #   @return [RRJ::RabbitMQ] Object RabbitMQ for connection to RabbitMQ server
+  #   @return [RubyRabbitmqJanus::RabbitMQ] Object RabbitMQ for connection to RabbitMQ
+  #   server
   # @!attribute [r] logs
-  #   @return [RRJ::Log] Object Log for manipulate logs
+  #   @return [RubyRabbitmqJanus::Log] Object Log for manipulate logs
   # @!attribute [r] settings
-  #   @return [RRJ::Config] Object Config to gem
+  #   @return [RubyRabbitmqJanus::Config] Object Config to gem
   class RRJ
-    # Returns a new instance of RRJ
+    # Returns a new instance of RubyRabbitmqJanus
     def initialize
       @logs = Log.instance
 
-      @settings = Config.new(@logs)
-      @requests = Requests.new(@logs)
-      @rabbit = RabbitMQ.new(@settings, @requests.requests, @logs)
+      @settings = RubyRabbitmqJanus::Config.new(@logs)
+      @requests = RubyRabbitmqJanus::Requests.new(@logs)
+      @rabbit = RubyRabbitmqJanus::RabbitMQ.new(@settings, @requests.requests, @logs)
     end
 
     # Send a message, to RabbitMQ, with a template JSON

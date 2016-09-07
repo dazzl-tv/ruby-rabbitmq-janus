@@ -3,7 +3,7 @@
 require 'json'
 require 'securerandom'
 
-module RRJ
+module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server
   class MessageJanus
@@ -13,6 +13,8 @@ module RRJ
       @opts = opts
       @plugins = plugins
       @logs = logs
+      @my_request = nil
+      @message = nil
     end
 
     # Send a message to RabbitMQ server

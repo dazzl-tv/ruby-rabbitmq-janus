@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe 'RRJ::RRJ' do
+describe 'RubyRabbitmqJanus::RRJ' do
   describe '.response', type: :channel_list do
-    let(:transaction) { RRJ::RRJ.new }
+    let(:transaction) { RubyRabbitmqJanus::RRJ.new }
 
     # Request type create
     let(:create_request) { transaction.ask('create') }

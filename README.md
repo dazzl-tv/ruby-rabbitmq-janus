@@ -54,6 +54,10 @@ destroy_response = transaction_template_response(destroy)
 ```
 
 The methods message_template_ask and message_template_response have an aliases :wink:
+```ruby
+message_template_ask => ask
+message_template_response => response
+```
 
 Example usage with a complex request :
 ```ruby
@@ -63,13 +67,8 @@ transaction = RubyRabbitmqJanus::RRJ.new
 # Send a request type
 transaction.transaction_plugin do |session_running|
   test = transaction.ask('test', session_running)
-  session = transaction.response(test)
+  session = transaction.response(session_running)
 end
-```
-
-```ruby
-message_template_ask => ask
-message_template_response => response
 ```
 
 ## Development

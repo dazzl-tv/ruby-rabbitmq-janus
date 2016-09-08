@@ -3,14 +3,11 @@
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem
-  # @!attribute [r] rabbit
-  #   @return [RubyRabbitmqJanus::RabbitMQ] Object RabbitMQ for connection to RabbitMQ
-  #   server
-  # @!attribute [r] logs
-  #   @return [RubyRabbitmqJanus::Log] Object Log for manipulate logs
-  # @!attribute [r] settings
-  #   @return [RubyRabbitmqJanus::Config] Object Config to gem
+  # @!attribute [r] session
+  #   @return [Hash] Response to request sending in transaction
   class RRJ
+    attr_reader :session
+
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
       @logs = Log.instance
@@ -18,6 +15,8 @@ module RubyRabbitmqJanus
       @settings = RubyRabbitmqJanus::Config.new(@logs)
       @requests = RubyRabbitmqJanus::Requests.new(@logs)
       @rabbit = RubyRabbitmqJanus::RabbitMQ.new(@settings, @requests.requests, @logs)
+
+      @session = nil
     end
 
     # Send a message, to RabbitMQ, with a template JSON
@@ -39,6 +38,18 @@ module RubyRabbitmqJanus
     # @option info_request [Hash] :data The option data to request
     def message_template_response(info_request)
       @rabbit.ask_response(info_request)
+    end
+
+    # Manage a transaction with an plugin in janus
+    # Is create an session and attach with a plugin configured in file conf to gem, then
+    # when a treatment is complet is destroy a session
+    # @yieldparam session_attach [Hash] Use a session created
+    # @yieldreturn [Hash] Contains a result to transaction with janus server
+    def transaction_plugin
+      session_attach = response(ask('attach', response(ask('create'))))
+      @session = yield(session_attach)
+      response(ask('destroy', response(ask('detach', @session))))
+      @session
     end
 
     alias ask message_template_ask

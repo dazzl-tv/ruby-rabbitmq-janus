@@ -8,6 +8,9 @@ module RubyRabbitmqJanus
   # Message Janus sending to rabbitmq server
   class MessageJanus
     # Initialiaze a message posting to RabbitMQ
+    # @param plugins [String] Name of plugin used by transaction
+    # @param logs [RubyRabbitmqJanus::Log] Instance log
+    # @param opts [Hash] Contains information to request sending
     def initialize(plugins, logs, opts)
       @correlation = SecureRandom.uuid
       @opts = opts
@@ -18,6 +21,10 @@ module RubyRabbitmqJanus
     end
 
     # Send a message to RabbitMQ server
+    # @param json [String] Name of request used
+    # @param channel [Bunny::Channel] Channel used in transaction
+    # @param queue_to [String] Name of queue used for sending request in RabbitMQ
+    # @return [Hash] Result to request executed
     def send(json, channel, queue_to)
       @message = channel.default_exchange
       @message.publish(test_request_and_replace(json),
@@ -36,6 +43,7 @@ module RubyRabbitmqJanus
       @my_request.to_json
     end
 
+    # Replace element in json request with information used byt transaction
     def replaces
       replace_transaction
       if @opts
@@ -72,11 +80,13 @@ module RubyRabbitmqJanus
       @my_request
     end
 
+    # Format the json used for request sending
     def add_return(key, value)
       @my_request[key] = value
       @my_request.merge!(key => value)
     end
 
+    # Format the response return
     def value_data_or_precise(key)
       @opts[key] || @opts['data']['id']
     end

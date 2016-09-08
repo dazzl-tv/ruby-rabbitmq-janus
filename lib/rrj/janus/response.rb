@@ -6,6 +6,7 @@ module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Response Janus received to RabbitMQ server
   class ResponseJanus
+    # Initialiaze a response reading in RabbitMQ queue
     def initialize(channel, connection, logs, opts = {})
       @channel = channel
       @connection = connection
@@ -35,6 +36,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # Format the response returning
     def return_response_json
       @response = JSON.parse(@response)
       case @opts['janus']
@@ -47,12 +49,9 @@ module RubyRabbitmqJanus
       @response
     end
 
-    def resp
-      @response['data']['id']
-    end
-
+    # Update value to element in Hash
     def merge(key)
-      @response[key] = resp
+      @response[key] = @response['data']['id']
     end
   end
 end

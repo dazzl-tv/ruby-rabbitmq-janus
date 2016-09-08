@@ -30,7 +30,7 @@ If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/
 
 ### Usage
 
-Exemple usage :
+Exemple usage simple :
 ```ruby
 # Initialize gem
 transaction = RubyRabbitmqJanus::RRJ.new
@@ -57,6 +57,18 @@ The methods message_template_ask and message_template_response have an aliases :
 ```ruby
 message_template_ask => ask
 message_template_response => response
+```
+
+Example usage with a complex request :
+```ruby
+# Initialize gem
+transaction = RubyRabbitmqJanus::RRJ.new
+
+# Send a request type
+transaction.transaction_plugin do |session_running|
+  test = transaction.ask('test', session_running)
+  session = transaction.response(session_running)
+end
 ```
 
 ## Development

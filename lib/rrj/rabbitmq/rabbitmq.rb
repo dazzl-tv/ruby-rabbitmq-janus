@@ -50,11 +50,17 @@ module RubyRabbitmqJanus
 
     # Use configuration information to connect RabbitMQ
     def read_options_server
-      hash = {}
+      option_hash = {}
       @settings.options.fetch('server').each do |key, server|
-        hash.merge!(key.to_sym => server.to_s)
+        option_hash.merge!(key.to_sym => server.to_s)
       end
-      hash
+      define_log_leve(opt_hash)
+    end
+
+    def define_log_level(option_hash)
+      option_hash[:log_level] = @logs.level
+      @logs.debug "Option used for connection with RabbitMQ #{option_hash}"
+      option_hash
     end
 
     # Execute request

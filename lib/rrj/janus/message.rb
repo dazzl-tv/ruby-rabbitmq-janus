@@ -26,7 +26,7 @@ module RubyRabbitmqJanus
     # @return [Hash] Result to request executed
     def send(json, channel, queue_to)
       @message = channel.default_exchange
-      @my_request = RubyRabbitmqJanus::Replace(json, @logs, @opts)
+      @my_request = RubyRabbitmqJanus::Replace.new(json, @logs, @opts)
       @message.publish(@my_request.to_json,
                        reply_to: 'test',
                        routing_key: queue_to,

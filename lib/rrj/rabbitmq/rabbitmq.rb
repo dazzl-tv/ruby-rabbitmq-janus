@@ -54,7 +54,7 @@ module RubyRabbitmqJanus
       @settings.options.fetch('server').each do |key, server|
         option_hash.merge!(key.to_sym => server.to_s)
       end
-      define_log_leve(opt_hash)
+      define_log_level(option_hash)
     end
 
     def define_log_level(option_hash)

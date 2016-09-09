@@ -4,7 +4,11 @@ require 'rrj/version'
 require 'rrj/init'
 require 'rrj/log'
 require 'rrj/config'
-require 'rrj/requests'
+
+require 'rrj/request/requests'
+require 'rrj/request/type_data'
+require 'rrj/request/replaces'
+require 'rrj/request/path'
 
 require 'rrj/rabbitmq/rabbitmq'
 

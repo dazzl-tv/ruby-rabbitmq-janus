@@ -48,6 +48,7 @@ module RubyRabbitmqJanus
     def transaction_plugin
       session_attach = response(ask('attach', response(ask('create'))))
       @session = yield(session_attach)
+      @logs.debug "Session running : #{session_attach}"
       response(ask('destroy', response(ask('detach', @session))))
       @session
     end

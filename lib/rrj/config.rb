@@ -5,8 +5,6 @@ require 'yaml'
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Loading a yaml file for apply a configuration to gem.
-  # @!attribute [r] options
-  #   @return  [RubyRabbitmqJanus::Config] Options to gem.
   class Config
     include Singleton
 

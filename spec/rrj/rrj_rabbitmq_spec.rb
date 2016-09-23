@@ -4,10 +4,10 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RabitMQ' do
   before(:context) do
-    @log = RubyRabbitmqJanus::Log.instance
-    @config = RubyRabbitmqJanus::Config.new(@log)
-    @request = RubyRabbitmqJanus::Requests.new(@log)
-    @rabbit = RubyRabbitmqJanus::RabbitMQ.new(@config, @request.requests, @log)
+    RubyRabbitmqJanus::Log.instance
+    RubyRabbitmqJanus::Config.instance
+    RubyRabbitmqJanus::Requests.instance
+    @rabbit = RubyRabbitmqJanus::RabbitMQ.new
   end
 
   it 'Connection to RabbitMQ Server' do

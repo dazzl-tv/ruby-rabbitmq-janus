@@ -7,20 +7,20 @@ module RubyRabbitmqJanus
   # Response Janus received to RabbitMQ server
   class ResponseJanus
     # Initialiaze a response reading in RabbitMQ queue
-    def initialize(channel, connection, logs, opts = {})
+    def initialize(channel, connection, opts = {})
+      Log.instance.debug 'Create an response'
       @channel = channel
       @connection = connection
       @opts = opts
-      @logs = logs
       @response = nil
     end
 
     # Read a response to janus (in RabbitMQ queue)
     # @return [Hash] resultat to request
-    def read(queue_from)
-      option_sub = { block: true, manual_ack: false, exclusive: false }
-      the_queue = @channel.queue(queue_from)
-      the_queue.subscribe(option_sub) do |info, prop, pay|
+    def read
+      Log.instance.debug 'Read a response'
+      the_queue = @channel.queue(Config.instance.options['queues']['queue_from'])
+      the_queue.subscribe(block: true) do |info, prop, pay|
         listen(info, prop, pay)
       end
       return_response_json
@@ -30,7 +30,8 @@ module RubyRabbitmqJanus
 
     # Listen a response to queue
     def listen(_delivery_info, properties, payload)
-      if @opts['correlation'] == properties[:correlation_id]
+      if @opts['properties']['correlation'] == properties[:correlation_id]
+        Log.instance.debug 'Response founding'
         @response = payload
         @connection.close
       end
@@ -45,7 +46,7 @@ module RubyRabbitmqJanus
       when 'attach'
         merge('handle_id')
       end
-      @logs.debug @response
+      Log.instance.debug @response
       @response
     end
 

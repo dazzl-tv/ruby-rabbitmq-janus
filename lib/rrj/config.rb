@@ -8,6 +8,8 @@ module RubyRabbitmqJanus
   class Config
     include Singleton
 
+    attr_reader :options
+
     # Define a default path to file configuration
     DEFAULT_PATH = File.realpath(File.join(File.dirname(__FILE__), '..', '..'))
 
@@ -24,8 +26,6 @@ module RubyRabbitmqJanus
     end
 
     private
-
-    attr_reader :options, :file
 
     # Load configuration file yaml
     # @return [Yaml] Configuration file

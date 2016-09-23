@@ -3,8 +3,8 @@
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server
-  class MessageSyncJanus < MessageJanus
-    def initialize(opts_request, channel, options)
+  class Sync < MessageJanus
+    def initialize(opts_request, channel)
       super
     end
 
@@ -15,8 +15,9 @@ module RubyRabbitmqJanus
     # @return [Hash] Result to request executed
     def send(json)
       message = channel.default_exchange
+      Log.instance.debug 'Send a message SYNCHRONE'
       message.publish(define_request_sending(json),
-                      routing_key: opts['janus']['queue_to'],
+                      routing_key: Config.instance.options['queues']['queue_to'],
                       correlation_id: correlation,
                       content_type: 'application/json')
       return_info_message

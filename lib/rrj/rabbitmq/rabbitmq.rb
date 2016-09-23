@@ -7,22 +7,24 @@ module RubyRabbitmqJanus
   # Class for connection with RabbitMQ Server
   class RabbitMQ
     # Return a new instance to RabbitMQ
-    # @param configuration [RRJ::Config] Configuration file to gem
-    # @param requests [Hash] Request sending to RabbitMQ
-    # @param logs [RRJ::Log] Log to gem
-    def initialize(configuration, requests, logs)
-      @settings = configuration
-      @logs = logs
-      @requests = requests
+    def initialize
       @connection = Bunny.new(read_options_server)
-      @response = nil
-      @janus = nil
+      @janus, @response = nil
     end
 
     # Connect to server RabbitMQ and post a message in queue ('to-janus' by default)
-    def ask_request(request_type, opts)
+    def ask_request_sync(request_type, opts)
       execute_request do
-        @response = @janus.send(@requests[request_type.to_s], opts)
+        rqt = Requests.instance.requests[request_type.to_s]
+        @response = @janus.send(rqt, opts)
+        close_server_rabbitmq
+      end
+    end
+
+    def ask_request_async(request_type, opts)
+      execute_request do
+        rqt = Requests.instance.requests[request_type.to_s]
+        @response = @janus.send_async(rqt, opts)
         close_server_rabbitmq
       end
     end
@@ -49,24 +51,31 @@ module RubyRabbitmqJanus
     end
 
     # Use configuration information to connect RabbitMQ
+    # This method smells of :reek:DuplicateMethodCall
+    # This method smells of :reek:TooManyStatements
+    # This method smells of :reek:FeatureEnvy
     def read_options_server
-      option_hash = {}
-      @settings.options.fetch('server').each do |key, server|
-        option_hash.merge!(key.to_sym => server.to_s)
-      end
-      define_log_level(option_hash)
+      hash = {}
+      hash.merge!(define_options)
+      hash['log_level'] = Log.instance.level
+      hash['log_file'] = Log.instance.log_file
+      Log.instance.debug "Option used for connection with RabbitMQ #{hash}"
+      hash
     end
 
-    def define_log_level(option_hash)
-      option_hash[:log_level] = @logs.level
-      @logs.debug "Option used for connection with RabbitMQ #{option_hash}"
-      option_hash
+    # This method smells of :reek:UtilityFunction
+    def define_options
+      hash = {}
+      Config.instance.options.fetch('server').each do |key, server|
+        hash[key.to_sym] = server.to_s
+      end
+      hash
     end
 
     # Execute request
     def execute_request
       open_server_rabbitmq
-      @janus = Janus.new(@connection, @settings.options, @logs)
+      @janus = Janus.new(@connection)
       yield
       @response
     end

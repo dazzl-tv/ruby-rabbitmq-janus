@@ -7,11 +7,14 @@ module RubyRabbitmqJanus
   # Format message request with good data
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
-    def initialize(json_file, logs, opts)
+    def initialize(json_file, opts)
       @request = JSON.parse(File.read(json_file))
       @opts = opts
-      @logs = logs
       @path = nil
+    end
+
+    def to_hash
+      Hash @request
     end
 
     def to_json
@@ -42,7 +45,6 @@ module RubyRabbitmqJanus
 
     def replace_specific_elements
       new_hash = rewrite_key_to_string(@opts[:other_key])
-      @logs.debug "New Hash : #{new_hash}"
       update_request new_hash
       new_hash.each do |key, value|
         update_value_in_request key, value
@@ -69,8 +71,10 @@ module RubyRabbitmqJanus
     # Replace plugin used for transaction
     def replace_plugin
       my_plugin = @request['plugin']
-      add_return('plugin', plugins[my_plugin.delete('<plugin[').delete(']').to_i]) \
-        if my_plugin
+      if my_plugin
+        number = TypeData.new(my_plugin)
+        add_return('plugin', Config.instance.options['janus']['plugins'][number.format])
+      end
     end
 
     # Rewrite key symbol to string
@@ -83,10 +87,10 @@ module RubyRabbitmqJanus
     end
 
     def update_value_in_request(key, value)
-      @path = RubyRabbitmqJanus::Path.new key
+      @path = Path.new key
 
       new_value = @request[@path.parent]
-      new_data = RRJ::TypeData.new(new_value[@path.child], value)
+      new_data = TypeData.new(new_value[@path.child], value)
       new_value.update(@path.childchild => new_data.format)
     end
   end

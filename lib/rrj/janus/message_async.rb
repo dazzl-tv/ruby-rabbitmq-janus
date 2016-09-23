@@ -3,10 +3,13 @@
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server
-  class MessageASyncJanus < MessageJanus
-    def initialize(opts_request, channel, options)
+  class ASync < MessageJanus
+    def initialize(opts_request, channel)
       super
       @response = nil
+      @condition = ConditionVariable.new
+      @lock = Mutex.new
+      @reply = channel.queue('', exclusive: true)
     end
 
     # Send a message to RabbitMQ server
@@ -15,43 +18,36 @@ module RubyRabbitmqJanus
     # @param queue_to [String] Name of queue used for sending request in RabbitMQ
     # @return [Hash] Result to request executed
     def send(json)
-      lock = channel_subscribe
-      lock.synchronize { condition.wait(lock) }
+      Log.instance.debug 'Send a message ASYNCHRONE'
+      subscribe
       channel_publish_message(json)
-      @response
     end
 
     private
 
-    attr_reader :lock, :reply, :response
-
-    def channel_subscribe
-      lock = Mutex.new
-      subscribe(lock)
-      lock
-    end
+    attr_reader :lock, :response
 
     def channel_publish_message(json)
       message = channel.default_exchange
       message.publish(define_request_sending(json),
-                      reply_to: reply.name,
-                      routing_key: opts['janus']['queue_to'],
+                      reply_to: @reply.name,
+                      routing_key: Config.instance.options['queues']['queue_to'],
                       correlation_id: correlation,
                       content_type: 'application/json')
+      @lock.synchronize { @condition.wait(lock) }
+      @response
     end
 
-    def subscribe(lock)
-      @condition = ConditionVariable.new
-      reply = channel.queue('', exclusive: true)
-      reply.subscribe do |_delivery_info, properties, payload|
-        parse_queue properties, payload, lock
+    def subscribe
+      @reply.subscribe do |_delivery_info, properties, payload|
+        parse_queue properties, payload
       end
     end
 
-    def parse_queue(properties, payload, lock)
+    def parse_queue(properties, payload)
       if properties[:correlation_id] == correlation
         @response = JSON.parse payload
-        lock.synchronize { condition.signal }
+        @lock.synchronize { @condition.signal }
       end
     end
   end

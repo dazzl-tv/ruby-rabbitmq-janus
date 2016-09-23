@@ -10,11 +10,11 @@ module RubyRabbitmqJanus
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      @logs = Log.instance
+      Log.instance
+      Config.instance
+      Requests.instance
 
-      @settings = RubyRabbitmqJanus::Config.new(@logs)
-      @requests = RubyRabbitmqJanus::Requests.new(@logs)
-      @rabbit = RubyRabbitmqJanus::RabbitMQ.new(@settings, @requests.requests, @logs)
+      @rabbit = RabbitMQ.new
 
       @session = nil
     end
@@ -27,7 +27,8 @@ module RubyRabbitmqJanus
     # @option opts [String] :transaction The transaction identifier
     # @option opts [Hash] :data The option data to request
     def message_template_ask(template_used = 'info', opts = {})
-      @rabbit.ask_request(template_used, opts)
+      Log.instance.debug 'Use request SYNC'
+      @rabbit.ask_request_sync(template_used, opts)
     end
 
     # Send a message to RabbitMQ for reading a response
@@ -48,12 +49,18 @@ module RubyRabbitmqJanus
     def transaction_plugin
       session_attach = response(ask('attach', response(ask('create'))))
       @session = yield(session_attach)
-      @logs.debug "Session running : #{session_attach}"
+      Log.instance.debug "Session running : #{session_attach}"
       response(ask('destroy', response(ask('detach', @session))))
       @session
     end
 
-    alias ask message_template_ask
-    alias response message_template_response
+    def message_template_async(template_used = 'info', opts = {})
+      Log.instance.debug 'Use request ASYNC'
+      @rabbit.ask_request_async(template_used, opts)
+    end
+
+    alias ask_async message_template_async
+    alias ask_sync message_template_ask
+    alias response_sync message_template_response
   end
 end

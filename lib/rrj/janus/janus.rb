@@ -9,11 +9,8 @@ module RubyRabbitmqJanus
     # Returns a new instance of Janus
     # @param connection [String] Connection to RabbitMQ server
     # @param logs [RRJ::Log] Instance to log
-    def initialize(connection, options, logs)
+    def initialize(connection)
       @channel = connection.create_channel
-      @queues = options['queues']
-      @plugins = options['janus']['plugins']
-      @logs = logs
     end
 
     # Send a message to RabbitMQ
@@ -21,8 +18,13 @@ module RubyRabbitmqJanus
     # @param opts [Hash] Contains the parameters used by request if necessary
     # @return [Hash] Result to request
     def send(request, opts)
-      message = MessageJanus.new(@plugins, @logs, opts)
-      message.send(request, @channel, @queues['queue_to'])
+      message = Sync.new(opts, @channel)
+      message.send(request)
+    end
+
+    def send_async(request, opts)
+      message = ASync.new(opts, @channel)
+      message.send(request)
     end
 
     # Read a message to RabbitMQ
@@ -30,8 +32,8 @@ module RubyRabbitmqJanus
     # @param connection [Object] Object contains a information to connection
     # @return [Hash] Result to request
     def read(info_message, connection)
-      response = ResponseJanus.new(@channel, connection, @logs, info_message)
-      response.read(@queues['queue_from'])
+      response = ResponseJanus.new(@channel, connection, info_message)
+      response.read
     end
   end
 end

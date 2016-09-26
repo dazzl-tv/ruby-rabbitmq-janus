@@ -37,6 +37,7 @@ module RubyRabbitmqJanus
     # @option info_request [String] :transaction The transaction identifier
     # @option info_request [Hash] :data The option data to request
     def message_template_response(info_request)
+      Log.instance.warn "InfoRequest ;p #{info_request}"
       @rabbit.ask_response(info_request)
     end
 

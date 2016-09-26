@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'RubyRabbitmqJanus::RRJ' do
   describe '.response', type: :request_sync, name: :channel_exist do
     let(:transaction) { RubyRabbitmqJanus::RRJ.new }
-    let(:channel_test) { { 'body': { 'channel': 1234 } } }
+    let(:channel_test) { { 'other_key': { 'body': { 'channel': 1234 } } } }
 
     # Request type create
     let(:create_request) { transaction.ask_sync('create') }

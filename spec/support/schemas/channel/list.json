@@ -11,15 +11,19 @@
         "data": {
           "type": "hash",
           "properties": {
+            "videocontrol": { "type": "string" },
             "list": { "type": "array" }
           },
           "required": [
+            "videocontrol",
             "list"
           ]
-        }
+        },
+        "plugin": { "type": "string" }
       },
       "required": [
-        "data"
+        "data",
+        "plugin"
       ]
     }
   },

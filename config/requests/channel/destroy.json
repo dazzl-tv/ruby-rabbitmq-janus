@@ -5,6 +5,6 @@
   "transaction": "<string>",
   "body": {
     "request": "destroy",
-    "channel": "<string>"
+    "channel": "<number>"
   }
 }

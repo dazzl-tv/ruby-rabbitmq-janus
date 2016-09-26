@@ -5,7 +5,6 @@ require 'spec_helper'
 describe 'RubyRabbitmqJanus::RRJ' do
   describe '.response', type: :request_sync, name: :channel_create do
     let(:transaction) { RubyRabbitmqJanus::RRJ.new }
-    let(:channel_test) { { 'other_key': { 'body': { 'channel': 4321 } } } }
 
     # Request type create
     let(:create_request) { transaction.ask_sync('create') }
@@ -43,7 +42,7 @@ describe 'RubyRabbitmqJanus::RRJ' do
     let(:destroy_request) { transaction.ask_sync('destroy', detach_response) }
     let(:destroy_response) { transaction.response_sync(destroy_request) }
 
-    it 'type channel::destroy' do
+    it 'type channel::create' do
       expect(create_response).to match_json_schema(:create)
       expect(attach_response).to match_json_schema(:attach)
       expect(channel_create_response).to match_json_schema(:channel_create)

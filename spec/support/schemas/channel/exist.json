@@ -1,39 +1,32 @@
 {
   "type": "object",
-  "porperties": {
-    "janus": {
-      "type": "string",
-      "pattern": "false"
-    },
-    "session_id": {
-      "type": "integer"
-    },
-    "transaction": {
-      "type": "string"
-    },
-    "sender": {
-      "type": "integer"
-    },
+  "properties": {
+    "janus": { "type": "string", "pattern": "success" },
+    "session_id": { "type": "integer" },
+    "transaction": { "type": "string" },
+    "sender": { "type": "integer" },
     "plugindata": {
-      "type": "object",
+      "type": "hash",
       "properties": {
         "data": {
           "type": "hash",
-          "videocontrol": { "type": "string", "pattern": "false" },
-          "channel": { "type": "integer"},
-          "exists": { "type": "boolean" }
+          "properties": {
+            "videocontrol": { "type": "string", "pattern": "success" },
+            "channel": { "type": "integer"},
+            "exists": { "type": "boolean" }
+            },
+            "required": [
+              "videocontrol",
+              "channel",
+              "exists"
+            ]
         },
         "plugin": {
           "type": "string"
-        },
-        "required": [
-          "videocontrol",
-          "channel",
-          "exists"
-        ]
+        }
       },
       "required": [
-        "plugina",
+        "plugin",
         "data"
       ]
     }

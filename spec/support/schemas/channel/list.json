@@ -1,22 +1,24 @@
 {
   "type": "object",
-  "porperties": {
+  "properties": {
     "janus": { "type": "string", "pattern": "success" },
     "session_id": { "type": "integer" },
     "transaction": { "type": "string" },
     "sender": { "type": "integer" },
     "plugindata": {
       "type": "hash",
-      "data": {
-        "list": { "type": "hash" }
+      "properties": {
+        "data": {
+          "list": { "type": "hash" }
+        },
+        "required": [
+          "list"
+        ]
       },
       "required": [
-        "list"
+        "data"
       ]
-    },
-    "required": [
-      "data"
-    ]
+    }
   },
   "required": [
     "janus",

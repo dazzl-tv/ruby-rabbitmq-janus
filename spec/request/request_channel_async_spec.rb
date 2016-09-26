@@ -13,7 +13,7 @@ describe 'RubyRabbitmqJanus::RRJ' do
     let(:detach) { transaction.ask_async('detach', attach) }
     let(:destroy) { transaction.ask_async('destroy', detach) }
 
-    it 'type channel::list' do
+    it 'type channel::list ASYNC' do
       expect(create).to match_json_schema(:create)
       expect(attach).to match_json_schema(:attach)
       expect(channel_list).to match_json_schema(:channel_list)

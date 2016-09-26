@@ -9,7 +9,7 @@ describe 'RubyRabbitmqJanus::RRJ' do
     # Request type info
     let(:info) { transaction.ask_async }
 
-    it 'type info' do
+    it 'type info ASYNC' do
       expect(info).to match_json_schema(:info)
     end
   end

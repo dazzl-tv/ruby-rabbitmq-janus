@@ -5,6 +5,6 @@
   "transaction": "<string>",
   "body": {
     "request": "exists",
-    "channel": "<string>"
+    "channel": "<number>"
   }
 }

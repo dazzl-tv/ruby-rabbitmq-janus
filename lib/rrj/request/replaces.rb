@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
       create_transaction
       return unless @opts
       replace_standard_elements
-      replace_specific_elements if @opts[:other_key]
+      replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
     end
 
     # Create an transaction string and replace in request field with an String format
@@ -44,11 +44,9 @@ module RubyRabbitmqJanus
     end
 
     def replace_specific_elements
-      new_hash = rewrite_key_to_string(@opts[:other_key])
-      Log.instance.debug "New Hash : #{new_hash}"
-      # update_request new_hash
-      new_hash.each do |key, value|
-        update_value_in_request key, value
+      if request_as_replace_specific
+        new_hash = rewrite_key_to_string(@opts[:other_key])
+        running_hash(new_hash)
       end
     end
 
@@ -87,12 +85,25 @@ module RubyRabbitmqJanus
       ]
     end
 
-    def update_value_in_request(key, value)
-      @path = Path.new key
+    def running_hash(hash, parent = '')
+      hash.each do |key, value|
+        if value.is_a?(Hash)
+          running_hash(value, new_parent(key, parent))
+        else
+          @request[parent][key] = value
+        end
+      end
+    end
 
-      new_value = @request[@path.parent]
-      new_data = TypeData.new(new_value[@path.child], value)
-      new_value.update(@path.childchild => new_data.format)
+    def request_as_replace_specific
+      ['<string>', '<number>'].each do |value|
+        return true if @request['body'].value?(value)
+      end
+    end
+
+    # This is method smells of :reek:UtilityFunction
+    def new_parent(key, parent)
+      "#{parent}#{'.' unless parent.empty?}#{key}"
     end
   end
 end

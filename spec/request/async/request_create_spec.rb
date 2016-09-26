@@ -7,13 +7,13 @@ describe 'RubyRabbitmqJanus::RRJ' do
     let(:transaction) { RubyRabbitmqJanus::RRJ.new }
 
     # Request type create
-    let(:create) { transaction.ask_sync('create') }
+    let(:create) { transaction.ask_async('create') }
 
     # Request type destroy
-    let(:destroy) { transaction.ask_sync('destroy', create) }
+    let(:destroy) { transaction.ask_async('destroy', create) }
 
     it 'type create ASYNC' do
-      expect(create).to match_json_schema(:create)
+      expect(create).to match_json_schema(:create_async)
       expect(destroy).to match_json_schema(:destroy)
     end
   end

@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+describe 'RubyRabbitmqJanus::RRJ' do
+  describe '.response', type: :request_async, name: :create do
+    let(:transaction) { RubyRabbitmqJanus::RRJ.new }
+
+    # Request type create
+    let(:create) { transaction.ask_sync('create') }
+
+    # Request type destroy
+    let(:destroy) { transaction.ask_sync('destroy', create) }
+
+    it 'type create ASYNC' do
+      expect(create).to match_json_schema(:create)
+      expect(destroy).to match_json_schema(:destroy)
+    end
+  end
+end

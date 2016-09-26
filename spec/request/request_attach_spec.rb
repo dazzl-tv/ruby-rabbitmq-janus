@@ -18,7 +18,7 @@ describe 'RubyRabbitmqJanus::RRJ' do
     let(:destroy_request) { transaction.ask_sync('destroy', attach_response) }
     let(:destroy_response) { transaction.response_sync(destroy_request) }
 
-    it 'type attach' do
+    it 'type attach SYNC' do
       expect(create_response).to match_json_schema(:create)
       expect(attach_response).to match_json_schema(:attach)
       expect(destroy_response).to match_json_schema(:destroy)

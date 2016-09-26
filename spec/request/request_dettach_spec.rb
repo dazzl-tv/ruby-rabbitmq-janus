@@ -22,7 +22,7 @@ describe 'RubyRabbitmqJanus::RRJ' do
     let(:destroy_request) { transaction.ask_sync('destroy', detach_response) }
     let(:destroy_response) { transaction.response_sync(destroy_request) }
 
-    it 'type detach' do
+    it 'type detach SYNC' do
       expect(create_response).to match_json_schema(:create)
       expect(attach_response).to match_json_schema(:attach)
       expect(detach_response).to match_json_schema(:detach)

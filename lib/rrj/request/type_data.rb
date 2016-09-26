@@ -10,7 +10,6 @@ module RubyRabbitmqJanus
 
     # Cast a string
     def format
-      Log.instance.debug "Type : #{@type}"
       case @type
       when '<number>'
         @value.to_i

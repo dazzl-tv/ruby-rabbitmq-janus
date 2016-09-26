@@ -37,7 +37,6 @@ module RubyRabbitmqJanus
     # @option info_request [String] :transaction The transaction identifier
     # @option info_request [Hash] :data The option data to request
     def message_template_response(info_request)
-      Log.instance.warn "InfoRequest ;p #{info_request}"
       @rabbit.ask_response(info_request)
     end
 
@@ -47,12 +46,8 @@ module RubyRabbitmqJanus
     # @yieldparam session_attach [Hash] Use a session created
     # @yieldreturn [Hash] Contains a result to transaction with janus server
     def transaction_plugin
-      session_attach = response_sync(ask_sync('attach',
-                                              response_sync(ask_sync('create'))))
-      @session = yield(session_attach)
-      Log.instance.debug "Session running : #{session_attach}"
-      response_sync(ask_sync('destroy', response_sync(ask_sync('detach', @session))))
-      @session
+      @session = yield attach_session
+      destroy_session
     end
 
     def message_template_ask_async(template_used = 'info', opts = {})
@@ -62,5 +57,17 @@ module RubyRabbitmqJanus
     alias ask_async message_template_ask_async
     alias ask_sync message_template_ask_sync
     alias response_sync message_template_response
+
+    private
+
+    def attach_session
+      Log.instance.debug 'Create an session'
+      response_sync(ask_sync('attach', ask_sync('create')))
+    end
+
+    def destroy_session
+      Log.instance.debug 'Destroy an session'
+      response_sync(ask_sync('destroy', response_sync(ask_sync('detach', @session))))
+    end
   end
 end

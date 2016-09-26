@@ -5,17 +5,18 @@ module RubyRabbitmqJanus
   # Load files json in config/request.
   # This file is used for sending a request to RabbitMQ
   # @!attribute [r] requests
-  #   @return [RubyRabbitmqJanus::Request] Array to request
   class Requests
+    include Singleton
+
     attr_reader :requests
 
     # Define folder to request
     PATH_REQUEST = 'config/requests/'
 
     # Load all requests in folder
-    def initialize(logs)
+    def initialize
       @requests = {}
-      logs.info "Loading all requests in : #{PATH_REQUEST}"
+      Log.instance.info "Loading all requests in : #{PATH_REQUEST}"
       Dir[File.join(PATH_REQUEST, '*')].count do |file|
         if File.file?(file)
           read_file(file)

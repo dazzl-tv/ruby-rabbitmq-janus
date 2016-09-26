@@ -17,16 +17,16 @@ module RubyRabbitmqJanus
     # Define a default level to gem (:warn, :info, :debug)
     DEFAULT_LEVEL = :debug
 
+    attr_reader :log_file
+
     # Returns a new instance to Log
     def initialize
       @logs = Logging.logger[Time.now.to_s + ' --']
       @logs.level = DEFAULT_LEVEL
-      @logs.add_appenders Logging.appenders.file(DEFAULT_LOG_DIR + '/' + DEFAULT_LOG_NAME)
+      @log_file = DEFAULT_LOG_DIR + '/' + DEFAULT_LOG_NAME
+      @logs.add_appenders Logging.appenders.file(@log_file)
 
-      welcome = "\n"\
-        "====================================\n" \
-        "### Start gem Rails Rabbit Janus ###\n" \
-        '===================================='
+      welcome = '### Start gem Rails Rabbit Janus ###'
       @logs.info(welcome)
     end
 

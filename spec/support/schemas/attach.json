@@ -14,7 +14,6 @@
     "janus",
     "session_id",
     "transaction",
-    "data",
-    "handle_id"
+    "data"
   ]
 }

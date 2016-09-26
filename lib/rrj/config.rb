@@ -5,9 +5,9 @@ require 'yaml'
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Loading a yaml file for apply a configuration to gem.
-  # @!attribute [r] options
-  #   @return  [RubyRabbitmqJanus::Config] Options to gem.
   class Config
+    include Singleton
+
     attr_reader :options
 
     # Define a default path to file configuration
@@ -20,12 +20,11 @@ module RubyRabbitmqJanus
     CUSTOMIZE_CONF = 'config/ruby-rabbitmq-janus.yml'
 
     # Initialize configuration file default or customize if exist
-    # @param logs [RubyRabbitmqJanus::Log] Load RubyRabbitmqJanus::Log to gem
-    def initialize(logs)
-      @logs = logs
-      @options = load_configuration(File.join(DEFAULT_PATH, DEFAULT_CONF))
-      override_configuration(File.join(Dir.pwd, CUSTOMIZE_CONF))
-      @options['gem']['log']['level']
+    def initialize
+      @options = nil
+      conf_customize
+      conf_default
+      define_log_level_used
     end
 
     private
@@ -33,16 +32,26 @@ module RubyRabbitmqJanus
     # Load configuration file yaml
     # @return [Yaml] Configuration file
     # @param file [String] Path to configuration file (with name)
+    # :reek:UtilityFunction { public_methods_only: true }
     def load_configuration(file)
-      @logs.info("Loading configuration file : #{file}")
+      Log.instance.info("Loading configuration file : #{file}")
       YAML.load(File.read(file))
     end
 
     # Load customize configuration file if exist
-    # @return [Yaml] Configuration file
-    # @param file [String] Path to configuration file (with name)
-    def override_configuration(file)
+    def conf_customize
+      file = File.join(Dir.pwd, CUSTOMIZE_CONF)
       @options = load_configuration(file) if File.exist?(file)
+    end
+
+    # Load default configuration if customize configuration doesn't exist
+    def conf_default
+      file = File.join(DEFAULT_PATH, DEFAULT_CONF)
+      @options ||= load_configuration(file)
+    end
+
+    def define_log_level_used
+      Log.instance.level = @options['gem']['log']['level']
     end
   end
 end

@@ -10,11 +10,11 @@ module RubyRabbitmqJanus
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      @logs = Log.instance
+      Log.instance
+      Config.instance
+      Requests.instance
 
-      @settings = RubyRabbitmqJanus::Config.new(@logs)
-      @requests = RubyRabbitmqJanus::Requests.new(@logs)
-      @rabbit = RubyRabbitmqJanus::RabbitMQ.new(@settings, @requests.requests, @logs)
+      @rabbit = RabbitMQ.new
 
       @session = nil
     end
@@ -26,8 +26,8 @@ module RubyRabbitmqJanus
     # @option opts [String] :janus The message type
     # @option opts [String] :transaction The transaction identifier
     # @option opts [Hash] :data The option data to request
-    def message_template_ask(template_used = 'info', opts = {})
-      @rabbit.ask_request(template_used, opts)
+    def message_template_ask_sync(template_used = 'info', opts = {})
+      @rabbit.ask_request_sync(template_used, opts)
     end
 
     # Send a message to RabbitMQ for reading a response
@@ -46,13 +46,28 @@ module RubyRabbitmqJanus
     # @yieldparam session_attach [Hash] Use a session created
     # @yieldreturn [Hash] Contains a result to transaction with janus server
     def transaction_plugin
-      session_attach = response(ask('attach', response(ask('create'))))
-      @session = yield(session_attach)
-      response(ask('destroy', response(ask('detach', @session))))
-      @session
+      @session = yield attach_session
+      destroy_session
     end
 
-    alias ask message_template_ask
-    alias response message_template_response
+    def message_template_ask_async(template_used = 'info', opts = {})
+      @rabbit.ask_request_async(template_used, opts)
+    end
+
+    alias ask_async message_template_ask_async
+    alias ask_sync message_template_ask_sync
+    alias response_sync message_template_response
+
+    private
+
+    def attach_session
+      Log.instance.debug 'Create an session'
+      response_sync(ask_sync('attach', ask_sync('create')))
+    end
+
+    def destroy_session
+      Log.instance.debug 'Destroy an session'
+      response_sync(ask_sync('destroy', response_sync(ask_sync('detach', @session))))
+    end
   end
 end

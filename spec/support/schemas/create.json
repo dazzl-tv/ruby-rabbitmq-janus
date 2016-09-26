@@ -11,7 +11,6 @@
   },
   "required": [
     "janus",
-    "session_id",
     "transaction",
     "data"
   ]

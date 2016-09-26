@@ -9,11 +9,14 @@
       "type": "hash",
       "properties": {
         "data": {
-          "list": { "type": "hash" }
-        },
-        "required": [
-          "list"
-        ]
+          "type": "hash",
+          "properties": {
+            "list": { "type": "array" }
+          },
+          "required": [
+            "list"
+          ]
+        }
       },
       "required": [
         "data"

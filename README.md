@@ -66,7 +66,7 @@ transaction = RubyRabbitmqJanus::RRJ.new
 # Send a request type
 transaction.transaction_plugin do |session_running|
   test = transaction.ask_sync('test', session_running)
-  session = transaction.response(session_running)
+  session = transaction.response_sync(session_running)
 end
 ```
 
@@ -92,7 +92,7 @@ transaction.ask_async('destroy', create)
 ```ruby
 # Aliases to methods synchronous
 message_template_ask_sync => ask_sync
-message_template_response => response
+message_template_response => response_sync
 
 # Aliases to methods asynchronous
 message_template_ask_async => ask_async

@@ -47,6 +47,7 @@ module RubyRabbitmqJanus
     def parse_queue(properties, payload)
       if properties[:correlation_id] == correlation
         @response = JSON.parse payload
+        Log.instance.debug "#{@response.class} #{@response}"
         @lock.synchronize { @condition.signal }
       end
     end

@@ -45,7 +45,8 @@ module RubyRabbitmqJanus
 
     def replace_specific_elements
       new_hash = rewrite_key_to_string(@opts[:other_key])
-      update_request new_hash
+      Log.instance.debug "New Hash : #{new_hash}"
+      # update_request new_hash
       new_hash.each do |key, value|
         update_value_in_request key, value
       end

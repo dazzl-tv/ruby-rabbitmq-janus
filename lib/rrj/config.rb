@@ -21,8 +21,10 @@ module RubyRabbitmqJanus
 
     # Initialize configuration file default or customize if exist
     def initialize
+      @options = nil
       conf_customize
       conf_default
+      define_log_level_used
     end
 
     private
@@ -46,6 +48,10 @@ module RubyRabbitmqJanus
     def conf_default
       file = File.join(DEFAULT_PATH, DEFAULT_CONF)
       @options ||= load_configuration(file)
+    end
+
+    def define_log_level_used
+      Log.instance.level = @options['gem']['log']['level']
     end
   end
 end

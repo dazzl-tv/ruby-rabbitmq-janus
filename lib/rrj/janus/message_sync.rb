@@ -28,7 +28,6 @@ module RubyRabbitmqJanus
     # Prepare an Hash with information necessary to read a response in RabbitMQ queue
     def return_info_message
       my_request['properties'] = { 'correlation' => correlation }
-      Log.instance.debug "#{my_request.class} #{my_request}"
       my_request
     end
   end

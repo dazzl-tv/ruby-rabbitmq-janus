@@ -8,7 +8,6 @@ module RubyRabbitmqJanus
   class ResponseJanus
     # Initialiaze a response reading in RabbitMQ queue
     def initialize(channel, connection, opts = {})
-      Log.instance.debug 'Create an response'
       @channel = channel
       @connection = connection
       @opts = opts
@@ -31,7 +30,6 @@ module RubyRabbitmqJanus
     # Listen a response to queue
     def listen(_delivery_info, properties, payload)
       if @opts['properties']['correlation'] == properties[:correlation_id]
-        Log.instance.debug 'Response founding'
         @response = payload
         @connection.close
       end
@@ -46,7 +44,6 @@ module RubyRabbitmqJanus
       when 'attach'
         merge('handle_id')
       end
-      Log.instance.debug @response
       @response
     end
 

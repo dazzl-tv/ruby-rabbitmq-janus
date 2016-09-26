@@ -59,7 +59,6 @@ module RubyRabbitmqJanus
       hash.merge!(define_options)
       hash['log_level'] = Log.instance.level
       hash['log_file'] = Log.instance.log_file
-      Log.instance.debug "Option used for connection with RabbitMQ #{hash}"
       hash
     end
 

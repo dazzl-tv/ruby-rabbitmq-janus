@@ -31,7 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
-  spec.add_runtime_dependency 'logging', '~> 2.1'
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'thread', '~> 0.2.2'
 end

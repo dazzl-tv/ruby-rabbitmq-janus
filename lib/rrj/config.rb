@@ -36,6 +36,8 @@ module RubyRabbitmqJanus
     def load_configuration(file)
       Log.instance.info("Loading configuration file : #{file}")
       YAML.load(File.read(file))
+    rescue
+      raise RubyRabbitmqJanus::ErrorConfig::ConfigFileNotFound
     end
 
     # Load customize configuration file if exist
@@ -53,6 +55,8 @@ module RubyRabbitmqJanus
     # Define log lvel used in this gem
     def define_log_level_used
       Log.instance.level = Log::LEVELS[@options['gem']['log']['level'].to_sym]
+    rescue
+      raise RubyRabbitmqJanus::ErrorConfig::LevelNotDefine
     end
   end
 end

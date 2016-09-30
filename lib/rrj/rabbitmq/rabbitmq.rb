@@ -44,6 +44,8 @@ module RubyRabbitmqJanus
     #   rabbitmq server
     def open_server_rabbitmq
       @connection.start
+    rescue
+      raise RubyRabbitmqJanus::ErrorRabbitmq::ConnectionRabbitmqFailed info_request
     end
 
     # Close connection to rabbitmq server
@@ -77,6 +79,8 @@ module RubyRabbitmqJanus
       @janus = Janus.new(@connection)
       yield
       @response
+    rescue
+      raise RubyRabbitmqJanus::ErrorRabbitmq::RequestNotExecuted info_request
     end
   end
 end

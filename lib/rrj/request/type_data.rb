@@ -3,12 +3,13 @@
 module RubyRabbitmqJanus
   # Format data with type corresponding
   class TypeData
+    # Create an object for replace element in request template to specific type
     def initialize(type, value = nil)
       @type = type
       @value = value
     end
 
-    # Cast a string
+    # Cast a element to correct type
     def format
       case @type
       when '<number>'

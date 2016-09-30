@@ -50,6 +50,7 @@ module RubyRabbitmqJanus
       @options ||= load_configuration(file)
     end
 
+    # Define log lvel used in this gem
     def define_log_level_used
       Log.instance.level = Log::LEVELS[@options['gem']['log']['level'].to_sym]
     end

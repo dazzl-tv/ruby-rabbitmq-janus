@@ -21,6 +21,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # Connect to server RabbitMQ and post a message in queue specific
     def ask_request_async(request_type, opts)
       execute_request do
         rqt = Requests.instance.requests[request_type.to_s]

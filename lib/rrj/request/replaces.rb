@@ -13,10 +13,12 @@ module RubyRabbitmqJanus
       @path = nil
     end
 
+    # Return request to Hash format
     def to_hash
       Hash @request
     end
 
+    # Return request to JSON format
     def to_json
       replaces
       @request.to_json
@@ -37,12 +39,14 @@ module RubyRabbitmqJanus
       @request['transaction'] = [*('A'..'Z'), *('0'..'9')].sample(10).join
     end
 
+    # Replace a standart element in request
     def replace_standard_elements
       replace_element('session_id')
       replace_plugin
       replace_element(@opts['handle_id'] ? 'handle_id' : 'sender', 'handle_id')
     end
 
+    # Replace element specific in request
     def replace_specific_elements
       if request_as_replace_specific
         new_hash = rewrite_key_to_string(@opts[:other_key])
@@ -85,6 +89,7 @@ module RubyRabbitmqJanus
       ]
     end
 
+    # Replace value in request Hash
     def running_hash(hash, parent = '')
       hash.each do |key, value|
         if value.is_a?(Hash)
@@ -95,6 +100,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # Test if request as specific elements
     def request_as_replace_specific
       ['<string>', '<number>'].each do |value|
         return true if @request['body'].value?(value)

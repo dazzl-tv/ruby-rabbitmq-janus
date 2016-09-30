@@ -8,7 +8,6 @@ require 'rrj/config'
 require 'rrj/request/requests'
 require 'rrj/request/type_data'
 require 'rrj/request/replaces'
-require 'rrj/request/path'
 
 require 'rrj/rabbitmq/rabbitmq'
 

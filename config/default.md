@@ -17,6 +17,14 @@ server:
 queues:
     queue_from: from-janus
     queue_to: to-janus
+
+janus:
+  plugins:
+    - janus.plugin.echotest
+
+gem:
+  log:
+    level: WARN
 ```
 
 ## Customize

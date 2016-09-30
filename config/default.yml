@@ -26,6 +26,8 @@ janus:
 
 # Options gem
 gem:
-  # Option for logging
+  # Option for logs
   log:
-    level: 'debug'
+    # Define level to log
+    # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
+    level: INFO

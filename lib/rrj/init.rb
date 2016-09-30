@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'singleton'
+
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem
@@ -27,6 +29,7 @@ module RubyRabbitmqJanus
     # @option opts [String] :transaction The transaction identifier
     # @option opts [Hash] :data The option data to request
     def message_template_ask_sync(template_used = 'info', opts = {})
+      Log.instance.info("Send message :#{template_used}")
       @rabbit.ask_request_sync(template_used, opts)
     end
 
@@ -46,11 +49,15 @@ module RubyRabbitmqJanus
     # @yieldparam session_attach [Hash] Use a session created
     # @yieldreturn [Hash] Contains a result to transaction with janus server
     def transaction_plugin
-      @session = yield attach_session
+      attach_session
+      Log.instance.debug "Session create : #{@session}"
+      @session = yield
       destroy_session
+      @session
     end
 
     def message_template_ask_async(template_used = 'info', opts = {})
+      Log.instance.info("Send message :#{template_used}")
       @rabbit.ask_request_async(template_used, opts)
     end
 
@@ -62,12 +69,13 @@ module RubyRabbitmqJanus
 
     def attach_session
       Log.instance.debug 'Create an session'
-      response_sync(ask_sync('attach', ask_sync('create')))
+      @session = ask_async('create')
+      @session = ask_async('attach', @session)
     end
 
     def destroy_session
       Log.instance.debug 'Destroy an session'
-      response_sync(ask_sync('destroy', response_sync(ask_sync('detach', @session))))
+      ask_async('destroy', ask_async('detach', @session))
     end
   end
 end

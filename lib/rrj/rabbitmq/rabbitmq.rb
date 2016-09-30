@@ -58,7 +58,6 @@ module RubyRabbitmqJanus
       hash = {}
       hash.merge!(define_options)
       hash['log_level'] = Log.instance.level
-      hash['log_file'] = Log.instance.log_file
       hash
     end
 

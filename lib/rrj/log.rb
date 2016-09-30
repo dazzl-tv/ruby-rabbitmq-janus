@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'logger'
+
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for wrtting logs.

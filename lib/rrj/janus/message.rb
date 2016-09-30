@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
 
     private
 
-    attr_reader :correlation, :my_request, :message
+    attr_reader :correlation, :my_request, :message, :channel
 
     # Format request sending to rabbitmq to json format
     # @param json [Hash] request base

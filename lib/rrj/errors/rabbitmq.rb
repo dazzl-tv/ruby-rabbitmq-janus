@@ -13,10 +13,19 @@ module RubyRabbitmqJanus
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define errors with Rabbitmq when connection is failed
-    class ConnectionRabbitmqFailed
+    class ConnectionRabbitmqFailed < RRJError
       def initialize
         @message = 'Error to server connection'
         @level = :fatal
+      end
+    end
+
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # Define errors with Rabbitmq when connection is failed
+    class RequestTemplateNotExist
+      def initialize
+        @message = 'The template request does not exist'
+        @level = :warn
       end
     end
   end

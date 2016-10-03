@@ -37,7 +37,7 @@ module RubyRabbitmqJanus
       Log.instance.info("Loading configuration file : #{file}")
       YAML.load(File.read(file))
     rescue
-      raise RubyRabbitmqJanus::ErrorConfig::ConfigFileNotFound
+      raise RubyRabbitmqJanus::ErrorConfig::ConfigFileNotFound, file
     end
 
     # Load customize configuration file if exist

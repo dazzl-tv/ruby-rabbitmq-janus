@@ -16,7 +16,7 @@ module RubyRabbitmqJanus
     def ask_request_sync(request_type, opts)
       execute_request do
         rqt = Requests.instance.requests[request_type.to_s]
-        @response = @janus.send(rqt, opts)
+        @response = ResponseError.new(@janus.send(rqt, opts))
         close_server_rabbitmq
       end
     end
@@ -25,7 +25,7 @@ module RubyRabbitmqJanus
     def ask_request_async(request_type, opts)
       execute_request do
         rqt = Requests.instance.requests[request_type.to_s]
-        @response = @janus.send_async(rqt, opts)
+        @response = ResponseError.new(@janus.send_async(rqt, opts))
         close_server_rabbitmq
       end
     end
@@ -33,7 +33,7 @@ module RubyRabbitmqJanus
     # Connect to server RabbitMQ and read a message in queue ('from-janus' by default)
     def ask_response(info_request)
       execute_request do
-        @response = @janus.read(info_request, @connection)
+        @response = ResponseError.new(@janus.read(info_request, @connection))
       end
     end
 
@@ -44,13 +44,15 @@ module RubyRabbitmqJanus
     #   rabbitmq server
     def open_server_rabbitmq
       @connection.start
-    rescue
+    rescue => info_request
       raise RubyRabbitmqJanus::ErrorRabbitmq::ConnectionRabbitmqFailed info_request
     end
 
     # Close connection to rabbitmq server
     def close_server_rabbitmq
       @connection.close
+    rescue
+      raise Bunny::ConnectionClosedError
     end
 
     # Use configuration information to connect RabbitMQ
@@ -78,9 +80,8 @@ module RubyRabbitmqJanus
       open_server_rabbitmq
       @janus = Janus.new(@connection)
       yield
-      @response
-    rescue
-      raise RubyRabbitmqJanus::ErrorRabbitmq::RequestNotExecuted info_request
+      raise RubyRabbitmqJanus::ErrorRabbitmq::RequestNotExecuted \
+        @response if @response.test_request_return
     end
   end
 end

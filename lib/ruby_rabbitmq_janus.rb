@@ -9,6 +9,7 @@ require 'rrj/errors/error'
 require 'rrj/errors/janus'
 require 'rrj/errors/config'
 require 'rrj/errors/rabbitmq'
+require 'rrj/errors/request'
 
 require 'rrj/request/requests'
 require 'rrj/request/type_data'

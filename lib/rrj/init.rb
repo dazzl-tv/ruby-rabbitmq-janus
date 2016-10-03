@@ -26,6 +26,7 @@ module RubyRabbitmqJanus
     # @param template_used [String] Json used to request sending in RabbitMQ
     # @param [Hash] opts the options sending with a request
     def message_template_ask_sync(template_used = 'info', opts = {})
+      test_request_demand_exist(template_used)
       Log.instance.info("Send message :#{template_used}")
       @rabbit.ask_request_sync(template_used, opts)
     end
@@ -55,6 +56,7 @@ module RubyRabbitmqJanus
     # @param template_used [String] Json used to request sending in RabbitMQ
     # @param [Hash] opts the options sending with a request
     def message_template_ask_async(template_used = 'info', opts = {})
+      test_request_demand_exist(template_used)
       Log.instance.info("Send message :#{template_used}")
       @rabbit.ask_request_async(template_used, opts)
     end
@@ -76,6 +78,11 @@ module RubyRabbitmqJanus
     def destroy_session
       Log.instance.debug 'Destroy an session'
       ask_async('destroy', ask_async('detach', @session))
+    end
+
+    def test_request_demand_exist(request_name)
+      raise ErrorRequest::RequestTemplateNotExist, request_name  \
+        unless Requests.instance.requests.key? request_name
     end
   end
 end

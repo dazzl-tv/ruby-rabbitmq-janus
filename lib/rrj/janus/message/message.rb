@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-require 'thread'
-
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Message Janus sending to rabbitmq server

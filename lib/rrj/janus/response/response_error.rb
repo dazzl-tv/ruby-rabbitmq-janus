@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'bunny'
-
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for test if response return an janus error

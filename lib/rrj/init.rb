@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 require 'singleton'
+require 'yaml'
+require 'json'
+require 'securerandom'
+require 'thread'
+require 'bunny'
+require 'logger'
+require 'key_path'
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>

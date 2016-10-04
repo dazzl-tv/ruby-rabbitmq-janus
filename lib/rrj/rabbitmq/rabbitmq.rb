@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'bunny'
-
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for connection with RabbitMQ Server

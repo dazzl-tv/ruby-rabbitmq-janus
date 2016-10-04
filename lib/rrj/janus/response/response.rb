@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'json'
-
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Response Janus received to RabbitMQ server

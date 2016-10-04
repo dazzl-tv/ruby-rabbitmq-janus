@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'key_path'
-
 module RubyRabbitmqJanus
   # Format message request with good data
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>

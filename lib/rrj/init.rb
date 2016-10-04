@@ -8,7 +8,7 @@ module RubyRabbitmqJanus
   # @!attribute [r] session
   #   @return [Hash] Response to request sending in transaction
   class RRJ
-    attr_reader :session
+    attr_reader :session, :handle
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
 
       @rabbit = RabbitMQ.new
 
-      @session = nil
+      @session, @handle = nil
     end
 
     # Send a message (SYNC), to RabbitMQ, with a template JSON.

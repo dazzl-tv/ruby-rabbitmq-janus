@@ -31,3 +31,7 @@ gem:
     # Define level to log
     # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
     level: INFO
+  # Option for sessions
+  session:
+    # Define time to send a keepalive message in seconds
+    keepalive: 45

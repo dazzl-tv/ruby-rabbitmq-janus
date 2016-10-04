@@ -25,6 +25,8 @@ janus:
 gem:
   log:
     level: WARN
+  session:
+    keepalive: 45
 ```
 
 ## Customize

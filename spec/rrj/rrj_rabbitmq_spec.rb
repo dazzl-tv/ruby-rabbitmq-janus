@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RabitMQ' do
+describe 'RubyRabbitmqJanus::RabitMQ', type: :config do
   before(:context) do
     RubyRabbitmqJanus::Log.instance
     RubyRabbitmqJanus::Config.instance

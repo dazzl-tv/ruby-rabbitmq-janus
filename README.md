@@ -106,7 +106,15 @@ bundle exec rspec
 ```
 
 TIPS: for rspec install janus and rabbitmq server configured by default for user
- rabbitmq and use plugin echotest for janus server.
+rabbitmq and use plugin echotest for janus server.
+
+Use tags for rspec
+| type            | name            |
+| --------------- | --------------- |
+| request_async   | attach          |
+| request_sync    | create          |
+| config          | detach          |
+|                 | info            |
 
 ### Documentation
 

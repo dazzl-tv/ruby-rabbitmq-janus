@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
+describe 'RubyRabbitmqJanus::RRJ', type: :config do
   it 'Has a version number' do
     expect(RubyRabbitmqJanus::VERSION).not_to be nil
   end

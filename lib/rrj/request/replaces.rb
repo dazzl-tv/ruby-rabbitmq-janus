@@ -4,10 +4,13 @@ module RubyRabbitmqJanus
   # Format message request with good data
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
+    attr_reader :request
+
     def initialize(json_file, opts)
       @request = JSON.parse(File.read(json_file))
       @opts = opts
       @path = nil
+      replaces
     end
 
     # Return request to Hash format
@@ -17,7 +20,6 @@ module RubyRabbitmqJanus
 
     # Return request to JSON format
     def to_json
-      replaces
       @request.to_json
     end
 

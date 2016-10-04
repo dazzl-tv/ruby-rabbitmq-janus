@@ -18,6 +18,7 @@ require 'rrj/request/replaces'
 require 'rrj/rabbitmq/rabbitmq'
 
 require 'rrj/janus/janus'
+require 'rrj/janus/keepalive'
 require 'rrj/janus/message/message'
 require 'rrj/janus/message/message_sync'
 require 'rrj/janus/message/message_async'

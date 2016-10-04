@@ -42,6 +42,7 @@ module RubyRabbitmqJanus
       when 'attach'
         merge('handle_id')
       end
+      Log.instance.debug "Response janus : #{@response}"
       @response
     end
 

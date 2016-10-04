@@ -17,6 +17,7 @@ module RubyRabbitmqJanus
         @response = ResponseError.new(@janus.send(rqt, opts))
         close_server_rabbitmq
       end
+      @response.request
     end
 
     # Connect to server RabbitMQ and post a message in queue specific
@@ -26,6 +27,7 @@ module RubyRabbitmqJanus
         @response = ResponseError.new(@janus.send_async(rqt, opts))
         close_server_rabbitmq
       end
+      @response.request
     end
 
     # Connect to server RabbitMQ and read a message in queue ('from-janus' by default)
@@ -33,6 +35,7 @@ module RubyRabbitmqJanus
       execute_request do
         @response = ResponseError.new(@janus.read(info_request, @connection))
       end
+      @response.request
     end
 
     private

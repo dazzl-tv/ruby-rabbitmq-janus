@@ -11,6 +11,7 @@ module RubyRabbitmqJanus
       @correlation = SecureRandom.uuid
       @options_request = opts_request
       @channel = channel
+      @my_request = nil
     end
 
     private
@@ -21,9 +22,13 @@ module RubyRabbitmqJanus
     # @param json [Hash] request base
     # @return [JSON] Request to JSON format
     def define_request_sending(json)
-      request = Replace.new(json, @options_request)
-      @my_request = request.to_hash
-      request.to_json
+      @my_request = Replace.new(json, @options_request)
+      Log.instance.debug "Sending a request : #{json_formated_log}"
+      @my_request.request.to_json
+    end
+
+    def json_formated_log
+      JSON.pretty_generate @my_request.request.to_hash
     end
   end
 end

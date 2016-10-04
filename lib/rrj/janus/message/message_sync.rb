@@ -28,8 +28,9 @@ module RubyRabbitmqJanus
 
     # Prepare an Hash with information necessary to read a response in RabbitMQ queue
     def return_info_message
-      my_request['properties'] = { 'correlation' => correlation }
-      my_request
+      rqe = my_request.request.merge!('properties' => { 'correlation' => correlation })
+      Log.instance.debug "@my_request #{rqe}"
+      rqe
     end
   end
 end

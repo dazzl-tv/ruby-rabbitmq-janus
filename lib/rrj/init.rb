@@ -19,13 +19,13 @@ module RubyRabbitmqJanus
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
+      @session, @handle = nil
+
       Log.instance
       Config.instance
       Requests.instance
 
       @rabbit = RabbitMQ.new
-
-      @session, @handle = nil
     end
 
     # Send a message (SYNC), to RabbitMQ, with a template JSON.

@@ -4,9 +4,11 @@ module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Class for test if response return an janus error
   class ResponseError
+    attr_reader :request
+
     # Return an Hash to request
     def initialize(request)
-      @request = Has.new(request)
+      @request = request
     end
 
     # Test if response is an error

@@ -26,6 +26,8 @@ module RubyRabbitmqJanus
       Requests.instance
 
       @rabbit = RabbitMQ.new
+
+      Keepalive.new
     end
 
     # Send a message (SYNC), to RabbitMQ, with a template JSON.

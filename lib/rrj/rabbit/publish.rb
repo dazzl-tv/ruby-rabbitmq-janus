@@ -19,11 +19,13 @@ module RubyRabbitmqJanus
       # Define options to message pusblishing in queue
       # @return [Hash]
       def option_publish(correlation)
-        {
+        hash = {
           routing_key: Config.instance.options['queues']['queue_to'],
           correlation_id: correlation,
           content_type: 'application/json'
         }
+        Log.instance.debug "Options for publishing a message : #{hash}"
+        hash
       end
     end
 

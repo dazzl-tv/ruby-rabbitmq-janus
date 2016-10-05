@@ -27,6 +27,9 @@ gem:
     level: WARN
   session:
     keepalive: 45
+  thread:
+    enable: false
+    number: 1
 ```
 
 ## Customize

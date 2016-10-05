@@ -35,3 +35,9 @@ gem:
   session:
     # Define time to send a keepalive message in seconds
     keepalive: 45
+  # Option for used multi thread
+  thread:
+    # Boolean for activate options thread
+    enable: false
+    # Number of core
+    number: 1

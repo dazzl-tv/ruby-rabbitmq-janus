@@ -11,11 +11,13 @@ Gem::Specification.new do |spec|
   spec.summary       = RubyRabbitmqJanus::SUMMARY
   spec.description   = RubyRabbitmqJanus::DESCRIPTION
 
-  spec.homepage      = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'
+  spec.homepage      = RubyRabbitmqJanus::HOMEPAGE
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ['lib']
+
+  spec.post_install_message = RubyRabbitmqJanus::POST_INSTALL
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'

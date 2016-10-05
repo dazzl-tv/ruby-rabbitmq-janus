@@ -2,7 +2,7 @@
 server:
   # Precise RabbitMQ host - Default 'localhost'
   host: localhost
-  # Precise RabbitMQ port - Default 'port'
+  # Precise RabbitMQ port - Default '5672'
   port: 5672
   # Precise RabbitMQ vhost - Default '/'
   vhost: /

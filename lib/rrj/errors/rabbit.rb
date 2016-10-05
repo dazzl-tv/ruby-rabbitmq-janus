@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  module ErrorRabbitmq
+  module ErrorRabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define errors with Rabbitmq when request is not sending
     class RequestNotExecuted < RRJError
@@ -11,10 +11,10 @@ module RubyRabbitmqJanus
     end
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Define errors with Rabbitmq when connection is failed
+    # Define errors if connection to rabbitmq is failed
     class ConnectionRabbitmqFailed < RRJError
-      def initialize
-        super 'Error to server connection', :fatal
+      def initialize(message)
+        super message, :fatal
       end
     end
   end

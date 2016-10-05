@@ -64,6 +64,10 @@ module RubyRabbitmqJanus
       @logs.debug(message) if test_level?(Logger::DEBUG)
     end
 
+    def logger
+      @logs
+    end
+
     private
 
     # This method smell :reek:UtilityFunction

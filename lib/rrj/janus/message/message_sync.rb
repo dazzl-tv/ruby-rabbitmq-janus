@@ -15,12 +15,9 @@ module RubyRabbitmqJanus
     # @param json [String] Name of request used
     # @return [Hash] Result to request executed
     def send(json)
-      message = channel.default_exchange
-      Log.instance.debug 'Send a message SYNCHRONE'
-      message.publish(define_request_sending(json),
-                      routing_key: Config.instance.options['queues']['queue_to'],
-                      correlation_id: correlation,
-                      content_type: 'application/json')
+      msg = Rabbit::Publish.new(channel)
+      msg.send_a_message(define_request_sending(json), correlation)
+
       return_info_message
     end
 

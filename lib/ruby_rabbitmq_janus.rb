@@ -11,6 +11,8 @@ require 'rrj/tools/replaces'
 
 # Define actions with rabbitmq
 require 'rrj/rabbit/rabbitmq'
+require 'rrj/rabbit/connect'
+require 'rrj/rabbit/publish'
 
 # Define actions with janus
 require 'rrj/janus/janus'
@@ -27,5 +29,5 @@ require 'rrj/janus/response/response_error'
 require 'rrj/errors/error'
 require 'rrj/errors/janus'
 require 'rrj/errors/config'
-require 'rrj/errors/rabbitmq'
+require 'rrj/errors/rabbit'
 require 'rrj/errors/request'

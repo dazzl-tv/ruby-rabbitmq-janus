@@ -10,10 +10,6 @@ describe 'RubyRabbitmqJanus::RabitMQ', type: :config do
     @rabbit = RubyRabbitmqJanus::RabbitMQ.new
   end
 
-  it 'Connection to RabbitMQ Server' do
-    expect(@rabbit.send(:open_server_rabbitmq).class).to eq Bunny::Session
-  end
-
   it 'Close connection RabbitMQ Server' do
     expect(@rabbit.send(:close_server_rabbitmq)).to eq :closed
   end

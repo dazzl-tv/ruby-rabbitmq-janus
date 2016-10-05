@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'rrj/version'
 
 require 'rrj/init'
 require 'rrj/log'

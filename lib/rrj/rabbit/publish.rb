@@ -16,6 +16,8 @@ module RubyRabbitmqJanus
 
       private
 
+      # Define options to message pusblishing in queue
+      # @return [Hash]
       def option_publish(correlation)
         {
           routing_key: Config.instance.options['queues']['queue_to'],
@@ -35,6 +37,8 @@ module RubyRabbitmqJanus
 
       private
 
+      # Define options to message pusblishing in queue with reply configured
+      # @return [Hash]
       def option_publish(correlation)
         super.merge!(reply_to: @reply.name)
       end

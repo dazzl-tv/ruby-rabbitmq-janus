@@ -22,7 +22,7 @@ in a queue for gem. Once the received message is decoded and returned through th
 
 ### Installation
 
-Use bitbucket for installing gem in your Gemfile
+Use rubygem for installing gem in your application. Add in your Gemfile 
 ```ruby
 gem 'ruby_rabbitmq_janus'
 ```
@@ -30,6 +30,21 @@ gem 'ruby_rabbitmq_janus'
 ### Configuration
 
 If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.md)
+
+Use generator for complet installation :
+```linux
+rails g -h
+RubyRabbitmqJanus:
+  ruby_rabbitmq_janus:configuration     # Generate a custom configuration file.
+  ruby_rabbitmq_janus:default_request   # Copy base request file sending to janus in application. It's necessary ifyou want add your request.
+  ruby_rabbitmq_janus:initializer       # Generate a initializer to this gem for rails application.
+  ruby_rabbitmq_janus:create_request    # Create an request to json format for RubyRabbitmqJanus transaction.
+```
+
+For create an new request is simple. Use a command generator :
+```linux
+rails g ruby_rabbitmq_janus:create_request test janus:info, transaction:<string>
+```
 
 ### Usage
 

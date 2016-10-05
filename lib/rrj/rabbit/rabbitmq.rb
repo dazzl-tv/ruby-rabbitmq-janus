@@ -15,7 +15,6 @@ module RubyRabbitmqJanus
       execute_request do
         rqt = Requests.instance.requests[request_type.to_s]
         @response = ResponseError.new(@janus.send(rqt, opts))
-        close_server_rabbitmq
       end
       @response.request
     end
@@ -25,7 +24,6 @@ module RubyRabbitmqJanus
       execute_request do
         rqt = Requests.instance.requests[request_type.to_s]
         @response = ResponseError.new(@janus.send_async(rqt, opts))
-        close_server_rabbitmq
       end
       @response.request
     end
@@ -49,8 +47,10 @@ module RubyRabbitmqJanus
 
     # Execute request
     def execute_request
+      @connection.start
       @janus = Janus.new(@connection.rabbit)
       yield
+      @connection.close
       raise RubyRabbitmqJanus::ErrorRabbit::RequestNotExecuted \
         @response if @response.test_request_return
     end

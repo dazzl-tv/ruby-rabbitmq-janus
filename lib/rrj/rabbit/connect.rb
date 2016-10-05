@@ -12,6 +12,10 @@ module RubyRabbitmqJanus
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(read_options_server)
+      end
+
+      # Openning a connection with Rabbitmq
+      def start
         @rabbit.start
       rescue => message
         raise ErrorRabbit::ConnectionRabbitmqFailed, message

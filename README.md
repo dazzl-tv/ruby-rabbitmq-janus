@@ -43,7 +43,7 @@ RubyRabbitmqJanus:
 
 For create an new request is simple. Use a command generator :
 ```linux
-rails g ruby_rabbitmq_janus:create_request test janus:info, transaction:<string>
+rails g ruby_rabbitmq_janus:create_request test info 'transaction:<string>,body:{plugins:false}'
 ```
 
 ### Usage

@@ -1,41 +1,32 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  # Format message request with good data
+  # Format message request with good data to HASH format
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
-    attr_reader :request
+    def initialize(request)
+      @request = request
+      @opts = nil # a delete
+    end
 
-    def initialize(json_file, opts)
-      @request = JSON.parse(File.read(json_file))
-      @opts = opts
-      @path = nil
+    def transform_request
       replaces
-    end
-
-    # Return request to Hash format
-    def to_hash
-      Hash @request
-    end
-
-    # Return request to JSON format
-    def to_json
-      @request.to_json
+      @request
     end
 
     private
 
-    # Replace element in json request with information used by transaction
+    # Replace element in hash request with information used for this transaction
     def replaces
-      create_transaction
-      return unless @opts
-      replace_standard_elements
-      replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
+      create_transaction if @request.key?('transaction')
+      # return unless @opts
+      # replace_standard_elements
+      # replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
     end
 
     # Create an transaction string and replace in request field with an String format
     def create_transaction
-      @request['transaction'] = [*('A'..'Z'), *('0'..'9')].sample(10).join
+      @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
     end
 
     # Replace a standart element in request

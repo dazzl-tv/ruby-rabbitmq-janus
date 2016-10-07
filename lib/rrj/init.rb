@@ -26,7 +26,8 @@ module RubyRabbitmqJanus
       Config.instance
       Requests.instance
 
-      @rabbit = RabbitMQ.new
+      @rabbit = nil
+      # @rabbit = RabbitMQ.new
 
       Keepalive.new
     end

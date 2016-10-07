@@ -7,11 +7,16 @@ module RubyRabbitmqJanus
     # @!attribute [r] rabbit
     #   @return [Bunny#session] Represent AMQP connection
     class Connect
-      attr_reader :rabbit
-
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(read_options_server)
+      end
+
+      # Create and transaction betwwen gem and rabbitmq
+      def transaction
+        start
+        yield
+        close
       end
 
       # Openning a connection with Rabbitmq
@@ -26,6 +31,11 @@ module RubyRabbitmqJanus
         @rabbit.close
       rescue
         raise Bunny::ConnectionClosedError
+      end
+
+      # Create an channel
+      def channel
+        @rabbit.create_channel
       end
 
       private

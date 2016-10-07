@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :reek:FeatureEnvy and :reek:InstanceVariableAssumption
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -10,22 +11,8 @@ module RubyRabbitmqJanus
       end
 
       # Send a message in queue
-      def send_a_message(request, correlation)
-        @exchange.publish(request, option_publish(correlation))
-      end
-
-      private
-
-      # Define options to message pusblishing in queue
-      # @return [Hash]
-      def option_publish(correlation)
-        hash = {
-          routing_key: Config.instance.options['queues']['queue_to'],
-          correlation_id: correlation,
-          content_type: 'application/json'
-        }
-        Log.instance.debug "Options for publishing a message : #{hash}"
-        hash
+      def send_a_message(request)
+        @exchange.publish(request.to_json, request.options)
       end
     end
 
@@ -34,15 +21,29 @@ module RubyRabbitmqJanus
       # Define echange and create an reply queue
       def initialize(exchange)
         @reply = exchange.queue('', exclusive: true)
+        @condition = ConditionVariable.new
+        @lock = Mutex.new
+        @response = nil
+        subscribe_to_queue
         super
+      end
+
+      def send_a_message(request)
+        @exchange.publish(request.to_json, request.options.merge!(reply_to: @reply.name))
+        @lock.synchronize { @condition.wait(@lock) }
+        Log.instance.debug "Response ... #{@response}"
+        @response
       end
 
       private
 
-      # Define options to message pusblishing in queue with reply configured
-      # @return [Hash]
-      def option_publish(correlation)
-        super.merge!(reply_to: @reply.name)
+      # Subscribe to queue in Rabbitmq
+      def subscribe_to_queue
+        @reply.subscribe do |_delivery_info, _properties, payload|
+          @response = JSON.parse payload
+          @lock.synchronize { @condition.signal }
+          Log.instance.debug "Response skdfjgnlkf,l... #{@response}"
+        end
       end
     end
   end

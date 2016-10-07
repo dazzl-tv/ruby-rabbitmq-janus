@@ -53,12 +53,11 @@ module RubyRabbitmqJanus
     # when a treatment is complet is destroy a session
     # @yieldparam session_attach [Hash] Use a session created
     # @yieldreturn [Hash] Contains a result to transaction with janus server
-    def transaction_plugin
-      attach_session
-      Log.instance.debug "Session create : #{@session}"
+    def transaction_simple
+      Log.instance.debug 'Transaction simple started'
+      attach_session_sync
       @session = yield
-      destroy_session
-      @session
+      destroy_session_sync
     end
 
     # Send a message (ASYNC), to RabbitMQ, with a template JSON.
@@ -76,6 +75,21 @@ module RubyRabbitmqJanus
     alias response_sync message_template_response
 
     private
+
+    # Create an session Janus in synchronous mode
+    def attach_session_sync
+      create = ask_sync 'create'
+      @session = response_sync create
+      attach = ask_sync 'attach', @session
+      @session = response_sync attach
+    end
+
+    def destroy_session_sync
+      detach = ask_sync 'detach', @session
+      @session = response_sync detach
+      destroy = ask_sync 'destroy', @session
+      response_sync destroy
+    end
 
     # Create an session Janus
     def attach_session

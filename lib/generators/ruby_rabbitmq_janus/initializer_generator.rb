@@ -8,7 +8,7 @@ module RubyRabbitmqJanus
 
       def copy_initializer
         initializer 'ruby_rabbitmq_janus.rb' do
-          "# frozen_string_literal: true\n\n@janus = RubyRabbitmqJanus::RRJ.new"
+          "# frozen_string_literal: true\n\n::RRJ = RubyRabbitmqJanus::RRJ.new"
         end
       end
     end

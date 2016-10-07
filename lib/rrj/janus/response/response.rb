@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'json'
-
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Response Janus received to RabbitMQ server
@@ -44,6 +42,7 @@ module RubyRabbitmqJanus
       when 'attach'
         merge('handle_id')
       end
+      Log.instance.debug "Response janus : #{@response}"
       @response
     end
 

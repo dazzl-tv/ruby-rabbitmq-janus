@@ -2,7 +2,7 @@
 server:
   # Precise RabbitMQ host - Default 'localhost'
   host: localhost
-  # Precise RabbitMQ port - Default 'port'
+  # Precise RabbitMQ port - Default '5672'
   port: 5672
   # Precise RabbitMQ vhost - Default '/'
   vhost: /
@@ -26,6 +26,18 @@ janus:
 
 # Options gem
 gem:
-  # Option for logging
+  # Option for logs
   log:
-    level: 'debug'
+    # Define level to log
+    # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
+    level: INFO
+  # Option for sessions
+  session:
+    # Define time to send a keepalive message in seconds
+    keepalive: 45
+  # Option for used multi thread
+  thread:
+    # Boolean for activate options thread
+    enable: false
+    # Number of core
+    number: 1

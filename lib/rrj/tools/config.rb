@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'yaml'
-
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Loading a yaml file for apply a configuration to gem.
@@ -36,6 +34,8 @@ module RubyRabbitmqJanus
     def load_configuration(file)
       Log.instance.info("Loading configuration file : #{file}")
       YAML.load(File.read(file))
+    rescue
+      raise RubyRabbitmqJanus::ErrorConfig::ConfigFileNotFound, file
     end
 
     # Load customize configuration file if exist
@@ -50,8 +50,11 @@ module RubyRabbitmqJanus
       @options ||= load_configuration(file)
     end
 
+    # Define log lvel used in this gem
     def define_log_level_used
-      Log.instance.level = @options['gem']['log']['level']
+      Log.instance.level = Log::LEVELS[@options['gem']['log']['level'].to_sym]
+    rescue
+      raise RubyRabbitmqJanus::ErrorConfig::LevelNotDefine
     end
   end
 end

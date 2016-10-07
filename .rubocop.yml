@@ -8,8 +8,5 @@ AllCops:
 Style/Encoding:
   Enabled: true
 
-Style/FrozenStringLiteralComment:
-  EnforcedStyle: always
-
 Metrics/LineLength:
   Max: 90

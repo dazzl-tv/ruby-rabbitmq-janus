@@ -1,24 +1,25 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'key_path'
-
 module RubyRabbitmqJanus
   # Format message request with good data
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
+    attr_reader :request
+
     def initialize(json_file, opts)
       @request = JSON.parse(File.read(json_file))
       @opts = opts
       @path = nil
+      replaces
     end
 
+    # Return request to Hash format
     def to_hash
       Hash @request
     end
 
+    # Return request to JSON format
     def to_json
-      replaces
       @request.to_json
     end
 
@@ -37,12 +38,14 @@ module RubyRabbitmqJanus
       @request['transaction'] = [*('A'..'Z'), *('0'..'9')].sample(10).join
     end
 
+    # Replace a standart element in request
     def replace_standard_elements
       replace_element('session_id')
       replace_plugin
       replace_element(@opts['handle_id'] ? 'handle_id' : 'sender', 'handle_id')
     end
 
+    # Replace element specific in request
     def replace_specific_elements
       if request_as_replace_specific
         new_hash = rewrite_key_to_string(@opts[:other_key])
@@ -85,6 +88,7 @@ module RubyRabbitmqJanus
       ]
     end
 
+    # Replace value in request Hash
     def running_hash(hash, parent = '')
       hash.each do |key, value|
         if value.is_a?(Hash)
@@ -95,6 +99,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # Test if request as specific elements
     def request_as_replace_specific
       ['<string>', '<number>'].each do |value|
         return true if @request['body'].value?(value)

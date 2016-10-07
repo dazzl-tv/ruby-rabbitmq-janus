@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request_sync, name: :detach do
+  describe '.response', type: :request_async, name: :detach do
     let(:transaction) { RubyRabbitmqJanus::RRJ.new }
 
     # Request type create

@@ -2,16 +2,12 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RabitMQ' do
+describe 'RubyRabbitmqJanus::RabitMQ', type: :config do
   before(:context) do
     RubyRabbitmqJanus::Log.instance
     RubyRabbitmqJanus::Config.instance
     RubyRabbitmqJanus::Requests.instance
     @rabbit = RubyRabbitmqJanus::RabbitMQ.new
-  end
-
-  it 'Connection to RabbitMQ Server' do
-    expect(@rabbit.send(:open_server_rabbitmq).class).to eq Bunny::Session
   end
 
   it 'Close connection RabbitMQ Server' do

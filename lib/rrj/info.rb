@@ -3,7 +3,7 @@
 # Define constant to gem.
 module RubyRabbitmqJanus
   # Define version to gem
-  VERSION = '0.3.0'
+  VERSION = '1.0.0'
 
   # Define a summary description to gem
   SUMMARY = 'Ruby RabbitMQ Janus'
@@ -14,4 +14,14 @@ module RubyRabbitmqJanus
     'send to RabbitMQ server in a queue for janus server. Janus processes a message ' \
     'and send to RabbitMQ server in a queue for gem. Once the received message is ' \
     'decoded and returned through the Rails API.'
+
+  # Define homepage
+  HOMEPAGE = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'
+
+  # Define a post install message
+  POST_INSTALL = \
+    "# =====\n" \
+    "# Thanks for installing!\n" \
+    "# See doc in #{HOMEPAGE}.\n" \
+    '# ====='
 end

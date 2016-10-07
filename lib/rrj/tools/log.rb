@@ -22,6 +22,7 @@ module RubyRabbitmqJanus
     # Returns a new instance to Log
     def initialize
       @logs = defined?(Rails) ? Rails.logger : Logger.new('log/rails-rabbit-janus.log')
+      @tag = ActiveSupport::TaggedLogging.new(@logs)
       @logs.progname = RubyRabbitmqJanus.name
       @logs.level = LEVELS[:DEBUG]
       @logs.info('### Start gem Rails Rabbit Janus ###')
@@ -31,37 +32,37 @@ module RubyRabbitmqJanus
     # Write a message in log with a UNKNOWN level
     # @param message [String] Message writing in warning level in log
     def unknown(message)
-      @logs.unknown(message)
+      write_tag { @logs.unknown(message) }
     end
 
     # Write a message in log with a FATAL level
     # @param message [String] Message writing in warning level in log
     def fatal(message)
-      @logs.fatal(message) if test_level?(Logger::FATAL)
+      write_tag { @logs.fatal(message) } if test_level?(Logger::FATAL)
     end
 
     # Write a message in log with a ERROR level
     # @param message [String] Message writing in warning level in log
     def error(message)
-      @logs.error(message) if test_level?(Logger::ERROR)
+      write_tag { @logs.error(message) } if test_level?(Logger::ERROR)
     end
 
     # Write a message in log with a warn level
     # @param message [String] Message writing in warning level in log
     def warn(message)
-      @logs.warn(message) if test_level?(Logger::WARN)
+      write_tag { @logs.warn(message) } if test_level?(Logger::WARN)
     end
 
     # Write a message in log with a info level
     # @param message [String] Message writing in info level in log
     def info(message)
-      @logs.info(message) if test_level?(Logger::INFO)
+      write_tag { @logs.info(message) } if test_level?(Logger::INFO)
     end
 
     # Write a message in log with a debug level
     # @param message [String] Message writing in debug level in log
     def debug(message)
-      @logs.debug(message) if test_level?(Logger::DEBUG)
+      write_tag { @logs.debug(message) } if test_level?(Logger::DEBUG)
     end
 
     def logger
@@ -73,6 +74,10 @@ module RubyRabbitmqJanus
     # This method smell :reek:UtilityFunction
     def test_level?(this_level)
       this_level >= Log.instance.level ? true : false
+    end
+
+    def write_tag
+      @tag.tagged(@logs.progname) { yield }
     end
   end
 end

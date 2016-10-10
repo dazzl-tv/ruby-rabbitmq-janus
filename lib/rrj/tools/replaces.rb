@@ -1,43 +1,61 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  # Format message request with good data
+  # Format message request with good data to HASH format
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
-    attr_reader :request
+    def initialize(request, options = nil)
+      @request = request
+      @opts = options
+      Log.instance.debug "HANDLEEE ?? #{@opts}"
+    end
 
-    def initialize(json_file, opts)
-      @request = JSON.parse(File.read(json_file))
-      @opts = opts
-      @path = nil
+    def transform_request
       replaces
-    end
-
-    # Return request to Hash format
-    def to_hash
-      Hash @request
-    end
-
-    # Return request to JSON format
-    def to_json
-      @request.to_json
+      @request
     end
 
     private
 
-    # Replace element in json request with information used by transaction
+    # Replace element in hash request with information used for this transaction
     def replaces
-      create_transaction
-      return unless @opts
-      replace_standard_elements
-      replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
+      replace_transaction if @request.key?('transaction')
+      replace_session if @request.key?('session_id')
+      replace_plugin if @request.key?('plugin')
+      replace_handle if @request.key?('handle_id')
+      # return unless @opts
+      # replace_standard_elements
+      # replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
     end
 
     # Create an transaction string and replace in request field with an String format
-    def create_transaction
-      @request['transaction'] = [*('A'..'Z'), *('0'..'9')].sample(10).join
+    def replace_transaction
+      @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
+    rescue => message
+      Log.instance.debug "Error transaction replace : #{message}"
     end
 
+    # Read option session and replace in request
+    def replace_session
+      @request['session_id'] = @opts['session_id']
+    rescue => message
+      Log.instance.debug "Error session replace : #{message}"
+    end
+
+    def replace_plugin
+      @request['plugin'] = Config.instance.options['janus']['plugin'][0]
+    rescue => message
+      Log.instance.debug "Error plugin replace : #{message}"
+    end
+
+    def replace_handle
+      Log.instance.debug 'Replace handle ..................'
+      @request['handle_id'] = @opts['handle_id']
+    rescue => message
+      Log.instance.debug "Error handle replace : #{message}"
+    end
+
+=begin
     # Replace a standart element in request
     def replace_standard_elements
       replace_element('session_id')
@@ -110,5 +128,6 @@ module RubyRabbitmqJanus
     def new_parent(key, parent)
       "#{parent}#{'.' unless parent.empty?}#{key}"
     end
+=end
   end
 end

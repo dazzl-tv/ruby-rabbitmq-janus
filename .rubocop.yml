@@ -8,5 +8,8 @@ AllCops:
 Style/Encoding:
   Enabled: true
 
+Style/BlockComments:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 90

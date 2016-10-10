@@ -4,11 +4,11 @@ require 'singleton'
 require 'yaml'
 require 'json'
 require 'securerandom'
-require 'thread'
 require 'bunny'
 require 'logger'
 require 'key_path'
 require 'active_support'
+require 'concurrent'
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -16,8 +16,6 @@ module RubyRabbitmqJanus
   # @!attribute [r] session
   #   @return [Hash] Response to request sending in transaction
   class RRJ
-    attr_reader :session, :handle
-
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
       @session, @handle = nil
@@ -26,11 +24,9 @@ module RubyRabbitmqJanus
       Config.instance
       Requests.instance
 
-      @rabbit = RabbitMQ.new
-
-      Keepalive.new
+      @session = Keepalive.new.session
     end
-
+=begin
     # Send a message (SYNC), to RabbitMQ, with a template JSON.
     # @return [Hash] Contains information to request sending
     # @param template_used [String] Json used to request sending in RabbitMQ
@@ -48,20 +44,15 @@ module RubyRabbitmqJanus
       Log.instance.warn "InfoRequest ;p #{info_request}"
       @rabbit.ask_response(info_request)
     end
-
+=end
     # Manage a transaction with an plugin in janus
-    # Is create an session and attach with a plugin configured in file conf to gem, then
-    # when a treatment is complet is destroy a session
-    # @yieldparam session_attach [Hash] Use a session created
-    # @yieldreturn [Hash] Contains a result to transaction with janus server
-    def transaction_plugin
-      attach_session
-      Log.instance.debug "Session create : #{@session}"
-      @session = yield
-      destroy_session
-      @session
+    # Use a running session for working with janus
+    def transaction(type)
+      Log.instance.debug 'Transaction a started'
+      tran = Transaction.new(@session)
+      tran.handle_running(type)
     end
-
+=begin
     # Send a message (ASYNC), to RabbitMQ, with a template JSON.
     # @return [Hash] Contains response to request.
     # @param template_used [String] Json used to request sending in RabbitMQ
@@ -77,6 +68,21 @@ module RubyRabbitmqJanus
     alias response_sync message_template_response
 
     private
+
+    # Create an session Janus in synchronous mode
+    def attach_session_sync
+      create = ask_sync 'create'
+      @session = response_sync create
+      attach = ask_sync 'attach', @session
+      @session = response_sync attach
+    end
+
+    def destroy_session_sync
+      detach = ask_sync 'detach', @session
+      @session = response_sync detach
+      destroy = ask_sync 'destroy', @session
+      response_sync destroy
+    end
 
     # Create an session Janus
     def attach_session
@@ -95,5 +101,6 @@ module RubyRabbitmqJanus
       raise ErrorRequest::RequestTemplateNotExist, request_name  \
         unless Requests.instance.requests.key? request_name
     end
+=end
   end
 end

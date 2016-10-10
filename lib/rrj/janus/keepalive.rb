@@ -10,6 +10,11 @@ module RubyRabbitmqJanus
       session_live
     end
 
+    def session
+      sleep 1
+      @response.session
+    end
+
     private
 
     # Star an session janus
@@ -44,8 +49,7 @@ module RubyRabbitmqJanus
     def session_keepalive(time_to_live)
       loop do
         sleep time_to_live
-        @publish.send_a_message(Message.new('keepalive',
-                                            'session_id' => @response.session))
+        @publish.send_a_message(Message.new('keepalive', 'session_id' => session))
       end
     rescue => message
       Log.instance.debug "Error keepalive : #{message}"

@@ -7,6 +7,7 @@ module RubyRabbitmqJanus
     def initialize(request, options = nil)
       @request = request
       @opts = options
+      Log.instance.debug "HANDLEEE ?? #{@opts}"
     end
 
     def transform_request
@@ -20,6 +21,8 @@ module RubyRabbitmqJanus
     def replaces
       replace_transaction if @request.key?('transaction')
       replace_session if @request.key?('session_id')
+      replace_plugin if @request.key?('plugin')
+      replace_handle if @request.key?('handle_id')
       # return unless @opts
       # replace_standard_elements
       # replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
@@ -39,6 +42,20 @@ module RubyRabbitmqJanus
       Log.instance.debug "Error session replace : #{message}"
     end
 
+    def replace_plugin
+      @request['plugin'] = Config.instance.options['janus']['plugin'][0]
+    rescue => message
+      Log.instance.debug "Error plugin replace : #{message}"
+    end
+
+    def replace_handle
+      Log.instance.debug 'Replace handle ..................'
+      @request['handle_id'] = @opts['handle_id']
+    rescue => message
+      Log.instance.debug "Error handle replace : #{message}"
+    end
+
+=begin
     # Replace a standart element in request
     def replace_standard_elements
       replace_element('session_id')
@@ -111,5 +128,6 @@ module RubyRabbitmqJanus
     def new_parent(key, parent)
       "#{parent}#{'.' unless parent.empty?}#{key}"
     end
+=end
   end
 end

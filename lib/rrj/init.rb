@@ -16,8 +16,6 @@ module RubyRabbitmqJanus
   # @!attribute [r] session
   #   @return [Hash] Response to request sending in transaction
   class RRJ
-    attr_reader :session, :handle
-
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
       @session, @handle = nil
@@ -26,12 +24,9 @@ module RubyRabbitmqJanus
       Config.instance
       Requests.instance
 
-      @rabbit = nil
-      # @rabbit = RabbitMQ.new
-
-      Keepalive.new
+      @session = Keepalive.new.session
     end
-
+=begin
     # Send a message (SYNC), to RabbitMQ, with a template JSON.
     # @return [Hash] Contains information to request sending
     # @param template_used [String] Json used to request sending in RabbitMQ
@@ -48,19 +43,15 @@ module RubyRabbitmqJanus
     def message_template_response(info_request)
       @rabbit.ask_response(info_request)
     end
-
+=end
     # Manage a transaction with an plugin in janus
-    # Is create an session and attach with a plugin configured in file conf to gem, then
-    # when a treatment is complet is destroy a session
-    # @yieldparam session_attach [Hash] Use a session created
-    # @yieldreturn [Hash] Contains a result to transaction with janus server
-    def transaction_simple
-      Log.instance.debug 'Transaction simple started'
-      attach_session_sync
-      @session = yield
-      destroy_session_sync
+    # Use a running session for working with janus
+    def transaction(type)
+      Log.instance.debug 'Transaction a started'
+      tran = Transaction.new(@session)
+      tran.handle_running(type)
     end
-
+=begin
     # Send a message (ASYNC), to RabbitMQ, with a template JSON.
     # @return [Hash] Contains response to request.
     # @param template_used [String] Json used to request sending in RabbitMQ
@@ -109,5 +100,6 @@ module RubyRabbitmqJanus
       raise ErrorRequest::RequestTemplateNotExist, request_name  \
         unless Requests.instance.requests.key? request_name
     end
+=end
   end
 end

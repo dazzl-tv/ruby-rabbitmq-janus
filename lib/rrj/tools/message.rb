@@ -4,16 +4,19 @@ module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Create an message for janus
   class Message
+    attr_reader :type
+
     # Instanciate an message
     # @param template_request [String] Name of request prepare
     # @param [Hash] Options to request
     # @option options [String] :session_id Identifier to session
+    # @option options [String] :handle_id Identifier to session manipulate
     def initialize(template_request, options = nil)
       @request = {}
-      @options = options
+      @type = template_request
       @properties = Propertie.new
-      load_request_file(template_request)
-      prepare_request
+      load_request_file
+      prepare_request(options)
     end
 
     # Return request to json format
@@ -39,16 +42,16 @@ module RubyRabbitmqJanus
     private
 
     # Load raw request
-    def load_request_file(template_request)
-      @request = JSON.parse File.read Requests.instance.requests[template_request]
-      Log.instance.debug "Opening request : #{to_nice_json}"
+    def load_request_file
+      @request = JSON.parse File.read Requests.instance.requests[@type]
+      Log.instance.debug "Opening request : #{to_json}"
     end
 
     # Transform raw request in request to janus, so replace element <string>, <number>
     # and other with real value
-    def prepare_request
-      @request = Replace.new(@request).transform_request
-      Log.instance.debug "Prepare request for janus : #{to_nice_json}"
+    def prepare_request(options)
+      @request = Replace.new(@request, options).transform_request
+      Log.instance.debug "Prepare request for janus : #{to_json}"
     end
   end
 end

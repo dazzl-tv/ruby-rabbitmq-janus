@@ -10,6 +10,7 @@ require 'rrj/tools/type_data'
 require 'rrj/tools/replaces'
 require 'rrj/tools/message'
 require 'rrj/tools/propertie'
+require 'rrj/tools/response'
 
 # Define actions with rabbitmq
 require 'rrj/rabbit/rabbitmq'

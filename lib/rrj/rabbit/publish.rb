@@ -18,9 +18,7 @@ module RubyRabbitmqJanus
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     class PublishReply < Publish
-      # Define echange and create an reply queue
       def initialize(exchange)
-        @reply = exchange.queue('', exclusive: true)
         @condition = ConditionVariable.new
         @lock = Mutex.new
         @response = nil
@@ -29,9 +27,9 @@ module RubyRabbitmqJanus
       end
 
       def send_a_message(request)
+        Log.instance.info "Send request type : #{request.type}"
         @exchange.publish(request.to_json, request.options.merge!(reply_to: @reply.name))
         @lock.synchronize { @condition.wait(@lock) }
-        Log.instance.debug "Response ... #{@response}"
         @response
       end
 
@@ -42,8 +40,19 @@ module RubyRabbitmqJanus
         @reply.subscribe do |_delivery_info, _properties, payload|
           @response = JSON.parse payload
           @lock.synchronize { @condition.signal }
-          Log.instance.debug "Response skdfjgnlkf,l... #{@response}"
         end
+      end
+    end
+
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    class PublishExclusive < PublishReply
+      def initialize(exchange, name_queue = '')
+        @reply = exchange.queue(name_queue, exclusive: true)
+        super(exchange)
+      end
+
+      def queue_name
+        @reply.name
       end
     end
   end

@@ -4,9 +4,9 @@ module RubyRabbitmqJanus
   # Format message request with good data to HASH format
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
-    def initialize(request)
+    def initialize(request, options = nil)
       @request = request
-      @opts = nil # a delete
+      @opts = options
     end
 
     def transform_request
@@ -18,15 +18,25 @@ module RubyRabbitmqJanus
 
     # Replace element in hash request with information used for this transaction
     def replaces
-      create_transaction if @request.key?('transaction')
+      replace_transaction if @request.key?('transaction')
+      replace_session if @request.key?('session_id')
       # return unless @opts
       # replace_standard_elements
       # replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
     end
 
     # Create an transaction string and replace in request field with an String format
-    def create_transaction
+    def replace_transaction
       @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
+    rescue => message
+      Log.instance.debug "Error transaction replace : #{message}"
+    end
+
+    # Read option session and replace in request
+    def replace_session
+      @request['session_id'] = @opts['session_id']
+    rescue => message
+      Log.instance.debug "Error session replace : #{message}"
     end
 
     # Replace a standart element in request

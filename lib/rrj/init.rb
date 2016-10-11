@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
   class RRJ
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      @session, @handle = nil
+      @handle = nil
 
       Log.instance
       Config.instance

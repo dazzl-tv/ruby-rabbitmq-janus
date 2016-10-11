@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "janus": { "type": "string", "pattern": "success" },
+    "session_id": { "type": "integer" },
+    "transaction": { "type": "string" },
+    "sender": { "type": "integer" },
+    "plugindata": {
+      "type": "hash",
+      "properties": {
+        "data": {
+          "type": "hash",
+          "properties": {
+            "videocontrol": { "type": "string", "pattern": "destroyed" },
+            "channel": { "type": "integer"}
+          },
+          "required": [
+            "videocontrol",
+            "channel"
+          ]
+        },
+        "plugin": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "data",
+        "plugin"
+      ]
+    }
+  },
+  "required": [
+    "janus",
+    "session_id",
+    "sender",
+    "transaction",
+    "plugindata"
+  ]
+}

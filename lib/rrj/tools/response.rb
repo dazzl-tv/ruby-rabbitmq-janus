@@ -25,10 +25,17 @@ module RubyRabbitmqJanus
       @request
     end
 
+    # Return a response simple for client
+    def for_plugin
+      @request['plugindata']['data']
+    end
+
+    # Return a integer to session
     def session
       data_id
     end
 
+    # Return a integer to handle
     def sender
       data_id
     end

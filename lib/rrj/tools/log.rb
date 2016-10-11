@@ -17,16 +17,16 @@ module RubyRabbitmqJanus
     }.freeze
 
     # This method smell :reek:Attribute
-    attr_accessor :level
+    attr_accessor :level, :progname
 
     # Returns a new instance to Log
     def initialize
-      @logs = defined?(Rails) ? logger_rails : logger_develop
-      @tag = ActiveSupport::TaggedLogging.new(@logs)
-      @logs.progname = RubyRabbitmqJanus.name
-      @logs.level = LEVELS[:DEBUG]
-      @logs.info('### Start gem Rails Rabbit Janus ###')
-      @level = @logs.level
+      logs = defined?(Rails) ? logger_rails : logger_develop
+      logs.progname = RubyRabbitmqJanus.name
+      logs.level = LEVELS[:DEBUG]
+      logs.info('### Start gem Rails Rabbit Janus ###')
+      @level = logs.level
+      @logs = ActiveSupport::TaggedLogging.new(logs)
     end
 
     # Write a message in log with a UNKNOWN level
@@ -92,7 +92,7 @@ module RubyRabbitmqJanus
     end
 
     def write_tag
-      @tag.tagged(@logs.progname) { yield }
+      @logs.tagged(@logs.progname) { yield }
     end
   end
 end

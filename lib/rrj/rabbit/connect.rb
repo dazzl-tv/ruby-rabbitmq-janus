@@ -16,8 +16,9 @@ module RubyRabbitmqJanus
       # Create and transaction betwwen gem and rabbitmq
       def transaction
         start
-        yield
+        response = yield(self)
         close
+        response
       end
 
       # Openning a connection with Rabbitmq

@@ -36,15 +36,17 @@ module RubyRabbitmqJanus
       Log.instance.info("Send message :#{template_used}")
       @rabbit.ask_request_sync(template_used, opts)
     end
-
-    # Send a message to RabbitMQ for reading a response
-    # @return [Hash] Contains a response to request sending
-    # @param info_request [Hash] Contains information to request sending
-    def message_template_response(info_request)
-      Log.instance.warn "InfoRequest ;p #{info_request}"
-      @rabbit.ask_response(info_request)
-    end
 =end
+
+    # Send a simple message to janus
+    def message_post(type = 'info')
+      Log.instance.warn "Send a simple message #{type}"
+      Rabbit::Connect.new.transaction do |rabbit|
+        publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        RubyRabbitmqJanus::Response.new(publish.send_a_message(Message.new(type))).to_json
+      end
+    end
+
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
     def transaction(type, options = {})

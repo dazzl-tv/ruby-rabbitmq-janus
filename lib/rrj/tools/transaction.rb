@@ -17,7 +17,7 @@ module RubyRabbitmqJanus
       @handle = publish_message_session('attach').sender
       response = publish_message_handle(type, options)
       @rabbit.close
-      response.to_hash
+      response.for_plugin
     end
 
     private

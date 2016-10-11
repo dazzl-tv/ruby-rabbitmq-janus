@@ -1,0 +1,2 @@
+config/request/channel/* merge=ours
+config/request/channel/README.md merge=ours

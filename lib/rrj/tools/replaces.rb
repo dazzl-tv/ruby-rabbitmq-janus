@@ -79,7 +79,7 @@ module RubyRabbitmqJanus
     end
 
     # Replace value in request Hash
-    def running_hash(hash, parent = '')
+    def running_hash(hash, parent = 'body')
       hash.each do |key, value|
         if value.is_a?(Hash)
           running_hash(value, new_parent(key, parent))

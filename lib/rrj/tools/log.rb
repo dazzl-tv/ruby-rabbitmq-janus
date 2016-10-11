@@ -21,7 +21,7 @@ module RubyRabbitmqJanus
 
     # Returns a new instance to Log
     def initialize
-      @logs = defined?(Rails) ? Rails.logger : Logger.new('log/rails-rabbit-janus.log')
+      @logs = defined?(Rails) ? logger_rails : logger_develop
       @tag = ActiveSupport::TaggedLogging.new(@logs)
       @logs.progname = RubyRabbitmqJanus.name
       @logs.level = LEVELS[:DEBUG]
@@ -65,11 +65,26 @@ module RubyRabbitmqJanus
       write_tag { @logs.debug(message) } if test_level?(Logger::DEBUG)
     end
 
+    # Return instance logger
     def logger
       @logs
     end
 
     private
+
+    # Define instance logger with rails
+    def logger_rails
+      Rails.logger
+    end
+
+    # Define instance logger wiptout rails
+    def logger_develop
+      log = Logger.new('log/rails-rabbit-janus.log')
+      log.formatter = proc do |severity, _datetime, _progname, msg|
+        "#{severity[0, 1].upcase}, #{msg}\n"
+      end
+      log
+    end
 
     # This method smell :reek:UtilityFunction
     def test_level?(this_level)

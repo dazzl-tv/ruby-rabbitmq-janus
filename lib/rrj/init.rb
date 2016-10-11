@@ -47,10 +47,10 @@ module RubyRabbitmqJanus
 =end
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
-    def transaction(type)
+    def transaction(type, options = {})
       Log.instance.debug 'Transaction a started'
       tran = Transaction.new(@session)
-      tran.handle_running(type)
+      tran.handle_running(type, options)
     end
 =begin
     # Send a message (ASYNC), to RabbitMQ, with a template JSON.

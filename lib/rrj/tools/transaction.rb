@@ -13,9 +13,9 @@ module RubyRabbitmqJanus
       @handle = nil
     end
 
-    def handle_running(type)
+    def handle_running(type, options)
       @handle = publish_message_session('attach').sender
-      response = publish_message_handle(type)
+      response = publish_message_handle(type, options)
       @rabbit.close
       response.to_hash
     end
@@ -27,9 +27,9 @@ module RubyRabbitmqJanus
       Response.new(@publish.send_a_message(msg))
     end
 
-    def publish_message_handle(type)
-      Log.instance.debug "Handle : #{@handle}"
-      msg = Message.new(type, 'session_id' => @session, 'handle_id' => @handle)
+    def publish_message_handle(type, options = {})
+      opts = { 'session_id' => @session, 'handle_id' => @handle }
+      msg = Message.new(type, opts.merge!(other: options))
       Response.new(@publish.send_a_message(msg))
     end
 

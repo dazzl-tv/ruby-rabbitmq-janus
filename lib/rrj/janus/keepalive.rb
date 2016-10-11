@@ -7,11 +7,13 @@ module RubyRabbitmqJanus
     def initialize
       @response, @publish = nil
       @rabbit = Rabbit::Connect.new
+      @lock = Mutex.new
+      @condition = ConditionVariable.new
       session_live
     end
 
     def session
-      sleep 1
+      @lock.synchronize { @condition.wait(@lock) }
       @response.session
     end
 
@@ -36,6 +38,7 @@ module RubyRabbitmqJanus
     def initialize_thread
       @rabbit.start
       @response = session_start
+      @lock.synchronize { @condition.signal }
       session_keepalive(ttl)
       @rabbit.close
     end

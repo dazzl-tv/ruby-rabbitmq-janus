@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
     # @param [Hash] Options to request
     # @option options [String] :session_id Identifier to session
     # @option options [String] :handle_id Identifier to session manipulate
-    def initialize(template_request, options = nil)
+    def initialize(template_request, options = {})
       @request = {}
       @type = template_request
       @properties = Propertie.new

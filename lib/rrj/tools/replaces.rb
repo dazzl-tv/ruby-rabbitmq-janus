@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   # Format message request with good data to HASH format
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   class Replace
-    def initialize(request, options = nil)
+    def initialize(request, options = {})
       @request = request
       @opts = options
       Log.instance.debug "Option to replace in request #{@opts}"

@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
     def initialize(request, options = nil)
       @request = request
       @opts = options
-      Log.instance.debug "HANDLEEE ?? #{@opts}"
+      Log.instance.debug "Option to replace in request #{@opts}"
     end
 
     def transform_request
@@ -19,13 +19,15 @@ module RubyRabbitmqJanus
 
     # Replace element in hash request with information used for this transaction
     def replaces
+      replace_classic
+      replace_other if @opts.key?('other') && @request.key?('body')
+    end
+
+    def replace_classic
       replace_transaction if @request.key?('transaction')
       replace_session if @request.key?('session_id')
       replace_plugin if @request.key?('plugin')
       replace_handle if @request.key?('handle_id')
-      # return unless @opts
-      # replace_standard_elements
-      # replace_specific_elements if @opts.key?(:other_key) && @request.key?('body')
     end
 
     # Create an transaction string and replace in request field with an String format
@@ -49,52 +51,15 @@ module RubyRabbitmqJanus
     end
 
     def replace_handle
-      Log.instance.debug 'Replace handle ..................'
       @request['handle_id'] = @opts['handle_id']
     rescue => message
       Log.instance.debug "Error handle replace : #{message}"
     end
 
-=begin
-    # Replace a standart element in request
-    def replace_standard_elements
-      replace_element('session_id')
-      replace_plugin
-      replace_element(@opts['handle_id'] ? 'handle_id' : 'sender', 'handle_id')
-    end
-
-    # Replace element specific in request
-    def replace_specific_elements
-      if request_as_replace_specific
-        new_hash = rewrite_key_to_string(@opts[:other_key])
-        running_hash(new_hash)
-      end
-    end
-
-    # Replace a session_id field with an Integer
-    def replace_element(value, value_replace = value)
-      add_return(value_replace, value_data_or_precise(value)) \
-        if @request[value_replace]
-    end
-
-    # Format the response return
-    def value_data_or_precise(key)
-      @opts[key] || @opts['data']['id']
-    end
-
-    # Format the json used for request sending
-    def add_return(key, value)
-      @request[key] = value
-      @request.merge!(key => value)
-    end
-
-    # Replace plugin used for transaction
-    def replace_plugin
-      my_plugin = @request['plugin']
-      if my_plugin
-        number = TypeData.new(my_plugin)
-        add_return('plugin', Config.instance.options['janus']['plugins'][number.format])
-      end
+    def replace_other
+      running_hash(rewrite_key_to_string(@opts['other']))
+    rescue => message
+      Log.instance.debug "Error other field : #{message}"
     end
 
     # Rewrite key symbol to string
@@ -117,17 +82,9 @@ module RubyRabbitmqJanus
       end
     end
 
-    # Test if request as specific elements
-    def request_as_replace_specific
-      ['<string>', '<number>'].each do |value|
-        return true if @request['body'].value?(value)
-      end
-    end
-
     # This is method smells of :reek:UtilityFunction
     def new_parent(key, parent)
       "#{parent}#{'.' unless parent.empty?}#{key}"
     end
-=end
   end
 end

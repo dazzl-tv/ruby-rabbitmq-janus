@@ -43,7 +43,7 @@ module RubyRabbitmqJanus
     end
 
     def replace_plugin
-      @request['plugin'] = Config.instance.options['janus']['plugin'][0]
+      @request['plugin'] = Config.instance.options['janus']['plugins'][0]
     rescue => message
       Log.instance.debug "Error plugin replace : #{message}"
     end

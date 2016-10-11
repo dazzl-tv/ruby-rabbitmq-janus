@@ -7,13 +7,13 @@ module RubyRabbitmqJanus
     def initialize(session)
       Log.instance.debug 'Transaction is started'
       @rabbit = Rabbit::Connect.new
+      @rabbit.start
       @publish = publisher
       @session = session
       @handle = nil
     end
 
     def handle_running(type)
-      @rabbit.start
       @handle = publish_message_session('attach').sender
       response = publish_message_handle(type)
       @rabbit.close

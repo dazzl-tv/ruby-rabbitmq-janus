@@ -16,10 +16,12 @@ module RubyRabbitmqJanus
     #   Message.new('test', {
     #     "session_id": 42,
     #     "handle_id": 42,
-    #     other: {
+    #     "replace": {
     #       "audio": false,
-    #       "subtitle": true,
     #       "video": true
+    #     },
+    #     "add": {
+    #       "subtitle": true
     #     })
     def initialize(template_request, options = {})
       @request = {}

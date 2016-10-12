@@ -38,8 +38,9 @@ module RubyRabbitmqJanus
 
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
-    def transaction(type, options = {})
+    def transaction(type,  replace = {}, add = {})
       Log.instance.debug 'Transaction a started'
+      options = { 'replace' => replace, 'add' => add }
       tran = Transaction.new(@session)
       tran.handle_running(type, options)
     end

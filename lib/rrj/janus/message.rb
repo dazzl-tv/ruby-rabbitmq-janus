@@ -8,13 +8,23 @@ module RubyRabbitmqJanus
 
     # Instanciate an message
     # @param template_request [String] Name of request prepare
-    # @param [Hash] Options to request
+    # @param [Hash] options Options to request (replace element or add in body)
     # @option options [String] :session_id Identifier to session
     # @option options [String] :handle_id Identifier to session manipulate
+    # @option options [Hash] :other Element contains in request sending to janus
+    # @example Initialize a message
+    #   Message.new('test', {
+    #     "session_id": 42,
+    #     "handle_id": 42,
+    #     other: {
+    #       "audio": false,
+    #       "subtitle": true,
+    #       "video": true
+    #     })
     def initialize(template_request, options = {})
       @request = {}
       @type = template_request
-      @properties = Propertie.new
+      @properties = Rabbit::Propertie.new
       load_request_file
       prepare_request(options)
     end

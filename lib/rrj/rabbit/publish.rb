@@ -20,6 +20,7 @@ module RubyRabbitmqJanus
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     class PublishReply < Publish
+      # Initialize a queue
       def initialize(exchange)
         @condition = ConditionVariable.new
         @lock = Mutex.new
@@ -28,6 +29,7 @@ module RubyRabbitmqJanus
         super
       end
 
+      # Publish an message in rabbitmq
       def send_a_message(request)
         Log.instance.info "Send request type : #{request.type}"
         @exchange.publish(request.to_json, request.options.merge!(reply_to: @reply.name))
@@ -48,11 +50,14 @@ module RubyRabbitmqJanus
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     class PublishExclusive < PublishReply
+      # Initialize an queue exclusive
       def initialize(exchange, name_queue = '')
         @reply = exchange.queue(name_queue, exclusive: true)
         super(exchange)
       end
 
+      # Name to queue
+      # @return [String] Name to queue used
       def queue_name
         @reply.name
       end

@@ -91,6 +91,7 @@ module RubyRabbitmqJanus
       this_level >= Log.instance.level ? true : false
     end
 
+    # Write a log with an tag
     def write_tag
       @logs.tagged(@logs.progname) { yield }
     end

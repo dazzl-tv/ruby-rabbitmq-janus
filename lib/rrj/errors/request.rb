@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
+  # Module for manipulate error given in request class
   module ErrorRequest
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define errors with Rabbitmq when connection is failed

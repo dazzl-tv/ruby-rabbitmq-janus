@@ -26,6 +26,7 @@ module RubyRabbitmqJanus
       logs.level = LEVELS[:DEBUG]
       logs.info('### Start gem Rails Rabbit Janus ###')
       @level = logs.level
+      @progname = logs.progname
       @logs = ActiveSupport::TaggedLogging.new(logs)
     end
 

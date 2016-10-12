@@ -126,10 +126,14 @@ rabbitmq and use plugin echotest for janus server.
 Use tags for rspec
 | type            | name            |
 | --------------- | --------------- |
-| request_async   | attach          |
-| request_sync    | create          |
-| config          | detach          |
+| request         | attach          |
+|                 | create          |
+|                 | detach          |
 |                 | info            |
+|                 | test            |
+| config          | rabbit          |
+|                 | log             |
+|                 | config          |
 
 ### Documentation
 

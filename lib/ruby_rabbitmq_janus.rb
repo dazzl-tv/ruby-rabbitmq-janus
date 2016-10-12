@@ -17,7 +17,7 @@ require 'rrj/rabbit/propertie'
 require 'rrj/janus/keepalive'
 require 'rrj/janus/message'
 require 'rrj/janus/response'
-require 'rrj/tools/transaction'
+require 'rrj/janus/transaction'
 
 # Define errors in gems
 require 'rrj/errors/error'

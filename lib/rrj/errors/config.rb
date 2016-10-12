@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
+  # Module for manipulate exception
   module ErrorConfig
     # Define an error if the configuration file is not here
     class ConfigFileNotFound < RRJError

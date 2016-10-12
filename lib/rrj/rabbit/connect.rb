@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
+  # Module rabbit interaction
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Class for manage connection with rabbitmq
-    # @!attribute [r] rabbit
-    #   @return [Bunny#session] Represent AMQP connection
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
@@ -16,8 +15,9 @@ module RubyRabbitmqJanus
       # Create and transaction betwwen gem and rabbitmq
       def transaction
         start
-        yield
+        response = yield(self)
         close
+        response
       end
 
       # Openning a connection with Rabbitmq
@@ -44,6 +44,7 @@ module RubyRabbitmqJanus
 
       private
 
+      # Read option for bunny instance (connection with rabbitmq)
       def read_options_server
         cfg = Config.instance.options['server']
         {

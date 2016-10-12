@@ -14,7 +14,10 @@ module RubyRabbitmqJanus
     # @return HASH request with element replace
     def transform_request
       replace_classic
-      replace_other if @opts.key?('other') && @request.key?('body')
+      unless @opts.empty?
+        replace_other if test_presence?('replace')
+        add_other if test_presence?('add')
+      end
       @request
     end
 
@@ -62,11 +65,19 @@ module RubyRabbitmqJanus
 
     # Replace other element in request
     def replace_other
-      values = @opts['other']
+      values = @opts['replace']
       Log.instance.debug "Replace other element : #{values}"
       running_hash(rewrite_key_to_string(values))
     rescue => message
-      Log.instance.debug "Error other field : #{message}"
+      Log.instance.debug "Error REPLACE other field : #{message}"
+    end
+
+    def add_other
+      values = @opts['add']
+      Log.instance.debug "Add other element : #{values}"
+      @request['body'].merge!(values)
+    rescue => message
+      Log.instance.debug "Error ADD other field : #{message}"
     end
 
     # Rewrite key symbol to string
@@ -79,7 +90,7 @@ module RubyRabbitmqJanus
     end
 
     # Replace value in request Hash
-    def running_hash(hash, parent = '')
+    def running_hash(hash, parent = 'body')
       hash.each do |key, value|
         if value.is_a?(Hash)
           running_hash(value, new_parent(key, parent))
@@ -92,6 +103,11 @@ module RubyRabbitmqJanus
     # This is method smells of :reek:UtilityFunction
     def new_parent(key, parent)
       "#{parent}#{'.' unless parent.empty?}#{key}"
+    end
+
+    # This method of :reek:NilCheck
+    def test_presence?(presence_of_key)
+      @opts.key?(presence_of_key) && @request.key?('body') && !@opts[presence_of_key].nil?
     end
   end
 end

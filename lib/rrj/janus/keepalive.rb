@@ -3,7 +3,9 @@
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Manage sending keepalive message
+  # :reek:TooManyInstanceVariables { max_instance_variables: 6 }
   class Keepalive
+    # Initalize a keepalive message
     def initialize
       @response, @publish = nil
       @rabbit = Rabbit::Connect.new
@@ -12,6 +14,7 @@ module RubyRabbitmqJanus
       session_live
     end
 
+    # Return an number session created
     def session
       @lock.synchronize { @condition.wait(@lock) }
       @response.session
@@ -20,7 +23,6 @@ module RubyRabbitmqJanus
     private
 
     # Star an session janus
-    # Create -> Keepalive -> destroy
     def session_start
       msg_create = Message.new 'create'
       @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
@@ -35,6 +37,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # Initialize an session with janus and start a keepalive transaction
     def initialize_thread
       @rabbit.start
       @response = session_start
@@ -43,12 +46,14 @@ module RubyRabbitmqJanus
       @rabbit.close
     end
 
+    # Define a Time To Live between each request sending to janus
     def ttl
       time_to_live = Config.instance.options['gem']['session']['keepalive'].to_i
       Log.instance.debug "Starting a thread keepalive with interval : #{time_to_live}"
       time_to_live
     end
 
+    # Create an loop for sending a keepalive message
     def session_keepalive(time_to_live)
       loop do
         sleep time_to_live

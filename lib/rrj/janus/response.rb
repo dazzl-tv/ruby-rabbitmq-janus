@@ -42,6 +42,7 @@ module RubyRabbitmqJanus
 
     private
 
+    # Read a hash and return an identifier
     def data_id
       @request['data']['id'].to_i
     end

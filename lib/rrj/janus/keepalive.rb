@@ -16,23 +16,18 @@ module RubyRabbitmqJanus
 
     # Return an number session created
     def session
+      Log.instance.debug 'Waiting response for number session created'
       @lock.synchronize { @condition.wait(@lock) }
+      Log.instance.debug 'Response is here'
       @response.session
     end
 
     private
 
-    # Star an session janus
-    def session_start
-      msg_create = Message.new 'create'
-      @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
-      RubyRabbitmqJanus::Response.new @publish.send_a_message(msg_create)
-    end
-
     # Send to regular interval a message keepalive
     def session_live
       Thread.new do
-        Log.instance.debug 'Send keepalive session'
+        Log.instance.debug 'Create an session for keepalive'
         initialize_thread
       end
     end
@@ -46,6 +41,24 @@ module RubyRabbitmqJanus
       @rabbit.close
     end
 
+    # Star an session janus
+    def session_start
+      msg_create = Message.new 'create'
+      @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
+      RubyRabbitmqJanus::Response.new @publish.send_a_message(msg_create)
+    end
+
+    # Create an loop for sending a keepalive message
+    def session_keepalive(time_to_live)
+      loop do
+        sleeping time_to_live
+        @publish.send_a_message(Message.new('keepalive',
+                                            'session_id' => @response.session))
+      end
+    rescue => message
+      Log.instance.debug "Error keepalive : #{message}"
+    end
+
     # Define a Time To Live between each request sending to janus
     def ttl
       time_to_live = Config.instance.options['gem']['session']['keepalive'].to_i
@@ -53,14 +66,11 @@ module RubyRabbitmqJanus
       time_to_live
     end
 
-    # Create an loop for sending a keepalive message
-    def session_keepalive(time_to_live)
-      loop do
-        sleep time_to_live
-        @publish.send_a_message(Message.new('keepalive', 'session_id' => session))
+    def sleeping(time)
+      time.downto 1 do |seconde|
+        Log.instance.debug seconde
+        sleep 1
       end
-    rescue => message
-      Log.instance.debug "Error keepalive : #{message}"
     end
   end
 end

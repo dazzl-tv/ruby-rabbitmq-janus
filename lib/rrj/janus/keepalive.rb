@@ -68,7 +68,7 @@ module RubyRabbitmqJanus
 
     def sleeping(time)
       time.downto 1 do |seconde|
-        Log.instance.debug seconde
+        Log.instance.debug seconde.to_s
         sleep 1
       end
     end

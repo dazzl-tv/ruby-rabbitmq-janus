@@ -9,6 +9,7 @@ require 'logger'
 require 'key_path'
 require 'active_support'
 require 'concurrent'
+require 'colorize'
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>

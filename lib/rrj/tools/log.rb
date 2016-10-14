@@ -33,37 +33,37 @@ module RubyRabbitmqJanus
     # Write a message in log with a UNKNOWN level
     # @param message [String] Message writing in warning level in log
     def unknown(message)
-      write_tag { @logs.unknown(message) }
+      write_tag { @logs.unknown(message.brown) }
     end
 
     # Write a message in log with a FATAL level
     # @param message [String] Message writing in warning level in log
     def fatal(message)
-      write_tag { @logs.fatal(message) } if test_level?(Logger::FATAL)
+      write_tag { @logs.fatal(message.red) } if test_level?(Logger::FATAL)
     end
 
     # Write a message in log with a ERROR level
     # @param message [String] Message writing in warning level in log
     def error(message)
-      write_tag { @logs.error(message) } if test_level?(Logger::ERROR)
+      write_tag { @logs.error(message.orange) } if test_level?(Logger::ERROR)
     end
 
     # Write a message in log with a warn level
     # @param message [String] Message writing in warning level in log
     def warn(message)
-      write_tag { @logs.warn(message) } if test_level?(Logger::WARN)
+      write_tag { @logs.warn(message.yellow) } if test_level?(Logger::WARN)
     end
 
     # Write a message in log with a info level
     # @param message [String] Message writing in info level in log
     def info(message)
-      write_tag { @logs.info(message) } if test_level?(Logger::INFO)
+      write_tag { @logs.info(message.green) } if test_level?(Logger::INFO)
     end
 
     # Write a message in log with a debug level
     # @param message [String] Message writing in debug level in log
     def debug(message)
-      write_tag { @logs.debug(message) } if test_level?(Logger::DEBUG)
+      write_tag { @logs.debug(message.light_blue) } if test_level?(Logger::DEBUG)
     end
 
     # Return instance logger

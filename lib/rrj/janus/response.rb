@@ -12,6 +12,7 @@ module RubyRabbitmqJanus
 
     # Return request to json format
     def to_json
+      analysis
       @request.to_json
     end
 
@@ -22,6 +23,7 @@ module RubyRabbitmqJanus
 
     # Return request to hash format
     def to_hash
+      analysis
       @request
     end
 
@@ -44,7 +46,16 @@ module RubyRabbitmqJanus
 
     # Read a hash and return an identifier
     def data_id
+      analysis
       @request['data']['id'].to_i
+    end
+
+    # Analysis response and send exception if janus return an error
+    # :reek:DuplicateMethodCall
+    def analysis
+      raise ErrorJanus::JanusSimple, @request['error'] if @request['janus'].equal? 'error'
+      raise ErrorJanus::JanusPlugin, @request['plugindata']['data'] if \
+        @request.key?('plugindata') && @request['plugindata']['data'].key?('error_code')
     end
   end
 end

@@ -16,7 +16,3 @@ require 'rrj/janus/transaction'
 
 # Define errors in gems
 require 'rrj/errors/error'
-require 'rrj/errors/janus'
-require 'rrj/errors/config'
-require 'rrj/errors/rabbit'
-require 'rrj/errors/request'

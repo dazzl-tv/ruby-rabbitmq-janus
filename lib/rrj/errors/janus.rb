@@ -1,8 +1,8 @@
 # frozen_string_literal: true
+# :reek:FeatureEnvy
 
 module RubyRabbitmqJanus
-  # Module for manipulate error given by Janus
-  module ErrorJanus
+  module Errors
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define errors to message sending and response to janus
     class JanusError < RRJError
@@ -11,17 +11,17 @@ module RubyRabbitmqJanus
       end
     end
 
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error for simple message
     class JanusSimple < JanusError
-      # :reek:FeatureEnvy
       def initialize(message)
         super "JANUS [#{message['code']}] #{message['reason']}"
       end
     end
 
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error for plugin
     class JanusPlugin < JanusError
-      # :reek:FeatureEnvy
       def initialize(message)
         super "JANUS PLUGIN [#{message['error_code']}] #{message['error']}"
       end

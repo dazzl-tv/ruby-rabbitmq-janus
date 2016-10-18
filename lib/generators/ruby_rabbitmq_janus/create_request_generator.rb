@@ -10,9 +10,7 @@ module RubyRabbitmqJanus
       argument :content, type: :string, default: ''
 
       def create_request
-        File.open(file_json, 'w') do |file|
-          file.write(write_json)
-        end
+        create_file file_json, write_json
       end
 
       private

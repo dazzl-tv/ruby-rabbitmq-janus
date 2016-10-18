@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+# Module contains all lib to this gem
 module RubyRabbitmqJanus
+  # Module for generators
   module Generators
     # Create an class for generate a custom configuration file
     class ConfigurationGenerator < Rails::Generators::Base

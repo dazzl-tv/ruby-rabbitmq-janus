@@ -20,29 +20,30 @@ module RubyRabbitmqJanus
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      Log.instance
-      Config.instance
-      Requests.instance
+      Tools::Log.instance
+      Tools::Config.instance
+      Tools::Requests.instance
 
-      @session = Keepalive.new.session
+      @session = Janus::Keepalive.new.session
     end
 
     # Send a simple message to janus
     # This method smells of :reek:UtilityFunction
     def message_post(type = 'info')
-      Log.instance.warn "Send a simple message : #{type}"
+      Tools::Log.instance.warn "Send a simple message : #{type}"
       Rabbit::Connect.new.transaction do |rabbit|
         publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-        RubyRabbitmqJanus::Response.new(publish.send_a_message(Message.new(type))).to_json
+        resp = publish.send_a_message(Janus::Message.new(type))
+        Janus::Response.new(resp).to_json
       end
     end
 
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
-    def transaction(type,  replace = {}, add = {})
-      Log.instance.debug 'Transaction a started'
+    def transaction(type, replace = {}, add = {})
+      Tools::Log.instance.debug 'Transaction a started'
       options = { 'replace' => replace, 'add' => add }
-      tran = Transaction.new(@session)
+      tran = Janus::Transaction.new(@session)
       tran.handle_running(type, options)
     end
   end

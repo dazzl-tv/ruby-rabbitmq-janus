@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  # Module for manipulate error given in request class
-  module ErrorRequest
+  module Errors
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define errors with Rabbitmq when connection is failed
-    class RequestTemplateNotExist < RRJError
+    class RequestTemplateNotExist < Errors::RRJError
       def initialize(request_name)
         super "The template request (#{request_name}) does not exist", :fatal
       end
@@ -13,7 +12,7 @@ module RubyRabbitmqJanus
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define errors if request folder does not exist
-    class RequestFolerDoesntExist < RRJError
+    class RequestFolerDoesntExist < Errors::RRJError
       def initialize
         super 'The requests folder does not exist', :fatal
       end

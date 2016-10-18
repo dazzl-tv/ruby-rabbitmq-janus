@@ -7,13 +7,13 @@ module RubyRabbitmqJanus
     class Publish
       # Define Exchange operation
       def initialize(exchange)
-        Log.instance.debug 'Create/Connect to queue'
+        Tools::Log.instance.debug 'Create/Connect to queue'
         @exchange = exchange.default_exchange
       end
 
       # Send a message in queue
       def send_a_message(request)
-        Log.instance.info "Send request type : #{request.type}"
+        Tools::Log.instance.info "Send request type : #{request.type}"
         @exchange.publish(request.to_json, request.options)
       end
     end
@@ -31,7 +31,7 @@ module RubyRabbitmqJanus
 
       # Publish an message in rabbitmq
       def send_a_message(request)
-        Log.instance.info "Send request type : #{request.type}"
+        Tools::Log.instance.info "Send request type : #{request.type}"
         @exchange.publish(request.to_json, request.options.merge!(reply_to: @reply.name))
         @lock.synchronize { @condition.wait(@lock) }
         @response

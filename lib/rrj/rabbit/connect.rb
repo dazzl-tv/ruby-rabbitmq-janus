@@ -24,7 +24,7 @@ module RubyRabbitmqJanus
         Tools::Log.instance.debug 'Connection to rabbitmq START'
         @rabbit.start
       rescue => message
-        raise ErrorRabbit::ConnectionRabbitmqFailed, message
+        raise Errors::ConnectionRabbitmqFailed, message
       end
 
       # Close connection to server RabbitMQ

@@ -9,10 +9,7 @@ require 'rrj/tools/tools'
 require 'rrj/rabbit/rabbit'
 
 # Define actions with janus
-require 'rrj/janus/keepalive'
-require 'rrj/janus/message'
-require 'rrj/janus/response'
-require 'rrj/janus/transaction'
+require 'rrj/janus/janus'
 
 # Define errors in gems
 require 'rrj/errors/error'

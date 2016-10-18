@@ -24,7 +24,7 @@ module RubyRabbitmqJanus
       Tools::Config.instance
       Tools::Requests.instance
 
-      @session = Keepalive.new.session
+      @session = Janus::Keepalive.new.session
     end
 
     # Send a simple message to janus
@@ -33,7 +33,8 @@ module RubyRabbitmqJanus
       Tools::Log.instance.warn "Send a simple message : #{type}"
       Rabbit::Connect.new.transaction do |rabbit|
         publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-        RubyRabbitmqJanus::Response.new(publish.send_a_message(Message.new(type))).to_json
+        resp = publish.send_a_message(Janus::Message.new(type))
+        Janus::Response.new(resp).to_json
       end
     end
 
@@ -42,7 +43,7 @@ module RubyRabbitmqJanus
     def transaction(type, replace = {}, add = {})
       Tools::Log.instance.debug 'Transaction a started'
       options = { 'replace' => replace, 'add' => add }
-      tran = Transaction.new(@session)
+      tran = Janus::Transaction.new(@session)
       tran.handle_running(type, options)
     end
   end

@@ -52,7 +52,7 @@ module RubyRabbitmqJanus
       # Create an loop for sending a keepalive message
       def session_keepalive(time_to_live)
         loop do
-          sleeping time_to_live
+          sleep time_to_live
           @publish.send_a_message(Message.new('keepalive',
                                               'session_id' => @response.session))
         end
@@ -66,13 +66,6 @@ module RubyRabbitmqJanus
         Tools::Log.instance.debug 'Starting a thread keepalive with interval : ' \
           + time_to_live
         time_to_live
-      end
-
-      def sleeping(time)
-        time.downto 1 do |seconde|
-          Tools::Log.instance.debug seconde.to_s
-          sleep 1
-        end
       end
     end
   end

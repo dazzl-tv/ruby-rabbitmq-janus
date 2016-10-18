@@ -5,6 +5,7 @@ module RubyRabbitmqJanus
     # Format message request with good data to HASH format
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     class Replace
+      # Initialize a tool replace
       def initialize(request, options = {})
         @request = request
         @opts = options
@@ -73,6 +74,7 @@ module RubyRabbitmqJanus
         Tools::Log.instance.debug "Error REPLACE other field : #{message}"
       end
 
+      # Adds other element to request
       def add_other
         values = @opts['add']
         Tools::Log.instance.debug "Add other element : #{values}"

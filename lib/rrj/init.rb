@@ -22,7 +22,7 @@ module RubyRabbitmqJanus
     def initialize
       Tools::Log.instance
       Tools::Config.instance
-      Requests.instance
+      Tools::Requests.instance
 
       @session = Keepalive.new.session
     end

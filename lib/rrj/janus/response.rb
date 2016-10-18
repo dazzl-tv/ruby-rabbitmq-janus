@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
     # Instanciate a response
     def initialize(response_janus)
       @request = response_janus
-      Log.instance.debug "Response return : #{to_json}"
+      Tools::Log.instance.debug "Response return : #{to_json}"
     end
 
     # Return request to json format

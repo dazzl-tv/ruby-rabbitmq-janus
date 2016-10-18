@@ -3,10 +3,7 @@
 require 'rrj/init'
 
 # Define tools for this gems
-require 'rrj/tools/log'
-require 'rrj/tools/config'
-require 'rrj/tools/requests'
-require 'rrj/tools/replaces'
+require 'rrj/tools/tools'
 
 # Define actions with rabbitmq
 require 'rrj/rabbit/connect'

@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
   class RRJError < StandardError
     def initialize(message, level)
       super(message)
-      Log.instance_method(level).bind(Log.instance).call(message)
+      Tools::Log.instance_method(level).bind(Tools::Log.instance).call(message)
     end
   end
 end

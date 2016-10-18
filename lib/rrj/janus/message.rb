@@ -55,15 +55,15 @@ module RubyRabbitmqJanus
 
     # Load raw request
     def load_request_file
-      @request = JSON.parse File.read Requests.instance.requests[@type]
-      Log.instance.debug "Opening request : #{to_json}"
+      @request = JSON.parse File.read Tools::Requests.instance.requests[@type]
+      Tools::Log.instance.debug "Opening request : #{to_json}"
     end
 
     # Transform raw request in request to janus, so replace element <string>, <number>
     # and other with real value
     def prepare_request(options)
-      @request = Replace.new(@request, options).transform_request
-      Log.instance.debug "Prepare request for janus : #{to_json}"
+      @request = Tools::Replace.new(@request, options).transform_request
+      Tools::Log.instance.debug "Prepare request for janus : #{to_json}"
     end
   end
 end

@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
   class Transaction
     # Initialize an transaction
     def initialize(session)
-      Log.instance.debug 'Transaction is started'
+      Tools::Log.instance.debug 'Transaction is started'
       @rabbit = Rabbit::Connect.new
       @rabbit.start
       @publish = publisher

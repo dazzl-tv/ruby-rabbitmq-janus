@@ -8,7 +8,7 @@ module RubyRabbitmqJanus
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
-        Log.instance.debug 'Initialize connection with RabbitMQ'
+        Tools::Log.instance.debug 'Initialize connection with RabbitMQ'
         @rabbit = Bunny.new(read_options_server)
       end
 
@@ -22,7 +22,7 @@ module RubyRabbitmqJanus
 
       # Openning a connection with Rabbitmq
       def start
-        Log.instance.debug 'Connection to rabbitmq START'
+        Tools::Log.instance.debug 'Connection to rabbitmq START'
         @rabbit.start
       rescue => message
         raise ErrorRabbit::ConnectionRabbitmqFailed, message
@@ -30,7 +30,7 @@ module RubyRabbitmqJanus
 
       # Close connection to server RabbitMQ
       def close
-        Log.instance.debug 'Connection to rabbitmq STOP'
+        Tools::Log.instance.debug 'Connection to rabbitmq STOP'
         @rabbit.close
       rescue
         raise Bunny::ConnectionClosedError
@@ -38,7 +38,7 @@ module RubyRabbitmqJanus
 
       # Create an channel
       def channel
-        Log.instance.debug 'Create an channel'
+        Tools::Log.instance.debug 'Create an channel'
         @rabbit.create_channel
       end
 
@@ -46,14 +46,14 @@ module RubyRabbitmqJanus
 
       # Read option for bunny instance (connection with rabbitmq)
       def read_options_server
-        cfg = Config.instance.options['server']
+        cfg = Tools::Config.instance.options['server']
         {
           host: cfg['host'],
           port: cfg['port'],
           user: cfg['user'],
           pass: cfg['password'],
           vhost: cfg['vhost'],
-          logger: Log.instance.logger
+          logger: Tools::Log.instance.logger
         }
       end
     end

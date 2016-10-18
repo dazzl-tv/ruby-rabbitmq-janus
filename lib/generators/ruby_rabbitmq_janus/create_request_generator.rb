@@ -2,7 +2,9 @@
 
 # Override String class
 class String
+  # Character used for delimited an line
   SEPARATOR_LINE = ','
+  # Character used for delimited an key and this value
   SEPARATOR_KEY_VALUE = ':'
 
   # Converting a string with a format special to hash

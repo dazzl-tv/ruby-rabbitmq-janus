@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  # Module rabbit interaction
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Class for manage connection with rabbitmq

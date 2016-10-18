@@ -6,9 +6,7 @@ require 'rrj/init'
 require 'rrj/tools/tools'
 
 # Define actions with rabbitmq
-require 'rrj/rabbit/connect'
-require 'rrj/rabbit/publish'
-require 'rrj/rabbit/propertie'
+require 'rrj/rabbit/rabbit'
 
 # Define actions with janus
 require 'rrj/janus/keepalive'

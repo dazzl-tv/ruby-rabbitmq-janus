@@ -33,11 +33,7 @@ class HashString
 
   # Test if string is hash
   def test_string_hash
-    if value.include?('{')
-      HashString.new(format_hash_string).convert_in_hash
-    else
-      value
-    end
+    value.include?('{') ? HashString.new(format_hash_string).convert_in_hash : value
   end
 
   # Transform string to hash
@@ -45,6 +41,7 @@ class HashString
     @array.drop(1).join(':').sub('{', '').sub('}', '').split(String::SEPARATOR_KEY_VALUE)
   end
 
+  # Return the value for hash object
   def value
     @array[1]
   end

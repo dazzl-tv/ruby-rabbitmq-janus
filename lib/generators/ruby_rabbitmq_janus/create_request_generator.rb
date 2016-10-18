@@ -1,5 +1,55 @@
 # frozen_string_literal: true
 
+# Override String class
+class String
+  SEPARATOR_LINE = ','
+  SEPARATOR_KEY_VALUE = ':'
+
+  # Converting a string with a format special to hash
+  def converting_to_hash
+    hash = {}
+    split(SEPARATOR_LINE).each do |couple_hash|
+      hash.merge! HashString.new(couple_hash.split(SEPARATOR_KEY_VALUE)).convert_in_hash
+    end
+    hash
+  end
+end
+
+# Create an hash with an array
+class HashString
+  # Initialize an array
+  def initialize(string_array)
+    @array = string_array
+    @hash = {}
+  end
+
+  # Create and return an hash
+  def convert_in_hash
+    @hash[@array[0]] = test_string_hash
+    @hash
+  end
+
+  private
+
+  # Test if string is hash
+  def test_string_hash
+    if value.include?('{')
+      HashString.new(format_hash_string).convert_in_hash
+    else
+      value
+    end
+  end
+
+  # Transform string to hash
+  def format_hash_string
+    @array.drop(1).join(':').sub('{', '').sub('}', '').split(String::SEPARATOR_KEY_VALUE)
+  end
+
+  def value
+    @array[1]
+  end
+end
+
 module RubyRabbitmqJanus
   module Generators
     # Create an class for generate a json request
@@ -26,26 +76,8 @@ module RubyRabbitmqJanus
       def write_json
         hash = {}
         hash['janus'] = janus_type
-        hash.merge!(to_hash(content))
+        hash.merge!(content.converting_to_hash)
         JSON.pretty_generate(hash)
-      end
-
-      def to_hash(body, arr_sep = ',', key_sep = ':')
-        hash = {}
-        body.split(arr_sep).each do |couple_hash|
-          key_value = couple_hash.split(key_sep)
-          hash[key_value[0]] = test_string_hash(key_value, arr_sep, key_sep)
-        end
-        hash
-      end
-
-      # :reek:DuplicateMethodCall and :reek:FeatureEnvy
-      def test_string_hash(value, arr_sep, key_sep)
-        if value[1].include? '{'
-          to_hash(value.drop(1).join(':').sub('{', '').sub('}', ''), arr_sep, key_sep)
-        else
-          value[1]
-        end
       end
 
       # Test if folder is exist and created if necessary

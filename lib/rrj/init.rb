@@ -46,5 +46,13 @@ module RubyRabbitmqJanus
       tran = Janus::Transaction.new(@session)
       tran.handle_running(type, options)
     end
+
+    # Define an handle and establish connection with janus
+    def start_handle(reason, data, jsep = nil)
+      Tools::Log.instance.debug 'Create an handle and establish an connection with janus'
+      tran = Janus::Transaction.new(@session)
+      tran.handle_running(type, options)
+      tran.sending_message(reason, data, jsep)
+    end
   end
 end

@@ -23,6 +23,11 @@ module RubyRabbitmqJanus
         response.for_plugin
       end
 
+      # Sending a message to janus
+      def sending_message
+        yield reason, data, jsep if block_given?
+      end
+
       private
 
       # Publish an message in sesion

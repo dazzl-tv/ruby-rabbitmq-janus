@@ -25,34 +25,38 @@ module RubyRabbitmqJanus
       Tools::Requests.instance
 
       @session = Janus::Keepalive.new.session
+    rescue => error
+      raise Errors::RRJErrorInit, error
     end
 
     # Send a simple message to janus
     # This method smells of :reek:UtilityFunction
     def message_post(type = 'info')
-      Tools::Log.instance.warn "Send a simple message : #{type}"
       Rabbit::Connect.new.transaction do |rabbit|
         publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-        resp = publish.send_a_message(Janus::Message.new(type))
-        Janus::Response.new(resp).to_json
+        Janus::Response.new(publish.send_a_message(Janus::Message.new(type))).to_json
       end
+    rescue => error
+      raise Errors::RRJErrorPost, error
     end
 
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
     def transaction(type, replace = {}, add = {})
-      Tools::Log.instance.debug 'Transaction a started'
       options = { 'replace' => replace, 'add' => add }
       tran = Janus::Transaction.new(@session)
       tran.handle_running(type, options)
+    rescue => error
+      raise Errors::RRJErrorTransaction, error
     end
 
     # Define an handle and establish connection with janus
-    def start_handle(reason, data, jsep = nil)
-      Tools::Log.instance.debug 'Create an handle and establish an connection with janus'
-      tran = Janus::Transaction.new(@session)
-      tran.handle_running(type, options)
-      tran.sending_message(reason, data, jsep)
+    def start_handle
+      # tran = Janus::Transaction.new(@session)
+      # tran.sending_message yield
+      yield
+    rescue => error
+      raise Errors::RRJErrorHandle, error
     end
   end
 end

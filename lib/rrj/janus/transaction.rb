@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
+require 'rrj/janus/transaction_callbacks'
+
 module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # This class work with janus and send a series of message
-    class Transaction
+    class Transaction < TransactionCallbacks
       # Initialize an transaction
       def initialize(session)
         @rabbit = Rabbit::Connect.new
-        @publish = publisher
         @session = session
-        @handle = nil
+        @handle = @publish = nil
       rescue => error
         raise Errors::JanusTransaction, error
       end
@@ -34,14 +35,6 @@ module RubyRabbitmqJanus
       end
 
       private
-
-      def transaction_start
-        @rabbit.start
-      end
-
-      def transaction_close
-        @rabbit.close
-      end
 
       # Publish an message in sesion
       def publish_message_session(type)

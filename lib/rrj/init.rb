@@ -40,6 +40,17 @@ module RubyRabbitmqJanus
       raise Errors::RRJErrorPost, error
     end
 
+    # Send an message simple in current session
+    def message_post_for_session(type)
+      Rabbit::Connect.new.transaction do |rabbit|
+        publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        msg = Janus::Message.new(type, 'session_id' => @session)
+        Janus::Response.new(publish.send_a_message(msg)).to_json
+      end
+    rescue => error
+      raise Errors::RRJErrorPost, error
+    end
+
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
     def transaction(type, replace = {}, add = {})

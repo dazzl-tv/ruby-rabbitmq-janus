@@ -39,7 +39,10 @@ module RubyRabbitmqJanus
 
       # Return a response simple for client
       def for_plugin
-        @request['plugindata']['data']
+        case @request['janus']
+        when 'success' then @request['plugindata']['data']
+        when 'ack' then {}
+        end
       rescue => error
         raise Errors::JanusResponsePluginData, error
       end

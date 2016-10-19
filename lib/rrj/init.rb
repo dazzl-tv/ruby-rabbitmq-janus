@@ -46,8 +46,8 @@ module RubyRabbitmqJanus
       options = { 'replace' => replace, 'add' => add }
       tran = Janus::Transaction.new(@session)
       tran.handle_running(type, options)
-    rescue => error
-      raise Errors::RRJErrorTransaction, error
+      # rescue => error
+      #  raise Errors::RRJErrorTransaction, error
     end
 
     # Define an handle and establish connection with janus

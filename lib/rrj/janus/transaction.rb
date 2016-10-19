@@ -7,28 +7,41 @@ module RubyRabbitmqJanus
     class Transaction
       # Initialize an transaction
       def initialize(session)
-        Tools::Log.instance.debug 'Transaction is started'
         @rabbit = Rabbit::Connect.new
-        @rabbit.start
         @publish = publisher
         @session = session
         @handle = nil
+      rescue => error
+        raise Errors::JanusTransaction, error
       end
 
       # Attach to session running an create an handle
       def handle_running(type, options)
         @handle = publish_message_session('attach').sender
-        response = publish_message_handle(type, options)
-        @rabbit.close
-        response.for_plugin
+        publish_message_handle(type, options)
+        # response.for_plugin
+      rescue => error
+        raise Errors::JanusTransactionHandle, error
       end
 
       # Sending a message to janus
       def sending_message
+        @handle = publish_message_session('attach').sender
         yield reason, data, jsep if block_given?
+        # response.for_plugin
+      rescue => error
+        raise Errors::JanusTransactionPost, error
       end
 
       private
+
+      def transaction_start
+        @rabbit.start
+      end
+
+      def transaction_close
+        @rabbit.close
+      end
 
       # Publish an message in sesion
       def publish_message_session(type)

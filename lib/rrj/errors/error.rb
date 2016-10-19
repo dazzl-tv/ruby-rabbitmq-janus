@@ -12,6 +12,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an exception if gem dont initialize correctly
     class RRJErrorInit < RRJError
       def initialize(message)
@@ -19,6 +20,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error if method message_post given an exception
     class RRJErrorPost < RRJError
       def initialize(message)
@@ -26,6 +28,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error if method transation given an exception
     class RRJErrorTransaction < RRJError
       def initialize(message)
@@ -33,6 +36,7 @@ module RubyRabbitmqJanus
       end
     end
 
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error if method start_handle given an exception
     class RRJErrorHandle < RRJError
       def initialize(message)
@@ -43,6 +47,10 @@ module RubyRabbitmqJanus
 end
 
 require 'rrj/errors/janus'
+require 'rrj/errors/janus_message'
+require 'rrj/errors/janus_response'
+require 'rrj/errors/janus_transaction'
+
 require 'rrj/errors/config'
 require 'rrj/errors/rabbit'
 require 'rrj/errors/request'

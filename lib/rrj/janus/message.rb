@@ -30,26 +30,36 @@ module RubyRabbitmqJanus
         @properties = Rabbit::Propertie.new
         load_request_file
         prepare_request(options)
+      rescue => error
+        raise Errors::JanusMessage, error
       end
 
       # Return request to json format
       def to_json
         @request.to_json
+      rescue => error
+        raise Errors::JanusMessageJson, error
       end
 
       # Return request to json format with nice format
       def to_nice_json
         JSON.pretty_generate to_hash
+      rescue => error
+        raise Errors::JanusMessagePrettyJson, error
       end
 
       # Return request to hash format
       def to_hash
         @request
+      rescue => error
+        raise Errors::JanusMessageHash, error
       end
 
       # Return options to message for rabbitmq
       def options
         @properties.options
+      rescue => error
+        raise Errors::JanusMessagePropertie, error
       end
 
       private

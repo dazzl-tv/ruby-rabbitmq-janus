@@ -11,6 +11,34 @@ module RubyRabbitmqJanus
         Tools::Log.instance_method(level).bind(Tools::Log.instance).call(message)
       end
     end
+
+    # Define an exception if gem dont initialize correctly
+    class RRJErrorInit < RRJError
+      def initialize(message)
+        super "Gem is not instanciate correctly : #{message}", :fatal
+      end
+    end
+
+    # Define an error if method message_post given an exception
+    class RRJErrorPost < RRJError
+      def initialize(message)
+        super "Post message is failed : #{message}", :fatal
+      end
+    end
+
+    # Define an error if method transation given an exception
+    class RRJErrorTransaction < RRJError
+      def initialize(message)
+        super "Transaction is failed : #{message}", :fatal
+      end
+    end
+
+    # Define an error if method start_handle given an exception
+    class RRJErrorHandle < RRJError
+      def initialize(message)
+        super "Transaction handle is failed : #{message}", :fatal
+      end
+    end
   end
 end
 

@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "server": {
+    "rabbit": {
       "type": "hash",
       "properties": {
         "host": { "type": "string" },
@@ -53,7 +53,7 @@
     }
   },
   "required": [
-    "server",
+    "rabbit",
     "queues",
     "janus",
     "gem"

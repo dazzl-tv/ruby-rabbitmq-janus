@@ -30,6 +30,7 @@ module RubyRabbitmqJanus
         replace_session if @request.key?('session_id')
         replace_plugin if @request.key?('plugin')
         replace_handle if @request.key?('handle_id')
+        replace_admin if @request.key?('admin_secret')
       end
 
       # Create an transaction string and replace in request field with an String format
@@ -66,6 +67,13 @@ module RubyRabbitmqJanus
         running_hash(rewrite_key_to_string(values))
       rescue => message
         Tools::Log.instance.warning "Error REPLACE other field : #{message}"
+      end
+
+      # Replace admin secret in request
+      def replace_admin
+        @request['admin_secret'].replace Tools::Config.options['rabbit']['admin_pass']
+      rescue => message
+        Tools::Log.instance.warning "Error replace admin_secret : #{message}"
       end
 
       # Adds other element to request

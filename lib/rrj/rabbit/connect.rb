@@ -45,7 +45,7 @@ module RubyRabbitmqJanus
 
       # Read option for bunny instance (connection with rabbitmq)
       def read_options_server
-        cfg = Tools::Config.instance.options['server']
+        cfg = Tools::Config.instance.options['rabbit']
         {
           host: cfg['host'],
           port: cfg['port'],

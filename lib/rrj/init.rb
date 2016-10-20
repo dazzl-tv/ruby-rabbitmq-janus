@@ -43,9 +43,22 @@ module RubyRabbitmqJanus
     # Send an message simple in current session
     def message_post_for_session(type)
       Rabbit::Connect.new.transaction do |rabbit|
-        publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
         msg = Janus::Message.new(type, 'session_id' => @session)
-        Janus::Response.new(publish.send_a_message(msg)).to_json
+        simple_response(rabbit, msg)
+        # publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        # Janus::Response.new(publish.send_a_message(msg)).to_json
+      end
+    rescue => error
+      raise Errors::RRJErrorPost, error
+    end
+
+    # Send a message simple for admin Janus
+    def message_admin(type)
+      Rabbit::Connect.new.transaction do |rabbit|
+        msg = Janus::MessageAdmin.new(type, 'session_id' => @session)
+        simple_response(rabbit, msg)
+        # publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        # Janus::Response.new(publish.send_a_message(msg)).to_json
       end
     rescue => error
       raise Errors::RRJErrorPost, error
@@ -68,6 +81,14 @@ module RubyRabbitmqJanus
       yield
     rescue => error
       raise Errors::RRJErrorHandle, error
+    end
+
+    private
+
+    # Send a simple message
+    def simple_message(rabbit, msg)
+      publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+      Janus::Response.new(publish.send_a_message(msg)).to_json
     end
   end
 end

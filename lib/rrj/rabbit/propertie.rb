@@ -20,6 +20,16 @@ module RubyRabbitmqJanus
           content_type: 'application/json'
         }
       end
+
+      # Define option sending to rabbitmq for janus admin message
+      def options_admin
+        Tools::Log.instance.debug 'Add options to propertie to message'
+        {
+          routing_key: Tools::Config.instance.options['queues']['admin']['queue_to'],
+          correlation_id: @correlation,
+          content_type: 'application/json'
+        }
+      end
     end
   end
 end

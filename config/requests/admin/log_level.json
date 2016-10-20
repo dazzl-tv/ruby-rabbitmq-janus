@@ -1,0 +1,6 @@
+{
+  "janus": "set_mpg_level",
+  "level": "<integer>",
+  "transaction": "<string>",
+  "admin_secret": "<string>"
+}

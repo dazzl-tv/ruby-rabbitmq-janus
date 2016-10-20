@@ -1,0 +1,5 @@
+{
+  "janus": "handle_info",
+  "transaction": "<string>",
+  "admin_secret": "<string>"
+}

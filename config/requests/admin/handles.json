@@ -1,0 +1,5 @@
+{
+  "janus": "lists_handles",
+  "transaction": "<string>",
+  "admin_secret": "<string>"
+}

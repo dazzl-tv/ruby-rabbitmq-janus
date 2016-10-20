@@ -37,28 +37,28 @@ module RubyRabbitmqJanus
       def replace_transaction
         @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
       rescue => message
-        Tools::Log.instance.warning "Error transaction replace : #{message}"
+        Tools::Log.instance.warn "Error transaction replace : #{message}"
       end
 
       # Read option session and replace in request
       def replace_session
         @request['session_id'] = @opts['session_id']
       rescue => message
-        Tools::Log.instance.warning "Error session replace : #{message}"
+        Tools::Log.instance.warn "Error session replace : #{message}"
       end
 
       # Replace plugin string
       def replace_plugin
         @request['plugin'] = Tools::Config.instance.options['janus']['plugins'][0]
       rescue => message
-        Tools::Log.instance.warning "Error plugin replace : #{message}"
+        Tools::Log.instance.warn "Error plugin replace : #{message}"
       end
 
       # Replace handle integer
       def replace_handle
         @request['handle_id'] = @opts['handle_id']
       rescue => message
-        Tools::Log.instance.warning "Error handle replace : #{message}"
+        Tools::Log.instance.warn "Error handle replace : #{message}"
       end
 
       # Replace other element in request
@@ -66,14 +66,14 @@ module RubyRabbitmqJanus
         values = @opts['replace']
         running_hash(rewrite_key_to_string(values))
       rescue => message
-        Tools::Log.instance.warning "Error REPLACE other field : #{message}"
+        Tools::Log.instance.warn "Error REPLACE other field : #{message}"
       end
 
       # Replace admin secret in request
       def replace_admin
-        @request['admin_secret'].replace Tools::Config.options['rabbit']['admin_pass']
+        @request['admin_secret'] = Tools::Config.instance.options['rabbit']['admin_pass']
       rescue => message
-        Tools::Log.instance.warning "Error replace admin_secret : #{message}"
+        Tools::Log.instance.warn "Error replace admin_secret : #{message}"
       end
 
       # Adds other element to request
@@ -81,7 +81,7 @@ module RubyRabbitmqJanus
         values = @opts['add']
         @request['body'].merge!(values)
       rescue => message
-        Tools::Log.instance.warning "Error ADD other field : #{message}"
+        Tools::Log.instance.warn "Error ADD other field : #{message}"
       end
 
       # Rewrite key symbol to string

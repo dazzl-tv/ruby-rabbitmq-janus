@@ -44,9 +44,7 @@ module RubyRabbitmqJanus
     def message_post_for_session(type)
       Rabbit::Connect.new.transaction do |rabbit|
         msg = Janus::Message.new(type, 'session_id' => @session)
-        simple_response(rabbit, msg)
-        # publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-        # Janus::Response.new(publish.send_a_message(msg)).to_json
+        queue_exclusive(rabbit, msg)
       end
     rescue => error
       raise Errors::RRJErrorPost, error
@@ -56,9 +54,7 @@ module RubyRabbitmqJanus
     def message_admin(type)
       Rabbit::Connect.new.transaction do |rabbit|
         msg = Janus::MessageAdmin.new(type, 'session_id' => @session)
-        simple_response(rabbit, msg)
-        # publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-        # Janus::Response.new(publish.send_a_message(msg)).to_json
+        queue_admin(rabbit, msg)
       end
     rescue => error
       raise Errors::RRJErrorPost, error
@@ -85,10 +81,17 @@ module RubyRabbitmqJanus
 
     private
 
-    # Send a simple message
-    def simple_message(rabbit, msg)
+    # Send a simple message in exclusive queue
+    def queue_exclusive(rabbit, msg)
       publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
       Janus::Response.new(publish.send_a_message(msg)).to_json
+    end
+
+    # Send a simple message in admin queue
+    def queue_admin(rabbit, msg)
+      queue_response = Tools::Config.instance.options['queues']['admin']['queue_from']
+      publish = Rabbit::PublishNonExclusive.new(rabbit.channel, queue_response)
+      Janus::Response.new(publish.send_a_message(msg)).to_hash
     end
   end
 end

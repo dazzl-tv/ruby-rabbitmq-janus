@@ -49,6 +49,17 @@ module RubyRabbitmqJanus
     end
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # Publish message in non exclusive queue
+    class PublishNonExclusive < PublishReply
+      # Initialize an queue non exclusive
+      def initialize(exchange, name_queue = '')
+        @reply = exchange.queue(name_queue)
+        super(exchange)
+      end
+    end
+
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # Publish message in exclusive queue
     class PublishExclusive < PublishReply
       # Initialize an queue exclusive
       def initialize(exchange, name_queue = '')

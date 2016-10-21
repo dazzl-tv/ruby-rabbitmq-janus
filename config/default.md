@@ -5,16 +5,20 @@ The configuration file contains many parts.
 By default the configuration file look like this :
 
 ```yaml
-server:
+rabbit:
     host: 'localhost'
     port: 5672
     vhost: '/'
     user: 'guest'
     password: 'guest'
+    admin_pass: janusoverlord
 
 queues:
     queue_from: from-janus
     queue_to: to-janus
+    admin:
+      queue_from: from-janus
+      queue_to: to-janus
 
 janus:
   plugins:

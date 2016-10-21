@@ -8,6 +8,9 @@ module RubyRabbitmqJanus
       # Instanciate a response
       def initialize(response_janus)
         @request = response_janus
+      rescue => error
+        raise Errors::JanusResponseInit, error
+      else
         Tools::Log.instance.debug "Response return : #{to_json}"
       end
 
@@ -15,22 +18,33 @@ module RubyRabbitmqJanus
       def to_json
         analysis
         @request.to_json
+      rescue => error
+        raise Errors::JanusResponseJson, error
       end
 
       # Return request to json format with nice format
       def to_nice_json
         JSON.pretty_generate to_hash
+      rescue => error
+        raise Errors::JanusResponsePrettyJson, error
       end
 
       # Return request to hash format
       def to_hash
         analysis
         @request
+      rescue => error
+        raise Errors::JanusResponseHash, error
       end
 
       # Return a response simple for client
       def for_plugin
-        @request['plugindata']['data']
+        case @request['janus']
+        when 'success' then @request['plugindata']['data']
+        when 'ack' then {}
+        end
+      rescue => error
+        raise Errors::JanusResponsePluginData, error
       end
 
       # Return a integer to session
@@ -49,13 +63,16 @@ module RubyRabbitmqJanus
       def data_id
         analysis
         @request['data']['id'].to_i
+      rescue => error
+        raise Errors::JanusResponseDataId, error
       end
 
       # Analysis response and send exception if janus return an error
       # :reek:DuplicateMethodCall
       def analysis
-        raise Errors::JanusSimple, @request['error'] if @request['janus'].equal? 'error'
-        raise Errors::JanusPlugin, @request['plugindata']['data'] if \
+        raise Errors::JanusResponseSimple, @request['error'] \
+          if @request['janus'].equal? 'error'
+        raise Errors::JanusResponsePlugin, @request['plugindata']['data'] if \
           @request.key?('plugindata') && @request['plugindata']['data'].key?('error_code')
       end
     end

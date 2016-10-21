@@ -17,9 +17,7 @@ module RubyRabbitmqJanus
 
       # Return an number session created
       def session
-        Tools::Log.instance.debug 'Waiting response for number session created'
         @lock.synchronize { @condition.wait(@lock) }
-        Tools::Log.instance.debug 'Response is here'
         @response.session
       end
 
@@ -62,10 +60,9 @@ module RubyRabbitmqJanus
 
       # Define a Time To Live between each request sending to janus
       def ttl
-        time_to_live = Tools::Config.instance.options['gem']['session']['keepalive'].to_i
-        Tools::Log.instance.debug 'Starting a thread keepalive with interval : ' \
-          + time_to_live
-        time_to_live
+        Tools::Config.instance.options['gem']['session']['keepalive'].to_i
+      rescue => error
+        Tools::Log.instance.debug "TTL Not loading - #{error}"
       end
     end
   end

@@ -2,6 +2,7 @@
 
 require 'rrj/janus/keepalive'
 require 'rrj/janus/message'
+require 'rrj/janus/admin'
 require 'rrj/janus/response'
 require 'rrj/janus/transaction'
 

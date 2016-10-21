@@ -9,7 +9,6 @@ module RubyRabbitmqJanus
       def initialize(request, options = {})
         @request = request
         @opts = options
-        Tools::Log.instance.debug "Option to replace in request #{@opts}"
       end
 
       # Replace element in hash request with information used for this transaction
@@ -31,56 +30,58 @@ module RubyRabbitmqJanus
         replace_session if @request.key?('session_id')
         replace_plugin if @request.key?('plugin')
         replace_handle if @request.key?('handle_id')
+        replace_admin if @request.key?('admin_secret')
       end
 
       # Create an transaction string and replace in request field with an String format
       def replace_transaction
-        Tools::Log.instance.debug 'Replace transaction'
         @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
       rescue => message
-        Tools::Log.instance.debug "Error transaction replace : #{message}"
+        Tools::Log.instance.warn "Error transaction replace : #{message}"
       end
 
       # Read option session and replace in request
       def replace_session
-        Tools::Log.instance.debug 'Replace session'
         @request['session_id'] = @opts['session_id']
       rescue => message
-        Tools::Log.instance.debug "Error session replace : #{message}"
+        Tools::Log.instance.warn "Error session replace : #{message}"
       end
 
       # Replace plugin string
       def replace_plugin
-        Tools::Log.instance.debug 'Replace plugin'
         @request['plugin'] = Tools::Config.instance.options['janus']['plugins'][0]
       rescue => message
-        Tools::Log.instance.debug "Error plugin replace : #{message}"
+        Tools::Log.instance.warn "Error plugin replace : #{message}"
       end
 
       # Replace handle integer
       def replace_handle
-        Tools::Log.instance.debug 'Replace handle'
         @request['handle_id'] = @opts['handle_id']
       rescue => message
-        Tools::Log.instance.debug "Error handle replace : #{message}"
+        Tools::Log.instance.warn "Error handle replace : #{message}"
       end
 
       # Replace other element in request
       def replace_other
         values = @opts['replace']
-        Tools::Log.instance.debug "Replace other element : #{values}"
         running_hash(rewrite_key_to_string(values))
       rescue => message
-        Tools::Log.instance.debug "Error REPLACE other field : #{message}"
+        Tools::Log.instance.warn "Error REPLACE other field : #{message}"
+      end
+
+      # Replace admin secret in request
+      def replace_admin
+        @request['admin_secret'] = Tools::Config.instance.options['rabbit']['admin_pass']
+      rescue => message
+        Tools::Log.instance.warn "Error replace admin_secret : #{message}"
       end
 
       # Adds other element to request
       def add_other
         values = @opts['add']
-        Tools::Log.instance.debug "Add other element : #{values}"
         @request['body'].merge!(values)
       rescue => message
-        Tools::Log.instance.debug "Error ADD other field : #{message}"
+        Tools::Log.instance.warn "Error ADD other field : #{message}"
       end
 
       # Rewrite key symbol to string

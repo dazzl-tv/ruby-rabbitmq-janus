@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
+describe 'RubyRabbitmqJanus::RRJ', type: :config do
   it 'Has a version number' do
     expect(RubyRabbitmqJanus::VERSION).not_to be nil
   end
@@ -13,5 +13,13 @@ describe 'RubyRabbitmqJanus::RRJ' do
 
   it 'Has a summary description' do
     expect(RubyRabbitmqJanus::SUMMARY).not_to be nil
+  end
+
+  it 'Has a homepage' do
+    expect(RubyRabbitmqJanus::HOMEPAGE).not_to be nil
+  end
+
+  it 'Has a post install message' do
+    expect(RubyRabbitmqJanus::POST_INSTALL).not_to be nil
   end
 end

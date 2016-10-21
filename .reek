@@ -1,0 +1,7 @@
+---
+UtilityFunction:
+  public_methods_only: true
+
+DuplicateMethodCall:
+  allow_calls:
+    - 'Log.instance'

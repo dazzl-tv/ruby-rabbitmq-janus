@@ -1,55 +1,80 @@
 # frozen_string_literal: true
 
-require 'json'
-
 module RubyRabbitmqJanus
-  # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-  # Response Janus received to RabbitMQ server
-  class ResponseJanus
-    # Initialiaze a response reading in RabbitMQ queue
-    def initialize(channel, connection, opts = {})
-      @channel = channel
-      @connection = connection
-      @opts = opts
-      @response = nil
-    end
-
-    # Read a response to janus (in RabbitMQ queue)
-    # @return [Hash] resultat to request
-    def read
-      Log.instance.debug 'Read a response'
-      the_queue = @channel.queue(Config.instance.options['queues']['queue_from'])
-      the_queue.subscribe(block: true) do |info, prop, pay|
-        listen(info, prop, pay)
+  module Janus
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # Read and decryt a response to janus
+    class Response
+      # Instanciate a response
+      def initialize(response_janus)
+        @request = response_janus
+      rescue => error
+        raise Errors::JanusResponseInit, error
+      else
+        Tools::Log.instance.debug "Response return : #{to_json}"
       end
-      return_response_json
-    end
 
-    private
-
-    # Listen a response to queue
-    def listen(_delivery_info, properties, payload)
-      if @opts['properties']['correlation'] == properties[:correlation_id]
-        @response = payload
-        @connection.close
+      # Return request to json format
+      def to_json
+        analysis
+        @request.to_json
+      rescue => error
+        raise Errors::JanusResponseJson, error
       end
-    end
 
-    # Format the response returning
-    def return_response_json
-      @response = JSON.parse(@response)
-      case @opts['janus']
-      when 'create'
-        merge('session_id')
-      when 'attach'
-        merge('handle_id')
+      # Return request to json format with nice format
+      def to_nice_json
+        JSON.pretty_generate to_hash
+      rescue => error
+        raise Errors::JanusResponsePrettyJson, error
       end
-      @response
-    end
 
-    # Update value to element in Hash
-    def merge(key)
-      @response[key] = @response['data']['id']
+      # Return request to hash format
+      def to_hash
+        analysis
+        @request
+      rescue => error
+        raise Errors::JanusResponseHash, error
+      end
+
+      # Return a response simple for client
+      def for_plugin
+        case @request['janus']
+        when 'success' then @request['plugindata']['data']
+        when 'ack' then {}
+        end
+      rescue => error
+        raise Errors::JanusResponsePluginData, error
+      end
+
+      # Return a integer to session
+      def session
+        data_id
+      end
+
+      # Return a integer to handle
+      def sender
+        data_id
+      end
+
+      private
+
+      # Read a hash and return an identifier
+      def data_id
+        analysis
+        @request['data']['id'].to_i
+      rescue => error
+        raise Errors::JanusResponseDataId, error
+      end
+
+      # Analysis response and send exception if janus return an error
+      # :reek:DuplicateMethodCall
+      def analysis
+        raise Errors::JanusResponseSimple, @request['error'] \
+          if @request['janus'].equal? 'error'
+        raise Errors::JanusResponsePlugin, @request['plugindata']['data'] if \
+          @request.key?('plugindata') && @request['plugindata']['data'].key?('error_code')
+      end
     end
   end
 end

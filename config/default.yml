@@ -1,8 +1,8 @@
-# Configuration file for gem
-server:
+# Rabbit information connection
+rabbit:
   # Precise RabbitMQ host - Default 'localhost'
   host: localhost
-  # Precise RabbitMQ port - Default 'port'
+  # Precise RabbitMQ port - Default '5672'
   port: 5672
   # Precise RabbitMQ vhost - Default '/'
   vhost: /
@@ -10,6 +10,8 @@ server:
   user: guest
   # Precise RabbitMQ password - Default 'guest'
   password: guest
+    # Password for admin request
+  admin_pass: janusoverlord
 
 # RabbitMQ Queue information
 queues:
@@ -17,6 +19,10 @@ queues:
   queue_from: from-janus
   # Queue sending a message for janus server
   queue_to: to-janus
+    # Queues for admin janus
+  admin:
+    queue_from: from-janus-admin
+    queue_to: to-janus-admin
 
 # Janus plugin used
 janus:
@@ -26,6 +32,18 @@ janus:
 
 # Options gem
 gem:
-  # Option for logging
+  # Option for logs
   log:
-    level: 'debug'
+    # Define level to log
+    # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
+    level: INFO
+  # Option for sessions
+  session:
+    # Define time to send a keepalive message in seconds
+    keepalive: 45
+  # Option for used multi thread
+  thread:
+    # Boolean for activate options thread
+    enable: false
+    # Number of core
+    number: 1

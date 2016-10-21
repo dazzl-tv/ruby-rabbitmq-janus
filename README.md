@@ -23,7 +23,7 @@ in a queue for gem. Once the received message is decoded and returned through th
 
 ### Installation
 
-Use bitbucket for installing gem in your Gemfile
+Use rubygem for installing gem in your application. Add in your Gemfile
 ```ruby
 gem 'ruby_rabbitmq_janus'
 ```
@@ -31,6 +31,29 @@ gem 'ruby_rabbitmq_janus'
 ### Configuration
 
 If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.md)
+
+Use generator for complete installation :
+```ruby
+rails g -h
+RubyRabbitmqJanus:
+  ruby_rabbitmq_janus:configuration
+  # Generate a custom configuration file.
+
+  ruby_rabbitmq_janus:default_request
+  # Copy base request file sending to janus in application. It's necessary if you want add your request.
+
+  ruby_rabbitmq_janus:initializer
+  # Generate a initializer to this gem for rails application.
+
+  ruby_rabbitmq_janus:create_request
+  # Create an request to json format for RubyRabbitmqJanus transaction.
+```
+
+For create an new request is simple. Use a command generator :
+```ruby
+rails g ruby_rabbitmq_janus:create_request test info 'transaction:<string>,body:{plugins:false}'
+      create  config/requests/test/info.json
+```
 
 ### Usage
 
@@ -107,7 +130,20 @@ bundle exec rspec
 ```
 
 TIPS: for rspec install janus and rabbitmq server configured by default for user
- rabbitmq and use plugin echotest for janus server.
+rabbitmq and use plugin echotest for janus server.
+
+Use tags for rspec :
+
+| type            | name            |
+| --------------- | --------------- |
+| request         | attach          |
+|                 | create          |
+|                 | detach          |
+|                 | info            |
+|                 | test            |
+| config          | rabbit          |
+|                 | log             |
+|                 | config          |
 
 ### Documentation
 

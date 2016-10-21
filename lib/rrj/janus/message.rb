@@ -1,31 +1,81 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-require 'thread'
-
 module RubyRabbitmqJanus
-  # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-  # Message Janus sending to rabbitmq server
-  class MessageJanus
-    # Initialiaze a message posting to RabbitMQ
-    # @param plugins [String] Name of plugin used by transaction
-    # @param logs [RubyRabbitmqJanus::Log] Instance log
-    # @param opts [Hash] Contains information to request sending
-    def initialize(opts_request, channel)
-      @correlation = SecureRandom.uuid
-      @options_request = opts_request
-      @channel = channel
-    end
+  module Janus
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # Create an message for janus
+    class Message
+      attr_reader :type
 
-    private
+      # Instanciate an message
+      # @param template_request [String] Name of request prepare
+      # @param [Hash] options Options to request (replace element or add in body)
+      # @option options [String] :session_id Identifier to session
+      # @option options [String] :handle_id Identifier to session manipulate
+      # @option options [Hash] :other Element contains in request sending to janus
+      # @example Initialize a message
+      #   Message.new('test', {
+      #     "session_id": 42,
+      #     "handle_id": 42,
+      #     "replace": {
+      #       "audio": false,
+      #       "video": true
+      #     },
+      #     "add": {
+      #       "subtitle": true
+      #     })
+      def initialize(template_request, options = {})
+        @request = {}
+        @type = template_request
+        @properties = Rabbit::Propertie.new
+        load_request_file
+        prepare_request(options)
+      rescue => error
+        raise Errors::JanusMessage, error
+      end
 
-    attr_reader :channel, :options_request, :opts, :correlation, :my_request, :message
-    attr_reader :log
+      # Return request to json format
+      def to_json
+        @request.to_json
+      rescue => error
+        raise Errors::JanusMessageJson, error
+      end
 
-    def define_request_sending(json)
-      request = Replace.new(json, @options_request)
-      @my_request = request.to_hash
-      request.to_json
+      # Return request to json format with nice format
+      def to_nice_json
+        JSON.pretty_generate to_hash
+      rescue => error
+        raise Errors::JanusMessagePrettyJson, error
+      end
+
+      # Return request to hash format
+      def to_hash
+        @request
+      rescue => error
+        raise Errors::JanusMessageHash, error
+      end
+
+      # Return options to message for rabbitmq
+      def options
+        @properties.options
+      rescue => error
+        raise Errors::JanusMessagePropertie, error
+      end
+
+      private
+
+      # Load raw request
+      def load_request_file
+        @request = JSON.parse File.read Tools::Requests.instance.requests[@type]
+        Tools::Log.instance.debug "Opening request : #{to_json}"
+      end
+
+      # Transform raw request in request to janus, so replace element <string>, <number>
+      # and other with real value
+      def prepare_request(options)
+        @request = Tools::Replace.new(@request, options).transform_request
+        Tools::Log.instance.debug "Prepare request for janus : #{to_json}"
+      end
     end
   end
 end

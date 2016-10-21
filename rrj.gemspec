@@ -1,6 +1,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rrj/version'
+require 'rrj/info'
 
 Gem::Specification.new do |spec|
   spec.name          = 'ruby_rabbitmq_janus'
@@ -11,11 +11,13 @@ Gem::Specification.new do |spec|
   spec.summary       = RubyRabbitmqJanus::SUMMARY
   spec.description   = RubyRabbitmqJanus::DESCRIPTION
 
-  spec.homepage      = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'
+  spec.homepage      = RubyRabbitmqJanus::HOMEPAGE
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.require_paths = ['lib']
+
+  spec.post_install_message = RubyRabbitmqJanus::POST_INSTALL
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'
@@ -29,9 +31,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry-byebug', '~> 3.4'
   spec.add_development_dependency 'json-schema', '~> 2.6', '>= 2.6.2'
   spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'
+  spec.add_development_dependency 'activesupport', '~> 4.2', '>= 4.2.7.1'
+  spec.add_development_dependency 'concurrent-ruby', '~> 1.0', '>= 1.0.2'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
-  spec.add_runtime_dependency 'logging', '~> 2.1'
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'thread', '~> 0.2.2'
+  spec.add_runtime_dependency 'colorize', '~> 0.8.1'
 end

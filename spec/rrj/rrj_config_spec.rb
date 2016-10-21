@@ -2,10 +2,9 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::Config', type: :config do
-  context 'when default configuration' do
-    let(:file) { "../../#{RubyRabbitmqJanus::Config::DEFAULT_CONF}" }
-
-    it_behaves_like 'file is found'
+describe 'RubyRabbitmqJanus::Config', type: :config, name: :config do
+  it 'Configuration is corectly loading' do
+    expect(RubyRabbitmqJanus::Tools::Config.instance.options).to \
+      match_json_schema(:config)
   end
 end

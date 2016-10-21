@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 require 'bundler/setup'
 require 'ruby_rabbitmq_janus'
 require 'pry'
@@ -22,13 +22,9 @@ RSpec.configure do |config|
   config.include Aruba::Api
   config.include JSON::SchemaMatchers
 
-  Dir[File.join('spec/support/schemas/', '*.json')].count do |file|
+  Dir[File.join('spec/support/schemas/*/', '*.json')].count do |file|
     json_file = JSON.parse(File.read(file))
     json_name = File.basename(file, '.json').to_sym
     config.json_schemas[json_name] = json_file
-  end
-
-  Dir[File.join('spec/support/schemas/channel/', '*.json')].count do |file|
-    config.json_schemas["channel_#{File.basename(file, '.json')}".to_sym] = file
   end
 end

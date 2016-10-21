@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "rabbit": {
+      "type": "hash",
+      "properties": {
+        "host": { "type": "string" },
+        "port": { "type": "integer" },
+        "vhost": { "type": "string" },
+        "user": { "type": "string" },
+        "password": { "type": "string" }
+      },
+      "required": [
+        "host",
+        "port",
+        "vhost",
+        "user",
+        "password"
+      ]
+    },
+    "queues": {
+      "type": "hash",
+      "properties": {
+        "queue_from": { "type": "string" },
+        "queue_to": { "type": "string" }
+      },
+      "required": [
+        "queue_from",
+        "queue_to"
+      ]
+    },
+    "janus": {
+      "type": "hash",
+      "properties": {
+        "plugins": { "type": "hash" }
+      },
+      "required": [
+        "plugins"
+      ]
+    },
+    "gem": {
+      "type": "hash",
+      "properties": {
+          "log": { "type": "hash" },
+          "session": { "type": "hash" },
+          "thread": { "type": "hash" }
+      },
+      "required": [
+        "log",
+        "session",
+        "thread"
+      ]
+    }
+  },
+  "required": [
+    "rabbit",
+    "queues",
+    "janus",
+    "gem"
+  ]
+}

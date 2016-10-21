@@ -1,73 +1,97 @@
 # frozen_string_literal: true
 
+require 'singleton'
+require 'yaml'
+require 'json'
+require 'securerandom'
+require 'bunny'
+require 'logger'
+require 'key_path'
+require 'active_support'
+require 'concurrent'
+require 'colorize'
+
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-  # Initialize gem
+  # Initialize gem and create automatically an session with Janus
   # @!attribute [r] session
-  #   @return [Hash] Response to request sending in transaction
   class RRJ
     attr_reader :session
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      Log.instance
-      Config.instance
-      Requests.instance
+      Tools::Log.instance
+      Tools::Config.instance
+      Tools::Requests.instance
 
-      @rabbit = RabbitMQ.new
-
-      @session = nil
+      @session = Janus::Keepalive.new.session
+    rescue => error
+      raise Errors::RRJErrorInit, error
     end
 
-    # Send a message, to RabbitMQ, with a template JSON
-    # @return [Hash] Contains information to request sending
-    # @param template_used [String] Json used to request sending in RabbitMQ
-    # @param [Hash] opts the options sending with a request
-    # @option opts [String] :janus The message type
-    # @option opts [String] :transaction The transaction identifier
-    # @option opts [Hash] :data The option data to request
-    def message_template_ask_sync(template_used = 'info', opts = {})
-      @rabbit.ask_request_sync(template_used, opts)
+    # Send a simple message to janus
+    # This method smells of :reek:UtilityFunction
+    def message_post(type = 'info')
+      Rabbit::Connect.new.transaction do |rabbit|
+        publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        Janus::Response.new(publish.send_a_message(Janus::Message.new(type))).to_json
+      end
+    rescue => error
+      raise Errors::RRJErrorPost, error
     end
 
-    # Send a message to RabbitMQ for reading a response
-    # @return [Hash] Contains a response to request sending
-    # @param info_request [Hash] Contains information to request sending
-    # @option info_request [String] :janus The message type
-    # @option info_request [String] :transaction The transaction identifier
-    # @option info_request [Hash] :data The option data to request
-    def message_template_response(info_request)
-      @rabbit.ask_response(info_request)
+    # Send an message simple in current session
+    def message_post_for_session(type)
+      Rabbit::Connect.new.transaction do |rabbit|
+        msg = Janus::Message.new(type, 'session_id' => @session)
+        queue_exclusive(rabbit, msg)
+      end
+    rescue => error
+      raise Errors::RRJErrorPost, error
+    end
+
+    # Send a message simple for admin Janus
+    def message_admin(type)
+      Rabbit::Connect.new.transaction do |rabbit|
+        msg = Janus::MessageAdmin.new(type, 'session_id' => @session)
+        queue_admin(rabbit, msg)
+      end
+    rescue => error
+      raise Errors::RRJErrorPost, error
     end
 
     # Manage a transaction with an plugin in janus
-    # Is create an session and attach with a plugin configured in file conf to gem, then
-    # when a treatment is complet is destroy a session
-    # @yieldparam session_attach [Hash] Use a session created
-    # @yieldreturn [Hash] Contains a result to transaction with janus server
-    def transaction_plugin
-      @session = yield attach_session
-      destroy_session
+    # Use a running session for working with janus
+    def transaction(type, replace = {}, add = {})
+      options = { 'replace' => replace, 'add' => add }
+      tran = Janus::Transaction.new(@session)
+      tran.handle_running(type, options)
+      # rescue => error
+      #  raise Errors::RRJErrorTransaction, error
     end
 
-    def message_template_ask_async(template_used = 'info', opts = {})
-      @rabbit.ask_request_async(template_used, opts)
+    # Define an handle and establish connection with janus
+    def start_handle
+      # tran = Janus::Transaction.new(@session)
+      # tran.sending_message yield
+      yield
+    rescue => error
+      raise Errors::RRJErrorHandle, error
     end
-
-    alias ask_async message_template_ask_async
-    alias ask_sync message_template_ask_sync
-    alias response_sync message_template_response
 
     private
 
-    def attach_session
-      Log.instance.debug 'Create an session'
-      response_sync(ask_sync('attach', ask_sync('create')))
+    # Send a simple message in exclusive queue
+    def queue_exclusive(rabbit, msg)
+      publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+      Janus::Response.new(publish.send_a_message(msg)).to_json
     end
 
-    def destroy_session
-      Log.instance.debug 'Destroy an session'
-      response_sync(ask_sync('destroy', response_sync(ask_sync('detach', @session))))
+    # Send a simple message in admin queue
+    def queue_admin(rabbit, msg)
+      queue_response = Tools::Config.instance.options['queues']['admin']['queue_from']
+      publish = Rabbit::PublishNonExclusive.new(rabbit.channel, queue_response)
+      Janus::Response.new(publish.send_a_message(msg)).to_hash
     end
   end
 end

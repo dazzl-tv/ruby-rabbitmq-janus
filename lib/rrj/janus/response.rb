@@ -9,6 +9,7 @@ module RubyRabbitmqJanus
       def initialize(response_janus)
         @request = response_janus
       rescue => error
+        Tools::Log.instance.debug "Request error : #{@request}"
         raise Errors::JanusResponseInit, error
       else
         Tools::Log.instance.debug "Response return : #{to_json}"
@@ -19,6 +20,7 @@ module RubyRabbitmqJanus
         analysis
         @request.to_json
       rescue => error
+        Tools::Log.instance.debug "Request error : #{@request}"
         raise Errors::JanusResponseJson, error
       end
 
@@ -26,6 +28,7 @@ module RubyRabbitmqJanus
       def to_nice_json
         JSON.pretty_generate to_hash
       rescue => error
+        Tools::Log.instance.debug "Request error : #{@request}"
         raise Errors::JanusResponsePrettyJson, error
       end
 
@@ -34,6 +37,7 @@ module RubyRabbitmqJanus
         analysis
         @request
       rescue => error
+        Tools::Log.instance.debug "Request error : #{@request}"
         raise Errors::JanusResponseHash, error
       end
 
@@ -44,6 +48,7 @@ module RubyRabbitmqJanus
         when 'ack' then {}
         end
       rescue => error
+        Tools::Log.instance.debug "Request error : #{@request}"
         raise Errors::JanusResponsePluginData, error
       end
 

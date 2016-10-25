@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/RedundantReturn
 module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # This class work with janus and send a series of message
+    # :reek:TooManyInstanceVariables
     class Transaction
       # Initialize an transaction
       def initialize(session)
         @rabbit = Rabbit::Connect.new
         @session = session
-        @handle = @publish = nil
+        @response = @handle = @publish = nil
       rescue => error
         raise Errors::JanusTransaction, error
       end
@@ -20,9 +20,9 @@ module RubyRabbitmqJanus
       def handle_running_complex(type, options)
         transaction_exclusive_process do
           @handle = publish_message_session('attach').sender
-          response = publish_message_handle(type, options)
-          response.for_plugin
+          @response = publish_message_handle(type, options)
         end
+        @response.for_plugin
       end
 
       # Attach to session running an create an handle for sending a simple message in
@@ -30,20 +30,21 @@ module RubyRabbitmqJanus
       def handle_running_simple(type, options)
         transaction_non_exclusive_process do
           @handle = publish_message_session('attach').sender
-          response = publish_message_handle(type, options)
-          response.for_plugin
+          @response = publish_message_handle(type, options)
+          publish_message_handle('detach')
         end
+        @response.for_plugin
       end
 
       def transaction_non_exclusive_process
-        return execute_transaction do
+        execute_transaction do
           @publish = Rabbit::PublishNonExclusive.new(@rabbit.channel)
           yield
         end
       end
 
       def transaction_exclusive_process
-        return execute_transaction do
+        execute_transaction do
           @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
           yield
         end
@@ -83,4 +84,3 @@ module RubyRabbitmqJanus
     end
   end
 end
-# rubocop:enable Style/RedundantReturn

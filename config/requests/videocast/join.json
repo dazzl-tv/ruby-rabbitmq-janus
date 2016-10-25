@@ -6,6 +6,7 @@
   "body": {
     "request": "join",
     "channel": "<number>",
-    "type": "videocaster"
+    "videocast": "<number>",
+    "type": "<string>"
   }
 }

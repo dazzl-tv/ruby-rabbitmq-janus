@@ -4,6 +4,7 @@
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # @abstract Publish message in RabbitMQ
     class Publish
       # Define Exchange operation
       def initialize(exchange)
@@ -19,6 +20,7 @@ module RubyRabbitmqJanus
     end
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # @abstract Publish an message in RabbitMQ and waiting a response
     class PublishReply < Publish
       # Initialize a queue
       def initialize(exchange)

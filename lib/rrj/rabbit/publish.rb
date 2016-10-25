@@ -60,6 +60,16 @@ module RubyRabbitmqJanus
       end
     end
 
+    # Publish for admin Janus
+    class PublishAdmin < PublishReply
+      # Initialize an queue non exclusive
+      def initialize(exchange)
+        name = Tools::Config.instance.options['queues']['admin']['queue_from']
+        @reply = exchange.queue(name)
+        super(exchange)
+      end
+    end
+
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Publish message in exclusive queue
     class PublishExclusive < PublishReply

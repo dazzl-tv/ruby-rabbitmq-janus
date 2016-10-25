@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
         @rabbit = Bunny.new(read_options_server)
       end
 
-      # Create and transaction betwwen gem and rabbitmq
+      # Create and transaction between gem and rabbitmq
       def transaction
         start
         response = yield(self)

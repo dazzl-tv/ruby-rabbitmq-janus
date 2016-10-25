@@ -90,8 +90,7 @@ module RubyRabbitmqJanus
 
     # Send a simple message in admin queue
     def queue_admin(rabbit, msg)
-      queue_response = Tools::Config.instance.options['queues']['admin']['queue_from']
-      publish = Rabbit::PublishNonExclusive.new(rabbit.channel, queue_response)
+      publish = Rabbit::PublishAdmin.new(rabbit.channel)
       Janus::Response.new(publish.send_a_message(msg)).to_hash
     end
   end

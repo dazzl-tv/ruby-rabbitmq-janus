@@ -70,10 +70,18 @@ module RubyRabbitmqJanus
       # Analysis response and send exception if janus return an error
       # :reek:DuplicateMethodCall
       def analysis
-        raise Errors::JanusResponseSimple, @request['error'] \
-          if @request['janus'].equal? 'error'
-        raise Errors::JanusResponsePlugin, @request['plugindata']['data'] if \
-          @request.key?('plugindata') && @request['plugindata']['data'].key?('error_code')
+        raise Errors::JanusResponseSimple, @request['error'] if error_simple?
+        raise Errors::JanusResponsePlugin, @request['plugindata']['data'] if error_plugin?
+      end
+
+      # Test if message response contains an simple error
+      def error_simple?
+        @request['janus'].equal? 'error'
+      end
+
+      # Test if message response contains an error in plugin
+      def error_plugin?
+        @request.key?('plugindata') && @request['plugindata']['data'].key?('error_code')
       end
     end
   end

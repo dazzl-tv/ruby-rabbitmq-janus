@@ -54,8 +54,8 @@ module RubyRabbitmqJanus
     # Publish message in non exclusive queue
     class PublishNonExclusive < PublishReply
       # Initialize an queue non exclusive
-      def initialize(exchange, name_queue = '')
-        @reply = exchange.queue(name_queue)
+      def initialize(exchange)
+        @reply = exchange.queue(Tools::Config.instance.options['queues']['queue_from'])
         super(exchange)
       end
     end

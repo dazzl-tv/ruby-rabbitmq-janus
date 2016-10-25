@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/RedundantReturn
 module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -14,23 +15,38 @@ module RubyRabbitmqJanus
         raise Errors::JanusTransaction, error
       end
 
-      # Attach to session running an create an handle
-      def handle_running(type, options)
-        transaction_process do
+      # Attach to session running an create an handle for sending a complex message in
+      # exclusive queue
+      def handle_running_complex(type, options)
+        transaction_exclusive_process do
           @handle = publish_message_session('attach').sender
           response = publish_message_handle(type, options)
           response.for_plugin
         end
       end
 
-      def transaction_process
-        Tools::Log.instance.debug 'Start a transaction ....'
-        @rabbit.start
-        @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
-        response = yield
-        @rabbit.close
-        Tools::Log.instance.debug 'Close a transaction ....'
-        response
+      # Attach to session running an create an handle for sending a simple message in
+      # non exclusive queue
+      def handle_running_simple(type, options)
+        transaction_non_exclusive_process do
+          @handle = publish_message_session('attach').sender
+          response = publish_message_handle(type, options)
+          response.for_plugin
+        end
+      end
+
+      def transaction_non_exclusive_process
+        return execute_transaction do
+          @publish = Rabbit::PublishNonExclusive.new(@rabbit.channel)
+          yield
+        end
+      end
+
+      def transaction_exclusive_process
+        return execute_transaction do
+          @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
+          yield
+        end
       end
 
       # Sending a message to janus
@@ -57,6 +73,14 @@ module RubyRabbitmqJanus
         msg = Janus::Message.new(type, opts.merge!(options))
         Janus::Response.new(@publish.send_a_message(msg))
       end
+
+      def execute_transaction
+        @rabbit.start
+        response = yield
+        @rabbit.close
+        response
+      end
     end
   end
 end
+# rubocop:enable Style/RedundantReturn

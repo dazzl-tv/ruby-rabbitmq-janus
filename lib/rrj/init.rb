@@ -62,12 +62,19 @@ module RubyRabbitmqJanus
 
     # Manage a transaction with an plugin in janus
     # Use a running session for working with janus
-    def transaction(type, replace = {}, add = {})
+    def transaction_complex(type, replace = {}, add = {})
       options = { 'replace' => replace, 'add' => add }
       tran = Janus::Transaction.new(@session)
-      tran.handle_running(type, options)
+      tran.handle_running_complex(type, options)
       # rescue => error
       #  raise Errors::RRJErrorTransaction, error
+    end
+
+    # Manage a transaction simple. Just for create element or destroy
+    def transaction_simple(type, replace = {}, add = {})
+      options = { 'replace' => replace, 'add' => add }
+      tran = Janus::Transaction.new(@session)
+      tran.handle_running_simple(type, options)
     end
 
     # Define an handle and establish connection with janus

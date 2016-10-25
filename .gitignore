@@ -55,3 +55,6 @@ Gemfile.lock
 
 ### ruby-rabbitmq_janus ###
 config/ruby-rabbitmq-janus.yml
+config/requests/channel
+config/requests/videocast
+spec/support/schema/channel

@@ -34,7 +34,7 @@ module RubyRabbitmqJanus
       # Write a message in log with a UNKNOWN level
       # @param message [String] Message writing in warning level in log
       def unknown(message)
-        write_tag { @logs.unknown(message.brown) }
+        write_tag { @logs.unknown(message) }
       end
 
       # Write a message in log with a FATAL level
@@ -70,6 +70,10 @@ module RubyRabbitmqJanus
       # Return instance logger
       def logger
         @logs
+      end
+
+      def logdev
+        @logs.instance_variable_get(:'@logdev').filename
       end
 
       private

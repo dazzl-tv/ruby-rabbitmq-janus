@@ -44,6 +44,7 @@ module RubyRabbitmqJanus
       private
 
       # Read option for bunny instance (connection with rabbitmq)
+      # :reek:FeatureEnvy
       def read_options_server
         cfg = Tools::Config.instance.options['rabbit']
         {
@@ -51,9 +52,19 @@ module RubyRabbitmqJanus
           port: cfg['port'],
           user: cfg['user'],
           pass: cfg['password'],
-          vhost: cfg['vhost'],
-          logger: Tools::Log.instance.logger
-        }
+          vhost: cfg['vhost']
+        }.merge!(option_log_rabbit)
+      end
+
+      def option_log_rabbit
+        if Tools::Log.instance.level.zero
+          {
+            log_level: Tools::Log.instance.level,
+            log_file: Tools::Log.instance.logdev
+          }
+        else
+          {}
+        end
       end
     end
   end

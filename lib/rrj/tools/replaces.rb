@@ -4,6 +4,7 @@ module RubyRabbitmqJanus
   module Tools
     # Format message request with good data to HASH format
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # :reek:ToomanyMethods
     class Replace
       # Initialize a tool replace
       def initialize(request, options = {})
@@ -30,7 +31,14 @@ module RubyRabbitmqJanus
         replace_session if @request.key?('session_id')
         replace_plugin if @request.key?('plugin')
         replace_handle if @request.key?('handle_id')
-        replace_admin if @request.key?('admin_secret')
+        replace_admins if @request.key?('admin_secret')
+      end
+
+      # Replace elements admins if present
+      def replace_admins
+        replace_admin
+        replace_level if @request.key?('level')
+        replace_debug if @request.key?('debug')
       end
 
       # Create an transaction string and replace in request field with an String format
@@ -74,6 +82,18 @@ module RubyRabbitmqJanus
         @request['admin_secret'] = Tools::Config.instance.options['rabbit']['admin_pass']
       rescue => message
         Tools::Log.instance.warn "Error replace admin_secret : #{message}"
+      end
+
+      def replace_level
+        @request['level'] = @opts['level']
+      rescue => message
+        Tools::Log.instance.warn "Error replace level : #{message}"
+      end
+
+      def replace_debug
+        @request['debug'] = @opts['debug']
+      rescue => message
+        Tools::Log.instance.warn "Error replace debug : #{message}"
       end
 
       # Adds other element to request

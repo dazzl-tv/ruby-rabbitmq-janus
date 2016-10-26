@@ -51,9 +51,9 @@ module RubyRabbitmqJanus
     end
 
     # Send a message simple for admin Janus
-    def message_admin(type)
+    def message_admin(type, options = {})
       Rabbit::Connect.new.transaction do |rabbit|
-        msg = Janus::MessageAdmin.new(type, 'session_id' => @session)
+        msg = Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
         queue_admin(rabbit, msg)
       end
     rescue => error

@@ -10,6 +10,7 @@ module RubyRabbitmqJanus
       def initialize(request, options = {})
         @request = request
         @opts = options
+        Tools::Log.instance.debug "Element to replace : #{@opts}"
       end
 
       # Replace element in hash request with information used for this transaction

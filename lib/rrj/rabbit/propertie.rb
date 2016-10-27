@@ -5,6 +5,8 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Manage properties to message sending in rabbitmq queue
     class Propertie
+      attr_reader :correlation
+
       # Initialize a message sending to rabbitmq
       def initialize
         Tools::Log.instance.debug 'initalize a propertie to message'

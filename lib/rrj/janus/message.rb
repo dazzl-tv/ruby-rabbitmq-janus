@@ -62,6 +62,11 @@ module RubyRabbitmqJanus
         raise Errors::JanusMessagePropertie, error
       end
 
+      # Return correlation to message
+      def correlation
+        @properties.correlation
+      end
+
       private
 
       # Load raw request

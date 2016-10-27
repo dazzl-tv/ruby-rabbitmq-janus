@@ -10,12 +10,14 @@ module RubyRabbitmqJanus
       def initialize(exchange)
         Tools::Log.instance.debug 'Create/Connect to queue'
         @exchange = exchange.default_exchange
+        @message = nil
       end
 
       # Send a message in queue
       def send_a_message(request)
         Tools::Log.instance.info "Send request type : #{request.type}"
-        @exchange.publish(request.to_json, request.options)
+        @message = request
+        @exchange.publish(@message.to_json, request.options)
       end
     end
 
@@ -34,18 +36,27 @@ module RubyRabbitmqJanus
       # Publish an message in rabbitmq
       def send_a_message(request)
         Tools::Log.instance.info "Send request type : #{request.type}"
-        @exchange.publish(request.to_json, request.options.merge!(reply_to: @reply.name))
+        @exchange.publish(read_message(request),
+                          request.options.merge!(reply_to: @reply.name))
         @lock.synchronize { @condition.wait(@lock) }
         @response
       end
 
       private
 
+      # Read message and return to JSON format
+      def read_message(request)
+        @message = request
+        @message.to_json
+      end
+
       # Subscribe to queue in Rabbitmq
       def subscribe_to_queue
-        @reply.subscribe do |_delivery_info, _properties, payload|
-          @response = JSON.parse payload
-          @lock.synchronize { @condition.signal }
+        @reply.subscribe do |_delivery_info, properties, payload|
+          if @message.correlation.eql?(properties.correlation_id)
+            @response = JSON.parse payload
+            @lock.synchronize { @condition.signal }
+          end
         end
       end
     end

@@ -11,12 +11,17 @@ module RubyRabbitmqJanus
         @rabbit = Bunny.new(read_options_server)
       end
 
-      # Create and transaction between gem and rabbitmq
-      def transaction
-        start
-        response = yield(self)
+      # Create an transaction with rabbitmq and close after response is received
+      def transaction_short
+        response = transaction_long { yield }
         close
         response
+      end
+
+      # Create an transaction with rabbitmq and not close
+      def transaction_long
+        start
+        yield
       end
 
       # Openning a connection with Rabbitmq

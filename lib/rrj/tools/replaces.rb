@@ -4,7 +4,6 @@ module RubyRabbitmqJanus
   module Tools
     # Format message request with good data to HASH format
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # :reek:ToomanyMethods
     class Replace
       # Initialize a tool replace
       def initialize(request, options = {})
@@ -26,20 +25,14 @@ module RubyRabbitmqJanus
 
       private
 
+      attr_reader :request, :opts
+
       # Replace classic elements
       def replace_classic
         replace_transaction if @request.key?('transaction')
         replace_session if @request.key?('session_id')
         replace_plugin if @request.key?('plugin')
         replace_handle if @request.key?('handle_id')
-        replace_admins if @request.key?('admin_secret')
-      end
-
-      # Replace elements admins if present
-      def replace_admins
-        replace_admin
-        replace_level if @request.key?('level')
-        replace_debug if @request.key?('debug')
       end
 
       # Create an transaction string and replace in request field with an String format
@@ -78,25 +71,6 @@ module RubyRabbitmqJanus
         Tools::Log.instance.warn "Error REPLACE other field : #{message}"
       end
 
-      # Replace admin secret in request
-      def replace_admin
-        @request['admin_secret'] = Tools::Config.instance.options['rabbit']['admin_pass']
-      rescue => message
-        Tools::Log.instance.warn "Error replace admin_secret : #{message}"
-      end
-
-      def replace_level
-        @request['level'] = @opts['level']
-      rescue => message
-        Tools::Log.instance.warn "Error replace level : #{message}"
-      end
-
-      def replace_debug
-        @request['debug'] = @opts['debug']
-      rescue => message
-        Tools::Log.instance.warn "Error replace debug : #{message}"
-      end
-
       # Adds other element to request
       def add_other
         values = @opts['add']
@@ -125,12 +99,12 @@ module RubyRabbitmqJanus
         end
       end
 
-      # This is method smells of :reek:UtilityFunction
       def new_parent(key, parent)
         "#{parent}#{'.' unless parent.empty?}#{key}"
       end
 
-      # This method of :reek:NilCheck
+      # Test presence of key in many hash
+      # :reek:NilCheck
       def test_presence?(presence_of_key)
         @opts.key?(presence_of_key) && \
           @request.key?('body') && \

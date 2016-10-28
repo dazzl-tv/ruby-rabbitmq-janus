@@ -53,8 +53,19 @@ Gemfile.lock
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 
-### ruby-rabbitmq_janus ###
+### ruby-rabbitmq-janus ###
+
+## Configuration customize
 config/ruby-rabbitmq-janus.yml
+
+## Request customize
 config/requests/channel
 config/requests/videocast
+
+## Schema JSON response
 spec/support/schema/channel
+spec/support/schema/videocast
+
+## Unitaire test for request customize
+spec/request/channel
+spec/request/videocast

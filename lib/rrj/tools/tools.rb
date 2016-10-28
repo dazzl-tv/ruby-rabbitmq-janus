@@ -4,6 +4,7 @@ require 'rrj/tools/log'
 require 'rrj/tools/config'
 require 'rrj/tools/requests'
 require 'rrj/tools/replaces'
+require 'rrj/tools/replaces_admin'
 
 module RubyRabbitmqJanus
   # Contains all tools necessary in this gem

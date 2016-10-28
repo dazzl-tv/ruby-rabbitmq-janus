@@ -13,6 +13,15 @@ module RubyRabbitmqJanus
       rescue => error
         raise Errors::JanusMessagePropertie, error
       end
+
+      private
+
+      # Transform raw request in request to janus, so replace element <string>, <number>
+      # and other with real value
+      def prepare_request(options)
+        @request = Tools::AdminReplace.new(@request, options).transform_request
+        Tools::Log.instance.debug "Prepare request admin for janus : #{to_json}"
+      end
     end
   end
 end

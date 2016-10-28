@@ -67,12 +67,8 @@ module RubyRabbitmqJanus
 
     # Send a message simple for admin Janus
     def message_admin(type, options = {})
-      Rabbit::Connect.new.transaction_short do |rabbit|
-        msg = Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
-        queue_admin(rabbit, msg)
-      end
-    rescue => error
-      raise Errors::RRJErrorPost, error
+      msg = Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
+      queue_admin(rabbit, msg)
     end
 
     # Send an message in handle session in current session.
@@ -87,6 +83,7 @@ module RubyRabbitmqJanus
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
     def message_handle(type, replace = {}, add = {})
       options = { 'replace' => replace, 'add' => add }
+      Tools::Log.instance.debug "Transaction : #{@transaction}"
       @transaction.publish_message_handle(type, options)
     end
 
@@ -104,6 +101,13 @@ module RubyRabbitmqJanus
       raise Errors::RRJErrorHandle, error
     end
 
+    def start_handle_admin
+      @transaction = Janus::TransactionAdmin.new(@session)
+      @transaction.handle_connect { yield }
+    rescue => error
+      raise Errors::RRJErrorHandle, error
+    end
+
     # Stop an handle existing in session running
     def stop_handle
       @transaction.handle_running_stop
@@ -117,12 +121,7 @@ module RubyRabbitmqJanus
       Janus::Response.new(publish.send_a_message(msg)).to_json
     end
 
-    # Send a simple message in admin queue
-    def queue_admin(rabbit, msg)
-      publish = Rabbit::PublishAdmin.new(rabbit.channel)
-      Janus::Response.new(publish.send_a_message(msg)).to_hash
-    end
-
+    # Return a current session if not specified
     def use_current_session?(option)
       { 'session_id' => @session } unless option.key?('session_id')
     end

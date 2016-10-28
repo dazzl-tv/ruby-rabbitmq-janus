@@ -28,8 +28,8 @@ module RubyRabbitmqJanus
       attr_reader :rabbit, :session, :response, :handle, :publish
 
       # determine queue used
-      # :reek:ControlParameter
-      def choose_queue(exclusive)
+      # :reek:ControlParameter and :reek:BooleanParameter
+      def choose_queue(exclusive = false)
         chan = @rabbit.channel
         @publish = if exclusive
                      Rabbit::PublishNonExclusive.new(chan)

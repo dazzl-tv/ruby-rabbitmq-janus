@@ -4,11 +4,11 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ' do
   describe '.response', type: :request, level: :base, name: :info do
-    # Request type info
-    let(:info) { @gateway.message_simple('base::info') }
+    let(:type) { 'base::info' }
+    let(:message) { @gateway.message_simple(type) }
 
     it 'type info' do
-      expect(info).to match_json_schema('base::info')
+      expect(message.to_json).to match_json_schema(type)
     end
   end
 end

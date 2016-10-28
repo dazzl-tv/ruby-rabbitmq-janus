@@ -38,8 +38,12 @@ RSpec.configure do |config|
     config.json_schemas[json_index] = json_file
   end
 
-  # Configure requests test
-  config.before(:example, type: :request) do
+  # Configure requests test before sending request
+  config.before(:example) do
     @gateway = RubyRabbitmqJanus::RRJ.new
+  end
+
+  config.after(:example) do
+    @gateway.message_session('base::destroy') unless @gateway.session.nil?
   end
 end

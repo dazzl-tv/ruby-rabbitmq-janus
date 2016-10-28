@@ -8,8 +8,8 @@ module RubyRabbitmqJanus
       # Connect to session and post an message
       def session_connect(exclusive)
         rabbit.transaction_short do
-          publish = choose_queue(exclusive)
-          Janus::Response.new(publish.send_a_message(yield)).to_json
+          choose_queue(exclusive)
+          send_a_message { yield }
         end
       end
     end

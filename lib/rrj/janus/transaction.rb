@@ -15,71 +15,38 @@ module RubyRabbitmqJanus
         raise Errors::JanusTransaction, error
       end
 
-      # Attach to session running an create an handle for sending a complex message in
-      # exclusive queue
-      def handle_running_complex(type, options)
-        transaction_exclusive_process do
-          @handle = publish_message_session('attach').sender
-          @response = publish_message_handle(type, options)
+      # Opening a short transaction with rabbitmq and close when is ending
+      def connect(exclusive)
+        rabbit.transaction_short do
+          choose_queue(exclusive)
+          send_a_message { yield }
         end
-        @response.for_plugin
-      end
-
-      # Attach to session running an create an handle for sending a simple message in
-      # non exclusive queue
-      def handle_running_simple(type, options)
-        transaction_non_exclusive_process do
-          @handle = publish_message_session('attach').sender
-          @response = publish_message_handle(type, options)
-          publish_message_handle('detach')
-        end
-        @response.for_plugin
-      end
-
-      def transaction_non_exclusive_process
-        execute_transaction do
-          @publish = Rabbit::PublishNonExclusive.new(@rabbit.channel)
-          yield
-        end
-      end
-
-      def transaction_exclusive_process
-        execute_transaction do
-          @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
-          yield
-        end
-      end
-
-      # Sending a message to janus
-      def sending_message
-        @handle = publish_message_session('attach').sender
-        yield reason, data, jsep if block_given?
-        # response.for_plugin
-      rescue => error
-        raise Errors::JanusTransactionPost, error
       end
 
       private
 
-      # Publish an message in sesion
-      def publish_message_session(type)
-        msg = Janus::Message.new(type, 'session_id' => @session)
-        Janus::Response.new(@publish.send_a_message(msg))
+      attr_reader :rabbit, :session, :response, :handle, :publish
+
+      # determine queue used
+      # :reek:ControlParameter
+      def choose_queue(exclusive)
+        chan = @rabbit.channel
+        @publish = if exclusive
+                     Rabbit::PublishNonExclusive.new(chan)
+                   else
+                     Rabbit::PublishExclusive.new(chan, '')
+                   end
       end
 
-      # Publish an message in handle
-      def publish_message_handle(type, options = {})
-        Tools::Log.instance.debug 'Publish Message Handle'
-        opts = { 'session_id' => @session, 'handle_id' => @handle }
-        msg = Janus::Message.new(type, opts.merge!(options))
-        Janus::Response.new(@publish.send_a_message(msg))
+      # Send a message to queue
+      def send_a_message
+        Janus::Response.new(@publish.send_a_message(yield))
       end
 
-      def execute_transaction
-        @rabbit.start
-        response = yield
-        @rabbit.close
-        response
+      # Associate handle to transaction
+      def create_handle
+        msg = Janus::Message.new('base::attach', 'session_id' => @session)
+        @handle = send_a_message { msg }.sender
       end
     end
   end

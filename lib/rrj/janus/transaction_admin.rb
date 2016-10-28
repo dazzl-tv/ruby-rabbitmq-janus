@@ -6,6 +6,13 @@ module RubyRabbitmqJanus
     # This class work with janus and send a series of message
     class TransactionAdmin < TransactionHandle
       # Initialize conncetion to Rabbit and Janus
+      def connect
+        rabbit.transaction_short do
+          choose_queue
+          send_a_message { yield }
+        end
+      end
+
       def handle_connect
         rabbit.transaction_long do
           choose_queue

@@ -67,8 +67,11 @@ module RubyRabbitmqJanus
 
     # Send a message simple for admin Janus
     def message_admin(type, options = {})
-      msg = Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
-      queue_admin(rabbit, msg)
+      Janus::TransactionAdmin.new(@session).connect do
+        Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
+      end
+      # msg = Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
+      # queue_admin(rabbit, msg)
     end
 
     # Send an message in handle session in current session.

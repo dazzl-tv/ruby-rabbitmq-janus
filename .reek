@@ -4,4 +4,4 @@ UtilityFunction:
 
 DuplicateMethodCall:
   allow_calls:
-    - 'Log.instance'
+    - 'Tools::Log.instance'

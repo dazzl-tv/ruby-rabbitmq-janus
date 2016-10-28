@@ -140,6 +140,8 @@ Use tags for rspec :
 |                 | detach          |
 |                 | info            |
 |                 | test            |
+| level           | base            |
+|                 | admin           |
 | config          | rabbit          |
 |                 | log             |
 |                 | config          |

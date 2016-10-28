@@ -22,9 +22,24 @@ RSpec.configure do |config|
   config.include Aruba::Api
   config.include JSON::SchemaMatchers
 
-  Dir[File.join('spec/support/schemas/*/', '*.json')].count do |file|
+  # Add JSONs for gem configuration test
+  Dir[File.join('spec/support/schemas/config/', '*.json')].count do |file|
     json_file = JSON.parse(File.read(file))
     json_name = File.basename(file, '.json').to_sym
     config.json_schemas[json_name] = json_file
+  end
+
+  # Add JSONs for request result test
+  Dir[File.join('spec/support/schemas/request/*/', '*.json')].count do |file|
+    json_file = JSON.parse(File.read(file))
+    json_type = File.dirname(file).split('/').last
+    json_name = File.basename(file, '.json').to_sym
+    json_index = "#{json_type}::#{json_name}"
+    config.json_schemas[json_index] = json_file
+  end
+
+  # Configure requests test
+  config.before(:example, type: :request) do
+    @gateway = RubyRabbitmqJanus::RRJ.new
   end
 end

@@ -63,8 +63,8 @@ config/requests/channel
 config/requests/videocast
 
 ## Schema JSON response
-spec/support/schema/channel
-spec/support/schema/videocast
+spec/support/schemas/request/channel
+spec/support/schemas/request/videocast
 
 ## Unitaire test for request customize
 spec/request/channel

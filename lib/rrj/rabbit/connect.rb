@@ -74,7 +74,11 @@ module RubyRabbitmqJanus
       # Test if string is an ENV variables
       def test_env_var(string, sym)
         test = string[sym.to_s]
-        value = test.include?('ENV') ? ENV[test.gsub("ENV['", '').gsub("']", '')] : test
+        value = if test.is_a?(String)
+                  test.include?('ENV') ? ENV[test.gsub("ENV['", '').gsub("']", '')] : test
+                else
+                  test
+                end
         { sym => value }
       end
     end

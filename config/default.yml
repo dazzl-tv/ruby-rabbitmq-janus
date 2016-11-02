@@ -9,7 +9,7 @@ rabbit:
   # Precise RabbitMQ user - Default 'guest'
   user: guest
   # Precise RabbitMQ password - Default 'guest'
-  password: guest
+  pass: guest
     # Password for admin request
   admin_pass: janusoverlord
 

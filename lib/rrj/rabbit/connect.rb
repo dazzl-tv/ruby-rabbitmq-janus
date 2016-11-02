@@ -52,15 +52,14 @@ module RubyRabbitmqJanus
       # :reek:FeatureEnvy
       def read_options_server
         cfg = Tools::Config.instance.options['rabbit']
-        {
-          host: cfg['host'],
-          port: cfg['port'],
-          user: cfg['user'],
-          pass: cfg['password'],
-          vhost: cfg['vhost']
-        }.merge!(option_log_rabbit)
+        opts = {}
+        %w(host port pass user vhost).each do |value|
+          opts.merge!(test_env_var(cfg, value.to_sym))
+        end
+        opts.merge!(option_log_rabbit)
       end
 
+      # Define option logs for bunny
       def option_log_rabbit
         if Tools::Log.instance.level.zero?
           {
@@ -70,6 +69,13 @@ module RubyRabbitmqJanus
         else
           {}
         end
+      end
+
+      # Test if string is an ENV variables
+      def test_env_var(string, sym)
+        test = string[sym.to_s]
+        value = test.include?('ENV') ? ENV[test.gsub("ENV['", '').gsub("']", '')] : test
+        { sym => value }
       end
     end
   end

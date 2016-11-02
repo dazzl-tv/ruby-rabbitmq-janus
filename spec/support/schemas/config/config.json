@@ -76,11 +76,11 @@
         "thread": {
           "type": "hash",
           "properties": {
-            "enabled": { "type" : "boolean" },
+            "enable": { "type" : "boolean" },
             "number": { "type": "integer" }
           },
           "required": [
-            "enabled",
+            "enable",
             "number"
           ]
         }

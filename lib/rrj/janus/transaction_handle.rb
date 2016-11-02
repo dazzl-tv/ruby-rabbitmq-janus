@@ -5,9 +5,19 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # This class work with janus and send a series of message
     class TransactionHandle < TransactionSession
-      # Initialize conncetion to Rabbit and Janus
+      # Initialize connection to Rabbit and Janus
       def handle_connect(exclusive)
         rabbit.transaction_long do
+          choose_queue(exclusive)
+          create_handle
+          yield
+        end
+      end
+
+      # Initialize connection to Rabbit and Janus and close after sending an received
+      # a response
+      def handle_connect_and_stop(exclusive)
+        rabbit.transaction_short do
           choose_queue(exclusive)
           create_handle
           yield

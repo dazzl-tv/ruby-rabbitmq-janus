@@ -121,13 +121,17 @@ module RubyRabbitmqJanus
       @transaction.handle_running_stop
     end
 
-    private
-
-    # Send a simple message in exclusive queue
-    def queue_exclusive(rabbit, msg)
-      publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-      Janus::Response.new(publish.send_a_message(msg)).to_json
+    # Start an short transaction, this queue is not exclusive
+    def handle_message_simple(type, replace = {}, add = {})
+      @transaction = Janus::TransactionHandle.new(@session)
+      @transaction.handle_connect_and_stop(false) do
+        message_handle(type, replace, add).for_plugin
+      end
+    rescue => error
+      raise Errors::RRJErrorHandle, error
     end
+
+    private
 
     # Return a current session if not specified
     def use_current_session?(option)

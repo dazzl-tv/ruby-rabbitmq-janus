@@ -17,7 +17,7 @@ module RubyRabbitmqJanus
 
       # Opening a short transaction with rabbitmq and close when is ending
       def connect(exclusive)
-        rabbit.transaction_short do
+        @rabbit.transaction_short do
           choose_queue(exclusive)
           send_a_message { yield }
         end

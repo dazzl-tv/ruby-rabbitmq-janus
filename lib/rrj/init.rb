@@ -41,7 +41,7 @@ module RubyRabbitmqJanus
     #   RubyRabbitmqJanus::RRJ.new.message_simple('base::info')
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
-    def message_simple(type, exclusive = false)
+    def message_simple(type = 'base::info', exclusive = false)
       Janus::Transaction.new(@session).connect(exclusive) do
         Janus::Message.new(type)
       end

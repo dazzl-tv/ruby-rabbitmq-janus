@@ -66,12 +66,17 @@ module RubyRabbitmqJanus
     end
 
     # Send a message simple for admin Janus
+    # @param [String] type
+    #   Given a type to request. JSON request writing in 'config/requests/'
+    # @param [Hash] options Options update in request
+    # @exemple Sending an message create
+    #   RubyRabbitmqJanus::RRJ.new.message_admin('admin::sessions')
+    #   #=> {"janus":"success","sessions": [12345, 8786567465465, ...] }
+    # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
     def message_admin(type, options = {})
       Janus::TransactionAdmin.new(@session).connect do
         Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
       end
-      # msg = Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
-      # queue_admin(rabbit, msg)
     end
 
     # Send an message in handle session in current session.

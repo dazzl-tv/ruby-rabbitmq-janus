@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
 
       def test_env_var(configuration, key)
         test = configuration[key.to_s]
-        if test.is_a?(configuration)
+        if test.is_a?(String)
           test.include?('ENV') ? ENV[test.gsub("ENV['", '').gsub("']", '')] : test
         else
           test

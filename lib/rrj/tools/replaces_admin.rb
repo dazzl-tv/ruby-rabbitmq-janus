@@ -22,7 +22,8 @@ module RubyRabbitmqJanus
 
       # Replace admin secret in request
       def replace_admin
-        request['admin_secret'] = Tools::Config.instance.options['rabbit']['admin_pass']
+        cfg = Tools::Config.instance.options['rabbit']
+        request['admin_secret'] = Tools::Env.instance.test_env_var(cfg, 'admin_pass')
       rescue => message
         Tools::Log.instance.warn "Error replace admin_secret : #{message}"
       end

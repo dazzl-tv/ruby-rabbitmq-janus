@@ -94,7 +94,7 @@ module RubyRabbitmqJanus
 
       # This method smell :reek:UtilityFunction
       def test_level?(this_level)
-        this_level >= Tools::Log.instance.level ? true : false
+        this_level >= Log.instance.level ? true : false
       end
 
       # Write a log with an tag

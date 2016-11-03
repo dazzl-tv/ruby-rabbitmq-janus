@@ -53,8 +53,8 @@ module RubyRabbitmqJanus
       def read_options_server
         cfg = Tools::Config.instance.options['rabbit']
         opts = {}
-        %w(host port pass user vhost).each do |value|
-          opts.merge!(test_env_var(cfg, value.to_sym))
+        %w(host port pass user vhost).each do |val|
+          opts.merge!(val => Tools::Env.instance.test_env_var(cfg, val))
         end
         opts.merge!(option_log_rabbit)
       end
@@ -69,17 +69,6 @@ module RubyRabbitmqJanus
         else
           {}
         end
-      end
-
-      # Test if string is an ENV variables
-      def test_env_var(string, sym)
-        test = string[sym.to_s]
-        value = if test.is_a?(String)
-                  test.include?('ENV') ? ENV[test.gsub("ENV['", '').gsub("']", '')] : test
-                else
-                  test
-                end
-        { sym => value }
       end
     end
   end

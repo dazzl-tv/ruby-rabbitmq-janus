@@ -21,6 +21,7 @@ module RubyRabbitmqJanus
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
+      Tools::Env.instance
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance

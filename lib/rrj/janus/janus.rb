@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rrj/janus/keepalive'
+require 'rrj/janus/event'
 require 'rrj/janus/message'
 require 'rrj/janus/admin'
 require 'rrj/janus/response'

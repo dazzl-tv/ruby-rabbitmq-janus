@@ -132,6 +132,12 @@ module RubyRabbitmqJanus
       raise Errors::RRJErrorHandle, error
     end
 
+    # Listen event sending in "from-janus" queue
+    # :reek:UtilityFunction
+    def listen_from_janus
+      Janus::Event.instance.start_listen
+    end
+
     private
 
     # Return a current session if not specified

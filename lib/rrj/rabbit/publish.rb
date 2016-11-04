@@ -30,7 +30,7 @@ module RubyRabbitmqJanus
         @lock = Mutex.new
         @response = nil
         subscribe_to_queue
-        super
+        super(exchange)
       end
 
       # Publish an message in rabbitmq
@@ -68,6 +68,14 @@ module RubyRabbitmqJanus
       def initialize(exchange)
         @reply = exchange.queue(Tools::Config.instance.options['queues']['queue_from'])
         super(exchange)
+      end
+
+      def listen_events
+        @reply.subscribe(block: true) do |_delivery_info, _properties, payload|
+          puts payload
+          @response = JSON.parse payload
+          @lock.synchronize { @condition.signal }
+        end
       end
     end
 

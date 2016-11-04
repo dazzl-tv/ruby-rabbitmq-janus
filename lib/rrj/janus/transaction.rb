@@ -32,8 +32,10 @@ module RubyRabbitmqJanus
       def choose_queue(exclusive = false)
         chan = @rabbit.channel
         @publish = if exclusive
+                     Tools::Log.instance.debug 'Choose an queue non Exclusive : to-janus'
                      Rabbit::PublishNonExclusive.new(chan)
                    else
+                     Tools::Log.instance.debug 'Choose an queue Exclusive : ampq.gen-xxx'
                      Rabbit::PublishExclusive.new(chan, '')
                    end
       end

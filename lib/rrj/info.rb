@@ -3,7 +3,7 @@
 # Define constant to gem.
 module RubyRabbitmqJanus
   # Define version to gem
-  VERSION = '1.0.1'
+  VERSION = '1.0.2'
 
   # Define a summary description to gem
   SUMMARY = 'Ruby RabbitMQ Janus'
@@ -21,7 +21,7 @@ module RubyRabbitmqJanus
   # Define a post install message
   POST_INSTALL = \
     "# ====================================================== #\n" \
-    "# Thanks for installing!                                 #\n" \
+    "# Thanks for installing RRJ !                            #\n" \
     "# #{HOMEPAGE}.       #\n" \
     "# ;;;;;;;;;;;:.                                          #\n" \
     "# ;;;;;;;;;;;;;;;;;;                                     #\n" \

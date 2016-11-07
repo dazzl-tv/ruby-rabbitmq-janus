@@ -51,9 +51,10 @@ module RubyRabbitmqJanus
       end
 
       # Subscribe to queue in Rabbitmq
+      # :reek:NilCheck
       def subscribe_to_queue
         @reply.subscribe do |_delivery_info, properties, payload|
-          if @message.correlation.eql?(properties.correlation_id)
+          if !@message.nil? && @message.correlation.eql?(properties.correlation_id)
             @response = JSON.parse payload
             @lock.synchronize { @condition.signal }
           end
@@ -71,10 +72,11 @@ module RubyRabbitmqJanus
       end
 
       def listen_events
-        @reply.subscribe(block: true) do |_delivery_info, _properties, payload|
-          puts payload
+        Tools::Log.instance.debug "Waiting message from queue : #{@reply.name}"
+        @reply.subscribe(block: true) do |_info, _properties, payload|
+          @condition.signal
           @response = JSON.parse payload
-          @lock.synchronize { @condition.signal }
+          Tools::Log.instance.debug "[X] #{@response['janus']}"
         end
       end
     end

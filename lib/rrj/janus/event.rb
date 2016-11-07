@@ -17,22 +17,34 @@ module RubyRabbitmqJanus
       def start_listen
         # Thread.new do
         Tools::Log.instance.debug 'Start thread to listen queue from-janus'
-        @rabbit.transaction_long do
-          loop_in_queue(Rabbit::PublishNonExclusive.new(@rabbit.channel))
+        begin
+          start_transaction
+        rescue Interrupt
+          Tools::Log.instance.info 'Stop to listen standard queue'
+          @rabbit.close
         end
-        @rabbit.close
         # end
       end
 
       private
 
-      def loop_in_queue(publish)
-        loop do
-          @lock.synchronize do
-            @condition.wait(@lock)
-            Janus::Response.new publish.listen_events
-          end
+      def start_transaction
+        @rabbit.transaction_long do
+          publisher = Rabbit::PublishNonExclusive.new(@rabbit.channel)
+          publisher.listen_events
+          # publish = Rabbit::PublishNonExclusive.new(@rabbit.channel)
+          # loop_in_queue(publish.listen_events)
         end
+      end
+
+      def loop_in_queue(_event)
+        # loop do
+        #   Janus::Response.new(event)
+        #   @lock.synchronize do
+        #     @condition.wait(@lock)
+        #     Janus::Response.new(event)
+        #   end
+        # end
       end
     end
   end

@@ -101,6 +101,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Publisher just for listen a classic out queue
     class PublishListen
+      # Initialize publisher object for listen an classic queue to Janus
       def initialize(rabbit)
         @count = 1
         @rabbit = rabbit.channel

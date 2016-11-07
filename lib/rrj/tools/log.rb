@@ -72,6 +72,7 @@ module RubyRabbitmqJanus
         @logs
       end
 
+      # Return device to log is writing
       def logdev
         @logs.instance_variable_get(:'@logdev').filename
       end

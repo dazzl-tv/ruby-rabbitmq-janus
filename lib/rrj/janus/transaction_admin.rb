@@ -13,6 +13,7 @@ module RubyRabbitmqJanus
         end
       end
 
+      # Choose queue, create an handle, connect to rabbitmq server and send messages
       def handle_connect
         rabbit.transaction_long do
           choose_queue

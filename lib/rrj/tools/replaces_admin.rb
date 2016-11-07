@@ -28,12 +28,14 @@ module RubyRabbitmqJanus
         Tools::Log.instance.warn "Error replace admin_secret : #{message}"
       end
 
+      # Replace level element
       def replace_level
         request['level'] = opts['level']
       rescue => message
         Tools::Log.instance.warn "Error replace level : #{message}"
       end
 
+      # Replace debug element
       def replace_debug
         request['debug'] = opts['debug']
       rescue => message

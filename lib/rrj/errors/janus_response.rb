@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error for response initalize
     class JanusResponseInit < JanusResponse
-      def initalize(message)
+      def initialize(message)
         super "Error create object : #{message}"
       end
     end
@@ -70,7 +70,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an error for response data
     class JanusResponseDataId < JanusResponse
-      def initalize(message)
+      def initialize(message)
         super "Error Data : #{message}"
       end
     end

@@ -8,6 +8,7 @@ module RubyRabbitmqJanus
     class Env
       include Singleton
 
+      # Test if a string contains a word ENV
       def test_env_var(configuration, key)
         test = configuration[key.to_s]
         if test.is_a?(String)

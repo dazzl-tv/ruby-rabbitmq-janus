@@ -99,6 +99,7 @@ module RubyRabbitmqJanus
         end
       end
 
+      # Return a key to hash parsing
       def new_parent(key, parent)
         "#{parent}#{'.' unless parent.empty?}#{key}"
       end

@@ -7,6 +7,7 @@ module RubyRabbitmqJanus
     class Event
       include Singleton
 
+      # Initialize Event object. Is used for listen an standard out queue to Janus
       def initialize
         @response = nil
         @rabbit = Rabbit::Connect.new
@@ -14,6 +15,7 @@ module RubyRabbitmqJanus
         @condition = ConditionVariable.new
       end
 
+      # Start listen queue and return each message
       def start_listen
         Thread.new do
           begin
@@ -27,6 +29,7 @@ module RubyRabbitmqJanus
 
       private
 
+      # Strat a transaction with Rabbit an Janus
       def start_transaction
         @rabbit.transaction_long do
           publisher = Rabbit::PublishListen.new(@rabbit)

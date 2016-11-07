@@ -38,7 +38,7 @@ module RubyRabbitmqJanus
     #   Given a type to request. JSON request writing in 'config/requests/'
     # @param [Bollean] exclusive
     #   Use an exclusive queue or not
-    # @exemple Sending an message info
+    # @example Sending an message info
     #   RubyRabbitmqJanus::RRJ.new.message_simple('base::info')
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
@@ -54,7 +54,7 @@ module RubyRabbitmqJanus
     # @param [Hash] options Options update in request
     # @param [Bollean] exclusive
     #   Use an exclusive queue or not
-    # @exemple Sending an message create
+    # @example Sending an message create
     #   RubyRabbitmqJanus::RRJ.new.message_session('base::create')
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
@@ -70,7 +70,7 @@ module RubyRabbitmqJanus
     # @param [String] type
     #   Given a type to request. JSON request writing in 'config/requests/'
     # @param [Hash] options Options update in request
-    # @exemple Sending an message create
+    # @example Sending an message create
     #   RubyRabbitmqJanus::RRJ.new.message_admin('admin::sessions')
     #   #=> {"janus":"success","sessions": [12345, 8786567465465, ...] }
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
@@ -83,10 +83,9 @@ module RubyRabbitmqJanus
     # Send an message in handle session in current session.
     # @param [String] type
     #   Given a type to request. JSON request writing in 'config/requests/'
-    # @param [Hash] options Options update in request
-    # @param [Bollean] exclusive
-    #   Use an exclusive queue or not
-    # @exemple Sending an message create
+    # @param [Hash] replace Options update in request
+    # @param [Hash] add Elements adding to request
+    # @example Sending an message create
     #   RubyRabbitmqJanus::RRJ.new.message_session('base::create')
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
@@ -96,13 +95,7 @@ module RubyRabbitmqJanus
       @transaction.publish_message_handle(type, options)
     end
 
-    # Manage a transaction simple. Just for create element or destroy
-    # def transaction_simple(type, replace = {}, add = {})
-    #   options = { 'replace' => replace, 'add' => add }
-    #   Janus::Transaction.new(@session).handle_running_simple(type, options)
-    # end
-
-    # Define an handle and establish connection with janus
+    # Define an handle transaction and establish connection with janus
     def start_handle(exclusive = false)
       @transaction = Janus::TransactionHandle.new(@session)
       @transaction.handle_connect(exclusive) { yield }
@@ -110,6 +103,7 @@ module RubyRabbitmqJanus
       raise Errors::RRJErrorHandle, error
     end
 
+    # Define an handle admin transaction and establish connection with janus
     def start_handle_admin
       @transaction = Janus::TransactionAdmin.new(@session)
       @transaction.handle_connect { yield }

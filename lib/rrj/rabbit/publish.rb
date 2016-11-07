@@ -70,15 +70,6 @@ module RubyRabbitmqJanus
         @reply = exchange.queue(Tools::Config.instance.options['queues']['queue_from'])
         super(exchange)
       end
-
-      def listen_events
-        Tools::Log.instance.debug "Waiting message from queue : #{@reply.name}"
-        @reply.subscribe(block: true) do |_info, _properties, payload|
-          @condition.signal
-          @response = JSON.parse payload
-          Tools::Log.instance.debug "[X] #{@response['janus']}"
-        end
-      end
     end
 
     # Publish for admin Janus
@@ -104,6 +95,27 @@ module RubyRabbitmqJanus
       # @return [String] Name to queue used
       def queue_name
         @reply.name
+      end
+    end
+
+    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # Publisher just for listen a classic out queue
+    class PublishListen
+      def initialize(rabbit)
+        @count = 1
+        @rabbit = rabbit.channel
+        @reply = @rabbit.queue(Tools::Config.instance.options['queues']['queue_from'])
+        Tools::Log.instance.debug "Waiting message from queue : #{@reply.name}"
+      end
+
+      # Listen a queue an return a body response
+      def listen_events
+        @reply.subscribe(block: true) do |_info, _properties, payload|
+          @response = JSON.parse payload
+          Tools::Log.instance.debug "[X] #{@response['janus']} | num : #{@count}"
+          @count += 1
+        end
+        @response
       end
     end
   end

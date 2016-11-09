@@ -17,12 +17,13 @@ module RubyRabbitmqJanus
   # @!attribute [r] session
   # :reek:BooleanParameter
   class RRJ
-    attr_reader :session
+    attr_reader :session, :event
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      start_instances
-      @session = Janus::Keepalive.new.session
+      start_instances_tools
+      @session = Janus::Keepalive.instance.session
+      @event = Janus::Event.instance.listen
       @transaction = nil
     rescue => error
       raise Errors::RRJErrorInit, error
@@ -86,13 +87,12 @@ module RubyRabbitmqJanus
     # @return [RubyRabbitmqJanus::Janus::Response] Give an object response to janus server
     def message_handle(type, replace = {}, add = {})
       options = { 'replace' => replace, 'add' => add }
-      Tools::Log.instance.debug "Transaction : #{@transaction}"
       @transaction.publish_message_handle(type, options)
     end
 
     # Define an handle transaction and establish connection with janus
     def start_handle(exclusive = false)
-      @transaction = Janus::TransactionHandle.new(@session)
+      @transaction ||= Janus::TransactionHandle.new(@session)
       @transaction.handle_connect(exclusive) { yield }
     rescue => error
       raise Errors::RRJErrorHandle, error
@@ -100,7 +100,7 @@ module RubyRabbitmqJanus
 
     # Define an handle admin transaction and establish connection with janus
     def start_handle_admin
-      @transaction = Janus::TransactionAdmin.new(@session)
+      @transaction ||= Janus::TransactionAdmin.new(@session)
       @transaction.handle_connect { yield }
     rescue => error
       raise Errors::RRJErrorHandle, error
@@ -113,7 +113,7 @@ module RubyRabbitmqJanus
 
     # Start an short transaction, this queue is not exclusive
     def handle_message_simple(type, replace = {}, add = {})
-      @transaction = Janus::TransactionHandle.new(@session)
+      @transaction ||= Janus::TransactionHandle.new(@session)
       @transaction.handle_connect_and_stop(false) do
         message_handle(type, replace, add).for_plugin
       end
@@ -123,13 +123,14 @@ module RubyRabbitmqJanus
 
     private
 
+    attr_accessor :transaction
+
     # Start singleton instances
-    def start_instances
+    def start_instances_tools
       Tools::Env.instance
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
-      # Janus::Event.instance.start_listen
     end
 
     # Return a current session if not specified

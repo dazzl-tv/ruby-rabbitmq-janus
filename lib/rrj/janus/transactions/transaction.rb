@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'rrj/janus/transactions/session'
-require 'rrj/janus/transactions/handle'
-require 'rrj/janus/transactions/admin'
-
 module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -57,3 +53,7 @@ module RubyRabbitmqJanus
     end
   end
 end
+
+require 'rrj/janus/transactions/session'
+require 'rrj/janus/transactions/handle'
+require 'rrj/janus/transactions/admin'

@@ -4,9 +4,12 @@ module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Manage sending keepalive message
-    class Keepalive < Thread
+    class Keepalive < OneThread
+      include Singleton
+
       # Initalize a keepalive message
       def initialize
+        Tools::Log.instance.debug 'Create an session for keepalive'
         super
         @publish = @response = nil
         session_live
@@ -22,10 +25,7 @@ module RubyRabbitmqJanus
 
       # Send to regular interval a message keepalive
       def session_live
-        Thread.new do
-          Tools::Log.instance.debug 'Create an session for keepalive'
-          initialize_thread
-        end
+        start_thread
       end
 
       # Initialize an session with janus and start a keepalive transaction

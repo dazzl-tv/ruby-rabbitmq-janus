@@ -43,6 +43,6 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'admin'
-require 'exclusive'
-require 'non_exclusive'
+require 'rrj/rabbit/publish/admin'
+require 'rrj/rabbit/publish/exclusive'
+require 'rrj/rabbit/publish/non_exclusive'

@@ -32,5 +32,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'publisher'
-require 'listener'
+require 'rrj/rabbit/publish/publisher'
+require 'rrj/rabbit/publish/listener'

@@ -15,7 +15,6 @@ module RubyRabbitmqJanus
         @rabbit = Rabbit::Connect.new
         @lock = Mutex.new
         @condition = ConditionVariable.new
-        @response = nil
       end
     end
   end

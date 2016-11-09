@@ -8,14 +8,14 @@ module RubyRabbitmqJanus
       # Initalize a keepalive message
       def initialize
         super
-        @publish = nil
+        @publish = @response = nil
         session_live
       end
 
       # Return an number session created
       def session
         lock.synchronize { condition.wait(lock) }
-        response.session
+        @response.session
       end
 
       private
@@ -31,8 +31,7 @@ module RubyRabbitmqJanus
       # Initialize an session with janus and start a keepalive transaction
       def initialize_thread
         rabbit.start
-        # response = session_start
-        session_start
+        @response = session_start
         lock.synchronize { condition.signal }
         session_keepalive(ttl)
         rabbit.close
@@ -42,8 +41,7 @@ module RubyRabbitmqJanus
       def session_start
         msg_create = Janus::Message.new 'base::create'
         @publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
-        response = @publish.send_a_message(msg_create)
-        response = Janus::Response.new(reponse)
+        @response = Janus::Response.new(@publish.send_a_message(msg_create))
       end
 
       # Create an loop for sending a keepalive message
@@ -51,7 +49,7 @@ module RubyRabbitmqJanus
         loop do
           sleep time_to_live
           @publish.send_a_message(Janus::Message.new('base::keepalive',
-                                                     'session_id' => response.session))
+                                                     'session_id' => @response.session))
         end
       rescue => message
         Tools::Log.instance.debug "Error keepalive : #{message}"

@@ -40,7 +40,7 @@ module RubyRabbitmqJanus
       # Star an session janus
       def session_start
         msg_create = Janus::Message.new 'base::create'
-        @publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        @publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
         @response = Janus::Response.new(@publish.send_a_message(msg_create))
       end
 

@@ -6,13 +6,16 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # Publish message in queue non exclusive. By default "to-janus".
       # This an option in config to this gem.
-      class PublishNonExclusive < BasePublisher
+      class PublishNonExclusive < Publisher
         def initialize(exchange)
           @reply = exchange.queue(queue_from)
           super(exchange)
+          Tools::Log.instance.debug 'Create/Connect to queue non exclusive'
         end
 
         private
+
+        attr_reader :reply
 
         # Define queue used for posting a message to API public
         def queue_from

@@ -15,15 +15,15 @@ module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem and create automatically an session with Janus
   # @!attribute [r] session
-  # :reek:BooleanParameter
+  # :reek:BooleanParameter and :reek:ControlParameter
   class RRJ
     attr_reader :session, :event
 
     # Returns a new instance of RubyRabbitmqJanus
-    def initialize
+    def initialize(listen_queue_classic = true)
       start_instances_tools
       @session = Janus::Keepalive.instance.session
-      @event = Janus::Event.instance.listen
+      Janus::Event.instance if listen_queue_classic
       @transaction = nil
     rescue => error
       raise Errors::RRJErrorInit, error

@@ -6,10 +6,10 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # This publisher don't post message. Is listen just an standard queue to Janus.
       # By default is "from-janus". It's a parameter in config to this gem.
-      class Listenner < BasePublisher
+      class Listener < BasePublisher
         # Define an publisher
         def initialize(rabbit)
-          super
+          super()
           @count = 1
           @rabbit = rabbit.channel
           @reply = @rabbit.queue(Tools::Config.instance.options['queues']['queue_from'])
@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
 
         # Listen a queue and return a body response
         def listen_events
-          @reply.subscribe(block: true) do |_info_delivery, _propertie, payload|
+          @reply.subscribe do |_info_delivery, _propertie, payload|
             synchronize_response(payload)
           end
           return_response
@@ -28,13 +28,11 @@ module RubyRabbitmqJanus
 
         # Sending an signal when an response is reading in queue
         def synchronize_response(payload)
-          lock.synchronize do
-            response = payload
-            Tools::Log.instance.debug \
-              "[X] Message number reading : #{@count} -- type : #{response['janus']}"
-            @count += 1
-            condition.signal
-          end
+          @response = JSON.parse payload
+          Tools::Log.instance.debug \
+            "[X] Message number reading : #{@count} -- type : #{response['janus']}"
+          @count += 1
+          lock.synchronize { condition.signal }
         end
       end
     end

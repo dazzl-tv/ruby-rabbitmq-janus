@@ -3,16 +3,14 @@
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   module Janus
-    # For listen standard queue
-    class Event
+    # For listen standard queue ("from-janus" by default)
+    class Event < Thread
       include Singleton
 
       # Initialize Event object. Is used for listen an standard out queue to Janus
       def initialize
-        @response = nil
-        @rabbit = Rabbit::Connect.new
-        @lock = Mutex.new
-        @condition = ConditionVariable.new
+        super
+        Tools::Log.instance.debug 'Start listen events in from-janus queue'
       end
 
       # Start listen queue and return each message
@@ -22,7 +20,7 @@ module RubyRabbitmqJanus
             start_transaction
           rescue Interrupt
             Tools::Log.instance.info 'Stop to listen standard queue'
-            @rabbit.close
+            rabbit.close
           end
         end
       end
@@ -31,8 +29,8 @@ module RubyRabbitmqJanus
 
       # Strat a transaction with Rabbit an Janus
       def start_transaction
-        @rabbit.transaction_long do
-          publisher = Rabbit::PublishListen.new(@rabbit)
+        rabbit.transaction_long do
+          publisher = Rabbit::PublishListen.new(rabbit)
           publisher.listen_events
         end
       end

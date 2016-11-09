@@ -21,13 +21,8 @@ module RubyRabbitmqJanus
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
-      Tools::Env.instance
-      Tools::Log.instance
-      Tools::Config.instance
-      Tools::Requests.instance
-
+      start_instances
       @session = Janus::Keepalive.new.session
-
       @transaction = nil
     rescue => error
       raise Errors::RRJErrorInit, error
@@ -126,13 +121,16 @@ module RubyRabbitmqJanus
       raise Errors::RRJErrorHandle, error
     end
 
-    # Listen event sending in "from-janus" queue
-    # :reek:UtilityFunction
-    def listen_from_janus
-      Janus::Event.instance.start_listen
-    end
-
     private
+
+    # Start singleton instances
+    def start_instances
+      Tools::Env.instance
+      Tools::Log.instance
+      Tools::Config.instance
+      Tools::Requests.instance
+      # Janus::Event.instance.start_listen
+    end
 
     # Return a current session if not specified
     def use_current_session?(option)

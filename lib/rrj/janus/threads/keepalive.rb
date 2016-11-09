@@ -4,21 +4,18 @@ module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Manage sending keepalive message
-    # :reek:TooManyInstanceVariables { max_instance_variables: 6 }
-    class Keepalive
+    class Keepalive < Thread
       # Initalize a keepalive message
       def initialize
-        @response, @publish = nil
-        @rabbit = Rabbit::Connect.new
-        @lock = Mutex.new
-        @condition = ConditionVariable.new
+        super
+        @publish = nil
         session_live
       end
 
       # Return an number session created
       def session
-        @lock.synchronize { @condition.wait(@lock) }
-        @response.session
+        lock.synchronize { condition.wait(lock) }
+        response.session
       end
 
       private
@@ -33,18 +30,20 @@ module RubyRabbitmqJanus
 
       # Initialize an session with janus and start a keepalive transaction
       def initialize_thread
-        @rabbit.start
-        @response = session_start
-        @lock.synchronize { @condition.signal }
+        rabbit.start
+        # response = session_start
+        session_start
+        lock.synchronize { condition.signal }
         session_keepalive(ttl)
-        @rabbit.close
+        rabbit.close
       end
 
       # Star an session janus
       def session_start
         msg_create = Janus::Message.new 'base::create'
-        @publish = Rabbit::PublishExclusive.new(@rabbit.channel, '')
-        Janus::Response.new @publish.send_a_message(msg_create)
+        @publish = Rabbit::PublishExclusive.new(rabbit.channel, '')
+        response = @publish.send_a_message(msg_create)
+        response = Janus::Response.new(reponse)
       end
 
       # Create an loop for sending a keepalive message
@@ -52,7 +51,7 @@ module RubyRabbitmqJanus
         loop do
           sleep time_to_live
           @publish.send_a_message(Janus::Message.new('base::keepalive',
-                                                     'session_id' => @response.session))
+                                                     'session_id' => response.session))
         end
       rescue => message
         Tools::Log.instance.debug "Error keepalive : #{message}"

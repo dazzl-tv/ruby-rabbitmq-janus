@@ -14,6 +14,7 @@ module RubyRabbitmqJanus
 
       private
 
+      # Start a new thread
       def start_thread
         Thread.new { initialize_thread }
       end

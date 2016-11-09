@@ -2,6 +2,7 @@
 
 module RubyRabbitmqJanus
   module Rabbit
+    # Define an module for create an publisher
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # @abstract Publish message in RabbitMQ

@@ -10,38 +10,31 @@ module RubyRabbitmqJanus
       # Initalize a keepalive message
       def initialize
         Tools::Log.instance.debug 'Create an session for keepalive'
-        super
         @publish = @response = nil
-        session_live
+        super
+        start_thread
       end
 
       # Return an number session created
       def session
-        lock.synchronize { condition.wait(lock) }
-        @response.session
+        wait { @response.session }
       end
 
       private
 
-      # Send to regular interval a message keepalive
-      def session_live
-        start_thread
-      end
-
       # Initialize an session with janus and start a keepalive transaction
       def initialize_thread
-        rabbit.start
-        @response = session_start
-        lock.synchronize { condition.signal }
-        session_keepalive(ttl)
+        rabbit.transaction_long { transaction_keepalive }
+      rescue Interrupt
+        Tools::Log.instance.info 'Stop to sending keepalive'
         rabbit.close
       end
 
-      # Star an session janus
-      def session_start
-        msg_create = Janus::Message.new 'base::create'
-        @publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-        @response = Janus::Response.new(@publish.send_a_message(msg_create))
+      # Star an session with janus and waiting an signal for saving session_id
+      def transaction_keepalive
+        @response = Janus::Response.new(create_session)
+        signal
+        session_keepalive(ttl)
       end
 
       # Create an loop for sending a keepalive message
@@ -49,7 +42,7 @@ module RubyRabbitmqJanus
         loop do
           sleep time_to_live
           @publish.send_a_message(Janus::Message.new('base::keepalive',
-                                                     'session_id' => @response.session))
+                                                     'session_id' => running_session))
         end
       rescue => message
         Tools::Log.instance.debug "Error keepalive : #{message}"
@@ -60,6 +53,17 @@ module RubyRabbitmqJanus
         Tools::Config.instance.options['gem']['session']['keepalive'].to_i
       rescue => error
         Tools::Log.instance.debug "TTL Not loading - #{error}"
+      end
+
+      # Create an message and publish for create session in Janus
+      def create_session
+        @publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
+        @publish.send_a_message(Janus::Message.new('base::create'))
+      end
+
+      # Return session_id
+      def running_session
+        @response.session
       end
     end
   end

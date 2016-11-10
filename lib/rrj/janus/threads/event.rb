@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
       def initialize
         Tools::Log.instance.debug 'Start listen events in from-janus queue'
         super
-        # listen_live
+        listen_live
       end
 
       # Start listen queue and return each message
@@ -26,7 +26,8 @@ module RubyRabbitmqJanus
 
       # Listen q queue "from-janus"
       def listen_live
-        start_thread
+        # start_thread
+        initialize_thread(&block)
       end
 
       # Intialize an listen to queue

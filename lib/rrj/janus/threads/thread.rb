@@ -7,6 +7,7 @@ module RubyRabbitmqJanus
     class Concurrency
       # Initialize class with elements for thread communication
       def initialize
+        Tools::Log.instance.info 'Create an subprocess'
         @rabbit = Rabbit::Connect.new
         @lock = Mutex.new
         @condition = ConditionVariable.new
@@ -17,9 +18,25 @@ module RubyRabbitmqJanus
       # Start a new thread
       def start_thread
         Thread.new { initialize_thread }
+        # pid = fork { initialize_thread }
+        # Tools::Log.instance.info "Process IDentifier : #{pid}"
+        # initialize_thread
       end
 
-      attr_accessor :rabbit, :lock, :condition
+      # Wait an signal
+      def wait
+        @lock.synchronize do
+          @condition.wait(@lock)
+          yield
+        end
+      end
+
+      # Send and signal
+      def signal
+        @lock.synchronize { @condition.signal }
+      end
+
+      attr_accessor :rabbit, :publish
     end
   end
 end

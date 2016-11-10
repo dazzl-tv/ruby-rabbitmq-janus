@@ -35,9 +35,7 @@ module RubyRabbitmqJanus
     # Listen a standar queue and working if necesary
     def listen(&block)
       # Send a processus to background
-      # fork do
-      Janus::Event.instance.listen(&block)
-      # end
+      # Janus::Event.instance.listen(&block)
     end
 
     # Send an simple message to janus. No options in request with this method.
@@ -142,7 +140,6 @@ module RubyRabbitmqJanus
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
-      Janus::Event.instance
     end
 
     # Return a current session if not specified

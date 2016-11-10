@@ -26,10 +26,10 @@ module RubyRabbitmqJanus
 
         # Execute an action for each response received in queue
         def event_received
-          Tools::Log.instance.debug 'Response received'
           lock.synchronize do
             condition.wait(lock)
-            yield @response.event, @response.data, @response.jsep
+            Tools::Log.instance.info 'Response received'
+            #yield @response.event, @response.data, @response.jsep
           end
         end
 

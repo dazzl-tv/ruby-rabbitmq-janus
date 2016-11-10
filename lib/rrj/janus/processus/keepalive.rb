@@ -21,16 +21,8 @@ module RubyRabbitmqJanus
 
         private
 
-        # Initialize an session with janus and start a keepalive transaction
-        def initialize_thread
-          rabbit.transaction_long { transaction_keepalive }
-        rescue Interrupt
-          Tools::Log.instance.info 'Stop to sending keepalive'
-          rabbit.close
-        end
-
         # Star an session with janus and waiting an signal for saving session_id
-        def transaction_keepalive
+        def transaction_running
           @response = Janus::Response.new(create_session)
           signal
           session_keepalive(ttl)

@@ -18,6 +18,14 @@ module RubyRabbitmqJanus
 
         private
 
+        # Initialize a thread
+        def initialize_thread
+          rabbit.transaction_long { transaction_running }
+        rescue Interrupt
+          Tools::Log.instance.info "Stop transaction #{self.class.name}"
+          rabbit.close
+        end
+
         # Wait an signal
         def wait
           @lock.synchronize do
@@ -37,5 +45,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/janus/threads/keepalive'
-require 'rrj/janus/threads/event'
+require 'rrj/janus/processus/keepalive'
+require 'rrj/janus/processus/event'

@@ -25,17 +25,14 @@ module RubyRabbitmqJanus
       start_instances_tools
 
       # Create an session while time opening
-      @session = Janus::Keepalive.instance.session
+      @session = Janus::Concurrencies::Keepalive.instance.session
 
       @transaction = nil
-    rescue => error
-      raise Errors::RRJErrorInit, error
     end
 
-    # Listen a standar queue and working if necesary
+    # Listen a standard queue and working if necessary
     def listen(&block)
-      # Send a processus to background
-      # Janus::Event.instance.listen(&block)
+      Janus::Concurrencies::Event.instance.listen(&block)
     end
 
     # Send an simple message to janus. No options in request with this method.
@@ -140,6 +137,8 @@ module RubyRabbitmqJanus
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
+      Janus::Concurrencies::Keepalive.instance
+      Janus::Concurrencies::Event.instance
     end
 
     # Return a current session if not specified

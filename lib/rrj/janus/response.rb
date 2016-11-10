@@ -4,6 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Read and decryt a response to janus
+    # :reek:TooManyMethods
     class Response
       # Instanciate a response
       def initialize(response_janus)
@@ -21,7 +22,7 @@ module RubyRabbitmqJanus
         @request.to_json
       rescue => error
         Tools::Log.instance.debug "Request error : #{@request}"
-        raise Errors::JanusResponseJson, error
+        raise Errors::JanusResponseJson, [error, @request]
       end
 
       # Return request to json format with nice format
@@ -38,7 +39,7 @@ module RubyRabbitmqJanus
         @request
       rescue => error
         Tools::Log.instance.debug "Request error : #{@request}"
-        raise Errors::JanusResponseHash, error
+        raise Errors::JanusResponseHash, [error, @request]
       end
 
       # Return a response simple for client
@@ -62,7 +63,32 @@ module RubyRabbitmqJanus
         data_id
       end
 
+      # Return event to message
+      def event
+        @request['janus']
+      end
+
+      # Return body data
+      def data
+        @request['plugindata']['data'] if plugin_response?
+      end
+
+      # Return jsep data
+      def jsep
+        @request['jsep'] if contains_jsep?
+      end
+
       private
+
+      # Test if response is returning by plugin
+      def plugin_response?
+        @request.key?('plugindata') && @request['plugindata'].key?('data')
+      end
+
+      # Test if response contains jsep data
+      def contains_jsep?
+        @request.key?('jsep')
+      end
 
       # Read a hash and return an identifier
       def data_id
@@ -75,7 +101,7 @@ module RubyRabbitmqJanus
       # Analysis response and send exception if janus return an error
       # :reek:DuplicateMethodCall
       def analysis
-        raise Errors::JanusResponseSimple, @request['error'] if error_simple?
+        raise Errors::JanusResponseSimple, @request if error_simple?
         raise Errors::JanusResponsePlugin, @request['plugindata']['data'] if error_plugin?
       end
 

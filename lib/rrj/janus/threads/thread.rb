@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Abstract class for janus Event and Keepalive
-    class OneThread
+    class Concurrency
       # Initialize class with elements for thread communication
       def initialize
         @rabbit = Rabbit::Connect.new

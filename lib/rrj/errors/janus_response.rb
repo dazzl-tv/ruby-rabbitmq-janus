@@ -23,7 +23,8 @@ module RubyRabbitmqJanus
     # Define an error for simple message
     class JanusResponseSimple < JanusResponse
       def initialize(message)
-        super "[#{message['code']}] #{message['reason']}"
+        error = message['error']
+        super "[#{error['code']}] #{error['reason']} -- #{message}"
       end
     end
 
@@ -39,7 +40,7 @@ module RubyRabbitmqJanus
     # Define an exception for json
     class JanusResponseJson < JanusResponse
       def initialize(message)
-        super "Error transform to JSON : #{message}"
+        super "Error transform to JSON : #{message[0]} -- message : #{message[1]}"
       end
     end
 
@@ -55,7 +56,7 @@ module RubyRabbitmqJanus
     # Define an exception for hash
     class JanusResponseHash < JanusResponse
       def initialize(message)
-        super "Error transform to Hash : #{message}"
+        super "Error transform to Hash : #{message[0]} -- message : #{message[1]}"
       end
     end
 

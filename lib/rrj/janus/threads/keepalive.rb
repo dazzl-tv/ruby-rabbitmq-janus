@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Manage sending keepalive message
-    class Keepalive < OneThread
+    class Keepalive < Concurrency
       include Singleton
 
       # Initalize a keepalive message

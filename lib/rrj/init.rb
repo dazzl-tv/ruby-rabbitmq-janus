@@ -20,13 +20,24 @@ module RubyRabbitmqJanus
     attr_reader :session, :event
 
     # Returns a new instance of RubyRabbitmqJanus
-    def initialize(listen_queue_classic = true)
+    def initialize
+      # Instanciate singleton tools
       start_instances_tools
+
+      # Create an session while time opening
       @session = Janus::Keepalive.instance.session
-      Janus::Event.instance if listen_queue_classic
+
       @transaction = nil
     rescue => error
       raise Errors::RRJErrorInit, error
+    end
+
+    # Listen a standar queue and working if necesary
+    def listen(&block)
+      # Send a processus to background
+      # fork do
+      Janus::Event.instance.listen(&block)
+      # end
     end
 
     # Send an simple message to janus. No options in request with this method.
@@ -131,6 +142,7 @@ module RubyRabbitmqJanus
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
+      Janus::Event.instance
     end
 
     # Return a current session if not specified

@@ -9,7 +9,6 @@ describe 'RubyRabbitmqJanus::RRJ' do
 
     it 'type attach' do
       expect(message.to_json).to match_json_schema(type)
-      @gateway.message_session('base::destroy')
     end
   end
 end

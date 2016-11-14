@@ -44,6 +44,8 @@ RSpec.configure do |config|
   end
 
   config.after(:example) do
-    @gateway.message_session('base::destroy') unless @gateway.session.nil?
+    unless config.filter_run_excluding name: :destroy
+      @gateway.message_session('base::destroy') unless @gateway.session.nil?
+    end
   end
 end

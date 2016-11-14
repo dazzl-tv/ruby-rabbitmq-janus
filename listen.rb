@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
-
-# :reek:NilCheck and :reek:TooManyStatements
+# frozen_string_literal: true
 
 require 'ruby_rabbitmq_janus'
 
 @t = RubyRabbitmqJanus::RRJ.new
+@events = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance
 
+# :reek:NilCheck and :reek:TooManyStatements
 def case_event(data, jsep)
-  puts "Event : #{data.class} -- #{data}"
+  puts "REASON : Event : #{data.class} -- #{data}"
   case data['videocontrol']
   when 'joined'
     puts 'Joined request ...'
@@ -24,32 +25,32 @@ def update_jsep(jsep)
 end
 
 def case_hangup
-  puts 'Hangup'
-  Thread.stop
+  puts 'REASON : Hangup'
+  Thread.current.stop
 end
 
 def case_stop
-  puts 'Stop'
-  Thread.stop
+  puts 'REASON : Stop'
+  Thread.current.stop
 end
 
 def case_error
-  puts 'Error ...'
+  puts 'REASON : Error ...'
 end
 
-puts "## Start listen Block"
-RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.listen do |reason, data, jsep|
+puts '## Start listen Block'
+@events.listen do |reason, data, jsep|
   case reason
   when 'event' then case_event(data, jsep)
   when 'hangup' then case_hangup
   when 'stop' then case_stop
   when 'error' then case_error
   else
-    puts "REASON default : #{reason}"
+    puts 'REASON default'
   end
 end
-puts "## End listen block"
+puts '## End listen block'
 
-#puts "apps running"
-#loop do
-#end
+puts 'apps running'
+loop do
+end

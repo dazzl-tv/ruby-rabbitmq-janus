@@ -13,7 +13,8 @@ module RubyRabbitmqJanus
           @rabbit = Rabbit::Connect.new
           @lock = Mutex.new
           @condition = ConditionVariable.new
-          Thread.new { initialize_thread }
+          @thread = Thread.new { initialize_thread }
+          @thread.abort_on_exception = true
         end
 
         private
@@ -30,13 +31,17 @@ module RubyRabbitmqJanus
         def wait
           @lock.synchronize do
             @condition.wait(@lock)
+            Tools::Log.instance.info 'Waitting signal'
             yield
           end
         end
 
         # Send and signal
         def signal
-          @lock.synchronize { @condition.signal }
+          @lock.synchronize do
+            Tools::Log.instance.info 'Sending signal'
+            @condition.signal
+          end
         end
 
         attr_accessor :rabbit, :publish

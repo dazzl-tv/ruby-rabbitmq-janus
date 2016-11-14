@@ -1,31 +1,55 @@
 #!/usr/bin/env ruby
 
+# :reek:NilCheck and :reek:TooManyStatements
+
 require 'ruby_rabbitmq_janus'
 
-t = RubyRabbitmqJanus::RRJ.new
+@t = RubyRabbitmqJanus::RRJ.new
+
+def case_event(data, jsep)
+  puts "Event : #{data.class} -- #{data}"
+  case data['videocontrol']
+  when 'joined'
+    puts 'Joined request ...'
+    @t.handle_message_simple('channel::offer', jsep)
+  when 'selected' then puts 'Selected request ...'
+  when 'unselected' then puts 'Unselected request ...'
+  when 'left' then puts 'Left request ...'
+  end
+  update_jsep(jsep) unless jsep.nil?
+end
+
+def update_jsep(jsep)
+  puts "JSEP : #{jsep}"
+end
+
+def case_hangup
+  puts 'Hangup'
+  Thread.stop
+end
+
+def case_stop
+  puts 'Stop'
+  Thread.stop
+end
+
+def case_error
+  puts 'Error ...'
+end
 
 puts "## Start listen Block"
-pid = fork do
-  t.listen do |reason, data, jsep|
-    RubyRabbitmqJanus::Tools::Log.instance.info \
-      "Test message received ... -- \n\r" \
-      "Reason : #{reason.inspect} -- #{reason.class} \r\n" \
-      "Data : #{data.inspect} -- data : #{data.class}\r\n" \
-      "Data : #{jsep.inspect} -- data : #{jsep.class}"
-    case reason
-    when 'event'
-      puts "REASON : #{reason}"
-      case data['videocontrol']
-      when 'joined'
-        puts 'Joined request ...'
-      end
-    else
-      puts "REASON default : #{reason}"
-    end
+RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.listen do |reason, data, jsep|
+  case reason
+  when 'event' then case_event(data, jsep)
+  when 'hangup' then case_hangup
+  when 'stop' then case_stop
+  when 'error' then case_error
+  else
+    puts "REASON default : #{reason}"
   end
 end
-puts "## End listen Block | PID : #{pid}"
+puts "## End listen block"
 
-puts "apps running"
-loop do
-end
+#puts "apps running"
+#loop do
+#end

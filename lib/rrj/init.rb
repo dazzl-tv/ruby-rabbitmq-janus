@@ -30,11 +30,6 @@ module RubyRabbitmqJanus
       @transaction = nil
     end
 
-    # Listen a standard queue and working if necessary
-    def listen(&block)
-      Janus::Concurrencies::Event.instance.listen(&block)
-    end
-
     # Send an simple message to janus. No options in request with this method.
     # @param [String] type
     #   Given a type to request. JSON request writing in 'config/requests/'
@@ -137,8 +132,6 @@ module RubyRabbitmqJanus
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
-      Janus::Concurrencies::Keepalive.instance
-      Janus::Concurrencies::Event.instance
     end
 
     # Return a current session if not specified

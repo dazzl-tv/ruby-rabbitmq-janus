@@ -26,10 +26,9 @@ module RubyRabbitmqJanus
 
         # Execute an action for each response received in queue
         def event_received
-          lock.synchronize do
-            condition.wait(lock)
-            Tools::Log.instance.info 'Response received'
-            #yield @response.event, @response.data, @response.jsep
+          loop do
+            return_response
+            yield @response.event, @response.data, @response.jsep
           end
         end
 
@@ -40,7 +39,7 @@ module RubyRabbitmqJanus
           @response = Janus::Response.new(JSON.parse(payload))
           Tools::Log.instance.info \
             "[X] Message number reading : #{@count} --\n\r" \
-            "type : #{@response}"
+            "#{@response.to_hash}"
           @count += 1
           lock.synchronize { condition.signal }
         end

@@ -38,7 +38,7 @@ module RubyRabbitmqJanus
 
         # Define queue used for admin message
         def choose_queue
-          @publish = Rabbit::PublisherPublishAdmin.new(rabbit.channel)
+          @publish = Rabbit::Publisher::PublisherAdmin.new(rabbit.channel)
         end
       end
     end

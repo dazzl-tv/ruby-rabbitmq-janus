@@ -93,7 +93,7 @@ module RubyRabbitmqJanus
 
     # Define an handle transaction and establish connection with janus
     def start_handle(exclusive = false)
-      @transaction ||= Janus::Transactions::Handle.new(@session)
+      @transaction = Janus::Transactions::Handle.new(@session)
       @transaction.handle_connect(exclusive) { yield }
     rescue => error
       raise Errors::RRJErrorHandle, error
@@ -101,7 +101,7 @@ module RubyRabbitmqJanus
 
     # Define an handle admin transaction and establish connection with janus
     def start_handle_admin
-      @transaction ||= Janus::Transactions::Admin.new(@session)
+      @transaction = Janus::Transactions::Admin.new(@session)
       @transaction.handle_connect { yield }
     rescue => error
       raise Errors::RRJErrorHandle, error
@@ -114,7 +114,7 @@ module RubyRabbitmqJanus
 
     # Start an short transaction, this queue is not exclusive
     def handle_message_simple(type, replace = {}, add = {})
-      @transaction ||= Janus::Transactions::Handle.new(@session)
+      @transaction = Janus::Transactions::Handle.new(@session)
       @transaction.handle_connect_and_stop(false) do
         message_handle(type, replace, add).for_plugin
       end

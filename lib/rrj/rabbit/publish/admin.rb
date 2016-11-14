@@ -8,8 +8,8 @@ module RubyRabbitmqJanus
       class PublisherAdmin < Publisher
         # Intialize an queue non eclusive for admin/monitor API with Janus
         def initialize(exchange)
-          super(exchange)
           @reply = exchange.queue(queue_from)
+          super(exchange)
         end
 
         private

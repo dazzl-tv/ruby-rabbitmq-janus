@@ -9,7 +9,9 @@ module RubyRabbitmqJanus
       # Create an initializer
       def copy_initializer
         initializer 'ruby_rabbitmq_janus.rb' do
-          "# frozen_string_literal: true\n\n::RRJ = RubyRabbitmqJanus::RRJ.new"
+          "# frozen_string_literal: true\n\n" \
+            "::RRJ = RubyRabbitmqJanus::RRJ.new\n"\
+            '::Events = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance'
         end
       end
     end

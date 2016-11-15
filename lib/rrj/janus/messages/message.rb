@@ -32,6 +32,8 @@ module RubyRabbitmqJanus
           @properties = Rabbit::Propertie.new
           load_request_file
           prepare_request(options)
+        rescue => error
+          raise Errors::JanusMessage, error
         end
 
         # Return request to json format

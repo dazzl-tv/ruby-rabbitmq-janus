@@ -33,7 +33,7 @@ module RubyRabbitmqJanus
         # Publish an message in handle
         def publish_message_handle(type, options = {})
           opts = { 'session_id' => session, 'handle_id' => handle }
-          msg = Janus::Message.new(type, opts.merge!(options))
+          msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           Janus::Responses::Standard.new(publish.send_a_message(msg))
         end
       end

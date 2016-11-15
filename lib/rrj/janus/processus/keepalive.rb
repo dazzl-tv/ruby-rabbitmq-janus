@@ -32,8 +32,7 @@ module RubyRabbitmqJanus
         def session_keepalive(time_to_live)
           loop do
             sleep time_to_live
-            @publish.send_a_message(Janus::Message.new('base::keepalive',
-                                                       'session_id' => running_session))
+            @publish.send_a_message(message_keepalive)
           end
         rescue => message
           Tools::Log.instance.debug "Error keepalive : #{message}"
@@ -49,12 +48,18 @@ module RubyRabbitmqJanus
         # Create an message and publish for create session in Janus
         def create_session
           @publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-          @publish.send_a_message(Janus::Message.new('base::create'))
+          @publish.send_a_message(Janus::Messages::Standard.new('base::create'))
         end
 
         # Return session_id
         def running_session
           @response.session
+        end
+
+        # Create an message with type keepalive
+        def message_keepalive
+          Janus::Messages::Standard.new('base::keepalive',
+                                        'session_id' => running_session)
         end
       end
     end

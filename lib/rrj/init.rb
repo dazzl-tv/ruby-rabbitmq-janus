@@ -42,7 +42,7 @@ module RubyRabbitmqJanus
     #   Give an object response to janus server
     def message_simple(type = 'base::info', exclusive = false)
       Janus::Transactions::Transaction.new(@session).connect(exclusive) do
-        Janus::Message.new(type)
+        Janus::Messages::Standard.new(type)
       end
     end
 
@@ -59,7 +59,7 @@ module RubyRabbitmqJanus
     # Give an object response to janus server
     def message_session(type, options = {}, exclusive = false)
       Janus::Transactions::Session.new(@session).session_connect(exclusive) do
-        Janus::Message.new(type, use_current_session?(options))
+        Janus::Messages::Standard.new(type, use_current_session?(options))
       end
     rescue => error
       raise Errors::RRJErrorPost, error
@@ -76,7 +76,7 @@ module RubyRabbitmqJanus
     # Give an object response to janus server
     def message_admin(type, options = {})
       Janus::Transactions::Admin.new(@session).connect do
-        Janus::MessageAdmin.new(type, options.merge!('session_id' => @session))
+        Janus::Messages::Admin.new(type, options.merge!('session_id' => @session))
       end
     end
 

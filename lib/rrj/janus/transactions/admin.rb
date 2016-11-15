@@ -27,7 +27,7 @@ module RubyRabbitmqJanus
         def publish_message_handle(type, options = {})
           opts = { 'session_id' => session, 'handle_id' => handle }
           msg = Janus::MessageAdmin.new(type, opts.merge!(options))
-          Janus::Response.new(publish.send_a_message(msg))
+          Janus::Responses::Standard.new(publish.send_a_message(msg))
         end
 
         # Stop an handle running

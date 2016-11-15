@@ -46,6 +46,8 @@ module RubyRabbitmqJanus
 
         private
 
+        attr_accessor :request
+
         # Analysis response and send exception if janus return an error
         # :reek:DuplicateMethodCall
         def analysis

@@ -23,7 +23,7 @@ module RubyRabbitmqJanus
 
         # Star an session with janus and waiting an signal for saving session_id
         def transaction_running
-          @response = Janus::Response.new(create_session)
+          @response = Janus::Responses::Standard.new(create_session)
           signal
           session_keepalive(ttl)
         end

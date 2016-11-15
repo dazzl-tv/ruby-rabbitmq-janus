@@ -32,7 +32,7 @@ module RubyRabbitmqJanus
 
         # Sending an signal when an response is reading in queue
         def synchronize_response(payload)
-          @response = Janus::Response.new(JSON.parse(payload))
+          @response = Janus::Responses::Event.new(JSON.parse(payload))
           Tools::Log.instance.info \
             "[X] Message number reading ##{@count} --\n\r" \
             "#{@response.to_hash}"

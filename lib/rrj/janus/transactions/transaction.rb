@@ -46,7 +46,7 @@ module RubyRabbitmqJanus
 
         # Send a message to queue
         def send_a_message
-          Janus::Response.new(@publish.send_a_message(yield))
+          Janus::Responses::Standard.new(@publish.send_a_message(yield))
         end
 
         # Associate handle to transaction

@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
         initializer 'ruby_rabbitmq_janus.rb' do
           "# frozen_string_literal: true\n\n" \
             "::RRJ = RubyRabbitmqJanus::RRJ.new\n"\
-            '::Events = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance'
+            '::JanusEvents = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance'
         end
       end
     end

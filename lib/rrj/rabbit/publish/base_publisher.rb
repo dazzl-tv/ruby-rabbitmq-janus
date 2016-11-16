@@ -23,8 +23,8 @@ module RubyRabbitmqJanus
 
         # return an response when signal is trigger
         def return_response
-          Tools::Log.instance.debug 'Response received'
           @lock.synchronize do
+            Tools::Log.instance.debug 'Response received'
             @condition.wait(@lock)
             @response
           end

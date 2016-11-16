@@ -9,7 +9,12 @@ module RubyRabbitmqJanus
         def initialize(exchange, name_queue)
           @reply = exchange.queue(name_queue, exclusive: true)
           super(exchange)
-          Tools::Log.instance.debug 'Create/Connect to queue exclusive'
+          subscribe_to_queue
+        end
+
+        def send_a_message(request)
+          super(request)
+          return_response
         end
 
         private

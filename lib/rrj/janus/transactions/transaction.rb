@@ -21,7 +21,7 @@ module RubyRabbitmqJanus
         def connect(exclusive)
           @rabbit.transaction_short do
             choose_queue(exclusive)
-            send_a_message { yield }
+            send_a_message(exclusive) { yield }
           end
         end
 
@@ -31,22 +31,36 @@ module RubyRabbitmqJanus
 
         # determine queue used
         # :reek:ControlParameter and :reek:BooleanParameter
-        def choose_queue(exclusive = false)
+        def choose_queue(exclusive)
           chan = @rabbit.channel
           @publish = if exclusive
                        Tools::Log.instance.debug \
-                         'Choose an queue non Exclusive : to-janus'
-                       Rabbit::Publisher::PublishNonExclusive.new(chan)
-                     else
-                       Tools::Log.instance.debug \
                          'Choose an queue Exclusive : ampq.gen-xxx'
                        Rabbit::Publisher::PublishExclusive.new(chan, '')
+                     else
+                       Tools::Log.instance.debug \
+                         'Choose an queue non Exclusive : to-janus'
+                       Rabbit::Publisher::PublishNonExclusive.new(chan)
                      end
         end
 
         # Send a message to queue
-        def send_a_message
-          Janus::Responses::Standard.new(@publish.send_a_message(yield))
+        def send_a_message(exclusive)
+          Tools::Log.instance.info 'Publish a message ...'
+          publish = @publish.send_a_message(yield)
+          Janus::Responses::Standard.new(read_response(publish, exclusive))
+        end
+
+        # Read a response if is a exclusive message
+        # :reek:ControlParameter
+        def read_response(publish, exclusive)
+          if exclusive
+            Tools::Log.instance.info '... and read a janus response'
+            publish
+          else
+            Tools::Log.instance.info '... and return an empty response'
+            {}
+          end
         end
 
         # Associate handle to transaction

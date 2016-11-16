@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
           super()
           @exchange = exchange.default_exchange
           @message = nil
-          subscribe_to_queue
+          Tools::Log.instance.info "Create/Connect to queue -- #{reply.name}"
         end
 
         # Publish an message in queue
@@ -20,7 +20,6 @@ module RubyRabbitmqJanus
           @message = request
           @exchange.publish(@message.to_json,
                             request.options.merge!(reply_to: queue_name))
-          return_response
         end
 
         private

@@ -60,7 +60,7 @@ module RubyRabbitmqJanus
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Responses::Standard]
     # Give an object response to janus server
-    def message_session(type, options = {}, exclusive = false)
+    def message_session(type, options = {}, exclusive = true)
       Janus::Transactions::Session.new(@session).session_connect(exclusive) do
         Janus::Messages::Standard.new(type, use_current_session?(options))
       end

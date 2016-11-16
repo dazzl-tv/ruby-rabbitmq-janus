@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
         def session_connect(exclusive)
           rabbit.transaction_short do
             choose_queue(exclusive)
-            send_a_message { yield }
+            send_a_message(exclusive) { yield }
           end
         end
       end

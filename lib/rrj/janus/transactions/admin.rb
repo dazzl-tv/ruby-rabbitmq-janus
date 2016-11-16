@@ -25,15 +25,20 @@ module RubyRabbitmqJanus
 
         # Publish an message in handle
         def publish_message_handle(type, options = {})
-          opts = { 'session_id' => session, 'handle_id' => handle }
-          msg = Janus::MessageAdmin.new(type, opts.merge!(options))
+          opts = {
+            'session_id' => session,
+            'handle_id' => handle,
+            'add' => {
+              'admin_secret' => Tools::Config.instance.options['rabbit']['admin_pass']
+            }
+          }
+          msg = Janus::Messages::Admin.new(type, opts.merge!(options))
           Janus::Responses::Standard.new(publish.send_a_message(msg))
         end
 
         # Stop an handle running
         def handle_running_stop
-          secret = Tools::Config.instance.options['rabbit']['admin_pass']
-          publish_message_handle('base::detach', admin_secret: secret)
+          publish_message_handle('base::detach')
         end
 
         # Define queue used for admin message

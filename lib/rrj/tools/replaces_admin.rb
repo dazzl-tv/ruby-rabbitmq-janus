@@ -11,6 +11,14 @@ module RubyRabbitmqJanus
       def replace_classic
         super
         replace_admins if request.key?('admin_secret')
+        add_secret if opts.key?('add')
+      end
+
+      # Add string secret for admin request
+      def add_secret
+        values = opts['add']
+        Tools::Log.instance.debug "Values add : #{values}"
+        request.merge!(values)
       end
 
       # Replace elements admins if present

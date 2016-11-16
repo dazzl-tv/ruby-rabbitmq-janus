@@ -37,15 +37,4 @@ RSpec.configure do |config|
     json_index = "#{json_type}::#{json_name}"
     config.json_schemas[json_index] = json_file
   end
-
-  # Configure requests test before sending request
-  config.before(:example) do
-    @gateway = RubyRabbitmqJanus::RRJ.new
-  end
-
-  config.after(:example) do
-    unless config.filter_run_excluding name: :destroy
-      @gateway.message_session('base::destroy') unless @gateway.session.nil?
-    end
-  end
 end

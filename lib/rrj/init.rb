@@ -35,7 +35,10 @@ module RubyRabbitmqJanus
     #   Given a type to request. JSON request writing in 'config/requests/'
     # @param [Bollean] exclusive
     #   Use an exclusive queue or not
-    # @example Sending an message info
+    # @example Sending an message info in queue 'to-janus'
+    #   RubyRabbitmqJanus::RRJ.new.message_simple('base::info', true)
+    #   #=> {}
+    # @example Sending an message info in queue exclusive 'ampq.gen-xxxxx'
     #   RubyRabbitmqJanus::RRJ.new.message_simple('base::info')
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Responses::Standard]

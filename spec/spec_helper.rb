@@ -37,4 +37,14 @@ RSpec.configure do |config|
     json_index = "#{json_type}::#{json_name}"
     config.json_schemas[json_index] = json_file
   end
+
+  # Configure requests test before sending request
+  config.before(:example) do
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Env)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
+    Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
+    @gateway = RubyRabbitmqJanus::RRJ.new
+  end
 end

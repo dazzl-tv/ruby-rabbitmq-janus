@@ -2,13 +2,16 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request, level: :base, name: :create do
-    let(:type) { 'base::create' }
-    let(:message) { @gateway.message_simple(type) }
+describe 'RubyRabbitmqJanus::RRJ -- message type create' do
+  before(:example) { @type = 'base::create' }
 
-    it 'type create' do
-      expect(message.to_json).to match_json_schema(type)
+  describe '#message_simple', type: :request, level: :base, name: :create do
+    context 'when queue is exclusive' do
+      include_examples 'message_simple should match json schema'
+    end
+
+    context 'when queue is not exclusive' do
+      include_examples 'message_simple should match json empty'
     end
   end
 end

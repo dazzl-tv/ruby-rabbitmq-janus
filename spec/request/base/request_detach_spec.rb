@@ -2,19 +2,16 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request, level: :base, name: :detach do
-    let(:type) { 'base::detach' }
-    let(:message) do
-      @gateway.start_handle(true) do
-        @gateway.message_handle(type)
-      end
+describe 'RubyRabbitmqJanus::RRJ -- mesage type detach' do
+  before(:example) { @type = 'base::detach' }
+
+  describe '#message_handle', type: :request, level: :base, name: :detach do
+    context 'when queue is exclusive' do
+      include_examples 'message_handle should match json schema'
     end
 
-    it 'type detach' do
-      @gateway.message_session('base::attach')
-      expect(message.to_json).to match_json_schema(type)
-      @gateway.message_session('base::destroy')
+    context 'when queue is not exclusive' do
+      include_examples 'message_handle should match json empty'
     end
   end
 end

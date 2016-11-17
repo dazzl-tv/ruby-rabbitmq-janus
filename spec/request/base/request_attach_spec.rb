@@ -2,13 +2,18 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request, level: :base, name: :attach do
-    let(:type) { 'base::attach' }
-    let(:message) { @gateway.message_session(type) }
+describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
+  before(:example) { @type = 'base::attach' }
 
-    it 'type attach' do
-      expect(message.to_json).to match_json_schema(type)
+  describe '#message_handle', type: :request, level: :base, name: :attach do
+    context 'when queue is exclusive' do
+      include_examples 'message_handle should match json schema'
+    end
+
+    context 'when queue is not exclusive' do
+      include_examples 'message_handle should match json empty'
     end
   end
+
+  after(:example) { @gateway.stop_handle }
 end

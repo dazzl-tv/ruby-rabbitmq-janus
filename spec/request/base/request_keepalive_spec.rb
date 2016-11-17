@@ -2,14 +2,16 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request, level: :base, name: :keepalive do
-    let(:type) { 'base::keepalive' }
-    let(:message) { @gateway.message_session(type) }
+describe 'RubyRabbitmqJanus::RRJ -- message type keepalive' do
+  before(:example) { @type = 'base::keepalive' }
 
-    it 'type keepalive' do
-      expect(message.to_json).to match_json_schema(type)
-      @gateway.message_session('base::destroy')
+  describe '#message_session', type: :request, level: :base, name: :keepalive do
+    context 'when queue is exclusive' do
+      include_examples 'message_session should match json schema'
+    end
+
+    context 'when queue is not exclusive' do
+      include_examples 'message_session should match json empty'
     end
   end
 end

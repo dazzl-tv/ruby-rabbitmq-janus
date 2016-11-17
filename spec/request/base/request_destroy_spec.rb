@@ -2,13 +2,16 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request, level: :base, name: :destroy do
-    let(:type) { 'base::destroy' }
-    let(:message) { @gateway.message_session(type) }
+describe 'RubyRabbitmqJanus::RRJ -- message type destroy' do
+  before(:example) { @type = 'base::destroy' }
 
-    it 'type destroy' do
-      expect(message.to_json).to match_json_schema(type)
+  describe '#message_session', type: :request, level: :base, name: :destroy do
+    context 'when queue is exclusive' do
+      include_examples 'message_session should match json schema'
+    end
+
+    context 'when queue is not exclusive' do
+      include_examples 'message_session should match json empty'
     end
   end
 end

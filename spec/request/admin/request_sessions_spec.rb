@@ -2,18 +2,10 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ' do
-  describe '.response', type: :request, level: :admin, name: :handle_info do
-    let(:type) { 'admin::handle_info' }
-    let(:message) do
-      @gateway.start_handle_admin do
-        @gateway.message_handle(type)
-      end
-    end
+describe 'RubyRabbitmqJanus::RRJ -- message type sessions' do
+  before(:example) { @type = 'admin::sessions' }
 
-    it 'type handle_info' do
-      expect(message.to_json).to match_json_schema(type)
-      @gateway.stop_handle
-    end
+  describe '#message_admin', type: :request, level: :admin, name: :sessions do
+    # include_examples 'message_admin should match json schema'
   end
 end

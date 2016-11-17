@@ -4,6 +4,7 @@ module RubyRabbitmqJanus
   module Tools
     # Format message request with good data to HASH format
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    # :reek:TooManyMethods
     class Replace
       # Initialize a tool replace
       def initialize(request, options = {})
@@ -33,6 +34,7 @@ module RubyRabbitmqJanus
         replace_session if @request.key?('session_id')
         replace_plugin if @request.key?('plugin')
         replace_handle if @request.key?('handle_id')
+        replace_candidate if @request.key?('candidate')
       end
 
       # Create an transaction string and replace in request field with an String format
@@ -61,6 +63,32 @@ module RubyRabbitmqJanus
         @request['handle_id'] = @opts['handle_id']
       rescue => message
         Tools::Log.instance.warn "Error handle replace : #{message}"
+      end
+
+      # Replace candidate, or candidates
+      def replace_candidate
+        save_candidate(candidates?)
+      rescue => message
+        Tools::Log.instance.warn "Error candidate replace : #{message}"
+      end
+
+      def save_candidate(value)
+        if @opts.key?('candidates')
+          @request['candidates'] = value
+        else
+          @request['candidate'] = value
+        end
+      end
+
+      # Test candidates or candidate
+      def candidates?
+        if @opts.key?('candidates')
+          @request['candidates'] = @request['candidate']
+          @request.delete('candidate')
+          @opts['candidates']
+        else
+          @opts['candidate']
+        end
       end
 
       # Replace other element in request

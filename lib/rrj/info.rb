@@ -3,7 +3,7 @@
 # Define constant to gem.
 module RubyRabbitmqJanus
   # Define version to gem
-  VERSION = '1.0.7'
+  VERSION = '1.0.8'
 
   # Define a summary description to gem
   SUMMARY = 'Ruby RabbitMQ Janus'

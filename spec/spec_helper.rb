@@ -47,4 +47,7 @@ RSpec.configure do |config|
     Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
     @gateway = RubyRabbitmqJanus::RRJ.new
   end
+
+  # Exclude request with tag broken
+  config.filter_run_excluding broken: true
 end

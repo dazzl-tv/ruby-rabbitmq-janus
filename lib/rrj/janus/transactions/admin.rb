@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
         def connect
           rabbit.transaction_short do
             choose_queue
-            send_a_message(false) { yield }
+            send_a_message { yield }
           end
         end
 
@@ -33,7 +33,7 @@ module RubyRabbitmqJanus
             }
           }
           msg = Janus::Messages::Admin.new(type, opts.merge!(options))
-          Janus::Responses::Standard.new(publish.send_a_message(msg))
+          send_a_message { msg }
         end
 
         # Stop an handle running
@@ -45,6 +45,14 @@ module RubyRabbitmqJanus
         def choose_queue
           chan = rabbit.channel
           @publish = Rabbit::Publisher::PublisherAdmin.new(chan)
+        end
+
+        private
+
+        # Override method for publishing an message and reading a response
+        def send_a_message
+          Tools::Log.instance.info 'Publish a message ...'
+          Janus::Responses::Standard.new(publish.send_a_message(yield))
         end
       end
     end

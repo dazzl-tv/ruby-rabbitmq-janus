@@ -10,6 +10,12 @@ module RubyRabbitmqJanus
         def initialize(exchange)
           @reply = exchange.queue(queue_from)
           super(exchange)
+          subscribe_to_queue
+        end
+
+        def send_a_message(request)
+          super(request)
+          return_response
         end
 
         private

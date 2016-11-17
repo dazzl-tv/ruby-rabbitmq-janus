@@ -6,8 +6,15 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # This class work with janus and send a series of message
       class Handle < Session
+        # Inistialize transaction handle
+        def initialize(session)
+          super(session)
+          @exclusive = nil
+        end
+
         # Initialize connection to Rabbit and Janus
         def handle_connect(exclusive)
+          @exclusive = exclusive
           rabbit.transaction_long do
             choose_queue(exclusive)
             create_handle
@@ -18,6 +25,7 @@ module RubyRabbitmqJanus
         # Initialize connection to Rabbit and Janus and close after sending an received
         # a response
         def handle_connect_and_stop(exclusive)
+          @exclusive = exclusive
           rabbit.transaction_short do
             choose_queue(exclusive)
             create_handle
@@ -34,7 +42,29 @@ module RubyRabbitmqJanus
         def publish_message_handle(type, options = {})
           opts = { 'session_id' => session, 'handle_id' => handle }
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
-          Janus::Responses::Standard.new(publish.send_a_message(msg))
+          publisher = publish.send_a_message(msg)
+          Janus::Responses::Standard.new(read_response(publisher, @exclusive))
+        end
+
+        private
+
+        # Associate handle to transaction
+        def create_handle
+          Tools::Log.instance.info 'Create an handle'
+          msg = Janus::Messages::Standard.new('base::attach', 'session_id' => session)
+          @handle = send_a_message_exclusive { msg }
+        end
+
+        # Send a messaeg in exclusive queue
+        def send_a_message_exclusive
+          Janus::Responses::Standard.new(read_response_exclusive { yield }).sender
+        end
+
+        # Read an response in queue exclusive
+        def read_response_exclusive
+          chan = rabbit.channel
+          tmp_publish = Rabbit::Publisher::PublishExclusive.new(chan, '')
+          tmp_publish.send_a_message(yield)
         end
       end
     end

@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
         def connect
           rabbit.transaction_short do
             choose_queue
-            send_a_message { yield }
+            send_a_message(false) { yield }
           end
         end
 
@@ -43,7 +43,8 @@ module RubyRabbitmqJanus
 
         # Define queue used for admin message
         def choose_queue
-          @publish = Rabbit::Publisher::PublisherAdmin.new(rabbit.channel)
+          chan = rabbit.channel
+          @publish = Rabbit::Publisher::PublisherAdmin.new(chan)
         end
       end
     end

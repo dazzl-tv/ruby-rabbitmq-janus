@@ -62,12 +62,6 @@ module RubyRabbitmqJanus
             {}
           end
         end
-
-        # Associate handle to transaction
-        def create_handle
-          msg = Janus::Messages::Standard.new('base::attach', 'session_id' => @session)
-          @handle = send_a_message { msg }.sender
-        end
       end
     end
   end

@@ -7,11 +7,17 @@ describe 'RubyRabbitmqJanus::RRJ -- mesage type detach' do
 
   describe '#message_handle', type: :request, level: :base, name: :detach do
     context 'when queue is exclusive' do
-      include_examples 'message_handle should match json schema'
+      it_behaves_like 'message_handle should match json schema' do
+        let(:replace) { {} }
+        let(:add) { {} }
+      end
     end
 
     context 'when queue is not exclusive' do
-      include_examples 'message_handle should match json empty'
+      it_behaves_like 'message_handle should match json empty' do
+        let(:replace) { {} }
+        let(:add) { {} }
+      end
     end
   end
 end

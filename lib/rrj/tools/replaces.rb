@@ -5,6 +5,7 @@ module RubyRabbitmqJanus
     # Format message request with good data to HASH format
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # :reek:TooManyMethods
+    # rubocop:disable Metrics/ClassLength
     class Replace
       # Initialize a tool replace
       def initialize(request, options = {})
@@ -82,12 +83,13 @@ module RubyRabbitmqJanus
 
       # Test candidates or candidate
       def candidates?
+        opts = @opts['replace']
         if @opts.key?('candidates')
           @request['candidates'] = @request['candidate']
           @request.delete('candidate')
-          @opts['candidates']
+          opts['candidates']
         else
-          @opts['candidate']
+          opts['candidate']
         end
       end
 
@@ -140,5 +142,6 @@ module RubyRabbitmqJanus
           !@opts[presence_of_key].nil?
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

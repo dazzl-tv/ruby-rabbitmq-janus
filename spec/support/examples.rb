@@ -36,9 +36,11 @@ end
 
 # Handle request
 shared_examples 'message_handle should match json schema' do
+  let(:replace) { replace }
+  let(:add) { add }
   let(:message) do
     @gateway.start_handle(true) do
-      @gateway.message_handle(@type)
+      @gateway.message_handle(@type, replace, add)
     end
   end
 
@@ -48,9 +50,11 @@ shared_examples 'message_handle should match json schema' do
 end
 
 shared_examples 'message_handle should match json empty' do
+  let(:replace) { replace }
+  let(:add) { add }
   let(:message) do
     @gateway.start_handle(false) do
-      @gateway.message_handle(@type)
+      @gateway.message_handle(@type, replace, add)
     end
   end
 

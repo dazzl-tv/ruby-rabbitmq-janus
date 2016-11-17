@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem and create automatically an session with Janus
   # @!attribute [r] session
-  # :reek:BooleanParameter and :reek:ControlParameter
+  # :reek:BooleanParameter and :reek:ControlParameter and :reek:DataClump
   class RRJ
     attr_reader :session, :event
 
@@ -43,9 +43,9 @@ module RubyRabbitmqJanus
     #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     # @return [RubyRabbitmqJanus::Janus::Responses::Standard]
     #   Give an object response to janus server
-    def message_simple(type = 'base::info', exclusive = false)
+    def message_simple(type = 'base::info', exclusive = false, options = {})
       Janus::Transactions::Transaction.new(@session).connect(exclusive) do
-        Janus::Messages::Standard.new(type)
+        Janus::Messages::Standard.new(type, options)
       end
     end
 

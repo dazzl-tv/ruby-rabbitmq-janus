@@ -13,6 +13,7 @@ module RubyRabbitmqJanus
           super(exchange)
         end
 
+        # Send an message to queue
         def send_a_message(request)
           super(request)
         end

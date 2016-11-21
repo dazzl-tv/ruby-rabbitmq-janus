@@ -73,6 +73,7 @@ module RubyRabbitmqJanus
         Tools::Log.instance.warn "Error candidate replace : #{message}"
       end
 
+      # Save candidate or candidates in request
       def save_candidate(value)
         if @opts.key?('candidates')
           @request['candidates'] = value

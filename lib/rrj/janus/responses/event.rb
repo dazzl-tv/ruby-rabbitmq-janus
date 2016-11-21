@@ -21,6 +21,11 @@ module RubyRabbitmqJanus
           request['jsep'] if contains_jsep?
         end
 
+        # Return a couple session_id and handle_id
+        def keys
+          [request['session_id'], request['sender']]
+        end
+
         private
 
         # Test if response contains jsep data

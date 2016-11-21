@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+# :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   # Contains all tools necessary in this gem
   module Tools
     # Class for tools used in gem
-    # :reek:UtilityFunction
     class Env
       include Singleton
 

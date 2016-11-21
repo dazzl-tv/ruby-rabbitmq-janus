@@ -31,7 +31,6 @@ module RubyRabbitmqJanus
       # Load configuration file yaml
       # @return [Yaml] Configuration file
       # @param file [String] Path to configuration file (with name)
-      # :reek:UtilityFunction { public_methods_only: true }
       def load_configuration(file)
         Tools::Log.instance.info("Loading configuration file : #{file}")
         YAML.load(File.read(file))

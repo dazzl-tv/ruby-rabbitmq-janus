@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# :reek:Attribute and :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   module Tools
@@ -17,7 +18,6 @@ module RubyRabbitmqJanus
         UNKNOWN: Logger::UNKNOWN
       }.freeze
 
-      # This method smell :reek:Attribute
       attr_accessor :level, :progname
 
       # Returns a new instance to Log
@@ -93,7 +93,6 @@ module RubyRabbitmqJanus
         log
       end
 
-      # This method smell :reek:UtilityFunction
       def test_level?(this_level)
         this_level >= Log.instance.level ? true : false
       end

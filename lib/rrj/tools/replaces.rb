@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+# :reek:TooManyMethods and :reek:NilCheck
 
 module RubyRabbitmqJanus
   module Tools
     # Format message request with good data to HASH format
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # :reek:TooManyMethods
     # rubocop:disable Metrics/ClassLength
     class Replace
       # Initialize a tool replace
@@ -136,7 +136,6 @@ module RubyRabbitmqJanus
       end
 
       # Test presence of key in many hash
-      # :reek:NilCheck
       def test_presence?(presence_of_key)
         @opts.key?(presence_of_key) && \
           @request.key?('body') && \

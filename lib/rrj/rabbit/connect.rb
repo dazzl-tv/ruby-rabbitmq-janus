@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# :reek:FeatureEnvy
 
 module RubyRabbitmqJanus
   module Rabbit
@@ -49,7 +50,6 @@ module RubyRabbitmqJanus
       private
 
       # Read option for bunny instance (connection with rabbitmq)
-      # :reek:FeatureEnvy
       def read_options_server
         cfg = Tools::Config.instance.options['rabbit']
         opts = {}

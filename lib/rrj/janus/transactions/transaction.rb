@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# :reek:TooManyInstanceVariables and :reek:ControlParameter
+# :reek:ControlParameter and :reek:BooleanParameter
 
 module RubyRabbitmqJanus
   module Janus
@@ -6,7 +8,6 @@ module RubyRabbitmqJanus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # This class work with janus and send a series of message
-      # :reek:TooManyInstanceVariables
       class Transaction
         # Initialize an transaction
         def initialize(session)
@@ -30,7 +31,6 @@ module RubyRabbitmqJanus
         attr_reader :rabbit, :session, :response, :handle, :publish
 
         # determine queue used
-        # :reek:ControlParameter and :reek:BooleanParameter
         def choose_queue(exclusive)
           chan = @rabbit.channel
           @publish = if exclusive
@@ -52,7 +52,6 @@ module RubyRabbitmqJanus
         end
 
         # Read a response if is a exclusive message
-        # :reek:ControlParameter
         def read_response(publish, exclusive)
           if exclusive
             Tools::Log.instance.info '... and read a janus response'

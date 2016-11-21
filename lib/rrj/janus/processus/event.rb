@@ -1,12 +1,12 @@
 # frozen_string_literal: true
+# :reek:InstanceVariableAssumption and :reek:NilCheck
+# :reek:TooManyInstanceVariables and :reek:TooManyStatements
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   module Janus
     module Concurrencies
       # For listen standard queue ("from-janus" by default)
-      # :reek:InstanceVariableAssumption and :reek:NilCheck
-      # :reek:TooManyInstanceVariables and :reek:TooManyStatements
       class Event < Concurrency
         include Singleton
 

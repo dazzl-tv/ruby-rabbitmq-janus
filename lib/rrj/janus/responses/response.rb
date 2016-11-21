@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# :reek:TooManyMethods and :reek:DuplicateMethodCall
 
 module RubyRabbitmqJanus
   module Janus
@@ -6,7 +7,6 @@ module RubyRabbitmqJanus
     module Responses
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # Read and decryt a response to janus
-      # :reek:TooManyMethods
       class Response
         # Instanciate a response
         def initialize(response_janus)
@@ -49,7 +49,6 @@ module RubyRabbitmqJanus
         attr_accessor :request
 
         # Analysis response and send exception if janus return an error
-        # :reek:DuplicateMethodCall
         def analysis
           raise Errors::JanusResponseSimple, @request if error_simple?
           raise Errors::JanusResponsePlugin, @request['plugindata']['data'] \

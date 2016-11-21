@@ -6,19 +6,16 @@ require 'ruby_rabbitmq_janus'
 @t = RubyRabbitmqJanus::RRJ.new
 @e = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance
 
-# :reek:NilCheck and :reek:TooManyStatements
 def case_event(data, jsep)
-  puts "REASON : Event : #{data.class} -- #{data}"
-  case data['videocontrol']
-  when 'joined'
-    puts 'Joined request ...'
-    @t.handle_message_simple('channel::offer', jsep)
-  end
-  update_jsep(jsep) unless jsep.nil?
+  puts "REASON : Event : #{data} -- #{jsep}"
 end
 
-def update_jsep(jsep)
-  puts "JSEP : #{jsep}"
+def case_hangup(data)
+  puts "REASON : Hangup : #{data}"
+end
+
+def case_error(data)
+  puts "REASON : Error : #{data}"
 end
 
 def case_stop
@@ -26,14 +23,17 @@ def case_stop
   Thread.current.stop
 end
 
-events = lambda do |reason, data = nil, jsep = nil|
+events = lambda do |reason, data, jsep = nil|
   puts "Execute block code with reason : #{reason}"
   case reason
   when 'event' then case_event(data, jsep)
+  when 'hangup' then case_hangup(data)
+  when 'error' then case_error(data)
   when 'stop' then case_stop
   else
     puts 'REASON default'
   end
+  puts " --\n\r"
 end
 
 puts '## Start listen Block'

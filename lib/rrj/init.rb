@@ -15,9 +15,10 @@ module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   # Initialize gem and create automatically an session with Janus
   # @!attribute [r] session
+  #   @return [Fixnum] Renturn an session number created in instanciate gem
   # :reek:BooleanParameter and :reek:ControlParameter and :reek:DataClump
   class RRJ
-    attr_reader :session, :event
+    attr_reader :session
 
     # Returns a new instance of RubyRabbitmqJanus
     def initialize
@@ -119,7 +120,19 @@ module RubyRabbitmqJanus
       @transaction.handle_running_stop
     end
 
-    # Start an short transaction, this queue is not exclusive
+    # Start an short transaction. Create an handle and send a message to queue.
+    # This queue is not exclusive, so this message is sending in queue 'to-janus' and a
+    # response is return in queue 'from-janus'
+    # @example Send an request trickle
+    #   candidate = {
+    #     'candidate' => {
+    #       'sdpMid' => 'video',
+    #       'sdpMLineIndex' => 1,
+    #       'candidate' => '...'
+    #     }
+    #   }
+    #   RubyRabbitmqJanus::RRJ.new.handle_message_simple('peer::trickle', candidate)
+    #   #=> { 'janus' => 'trickle', ..., 'candidate' => { 'completed' : true } } }
     def handle_message_simple(type, replace = {}, add = {})
       @transaction = Janus::Transactions::Handle.new(@session)
       @transaction.handle_connect_and_stop(false) do

@@ -24,6 +24,7 @@ module RubyRabbitmqJanus
         def listen_events
           lock.synchronize do
             condition.wait(lock)
+            Tools::Log.instance.info 'Janus event received .. treatment ..'
             yield @response.event, @response.data, @response.jsep
           end
         end

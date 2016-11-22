@@ -19,7 +19,7 @@ module RubyRabbitmqJanus
         # Transform raw request in request to janus, so replace element <string>, <number>
         # and other with real value
         def prepare_request(options)
-          @request = Tools::AdminReplace.new(request, options).transform_request
+          @request = Tools::Replaces::Admin.new(request, options).transform_request
           super
         end
       end

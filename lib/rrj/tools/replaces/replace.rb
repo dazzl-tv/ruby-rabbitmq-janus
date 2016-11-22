@@ -44,5 +44,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'irrj/tools/replaces/standard'
-require 'irrj/tools/replaces/admin'
+require 'rrj/tools/replaces/standard'
+require 'rrj/tools/replaces/admin'

@@ -6,8 +6,8 @@ require 'ruby_rabbitmq_janus'
 @t = RubyRabbitmqJanus::RRJ.new
 @e = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance
 
-def case_event(data, jsep)
-  puts "REASON : Event : #{data} -- #{jsep}"
+def case_event(response)
+  puts "REASON : Event : #{response.to_hash}"
 end
 
 def case_hangup(data)
@@ -23,12 +23,12 @@ def case_stop
   Thread.current.stop
 end
 
-events = lambda do |reason, data, jsep = nil|
+events = lambda do |reason, response|
   puts "Execute block code with reason : #{reason}"
   case reason
-  when 'event' then case_event(data, jsep)
-  when 'hangup' then case_hangup(data)
-  when 'error' then case_error(data)
+  when 'event' then case_event(response)
+  when 'hangup' then case_hangup(response)
+  when 'error' then case_error(response)
   when 'stop' then case_stop
   else
     puts 'REASON default'

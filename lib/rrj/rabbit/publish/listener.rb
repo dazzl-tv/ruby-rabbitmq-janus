@@ -25,7 +25,7 @@ module RubyRabbitmqJanus
           lock.synchronize do
             condition.wait(lock)
             Tools::Log.instance.info 'Janus event received .. treatment ..'
-            yield @response.event, @response.data, @response.jsep
+            yield @response.event, @response
           end
         end
 
@@ -34,9 +34,7 @@ module RubyRabbitmqJanus
         # Sending an signal when an response is reading in queue
         def synchronize_response(payload)
           @response = Janus::Responses::Event.new(JSON.parse(payload))
-          Tools::Log.instance.info \
-            "[X] Message number reading ##{@count} --\n\r" \
-            "#{@response.to_hash}"
+          Tools::Log.instance.info "[X] Message number reading ##{@count}"
           @count += 1
           lock.synchronize { condition.signal }
         end

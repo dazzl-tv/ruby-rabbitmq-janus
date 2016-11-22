@@ -11,24 +11,9 @@ module RubyRabbitmqJanus
         # Replace classic elements
         def replace_classic
           super
-          replace_session if request.key?('session_id')
-          replace_plugin if request.key?('plugin')
           replace_handle if request.key?('handle_id')
           replace_candidate if request.key?('candidate')
-        end
-
-        # Read option session and replace in request
-        def replace_session
-          request['session_id'] = opts['session_id']
-        rescue => message
-          Tools::Log.instance.warn "Error session replace : #{message}"
-        end
-
-        # Replace plugin string
-        def replace_plugin
-          request['plugin'] = Tools::Config.instance.options['janus']['plugins'][0]
-        rescue => message
-          Tools::Log.instance.warn "Error plugin replace : #{message}"
+          replace_sdp if request.key?('jsep')
         end
 
         # Replace handle integer
@@ -43,6 +28,13 @@ module RubyRabbitmqJanus
           save_candidate(candidates?)
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"
+        end
+
+        # Replace sdp in request
+        def replace_sdp
+          request['jsep']['sdp'] = opts['sdp']
+        rescue => message
+          Tools::Log.instance.warn "Error sdp replace : #{message}"
         end
 
         # Save candidate or candidates in request

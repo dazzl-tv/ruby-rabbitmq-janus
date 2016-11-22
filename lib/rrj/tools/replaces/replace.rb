@@ -2,6 +2,7 @@
 
 module RubyRabbitmqJanus
   module Tools
+    # Tools for replace elements in request
     module Replaces
       # Tools for replace elements in request sending to Rabbitmq
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -31,6 +32,8 @@ module RubyRabbitmqJanus
         # Replace basic elements
         def replace_classic
           replace_transaction if @request.key?('transaction')
+          replace_session if @request.key?('session_id')
+          replace_plugin if @request.key?('plugin')
         end
 
         # Create an transaction string and replace in request field with an String format
@@ -38,6 +41,20 @@ module RubyRabbitmqJanus
           @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
         rescue => message
           Tools::Log.instance.warn "Error transaction replace : #{message}"
+        end
+
+        # Read option session and replace in request
+        def replace_session
+          @request['session_id'] = @opts['session_id']
+        rescue => message
+          Tools::Log.instance.warn "Error session replace : #{message}"
+        end
+
+        # Replace plugin string
+        def replace_plugin
+          @request['plugin'] = Tools::Config.instance.options['janus']['plugins'][0]
+        rescue => message
+          Tools::Log.instance.warn "Error plugin replace : #{message}"
         end
       end
     end

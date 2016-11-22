@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# :reek:NilCheck
 
 module RubyRabbitmqJanus
   module Tools
@@ -110,9 +109,7 @@ module RubyRabbitmqJanus
 
         # Test presence of key in many hash
         def test_presence?(presence_of_key)
-          opts.key?(presence_of_key) && \
-            request.key?('body') && \
-            !opts[presence_of_key].nil?
+          opts.key?(presence_of_key) && request.key?('body')
         end
       end
     end

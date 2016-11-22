@@ -32,7 +32,7 @@ module RubyRabbitmqJanus
 
         # Replace sdp in request
         def replace_sdp
-          request['jsep']['sdp'] = opts['sdp']
+          request['jsep']['sdp'] = opts['replace']['sdp']
         rescue => message
           Tools::Log.instance.warn "Error sdp replace : #{message}"
         end
@@ -89,7 +89,7 @@ module RubyRabbitmqJanus
             if value.is_a?(Hash)
               running_hash(value, new_parent(key, parent))
             else
-              request[parent][key] = value
+              request[parent][key] = value unless key.eql? 'sdp'
             end
           end
         end

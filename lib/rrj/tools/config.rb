@@ -53,7 +53,7 @@ module RubyRabbitmqJanus
       # Define log lvel used in this gem
       def define_log_level_used
         Tools::Log.instance.level = \
-          Tools::Log::LEVELS[@options['gem']['log']['level'].to_sym]
+          Tools::Log::LEVELS[@options['gem']['log']['level'].upcase.to_sym]
       rescue
         raise Errors::LevelNotDefine
       end

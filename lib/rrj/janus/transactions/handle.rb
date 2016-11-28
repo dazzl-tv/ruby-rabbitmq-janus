@@ -5,6 +5,7 @@ module RubyRabbitmqJanus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # This class work with janus and send a series of message
+      # :reek:TooManyStatements
       class Handle < Session
         # Inistialize transaction handle
         def initialize(session)
@@ -24,11 +25,11 @@ module RubyRabbitmqJanus
 
         # Initialize connection to Rabbit and Janus and close after sending an received
         # a response
-        def handle_connect_and_stop(exclusive)
+        def handle_connect_and_stop(exclusive, sender)
           @exclusive = exclusive
           rabbit.transaction_short do
             choose_queue(exclusive)
-            create_handle
+            sender.eql?(0) ? create_handle : connect_handle(sender)
             yield
           end
         end
@@ -48,11 +49,17 @@ module RubyRabbitmqJanus
 
         private
 
-        # Associate handle to transaction
+        # Create an handle for transaction
         def create_handle
           Tools::Log.instance.info 'Create an handle'
           msg = Janus::Messages::Standard.new('base::attach', 'session_id' => session)
           @handle = send_a_message_exclusive { msg }
+        end
+
+        # Connect to handle
+        def connect_handle(sender)
+          Tools::Log.instance.info 'Connect an handle'
+          @handle = sender
         end
 
         # Send a messaeg in exclusive queue

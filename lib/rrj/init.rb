@@ -17,6 +17,7 @@ module RubyRabbitmqJanus
   # @!attribute [r] session
   #   @return [Fixnum] Renturn an session number created in instanciate gem
   # :reek:BooleanParameter and :reek:ControlParameter and :reek:DataClump
+  # :reek:LongParameterList and :reek:TooManyStatements
   class RRJ
     attr_reader :session
 
@@ -133,9 +134,10 @@ module RubyRabbitmqJanus
     #   }
     #   RubyRabbitmqJanus::RRJ.new.handle_message_simple('peer::trickle', candidate)
     #   #=> { 'janus' => 'trickle', ..., 'candidate' => { 'completed' : true } } }
-    def handle_message_simple(type, replace = {}, add = {})
+    def handle_message_simple(type, replace = {}, add = {}, exclusive = false)
+      handle = replace.include?('handle_id') ? replace['handle_id'] : 0
       @transaction = Janus::Transactions::Handle.new(@session)
-      @transaction.handle_connect_and_stop(false) do
+      @transaction.handle_connect_and_stop(exclusive, handle) do
         message_handle(type, replace, add).for_plugin
       end
     rescue => error

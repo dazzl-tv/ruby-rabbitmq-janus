@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     # Create an class for generate a initializer
     class InitializerGenerator < Rails::Generators::Base
       desc 'Generate a initializer to this gem for rails application.'
-      INITIALIZER <<-INIT
+      INITIALIZER = <<-INIT
 # frozen_string_literal: true
 
 require 'actions'

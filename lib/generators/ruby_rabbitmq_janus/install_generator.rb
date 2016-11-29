@@ -5,13 +5,13 @@ module RubyRabbitmqJanus
     # Create an class for generate a installing
     class InstallGenerator < Rails::Generators::Base
       desc 'Install RubyRabbitmqJanus in your Rails application'
-      ACTION_CLASS <<-BASE
+      ACTION_CLASS = <<-BASE
 module RubyRabbitmqJanus
   # Execute this code when janus return an events in standard queue
   class ActionsEvents
     def actions
       lambda do |reason, data|
-        Rails.logger.debug "Execute block code with reason : #{reason}"
+        Rails.logger.debug "Execute block code with reason : \#{reason}"
         case reason
         when event this case_events(data.to_hash)
         end
@@ -21,13 +21,14 @@ module RubyRabbitmqJanus
     private
 
     def case_events(data)
-      Rails.logger.debug "Event : #{data}"
+      Rails.logger.debug "Event : \#{data}"
     end
   end
 end
       BASE
-      APPLICATION <<-AUTOLOAD
-    config.autoloads_paths += Dir[Rails.root.join('app', 'ruby_rabbitmq_janus')]
+      APPLICATION = <<-AUTOLOAD
+# Load RubyRabbitmqJanus actions events code blocks
+config.autoload_paths += Dir[Rails.root.join('app', 'ruby_rabbitmq_janus')]
       AUTOLOAD
 
       def add_actions
@@ -35,7 +36,12 @@ end
         create_file 'app/ruby_rabbitmq_janus/actions.rb', ACTION_CLASS
 
         # Add to application.rb
-        application APPLICATION
+        application do
+          APPLICATION
+        end
+
+        # Add initializer
+        generate 'ruby_rabbitmq_janus:initializer'
       end
     end
   end

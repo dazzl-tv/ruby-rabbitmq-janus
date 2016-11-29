@@ -9,4 +9,4 @@ Style/Encoding:
   Enabled: true
 
 Metrics/LineLength:
-  Max: 90
+  Max: 80

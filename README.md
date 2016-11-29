@@ -1,10 +1,13 @@
-# ruby-rabbitmq-janus
+# ruby-rabbitmq-janus -- RRJ
 Ruby Gem for Janus WebRTC Gateway integration using RabbitMQ message queue
 
 This gem is used to communicate to a server Janus through RabbitMQ software (
 Message-oriented middleware). It waiting a messages to Rails API who send to RabbitMQ
 server in a queue for janus server. janus processes a message and send to RabbitMQ server
 in a queue for gem. Once the received message is decoded and returned through the Rails API.
+
+
+This gem is product by [Dazzl.tv](http://dazzl.tv)
 
 ## Menu
 * [How to use](#how-to-use)
@@ -14,9 +17,12 @@ in a queue for gem. Once the received message is decoded and returned through th
     * [Usage Synchrounous](#usage-with-synchronous-request)
     * [Usage Asynchrounous](#usage-with-asynchronous-request)
     * [Aliases](#aliases)
+* [Upgrade](#upgrade)
 * [Development](#development)
  * [RSpec](#rspec-test)
  * [Documentation](#documentation)
+    * [Read documentation](#read-documentation)
+    * [Generate developer documentation](#generate-developer-documentation)
 
 ## How to use
 
@@ -122,6 +128,7 @@ message_template_ask_async => ask_async
 ```
 
 ## Development
+
 ### RSpec test
 
 ```linux
@@ -146,7 +153,17 @@ Use tags for rspec :
 |                 | log             |
 |                 | config          |
 
+## Upgrade
+
+For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
+
 ### Documentation
+
+#### Read documentation
+
+The documentation is accessible in [rubydoc](http://www.rubydoc.info/gems/ruby_rabbitmq_janus/)
+
+#### Generate developer documentation
 
 This doc is generated with yard.
 
@@ -157,4 +174,4 @@ yard
 yard server
 ```
 
-see [Yard Getting Started](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
+[See Yard Getting Started](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)

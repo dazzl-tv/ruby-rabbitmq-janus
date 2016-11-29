@@ -13,9 +13,12 @@ require 'colorize'
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-  # Initialize gem and create automatically an session with Janus
+  # Initialize RRJ gem and create automatically a session with janus and
+  # sending a keepalive message. The Time To Live is configured in yaml
+  # configuration file 'config/default.yml' or
+  # 'config/ruby-rabbitmq-janus.yml'.
   # @!attribute [r] session
-  #   @return [Fixnum] Renturn an session number created in instanciate gem
+  #   @return [Fixnum] Return an session number created in instantiate this gem.
   # :reek:BooleanParameter and :reek:ControlParameter and :reek:DataClump
   # :reek:LongParameterList and :reek:TooManyStatements
   class RRJ
@@ -81,7 +84,8 @@ module RubyRabbitmqJanus
     # Give an object response to janus server
     def message_admin(type, options = {})
       Janus::Transactions::Admin.new(@session).connect do
-        Janus::Messages::Admin.new(type, options.merge!('session_id' => @session))
+        Janus::Messages::Admin.new(type,
+                                   options.merge!('session_id' => @session))
       end
     end
 
@@ -122,8 +126,8 @@ module RubyRabbitmqJanus
     end
 
     # Start an short transaction. Create an handle and send a message to queue.
-    # This queue is not exclusive, so this message is sending in queue 'to-janus' and a
-    # response is return in queue 'from-janus'
+    # This queue is not exclusive, so this message is sending in queue
+    # 'to-janus' and a response is return in queue 'from-janus'
     # @example Send an request trickle
     #   candidate = {
     #     'candidate' => {
@@ -132,8 +136,12 @@ module RubyRabbitmqJanus
     #       'candidate' => '...'
     #     }
     #   }
-    #   RubyRabbitmqJanus::RRJ.new.handle_message_simple('peer::trickle', candidate)
-    #   #=> { 'janus' => 'trickle', ..., 'candidate' => { 'completed' : true } } }
+    #   RubyRabbitmqJanus::RRJ.new.handle_message_simple('peer::trickle',
+    #                                                    candidate)
+    #   #=> { 'janus' => 'trickle', ..., 'candidate' => {
+    #     'completed' : true
+    #     }
+    #   }
     def handle_message_simple(type, replace = {}, add = {}, exclusive = false)
       handle = replace.include?('handle_id') ? replace['handle_id'] : 0
       @transaction = Janus::Transactions::Handle.new(@session)

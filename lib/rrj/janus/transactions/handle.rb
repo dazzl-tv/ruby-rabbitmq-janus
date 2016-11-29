@@ -21,10 +21,11 @@ module RubyRabbitmqJanus
             create_handle
             yield
           end
+          handle
         end
 
-        # Initialize connection to Rabbit and Janus and close after sending an received
-        # a response
+        # Initialize connection to Rabbit and Janus and close after sending an
+        # received a response
         def handle_connect_and_stop(exclusive, sender)
           @exclusive = exclusive
           rabbit.transaction_short do
@@ -52,7 +53,8 @@ module RubyRabbitmqJanus
         # Create an handle for transaction
         def create_handle
           Tools::Log.instance.info 'Create an handle'
-          msg = Janus::Messages::Standard.new('base::attach', 'session_id' => session)
+          opt = { 'session_id' => session }
+          msg = Janus::Messages::Standard.new('base::attach', opt)
           @handle = send_a_message_exclusive { msg }
         end
 
@@ -64,7 +66,9 @@ module RubyRabbitmqJanus
 
         # Send a messaeg in exclusive queue
         def send_a_message_exclusive
-          Janus::Responses::Standard.new(read_response_exclusive { yield }).sender
+          Janus::Responses::Standard.new(read_response_exclusive do
+            yield
+          end).sender
         end
 
         # Read an response in queue exclusive

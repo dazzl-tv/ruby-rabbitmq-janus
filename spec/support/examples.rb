@@ -38,28 +38,24 @@ end
 shared_examples 'message_handle should match json schema' do
   let(:replace) { replace }
   let(:add) { add }
-  let(:message) do
-    @gateway.start_handle(true) do
-      @gateway.message_handle(@type, replace, add)
-    end
-  end
+  let(:message) { @gateway.message_handle(@type, replace, add) }
 
   it do
-    expect(message.to_json).to match_json_schema(@type)
+    @gateway.start_handle(true) do
+      expect(message.to_json).to match_json_schema(@type)
+    end
   end
 end
 
 shared_examples 'message_handle should match json empty' do
   let(:replace) { replace }
   let(:add) { add }
-  let(:message) do
-    @gateway.start_handle(false) do
-      @gateway.message_handle(@type, replace, add)
-    end
-  end
+  let(:message) { @gateway.message_handle(@type, replace, add) }
 
   it do
-    expect(message.to_json).to eq('{}')
+    @gateway.start_handle(false) do
+      expect(message.to_json).to eq('{}')
+    end
   end
 end
 

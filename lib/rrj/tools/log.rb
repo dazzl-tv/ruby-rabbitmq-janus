@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# :reek:Attribute and :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   module Tools
@@ -17,7 +18,6 @@ module RubyRabbitmqJanus
         UNKNOWN: Logger::UNKNOWN
       }.freeze
 
-      # This method smell :reek:Attribute
       attr_accessor :level, :progname
 
       # Returns a new instance to Log
@@ -34,7 +34,7 @@ module RubyRabbitmqJanus
       # Write a message in log with a UNKNOWN level
       # @param message [String] Message writing in warning level in log
       def unknown(message)
-        write_tag { @logs.unknown(message.brown) }
+        write_tag { @logs.unknown(message) }
       end
 
       # Write a message in log with a FATAL level
@@ -72,6 +72,11 @@ module RubyRabbitmqJanus
         @logs
       end
 
+      # Return device to log is writing
+      def logdev
+        @logs.instance_variable_get(:'@logdev').filename
+      end
+
       private
 
       # Define instance logger with rails
@@ -88,9 +93,8 @@ module RubyRabbitmqJanus
         log
       end
 
-      # This method smell :reek:UtilityFunction
       def test_level?(this_level)
-        this_level >= Tools::Log.instance.level ? true : false
+        this_level >= Log.instance.level ? true : false
       end
 
       # Write a log with an tag

@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an exception for running_handle
     class JanusTransactionHandle
-      def initalize(message)
+      def initialize(message)
         super "[Transaction] Error handle #{message}"
       end
     end

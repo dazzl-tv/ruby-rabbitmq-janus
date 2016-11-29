@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "janus": { "type": "string", "pattern": "ack" },
+    "session_id": { "type": "integer" },
+    "transaction": { "type":  "string" }
+  },
+  "required": [
+    "janus",
+    "session_id",
+    "transaction"
+  ]
+}

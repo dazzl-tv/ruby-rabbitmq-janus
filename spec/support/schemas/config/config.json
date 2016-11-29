@@ -8,25 +8,39 @@
         "port": { "type": "integer" },
         "vhost": { "type": "string" },
         "user": { "type": "string" },
-        "password": { "type": "string" }
+        "pass": { "type": "string" },
+        "admin_pass": { "type": "string" }
       },
       "required": [
         "host",
         "port",
         "vhost",
         "user",
-        "password"
+        "pass",
+        "admin_pass"
       ]
     },
     "queues": {
       "type": "hash",
       "properties": {
         "queue_from": { "type": "string" },
-        "queue_to": { "type": "string" }
+        "queue_to": { "type": "string" },
+        "admin": {
+          "type": "hash",
+          "properties": {
+            "queue_from": { "type": "string" },
+            "queue_to": { "type": "string" }
+          },
+          "required": [
+            "queue_from",
+            "queue_to"
+          ]
+        }
       },
       "required": [
         "queue_from",
-        "queue_to"
+        "queue_to",
+        "admin"
       ]
     },
     "janus": {
@@ -41,9 +55,35 @@
     "gem": {
       "type": "hash",
       "properties": {
-          "log": { "type": "hash" },
-          "session": { "type": "hash" },
-          "thread": { "type": "hash" }
+        "log": {
+          "type": "hash",
+          "properties": {
+            "level": { "type": "string" }
+          },
+          "required": [
+            "level"
+          ]
+        },
+        "session": {
+          "type": "hash",
+          "properties": {
+            "keepalive": { "type": "integer" }
+          },
+          "required": [
+            "keepalive"
+          ]
+        },
+        "thread": {
+          "type": "hash",
+          "properties": {
+            "enable": { "type" : "boolean" },
+            "number": { "type": "integer" }
+          },
+          "required": [
+            "enable",
+            "number"
+          ]
+        }
       },
       "required": [
         "log",

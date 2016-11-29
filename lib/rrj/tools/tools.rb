@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require 'rrj/tools/log'
+require 'rrj/tools/env'
 require 'rrj/tools/config'
 require 'rrj/tools/requests'
-require 'rrj/tools/replaces'
+require 'rrj/tools/replaces/replace'
 
 module RubyRabbitmqJanus
   # Contains all tools necessary in this gem

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'rrj/janus/keepalive'
-require 'rrj/janus/message'
-require 'rrj/janus/admin'
-require 'rrj/janus/response'
-require 'rrj/janus/transaction'
+require 'rrj/janus/processus/concurrency'
+require 'rrj/janus/messages/message'
+require 'rrj/janus/responses/response'
+require 'rrj/janus/transactions/transaction'
 
 module RubyRabbitmqJanus
   # Module interaction with Janus

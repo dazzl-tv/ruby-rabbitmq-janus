@@ -8,8 +8,6 @@
     "version_string": { "type":  "string" },
     "author": { "type":  "string" },
     "data_channel": { "type":  "boolean" },
-    "ipv6": { "type":  "string", "pattern": "^(?i)(true|false)$" },
-    "ice-tcp": { "type":  "string", "pattern": "^(?i)(true|false)$" },
     "transports": { "type": "hash" },
     "plugins": { "type": "hash" }
   },
@@ -21,8 +19,6 @@
     "version_string",
     "author",
     "data_channels",
-    "ipv6",
-    "ice-tcp",
     "transports",
     "plugins"
   ]

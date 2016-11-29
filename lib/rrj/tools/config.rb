@@ -31,7 +31,6 @@ module RubyRabbitmqJanus
       # Load configuration file yaml
       # @return [Yaml] Configuration file
       # @param file [String] Path to configuration file (with name)
-      # :reek:UtilityFunction { public_methods_only: true }
       def load_configuration(file)
         Tools::Log.instance.info("Loading configuration file : #{file}")
         YAML.load(File.read(file))
@@ -54,7 +53,7 @@ module RubyRabbitmqJanus
       # Define log lvel used in this gem
       def define_log_level_used
         Tools::Log.instance.level = \
-          Tools::Log::LEVELS[@options['gem']['log']['level'].to_sym]
+          Tools::Log::LEVELS[@options['gem']['log']['level'].upcase.to_sym]
       rescue
         raise Errors::LevelNotDefine
       end

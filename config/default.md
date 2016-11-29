@@ -10,7 +10,7 @@ rabbit:
     port: 5672
     vhost: '/'
     user: 'guest'
-    password: 'guest'
+    pass: 'guest'
     admin_pass: janusoverlord
 
 queues:

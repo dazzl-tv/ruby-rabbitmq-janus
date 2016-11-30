@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initialize RRJ variables all the time for used in rake actions
 ### Added
 - Add generetor install
+- Rakefile and configure Travis services
 
 ## [1.1.8] - 2016-11-29
 ### Changed

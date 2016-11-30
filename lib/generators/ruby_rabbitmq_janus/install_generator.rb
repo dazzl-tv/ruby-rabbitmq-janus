@@ -9,6 +9,7 @@ module RubyRabbitmqJanus
 module RubyRabbitmqJanus
   # Execute this code when janus return an events in standard queue
   class ActionsEvents
+    # Default method using for sending a block of code
     def actions
       lambda do |reason, data|
         Rails.logger.debug "Execute block code with reason : \#{reason}"

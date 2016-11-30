@@ -1,5 +1,7 @@
 sudo: required
+
 cache: bundler
+
 language: ruby
 
 rvm:
@@ -10,7 +12,7 @@ services:
 
 before_install:
   - gem install bundler -v 1.12.5
-  - docker run -p 4369:43:69 -p 5671:5671 -p 5672:5672 -p 25672:25672 -d rabbitmq:3
+  - docker run -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -d rabbitmq:3
   - docker run quay.io/dazzl/janus-gateway
 
 script: bundle exec rake

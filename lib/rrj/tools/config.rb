@@ -9,14 +9,18 @@ module RubyRabbitmqJanus
 
       attr_reader :options
 
-      # Define a default path to file configuration
-      DEFAULT_PATH = File.realpath(File.join(File.dirname(__FILE__), '..', '..'))
+      # Define HOME RRJ
+      RRJ_HOME = File.realpath(File.join(File.dirname(__FILE__),
+                                         '..', '..', '..'))
 
       # Define a default name to file configuration
-      DEFAULT_CONF = 'config/default.yml'
+      CONF_DEFAULT = 'config/default.yml'
 
       # Define a default override file configuration
-      CUSTOMIZE_CONF = 'config/ruby-rabbitmq-janus.yml'
+      CONF_CUSTOM = 'config/ruby-rabbitmq-janus.yml'
+
+      # Define a default path to file configuration
+      PATH_DEFAULT = File.join(RRJ_HOME, CONF_DEFAULT)
 
       # Initialize configuration file default or customize if exist
       def initialize
@@ -24,6 +28,8 @@ module RubyRabbitmqJanus
         conf_customize
         conf_default
         define_log_level_used
+
+        puts @options
       end
 
       private
@@ -40,13 +46,13 @@ module RubyRabbitmqJanus
 
       # Load customize configuration file if exist
       def conf_customize
-        file = File.join(Dir.pwd, CUSTOMIZE_CONF)
+        file = File.join(Dir.pwd, CONF_CUSTOM)
         @options = load_configuration(file) if File.exist?(file)
       end
 
       # Load default configuration if customize configuration doesn't exist
       def conf_default
-        file = File.join(DEFAULT_PATH, DEFAULT_CONF)
+        file = PATH_DEFAULT
         @options ||= load_configuration(file)
       end
 

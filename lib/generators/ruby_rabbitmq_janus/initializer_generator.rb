@@ -10,12 +10,12 @@ module RubyRabbitmqJanus
 
 require 'actions'
 
+# Initialize a gem and create an session with a keepalive
+::RRJ = RubyRabbitmqJanus::RRJ.new
+
 # This test disable this gems execution when you running an task with rake
 unless File.basename($PROGRAM_NAME) == 'rake'
   Rails.configuration.after_initialize do
-    # Initialize a gem and create an session with a keepalive
-    ::RRJ = RubyRabbitmqJanus::RRJ.new
-
     # If you don't want listen a standard queue, comment this lines and
     # "require 'actions'"
     actions = RubyRabbitmqJanus::ActionEvents.new.actions

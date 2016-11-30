@@ -12,7 +12,7 @@ services:
 
 before_install:
   - gem install bundler -v 1.12.5
-  - docker run --name rabbit -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -d rabbitmq:3
+  - docker run --name rabbit -p 127.0.0.1:5672:5672 -d rabbitmq:3
   - docker run --name janus --link rabbit -d quay.io/dazzl/janus-gateway
 
 script: bundle exec rake

@@ -28,8 +28,6 @@ module RubyRabbitmqJanus
         conf_customize
         conf_default
         define_log_level_used
-
-        puts @options
       end
 
       private

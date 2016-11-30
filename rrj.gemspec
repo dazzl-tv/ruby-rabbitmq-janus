@@ -32,10 +32,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'json-schema', '~> 2.6', '>= 2.6.2'
   spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'
   spec.add_development_dependency 'activesupport', '~> 4.2', '>= 4.2.7.1'
-  spec.add_development_dependency 'concurrent-ruby', '~> 1.0', '>= 1.0.2'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'thread', '~> 0.2.2'
-  spec.add_runtime_dependency 'colorize', '~> 0.8.1'
 end

@@ -1,7 +1,7 @@
 # Rabbit information connection
 rabbit:
   # Precise RabbitMQ host - Default 'localhost'
-  host: localhost
+  host: 127.0.0.1
   # Precise RabbitMQ port - Default '5672'
   port: 5672
   # Precise RabbitMQ vhost - Default '/'

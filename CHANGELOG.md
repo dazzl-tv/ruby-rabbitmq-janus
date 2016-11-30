@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.9] - 2016-11-30
+### Changed
+- Refractoring initializer with create class in 'app/ruby_rabbitmq_janus'
+- Initialize RRJ variables all the time for used in rake actions
+### Added
+- Add generetor install
 
 ## [1.1.8] - 2016-11-29
 ### Changed

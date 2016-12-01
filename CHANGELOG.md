@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add generetor install
 - Rakefile and configure Travis services
+- Deploy with travis-ci
+- Control travis.yml is correct
 
 ## [1.1.8] - 2016-11-29
 ### Changed

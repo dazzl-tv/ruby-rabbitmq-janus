@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'json-schema', '~> 2.6', '>= 2.6.2'
   spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'
   spec.add_development_dependency 'activesupport', '~> 4.2', '>= 4.2.7.1'
+  spec.add_development_dependency 'travis', '~> 1.8', '>= 1.8.4'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
   spec.add_runtime_dependency 'key_path', '~> 1.2'

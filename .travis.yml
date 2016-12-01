@@ -7,6 +7,11 @@ language: ruby
 rvm:
   - 2.3.1
 
+branches:
+  only:
+    - develop
+    - master
+
 env:
   DOCKER_COMPOSE_VERSION: 1.8.1
 
@@ -24,5 +29,6 @@ script:
 deploy:
   provider: rubygems
   api_key: 'a0f3881aca2f1b0862183688bfdec9a5'
+  gemspec: rrj.gemspec
   on:
     branch: master

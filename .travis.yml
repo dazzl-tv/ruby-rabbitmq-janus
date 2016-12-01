@@ -34,3 +34,9 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
+
+notifications:
+  slack:
+    on_success: always
+    rooms:
+      - dazzl:2QxrfFB5jYaRrWjt0xwTqUb2

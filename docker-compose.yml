@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  gem:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    links:
+      - rabbit
+
+  rabbit:
+    image: rabbitmq:3
+    ports:
+      - 5672:5672
+
+  janus:
+    build:
+      context: ./.travis
+      dockerfile: Dockerfile.janus
+    links:
+      - rabbit

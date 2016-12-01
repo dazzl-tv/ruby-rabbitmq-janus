@@ -4,20 +4,16 @@ module RubyRabbitmqJanus
   module Rabbit
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      # This publisher don't post message. Is listen just an standard queue to Janus.
-      # By default is "from-janus". It's a parameter in config to this gem.
+      # This publisher don't post message. Is listen just an standard queue to
+      # Janus. By default is "from-janus". It's a parameter in config to this
+      # gem.
       class Listener < BasePublisher
         # Define an publisher
         def initialize(rabbit)
           super()
-          @response = nil
-          @count = 1
           @rabbit = rabbit.channel
-          @reply = @rabbit.queue(Tools::Config.instance.options['queues']['queue_from'])
-          Tools::Log.instance.debug "Waiting message from queue : #{@reply.name}"
-          @reply.subscribe do |_info_delivery, _propertie, payload|
-            synchronize_response(payload)
-          end
+          @response = nil
+          subscribe_queue
         end
 
         # Listen a queue and return a body response
@@ -31,11 +27,41 @@ module RubyRabbitmqJanus
 
         private
 
+        def queue_name
+          Tools::Config.instance.options['queues']['queue_from']
+        end
+
+        # Subscribe queue
+        def subscribe_queue
+          reply = @rabbit.queue(queue_name)
+          @rabbit.prefetch(1)
+          reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
+            log_message_id(prop)
+            synchronize_response(info, payload)
+          end
+        end
+
+        # Define type binding used for subscriber
+        def binding
+          @rabbit.direct('amq.direct')
+        end
+
+        # Options subscribe
+        def opts_subs
+          { block: false, manual_ack: true, arguments: { 'x-priority': 2 } }
+        end
+
+        # Counts transmitted messages
+        def log_message_id(propertie)
+          message_id = propertie.message_id
+          Tools::Log.instance.info "[X] Message reading with ID ##{message_id}"
+        end
+
         # Sending an signal when an response is reading in queue
-        def synchronize_response(payload)
+        def synchronize_response(info, payload)
+          sleep 0.2
           @response = Janus::Responses::Event.new(JSON.parse(payload))
-          Tools::Log.instance.info "[X] Message number reading ##{@count}"
-          @count += 1
+          @rabbit.acknowledge(info.delivery_tag, false)
           lock.synchronize { condition.signal }
         end
       end

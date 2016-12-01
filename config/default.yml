@@ -1,7 +1,7 @@
 # Rabbit information connection
 rabbit:
   # Precise RabbitMQ host - Default 'localhost'
-  host: localhost
+  host: rabbit
   # Precise RabbitMQ port - Default '5672'
   port: 5672
   # Precise RabbitMQ vhost - Default '/'
@@ -19,9 +19,11 @@ queues:
   queue_from: from-janus
   # Queue sending a message for janus server
   queue_to: to-janus
-    # Queues for admin janus
+  # Queues for admin janus
   admin:
+    # Queue sending response to admin API janus
     queue_from: from-janus-admin
+    # Queue sending a message for admin API janus
     queue_to: to-janus-admin
 
 # Janus plugin used
@@ -36,7 +38,7 @@ gem:
   log:
     # Define level to log
     # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
-    level: INFO
+    level: info
   # Option for sessions
   session:
     # Define time to send a keepalive message in seconds

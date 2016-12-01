@@ -7,6 +7,3 @@ PreCommit:
     enabled: true
   JsonSyntax:
     enabled: true
-PrePush:
-  RSpec:
-    enabled: true

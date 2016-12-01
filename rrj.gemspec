@@ -14,7 +14,11 @@ Gem::Specification.new do |spec|
   spec.homepage      = RubyRabbitmqJanus::HOMEPAGE
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files         = ['Gemfile', 'Gemfile.lock', 'LICENSE', 'Rakefile']
+  spec.files         += Dir['config/**/*']
+  spec.files         += Dir['lib/**/*']
+  spec.files         += Dir['spec/**/*']
+  spec.files         += Dir['tmp/**/*']
   spec.require_paths = ['lib']
 
   spec.post_install_message = RubyRabbitmqJanus::POST_INSTALL

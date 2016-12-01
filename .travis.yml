@@ -34,6 +34,7 @@ deploy:
   skip_cleanup: true
   gem: ruby_rabbitmq_janus
   on:
+    tags: true
     branch: master
 
 notifications:

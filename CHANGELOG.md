@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Refractoring initializer with create class in 'app/ruby_rabbitmq_janus'
 - Initialize RRJ variables all the time for used in rake actions
+- Update listener for each message in standard queue is treatment
 ### Added
 - Add generetor install
+- Rakefile and configure Travis services
+- Deploy with travis-ci
+- Control travis.yml is correct
 
 ## [1.1.8] - 2016-11-29
 ### Changed

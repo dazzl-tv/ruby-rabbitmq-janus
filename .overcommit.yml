@@ -7,6 +7,5 @@ PreCommit:
     enabled: true
   JsonSyntax:
     enabled: true
-PrePush:
-  RSpec:
+  TravisLint:
     enabled: true

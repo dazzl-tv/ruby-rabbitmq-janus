@@ -20,3 +20,9 @@ before_install:
 script:
   - docker-compose up -d janus
   - docker-compose run gem bundle exec rake
+
+deploy:
+  provider: rubygems
+  api_key: 'a0f3881aca2f1b0862183688bfdec9a5'
+  on:
+    branch: master

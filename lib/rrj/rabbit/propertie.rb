@@ -27,10 +27,17 @@ module RubyRabbitmqJanus
       def options_admin
         Tools::Log.instance.debug 'Add options to propertie to message'
         {
-          routing_key: Tools::Config.instance.options['queues']['admin']['queue_to'],
+          routing_key: routing_key,
           correlation_id: @correlation,
           content_type: 'application/json'
         }
+      end
+
+      private
+
+      # Read configuration file to gem for reading a admin queue name
+      def routing_key
+        Tools::Config.instance.options['queues']['admin']['queue_to']
       end
     end
   end

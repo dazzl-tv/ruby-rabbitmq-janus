@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop:disable Metrics/LineLength
 
 module RubyRabbitmqJanus
   # Define all error in gem
@@ -45,6 +46,7 @@ module RubyRabbitmqJanus
     end
   end
 end
+# rubocop:enable Metrics/LineLength
 
 require 'rrj/errors/janus'
 require 'rrj/errors/janus_message'

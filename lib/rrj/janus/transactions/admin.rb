@@ -14,7 +14,8 @@ module RubyRabbitmqJanus
           end
         end
 
-        # Choose queue, create an handle, connect to rabbitmq server and send messages
+        # Choose queue, create an handle, connect to rabbitmq server and send
+        # messages
         def handle_connect
           rabbit.transaction_long do
             choose_queue
@@ -29,7 +30,7 @@ module RubyRabbitmqJanus
             'session_id' => session,
             'handle_id' => handle,
             'add' => {
-              'admin_secret' => Tools::Config.instance.options['rabbit']['admin_pass']
+              'admin_secret' => admin_secret
             }
           }
           msg = Janus::Messages::Admin.new(type, opts.merge!(options))
@@ -53,6 +54,11 @@ module RubyRabbitmqJanus
         def send_a_message
           Tools::Log.instance.info 'Publish a message ...'
           Janus::Responses::Standard.new(publish.send_a_message(yield))
+        end
+
+        # Read a admin pass in configuration file to this gem
+        def admin_secret
+          Tools::Config.instance.options['rabbit']['admin_pass']
         end
       end
     end

@@ -78,9 +78,14 @@ module RubyRabbitmqJanus
         def rewrite_key_to_string(node)
           Hash[
             node.map do |key, value|
-              [key.to_s, value.is_a?(Hash) ? rewrite_key_to_string(value) : value]
+              [key.to_s, value?(value)]
             end
           ]
+        end
+
+        # Test the value is an array
+        def value?(value)
+          value.is_a?(Hash) ? rewrite_key_to_string(value) : value
         end
 
         # Replace value in request Hash

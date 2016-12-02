@@ -3,15 +3,16 @@
 # Override String class
 class String
   # Character used for delimited an line
-  SEPARATOR_LINE = ','
+  SEP_LINE = ','
   # Character used for delimited an key and this value
-  SEPARATOR_KEY_VALUE = ':'
+  SEP_KEY = ':'
 
   # Converting a string with a format special to hash
   def converting_to_hash
     hash = {}
-    split(SEPARATOR_LINE).each do |couple_hash|
-      hash.merge! HashString.new(couple_hash.split(SEPARATOR_KEY_VALUE)).convert_in_hash
+    split(SEP_LINE).each do |couple_hash|
+      hash.merge! \
+        HashString.new(couple_hash.split(SEP_KEY)).convert_in_hash
     end
     hash
   end
@@ -35,12 +36,16 @@ class HashString
 
   # Test if string is hash
   def test_string_hash
-    value.include?('{') ? HashString.new(format_hash_string).convert_in_hash : value
+    if value.include?('{')
+      HashString.new(format_hash_string).convert_in_hash
+    else
+      value
+    end
   end
 
   # Transform string to hash
   def format_hash_string
-    @array.drop(1).join(':').sub('{', '').sub('}', '').split(String::SEPARATOR_KEY_VALUE)
+    @array.drop(1).join(':').sub('{', '').sub('}', '').split(String::SEP_KEY)
   end
 
   # Return the value for hash object
@@ -58,7 +63,8 @@ module RubyRabbitmqJanus
       argument :janus_type, type: :string, default: ''
       argument :content, type: :string, default: ''
 
-      # Create an file to json format in folder 'config/request/' to you Rails apps
+      # Create an file to json format in folder 'config/request/' to you
+      # Rails apps
       def create_request
         create_file file_json, write_json
       end
@@ -67,7 +73,11 @@ module RubyRabbitmqJanus
 
       # Create a path and name file
       def file_json
-        base_file = type_name.empty? ? 'config/requests' : create_folder?(type_name)
+        base_file = if type_name.empty?
+                      'config/requests'
+                    else
+                      create_folder?(type_name)
+                    end
         "#{base_file}/#{janus_type}.json"
       end
 

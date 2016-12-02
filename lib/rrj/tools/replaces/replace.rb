@@ -14,7 +14,8 @@ module RubyRabbitmqJanus
           Tools::Log.instance.debug "Element to replace : #{@opts}"
         end
 
-        # Replace element in hash request with information used for this transaction
+        # Replace element in hash request with information used for this
+        # transaction
         # @return HASH request with element replace
         def transform_request
           replace_classic
@@ -36,9 +37,11 @@ module RubyRabbitmqJanus
           replace_plugin if @request.key?('plugin')
         end
 
-        # Create an transaction string and replace in request field with an String format
+        # Create an transaction string and replace in request field with an
+        # String format
         def replace_transaction
-          @request['transaction'].replace [*('A'..'Z'), *('0'..'9')].sample(10).join
+          @request['transaction'].replace \
+            [*('A'..'Z'), *('0'..'9')].sample(10).join
         rescue => message
           Tools::Log.instance.warn "Error transaction replace : #{message}"
         end
@@ -52,9 +55,14 @@ module RubyRabbitmqJanus
 
         # Replace plugin string
         def replace_plugin
-          @request['plugin'] = Tools::Config.instance.options['janus']['plugins'][0]
+          @request['plugin'] = plugin
         rescue => message
           Tools::Log.instance.warn "Error plugin replace : #{message}"
+        end
+
+        # Return a first plugin to array in config gem
+        def plugin
+          Tools::Config.instance.options['janus']['plugins'][0]
         end
       end
     end

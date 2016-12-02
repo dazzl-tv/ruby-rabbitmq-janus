@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.10] - 2016-12-02
+### Changed
+- Update metrics
+
 ## [1.1.9] - 2016-11-30
 ### Changed
 - Refractoring initializer with create class in 'app/ruby_rabbitmq_janus'

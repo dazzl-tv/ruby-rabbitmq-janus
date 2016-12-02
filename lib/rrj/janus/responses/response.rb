@@ -62,7 +62,8 @@ module RubyRabbitmqJanus
 
         # Test if message response contains an error in plugin
         def error_plugin?
-          @request.key?('plugindata') && @request['plugindata']['data'].key?('error_code')
+          @request.key?('plugindata') && \
+            @request['plugindata']['data'].key?('error_code')
         end
       end
     end

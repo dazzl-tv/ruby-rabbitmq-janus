@@ -10,7 +10,8 @@ module RubyRabbitmqJanus
       class Event < Concurrency
         include Singleton
 
-        # Initialize Event object. Is used for listen an standard out queue to Janus
+        # Initialize Event object. Is used for listen an standard out queue to
+        # Janus
         def initialize
           super
           @publish = @response = nil
@@ -28,8 +29,8 @@ module RubyRabbitmqJanus
 
         # Initialize a thread
         def transaction_running
-          Thread.current.thread_variable_set(:publish,
-                                             Rabbit::Publisher::Listener.new(rabbit))
+          publisher = Rabbit::Publisher::Listener.new(rabbit)
+          Thread.current.thread_variable_set(:publish, publisher)
         end
       end
     end

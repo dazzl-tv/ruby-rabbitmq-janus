@@ -15,10 +15,12 @@ module RubyRabbitmqJanus
 
         private
 
-        # Transform raw request in request to janus, so replace element <string>, <number>
+        # Transform raw request in request to janus, so replace element
+        # <string>, <number>
         # and other with real value
         def prepare_request(options)
-          @request = Tools::Replaces::Standard.new(request, options).transform_request
+          @request = Tools::Replaces::Standard.new(request,
+                                                   options).transform_request
           super
         end
       end

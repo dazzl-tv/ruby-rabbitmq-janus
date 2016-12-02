@@ -31,9 +31,9 @@ deploy:
   api_key:
     secure: diLyaa7RlXWpoIwy25HuKZHJIhwWonzvpEkLVnx7Gj+mxelFvtC8kdhdHXsEIo0Z625OiNJYOoRZiHsxYrKEIUf66iKhJOegblyK06XbdUkpArx67GJVFVIbzB233L8b/l6DcpZT2GMtqqw0MFEZfmWOtCbp6nma2wzGd75C51ABE+oCnY2nxKHjdpynMgU++dRUWtvW7ObAbEtp3xGqfy7t+7eVFmZArlA2ulKyW385v0IHYs+hdVkb4IxgYyZ1jGe9CeP6UKl9SZeVounk8WmPRNyqEqh+OL+V8QYj4BYdZUrmw/DsvGa/JeAHDx0ArJ+H9Ro/LoqDU0E6g5CobQI/csUXp4zGhjXWjiSXCCAsQoTjZ0HK6igkyavIVF7zbzuuzvWz6NpLt1IqC+f//QOxjjtDEKjHUjornkNxHtqxAKFaJ9mvkS3Pzna5PJi4r+CPTSG15dZ6wq7daAKQvzyaLYJQf+r2MzjWSy+eFqkMYr0XmHo+Dg9a297M8xx6UCFu7UUSa4TTrgPY9tN8FtWOiySiHyzKig+TtjO3Q54sk+ZWoRpIpyiSJShMiluSl44CO7ntI/IzYJr4jC2sh2cJDWH6urIZKVRNdFo1R2nIL6qzmPNhpXXxdcPE/iUNrrLlpVlpyVjz3GpX9+dEG5CHjoIJlaW8T8K30KswlqU=
   gemspec: rrj.gemspec
-  skip_cleanup: true
   gem: ruby_rabbitmq_janus
   on:
+    repo: dazzl-tv/ruby-rabbitmq-janus
     tags: true
     branch: master
 

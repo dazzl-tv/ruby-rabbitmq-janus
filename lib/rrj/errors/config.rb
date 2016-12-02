@@ -6,7 +6,8 @@ module RubyRabbitmqJanus
     # Define an error if the configuration file is not here
     class ConfigFileNotFound < Errors::RRJError
       def initialize(file)
-        super "Error for configuration file (#{file}), does on exist.", :error
+        super \
+          "Error for configuration file (#{file}), does on exist.", :error
       end
     end
 
@@ -14,7 +15,8 @@ module RubyRabbitmqJanus
     # Define and error if rubrik level is not present
     class LevelNotDefine < Errors::RRJError
       def initialize
-        super 'Error in configuration file : option level is not present.', :warn
+        super \
+          'Error in configuration file : option level is not present.', :warn
       end
     end
   end

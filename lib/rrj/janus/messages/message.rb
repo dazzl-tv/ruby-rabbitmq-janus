@@ -11,10 +11,10 @@ module RubyRabbitmqJanus
 
         # Instanciate an message
         # @param template_request [String] Name of request prepare
-        # @param [Hash] options Options to request (replace element or add in body)
+        # @param [Hash] options Options to request
         # @option options [String] :session_id Identifier to session
         # @option options [String] :handle_id Identifier to session manipulate
-        # @option options [Hash] :other Element contains in request sending to janus
+        # @option options [Hash] :other Element contains in request sending
         # @example Initialize a message
         #   Message.new('test', {
         #     "session_id": 42,
@@ -68,13 +68,18 @@ module RubyRabbitmqJanus
 
         # Load raw request
         def load_request_file
-          @request = JSON.parse File.read Tools::Requests.instance.requests[@type]
+          @request = request_instance
           Tools::Log.instance.debug "Opening request : #{to_json}"
         end
 
         # Transform JSON request with elements necessary
         def prepare_request(_options)
           Tools::Log.instance.debug "Prepare request for janus : #{to_json}"
+        end
+
+        # Return request to json format
+        def request_instance
+          JSON.parse File.read Tools::Requests.instance.requests[@type]
         end
       end
     end

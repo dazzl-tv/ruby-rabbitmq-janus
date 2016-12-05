@@ -22,10 +22,12 @@ module RubyRabbitmqJanus
 
       private
 
+      # Convert a data to String type
       def convert_to_type_string
         @data.to_s
       end
 
+      # Convert a data to Integer type
       def convert_to_type_number
         @data.to_i
       end

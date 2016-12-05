@@ -81,9 +81,8 @@ module RubyRabbitmqJanus
     # @return [RubyRabbitmqJanus::Janus::Responses::Standard]
     # Give an object response to janus server
     def message_admin(type, options = {})
-      Janus::Transactions::Admin.new(@session).connect do
-        Janus::Messages::Admin.new(type,
-                                   options.merge!('session_id' => @session))
+      Janus::Transactions::Admin.new(use_current_session?(options)).connect do
+        Janus::Messages::Admin.new(type, options)
       end
     end
 

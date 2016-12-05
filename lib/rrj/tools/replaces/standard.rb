@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
 
         # Replace handle integer
         def replace_handle
-          request['handle_id'] = opts['handle_id']
+          request['handle_id'] = type.convert('handle_id', opts)
         rescue => message
           Tools::Log.instance.warn "Error handle replace : #{message}"
         end

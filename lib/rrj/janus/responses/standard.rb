@@ -6,17 +6,6 @@ module RubyRabbitmqJanus
     module Responses
       # Response for events message
       class Standard < Response
-        # Return a response simple for client
-        def for_plugin
-          case request['janus']
-          when 'success' then request['plugindata']['data']
-          when 'ack' then {}
-          end
-        rescue => error
-          Tools::Log.instance.debug "Request error : #{request}"
-          raise Errors::JanusResponsePluginData, error
-        end
-
         # Return a integer to session
         def session
           data_id

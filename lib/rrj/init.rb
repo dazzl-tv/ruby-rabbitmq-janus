@@ -143,7 +143,7 @@ module RubyRabbitmqJanus
       handle = replace.include?('handle_id') ? replace['handle_id'] : 0
       @transaction = Janus::Transactions::Handle.new(@session)
       @transaction.handle_connect_and_stop(exclusive, handle) do
-        message_handle(type, replace, add).for_plugin
+        message_handle(type, replace, add)
       end
     rescue => error
       raise Errors::RRJErrorHandle, error

@@ -11,6 +11,7 @@ module RubyRabbitmqJanus
         def initialize(request, options = {})
           @request = request
           @opts = options
+          @type = Tools::Type.new(@request)
           Tools::Log.instance.debug "Element to replace : #{@opts}"
         end
 
@@ -28,7 +29,7 @@ module RubyRabbitmqJanus
 
         private
 
-        attr_reader :request, :opts
+        attr_reader :request, :opts, :type
 
         # Replace basic elements
         def replace_classic
@@ -48,7 +49,7 @@ module RubyRabbitmqJanus
 
         # Read option session and replace in request
         def replace_session
-          @request['session_id'] = @opts['session_id']
+          @request['session_id'] = @type.convert('session_id', @opts)
         rescue => message
           Tools::Log.instance.warn "Error session replace : #{message}"
         end

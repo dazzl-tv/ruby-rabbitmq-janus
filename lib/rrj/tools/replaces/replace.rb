@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
 
         private
 
-        attr_reader :request, :opts
+        attr_reader :request, :opts, :type
 
         # Replace basic elements
         def replace_classic

@@ -29,6 +29,7 @@ module RubyRabbitmqJanus
 
       # Create an session while time opening
       @session = Janus::Concurrencies::Keepalive.instance.session
+      Tools::Log.instance.info "Create an session janus with id : #{@session}"
 
       @transaction = nil
     end

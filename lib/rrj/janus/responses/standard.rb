@@ -20,7 +20,6 @@ module RubyRabbitmqJanus
 
         # Read a hash and return an identifier
         def data_id
-          analysis
           request['data']['id'].to_i
         rescue => error
           raise Errors::JanusResponseDataId, error

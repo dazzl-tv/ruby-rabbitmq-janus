@@ -30,6 +30,26 @@ module RubyRabbitmqJanus
         define_log_level_used
       end
 
+      # Read configuration queue from
+      def queue_from
+        @options['queues']['standard']['from']
+      end
+
+      # Read configuration queue to
+      def queue_to
+        @options['queues']['standard']['to']
+      end
+
+      # Read configuration queue admin from
+      def queue_admin_from
+        @options['queues']['admin']['from']
+      end
+
+      # Read configuration queue admin to
+      def queue_admin_to
+        @options['queues']['admin']['to']
+      end
+
       private
 
       # Load configuration file yaml

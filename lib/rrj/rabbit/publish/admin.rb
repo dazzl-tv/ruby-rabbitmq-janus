@@ -25,7 +25,7 @@ module RubyRabbitmqJanus
 
         # Define queue used for posting a message to API admin
         def queue_from
-          Tools::Config.instance.options['queues']['admin']['queue_from']
+          Tools::Config.instance.queue_admin_from
         end
       end
     end

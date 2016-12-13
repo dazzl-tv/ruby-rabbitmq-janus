@@ -24,7 +24,7 @@ module RubyRabbitmqJanus
 
         # Define queue used for posting a message to API public
         def queue_from
-          Tools::Config.instance.options['queues']['queue_from']
+          Tools::Config.instance.queue_from
         end
       end
     end

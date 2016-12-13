@@ -28,7 +28,7 @@ module RubyRabbitmqJanus
         private
 
         def queue_name
-          Tools::Config.instance.options['queues']['queue_from']
+          Tools::Config.instance.queue_from
         end
 
         # Subscribe queue

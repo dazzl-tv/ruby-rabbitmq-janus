@@ -14,8 +14,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = RubyRabbitmqJanus::HOMEPAGE
   spec.license       = 'MIT'
 
-  spec.files         = ['Gemfile', 'LICENSE', 'Rakefile']
-  spec.files         += Dir['config/**/*']
+  spec.files         = ['Gemfile', 'LICENSE', 'Rakefile', 'config/default.yml']
+  spec.files         += Dir['config/requests/**/*']
   spec.files         += Dir['lib/**/*']
   spec.files         += Dir['spec/**/*']
   spec.files         += Dir['tmp/**/*']

@@ -57,7 +57,7 @@ module RubyRabbitmqJanus
       # @param file [String] Path to configuration file (with name)
       def load_configuration(file)
         Tools::Log.instance.info("Loading configuration file : #{file}")
-        YAML.load(File.read(file))
+        YAML.load(ERB.new(File.read(file)).result)
       rescue
         raise Errors::ConfigFileNotFound, file
       end

@@ -8,6 +8,7 @@ require 'bunny'
 require 'logger'
 require 'key_path'
 require 'active_support'
+require 'erb'
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -156,7 +157,6 @@ module RubyRabbitmqJanus
 
     # Start singleton instances
     def start_instances_tools
-      Tools::Env.instance
       Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance

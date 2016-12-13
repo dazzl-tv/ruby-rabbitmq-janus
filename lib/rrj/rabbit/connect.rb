@@ -54,7 +54,7 @@ module RubyRabbitmqJanus
         cfg = Tools::Config.instance.options['rabbit']
         opts = {}
         %w(host port pass user vhost).each do |val|
-          opts.merge!(val.to_sym => Tools::Env.instance.test_env_var(cfg, val))
+          opts.merge!(val.to_sym => cfg[val])
         end
         opts.merge!(option_log_rabbit)
       end

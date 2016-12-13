@@ -52,9 +52,7 @@ module RubyRabbitmqJanus
 
         # Given a admin pass for request
         def admin_pass
-          cfg = Tools::Config.instance.options['rabbit']
-          key = 'admin_pass'
-          Tools::Env.instance.test_env_var(cfg, key)
+          Tools::Config.instance.options['rabbit']['admin_pass']
         end
       end
     end

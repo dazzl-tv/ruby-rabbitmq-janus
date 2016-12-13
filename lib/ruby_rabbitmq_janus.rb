@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Load all tools necessary to good functionlaty to this gem
 require 'rrj/init'
 
 # Define tools for this gems

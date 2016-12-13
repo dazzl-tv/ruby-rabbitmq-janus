@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.0] - 2016-12-
 ### [Changed]
+- Update configuration yard doc
 - Interpret RRJ configuration file
 - Update configuration file. Move queue elements, delete thread options
 ### [Deleted]

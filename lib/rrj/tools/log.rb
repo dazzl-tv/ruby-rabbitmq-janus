@@ -91,8 +91,8 @@ module RubyRabbitmqJanus
       end
 
       # Save log level used in this gem
-      def save_level
-        @level = LEVELS[Tools::Config.instance.log_level]
+      def save_level(gem_level)
+        @level = LEVELS[gem_level]
       end
 
       private

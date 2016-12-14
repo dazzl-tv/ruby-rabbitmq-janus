@@ -32,7 +32,7 @@ module RubyRabbitmqJanus
         @options = nil
         conf_customize
         conf_default
-        Tools::Log.instance.save_level
+        Tools::Log.instance.save_level(log_level)
       end
 
       # @return [String] read configuration for queue `from`

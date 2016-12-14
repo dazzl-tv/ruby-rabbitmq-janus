@@ -36,9 +36,7 @@ end
 
 # Handle request
 shared_examples 'message_handle should match json schema' do
-  let(:replace) { replace }
-  let(:add) { add }
-  let(:message) { @gateway.message_handle(@type, replace, add) }
+  let(:message) { @gateway.message_handle(@type, @options) }
 
   it do
     @gateway.start_handle(true) do
@@ -48,9 +46,10 @@ shared_examples 'message_handle should match json schema' do
 end
 
 shared_examples 'message_handle should match json empty' do
-  let(:replace) { replace }
-  let(:add) { add }
-  let(:message) { @gateway.message_handle(@type, replace, add) }
+  let(:message) do
+    options = options.nil? ? { replace: {}, add: {} } : options
+    @gateway.message_handle(@type, options)
+  end
 
   it do
     @gateway.start_handle(false) do
@@ -62,9 +61,7 @@ end
 # Handle admin
 shared_examples 'message_handle_admin should match json schema' do
   let(:message) do
-    @gateway.start_handle_admin do
-      @gateway.message_handle(@type)
-    end
+    @gateway.message_admin(@type)
   end
 
   it do

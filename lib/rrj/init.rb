@@ -67,7 +67,7 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def message_simple(type = 'base::info', exclusive = false, options = {})
-      Janus::Transactions::Transaction.new(@session).connect(exclusive) do
+      Janus::Transactions::Session.new(@session).connect(exclusive) do
         Janus::Messages::Standard.new(type, options)
       end
     end
@@ -97,11 +97,16 @@ module RubyRabbitmqJanus
     end
 
     # Send a message simple for admin Janus.
-    # **Is used just for sending a message to Janus Monitor/Admin API**.
+    # **Is used just for sending a message to Janus Monitor/Admin API**. The
+    # queue is exclusive for not transmitting data to anyone.
     #
     # @param [String] type
     #   Given a type to request. JSON request writing in `config/requests/`
-    # @param [Hash] options Options update in request
+    # @param [Hash] options Fields updating in request sending to janus.
+    #   **This hash must imperatively contains the key `replace`**
+    # @option options [Hash] :replace Contains all fields who be replaced in
+    #   request sending to janus.
+    # @option options [Hash] :add Contains all fields adding to request.
     #
     # @example Sending an message create
     #   RubyRabbitmqJanus::RRJ.new.message_admin('admin::sessions')
@@ -111,18 +116,22 @@ module RubyRabbitmqJanus
     #   Give an object response to janus server
     #
     # @since 1.0.0
-    def message_admin(type, options = {})
-      Janus::Transactions::Admin.new(use_current_session?(options)).connect do
-        Janus::Messages::Admin.new(type, options)
-      end
+    def message_admin(type, options = { replace: {}, add: {} })
+      @transaction = Janus::Transactions::Admin.new(@session,
+                                                    true,
+                                                    handle?(options))
+      @transaction.connect { Janus::Messages::Admin.new(type, options) }
     end
 
     # Send an message in handle session in current session.
     #
     # @param [String] type
     #   Given a type to request. JSON request writing in 'config/requests/'
-    # @param [Hash] replace Options update in request
-    # @param [Hash] add Elements adding to request
+    # @param [Hash] options Fields updating in request sending to janus.
+    #   **This hash must imperatively contains the key `replace`**
+    # @option options [Hash] :replace Contains all fields who be replaced in
+    #   request sending to janus.
+    # @option options [Hash] :add Contains all fields adding to request.
     #
     # @example Sending an message create
     #   RubyRabbitmqJanus::RRJ.new.message_session('base::create')
@@ -132,8 +141,7 @@ module RubyRabbitmqJanus
     #   Give a object response to janus server
     #
     # @since 1.0.0
-    def message_handle(type, replace = {}, add = {})
-      options = { 'replace' => replace, 'add' => add }
+    def message_handle(type, options = { replace: {}, add: {} })
       @transaction.publish_message_handle(type, options)
     end
 
@@ -187,9 +195,7 @@ module RubyRabbitmqJanus
       @transaction = Janus::Transactions::Handle.new(@session,
                                                      false,
                                                      handle?(options))
-      @transaction.connect do
-        message_handle(type, options[:replace], options[:add])
-      end
+      @transaction.connect { message_handle(type, options) }
     rescue => error
       raise Errors::RRJErrorHandle, error
     end

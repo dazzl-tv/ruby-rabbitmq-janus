@@ -1,0 +1,14 @@
+{
+  "janus": "message",
+  "session_id": "<number>",
+  "handle_id": "<number>",
+  "transaction": "<string>",
+  "body": {
+    "audio": "true",
+    "video": "true"
+  },
+  "jsep": {
+    "type": "offer",
+    "sdp": "<string>"
+  }
+}

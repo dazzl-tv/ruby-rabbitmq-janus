@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "janus": { "type": "string", "pattern": "trickle" },
+    "transaction": { "type":  "string" },
+    "candidate": {
+      "type": "hash",
+      "properties": {
+        "completed": { "type": "boolean" }
+      },
+      "required": [
+        "completed"
+      ]
+    }
+  },
+  "required": [
+    "janus",
+    "transaction",
+    "candidate"
+  ]
+}

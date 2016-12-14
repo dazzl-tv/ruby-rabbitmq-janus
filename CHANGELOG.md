@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.0] - 2016-12-
+### [Added]
+- Add request/spec for peer (trickle, offer, answer)
 ### [Changed]
+- Update information for default configuration/requests
+- Update SPEC
+- Update configuration to reek
 - Update configuration yard doc
 - Interpret RRJ configuration file
 - Update configuration file. Move queue elements, delete thread options

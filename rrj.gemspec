@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.files        += ['config/default.md', 'config/requests.md']
   spec.files         += Dir['config/requests/admin/*']
   spec.files         += Dir['config/requests/base/*']
+  spec.files         += Dir['config/requests/peer/*']
   spec.files         += Dir['lib/**/*']
   spec.files         += Dir['spec/**/*']
   spec.files         += Dir['tmp/**/*']

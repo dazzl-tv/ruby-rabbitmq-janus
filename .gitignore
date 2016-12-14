@@ -61,17 +61,11 @@ config/ruby-rabbitmq-janus.yml
 ## Request customize
 config/requests/channel
 config/requests/videocast
-config/requests/peer
 
 ## Schema JSON response
 spec/support/schemas/request/channel
 spec/support/schemas/request/videocast
-spec/support/schemas/request/peer
-
-## Support RSpec
-spec/support/examples_peer.rb
 
 ## Unitaire test for request customize
 spec/request/channel
 spec/request/videocast
-spec/request/peer

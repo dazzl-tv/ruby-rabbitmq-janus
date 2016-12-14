@@ -1,0 +1,13 @@
+{
+  "janus": "message",
+  "session_id": "<number>",
+  "handle_id": "<number>",
+  "transaction": "<string>",
+  "body": {
+    "request": "configure"
+  },
+  "jsep": {
+    "type": "answer",
+    "sdp": "<string>"
+  }
+}

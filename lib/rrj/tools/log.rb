@@ -1,10 +1,15 @@
 # frozen_string_literal: true
-# :reek:Attribute and :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Class for wrtting logs.
+
+    # # Manage log in this gem
+    #
+    # Singleton object for manipulate logs in this gem
+    #
+    # @!attribute [r] level
+    #   @return [Fixnum] Return a number to log level.
     class Log
       include Singleton
 
@@ -18,9 +23,12 @@ module RubyRabbitmqJanus
         UNKNOWN: Logger::UNKNOWN
       }.freeze
 
-      attr_accessor :level, :progname
+      attr_reader :level
 
-      # Returns a new instance to Log
+      # Returns a new instance to Log and use `Tag` element for each line
+      # writing in log with name to gem.
+      #
+      # @see http://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html
       def initialize
         logs = defined?(Rails) ? logger_rails : logger_develop
         logs.progname = RubyRabbitmqJanus.name
@@ -31,60 +39,68 @@ module RubyRabbitmqJanus
         @logs = ActiveSupport::TaggedLogging.new(logs)
       end
 
-      # Write a message in log with a UNKNOWN level
+      # Write a message in log with a `UNKNOWN` level
+      #
       # @param message [String] Message writing in warning level in log
       def unknown(message)
         write_tag { @logs.unknown(message) }
       end
 
-      # Write a message in log with a FATAL level
+      # Write a message in log with a `FATAL` level
+      #
       # @param message [String] Message writing in warning level in log
       def fatal(message)
         write_tag { @logs.fatal(message) } if test_level?(Logger::FATAL)
       end
 
-      # Write a message in log with a ERROR level
+      # Write a message in log with a `ERROR` level
+      #
       # @param message [String] Message writing in warning level in log
       def error(message)
         write_tag { @logs.error(message) } if test_level?(Logger::ERROR)
       end
 
-      # Write a message in log with a warn level
+      # Write a message in log with a `WARN` level
       # @param message [String] Message writing in warning level in log
       def warn(message)
         write_tag { @logs.warn(message) } if test_level?(Logger::WARN)
       end
 
-      # Write a message in log with a info level
+      # Write a message in log with a `INFO` level
+      #
       # @param message [String] Message writing in info level in log
       def info(message)
         write_tag { @logs.info(message) } if test_level?(Logger::INFO)
       end
 
-      # Write a message in log with a debug level
+      # Write a message in log with a `DEBUG` level
+      #
       # @param message [String] Message writing in debug level in log
       def debug(message)
         write_tag { @logs.debug(message) } if test_level?(Logger::DEBUG)
       end
 
-      # Return instance logger
+      # @return [RubyRabbitmqJanus::Tools::Log] the instance to logger
       def logger
         @logs
       end
 
-      # Return device to log is writing
+      # @return [String] name of file to lgger used
       def logdev
         @logs.instance_variable_get(:'@logdev').filename
       end
 
+      # Save log level used in this gem
+      def save_level
+        @level = LEVELS[Tools::Config.instance.log_level]
+      end
+
       private
 
-      # Define instance logger with rails
       def logger_rails
         Rails.logger
       end
 
-      # Define instance logger wiptout rails
       def logger_develop
         log = Logger.new('log/rails-rabbit-janus.log')
         log.formatter = proc do |severity, _datetime, _progname, msg|
@@ -97,7 +113,6 @@ module RubyRabbitmqJanus
         this_level >= Log.instance.level ? true : false
       end
 
-      # Write a log with an tag
       def write_tag
         @logs.tagged(@logs.progname) { yield }
       end

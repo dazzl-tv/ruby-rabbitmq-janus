@@ -4,7 +4,8 @@ module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
-    # Singletong object for reading configuration file
+    # # Manage configuration file
+    # Singleton object for reading configuration file
     #
     # @!attribute [r] options
     #   @return [Hash] Return all options to configured in config file.

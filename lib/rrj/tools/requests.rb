@@ -3,9 +3,15 @@
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Load files json in config/request.
-    # This file is used for sending a request to RabbitMQ
+
+    # # Load files json in `config/request/**/*`.
+    #
+    # This file is used for sending a request to Janus
+    #
     # @!attribute [r] requests
+    #   @return [Hash] It's a hash with name and path to request.
+    #
+    # @see file:/config/requests.md For more information to type requests used.
     class Requests
       include Singleton
 
@@ -29,7 +35,6 @@ module RubyRabbitmqJanus
 
       private
 
-      # Run folder contains templates json
       def each_folder(subfolder)
         Dir[File.join(PATH_REQUEST + subfolder, '*')].count do |file|
           if File.file?(file)
@@ -40,15 +45,10 @@ module RubyRabbitmqJanus
         end
       end
 
-      # Add template json to requests array
-      # @param file [File]
       def read_file(file)
         @requests[File.basename(file, '.json').to_s] = File.path(file)
       end
 
-      # Add template json to requests array with a path
-      # @param folder [Dir]
-      # @param file [File]
       def read_folder(folder, file)
         @requests[folder + File.basename(file, '.json').to_s] = File.path(file)
       end

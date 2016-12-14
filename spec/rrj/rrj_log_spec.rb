@@ -7,7 +7,7 @@ describe 'RubyRabbitmqJanus::Log', type: :config, name: :log do
     expect(RubyRabbitmqJanus::Tools::Log.instance).not_to be nil
   end
 
-  it 'Default level log is DEBUG' do
+  it 'Default level log is INFO' do
     # 0 = debug
     # ...
     # 5 = unknown

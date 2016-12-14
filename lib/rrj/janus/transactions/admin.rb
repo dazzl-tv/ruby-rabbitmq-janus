@@ -4,6 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+
       # This class work with janus and send a series of message
       class Admin < Handle
         # Initialize conncetion to Rabbit and Janus

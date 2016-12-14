@@ -4,40 +4,34 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+
       # This class work with janus and send a series of message
-      # :reek:TooManyStatements
       class Handle < Session
-        # Inistialize transaction handle
-        def initialize(session)
+        # Initialize a transaction with handle
+        #
+        # @param [Fixnum] session
+        #   Use a session identifier for created message
+        def initialize(session, exclusive, handle = 0)
           super(session)
-          @exclusive = nil
+          @exclusive = exclusive
+          @handle = handle
         end
 
-        # Initialize connection to Rabbit and Janus
-        def handle_connect(exclusive)
-          @exclusive = exclusive
+        # Opening a long transaction with rabbitmq
+        #
+        # @param [Boolean] exclusive
+        #   Determine if the message is sending to a exclusive queue or not
+        #
+        # @yield Send a message to Janus
+        #
+        # @return [Fixnum] Sender using in current transaction
+        def connect
           rabbit.transaction_long do
-            choose_queue(exclusive)
-            create_handle
+            choose_queue
+            create_handle if @handle.eql?(0)
             yield
           end
           handle
-        end
-
-        # Initialize connection to Rabbit and Janus and close after sending an
-        # received a response
-        def handle_connect_and_stop(exclusive, sender)
-          @exclusive = exclusive
-          rabbit.transaction_short do
-            choose_queue(exclusive)
-            sender.eql?(0) ? create_handle : connect_handle(sender)
-            yield
-          end
-        end
-
-        # Stop an handle running
-        def handle_running_stop
-          publish_message_handle('base::detach')
         end
 
         # Publish an message in handle
@@ -45,7 +39,7 @@ module RubyRabbitmqJanus
           opts = { 'session_id' => session, 'handle_id' => handle }
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           publisher = publish.send_a_message(msg)
-          Janus::Responses::Standard.new(read_response(publisher, @exclusive))
+          Janus::Responses::Standard.new(read_response(publisher))
         end
 
         private
@@ -56,12 +50,6 @@ module RubyRabbitmqJanus
           opt = { 'session_id' => session }
           msg = Janus::Messages::Standard.new('base::attach', opt)
           @handle = send_a_message_exclusive { msg }
-        end
-
-        # Connect to handle
-        def connect_handle(sender)
-          Tools::Log.instance.info 'Connect an handle'
-          @handle = sender
         end
 
         # Send a messaeg in exclusive queue

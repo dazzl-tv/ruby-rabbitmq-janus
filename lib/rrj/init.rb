@@ -89,7 +89,7 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def message_session(type, options = {}, exclusive = true)
-      Janus::Transactions::Session.new(@session).session_connect(exclusive) do
+      Janus::Transactions::Session.new(@session).connect(exclusive) do
         Janus::Messages::Standard.new(type, use_current_session?(options))
       end
     rescue => error
@@ -153,8 +153,8 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def start_handle(exclusive = false)
-      @transaction = Janus::Transactions::Handle.new(@session)
-      @transaction.handle_connect(exclusive) { yield }
+      @transaction = Janus::Transactions::Handle.new(@session, exclusive)
+      @transaction.connect { yield }
     rescue => error
       raise Errors::RRJErrorHandle, error
     end
@@ -184,8 +184,10 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def handle_message_simple(type, options = { replace: {}, add: {} })
-      @transaction = Janus::Transactions::Handle.new(@session)
-      @transaction.handle_connect_and_stop(handle?(options)) do
+      @transaction = Janus::Transactions::Handle.new(@session,
+                                                     false,
+                                                     handle?(options))
+      @transaction.connect do
         message_handle(type, options[:replace], options[:add])
       end
     rescue => error

@@ -1,39 +1,33 @@
 # frozen_string_literal: true
-# :reek:TooManyInstanceVariables and :reek:ControlParameter
-# :reek:ControlParameter and :reek:BooleanParameter
 
 module RubyRabbitmqJanus
   module Janus
-    # Define an module for manipulate a message between apps and janus
+    # Define an module for manipulate messages between apps and Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      # This class work with janus and send a series of message
+
+      # # Manage a transactions
+      # This class work with Janus and send a series of message
       class Transaction
-        # Initialize an transaction
+        # Initialize a transaction
+        #
+        # @param [Fixnum] session
+        #   Use a session identifier for created message
         def initialize(session)
           @rabbit = Rabbit::Connect.new
           @session = session
-          @response = @handle = @publish = nil
+          @publish = @exclusive = nil
         rescue => error
           raise Errors::JanusTransaction, error
         end
 
-        # Opening a short transaction with rabbitmq and close when is ending
-        def connect(exclusive)
-          @rabbit.transaction_short do
-            choose_queue(exclusive)
-            send_a_message(exclusive) { yield }
-          end
-        end
-
         private
 
-        attr_reader :rabbit, :session, :response, :handle, :publish
+        attr_reader :rabbit, :session, :response, :handle, :publish, :exclusive
 
-        # determine queue used
-        def choose_queue(exclusive)
+        def choose_queue
           chan = @rabbit.channel
-          @publish = if exclusive
+          @publish = if @exclusive
                        Tools::Log.instance.debug \
                          'Choose an queue Exclusive : ampq.gen-xxx'
                        Rabbit::Publisher::PublishExclusive.new(chan, '')
@@ -44,16 +38,14 @@ module RubyRabbitmqJanus
                      end
         end
 
-        # Send a message to queue
-        def send_a_message(exclusive)
+        def send_a_message
           Tools::Log.instance.info 'Publish a message ...'
           publish = @publish.send_a_message(yield)
-          Janus::Responses::Standard.new(read_response(publish, exclusive))
+          Janus::Responses::Standard.new(read_response(publish))
         end
 
-        # Read a response if is a exclusive message
-        def read_response(publish, exclusive)
-          if exclusive
+        def read_response(publish)
+          if @exclusive
             Tools::Log.instance.info '... and read a janus response'
             publish
           else

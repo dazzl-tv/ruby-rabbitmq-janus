@@ -4,14 +4,21 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      # This class work with janus and send a series of message for session
-      # level
+
+      # # Manage a transaction
+      # Manage a transaction with message if contains a session identifier
       class Session < Transaction
-        # Connect to session and post an message
-        def session_connect(exclusive)
+        # Opening a short transaction with rabbitmq and close when is ending
+        #
+        # @param [Boolean] exclusive
+        #   Determine if the message is sending to a exclusive queue or not
+        #
+        # @yield Send a message to Janus
+        def connect(exclusive)
+          @exclusive = exclusive
           rabbit.transaction_short do
-            choose_queue(exclusive)
-            send_a_message(exclusive) { yield }
+            choose_queue
+            send_a_message { yield }
           end
         end
       end

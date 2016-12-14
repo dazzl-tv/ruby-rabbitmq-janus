@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 # describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
-describe 'RubyRabbitmqJanus::RRJ -- message type trickle', broken: true do
+describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
   before(:example) { @type = 'peer::trickle' }
 
   describe '#message_handle', type: :request, level: :peer, name: :trickle do

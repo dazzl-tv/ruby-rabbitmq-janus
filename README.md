@@ -17,6 +17,8 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
 * [How to use](#how-to-use)
  * [Installation](#installation)
  * [Configuration](#configuration)
+    * [Generators](#generators)
+    * [Requests](#requests)
  * [Usage](#usage)
     * [Usage Synchrounous](#usage-with-synchronous-request)
     * [Usage Asynchrounous](#usage-with-asynchronous-request)
@@ -41,7 +43,10 @@ gem 'ruby_rabbitmq_janus'
 
 If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.md)
 
+#### Generators
+
 Use generator for complete installation :
+
 ```ruby
 rails g -h
 RubyRabbitmqJanus:
@@ -58,11 +63,16 @@ RubyRabbitmqJanus:
   # Create an request to json format for RubyRabbitmqJanus transaction.
 ```
 
+#### Requests
+
 For create an new request is simple. Use a command generator :
+
 ```ruby
 rails g ruby_rabbitmq_janus:create_request test info 'transaction:<string>,body:{plugins:false}'
       create  config/requests/test/info.json
 ```
+
+For more explain in requests files see [default requests](config/requests.md).
 
 ### Usage
 

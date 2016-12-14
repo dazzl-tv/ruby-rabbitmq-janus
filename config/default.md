@@ -6,39 +6,39 @@ By default the configuration file look like this :
 
 ```yaml
 rabbit:
-    host: 'localhost'
+    host: localhost
     port: 5672
-    vhost: '/'
-    user: 'guest'
-    pass: 'guest'
+    vhost: /
+    user: guest
+    pass: guest
     admin_pass: janusoverlord
 
 queues:
-    queue_from: from-janus
-    queue_to: to-janus
+  standard:
+    from: from-janus
+    to: to-janus
     admin:
-      queue_from: from-janus
-      queue_to: to-janus
+      from: from-janus-admin
+      to: to-janus-admin
 
 janus:
+  session:
+    keepalive: 45
   plugins:
     - janus.plugin.echotest
 
 gem:
   log:
-    level: WARN
-  session:
-    keepalive: 45
-  thread:
-    enable: false
-    number: 1
+    level: info
 ```
 
 ## Customize
+
 For customizing a configuration add a yml file in your rails project in
 `config/ruby-rabbitmq-janus.yml`, or use rails generator with command `rails generate
 ruby_rabbitmq_janus:configuration`.
 
 ## Ressources
+
 * [Configuration of RabbitMQ](https://www.rabbitmq.com/configure.html#config-items)
 * [Configuration of Janus queue](https://janus.conf.meetecho.com/docs/rest.html#rabbit)

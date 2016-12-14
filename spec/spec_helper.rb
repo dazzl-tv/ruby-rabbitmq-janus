@@ -40,7 +40,6 @@ RSpec.configure do |config|
 
   # Configure requests test before sending request
   config.before(:example) do
-    Singleton.__init__(RubyRabbitmqJanus::Tools::Env)
     Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
     Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
     Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)

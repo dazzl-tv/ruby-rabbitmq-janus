@@ -23,32 +23,42 @@
     "queues": {
       "type": "hash",
       "properties": {
-        "queue_from": { "type": "string" },
-        "queue_to": { "type": "string" },
+        "standard": {
+          "type": "hash",
+          "properties": {
+            "from": { "type": "string" },
+            "to": { "type": "string" }
+          },
+          "required": [
+            "from",
+            "to"
+          ]
+        },
         "admin": {
           "type": "hash",
           "properties": {
-            "queue_from": { "type": "string" },
-            "queue_to": { "type": "string" }
+            "from": { "type": "string" },
+            "to": { "type": "string" }
           },
           "required": [
-            "queue_from",
-            "queue_to"
+            "from",
+            "to"
           ]
         }
       },
       "required": [
-        "queue_from",
-        "queue_to",
+        "standard",
         "admin"
       ]
     },
     "janus": {
       "type": "hash",
       "properties": {
-        "plugins": { "type": "hash" }
+        "plugins": { "type": "hash" },
+        "session": { "type": "hash" }
       },
       "required": [
+        "session",
         "plugins"
       ]
     },
@@ -63,32 +73,10 @@
           "required": [
             "level"
           ]
-        },
-        "session": {
-          "type": "hash",
-          "properties": {
-            "keepalive": { "type": "integer" }
-          },
-          "required": [
-            "keepalive"
-          ]
-        },
-        "thread": {
-          "type": "hash",
-          "properties": {
-            "enable": { "type" : "boolean" },
-            "number": { "type": "integer" }
-          },
-          "required": [
-            "enable",
-            "number"
-          ]
         }
       },
       "required": [
-        "log",
-        "session",
-        "thread"
+        "log"
       ]
     }
   },

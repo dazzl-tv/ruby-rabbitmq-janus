@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# :reek:TooManyMethods and :reek:DuplicateMethodCall
 
 module RubyRabbitmqJanus
   module Janus

@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# :reek:FeatureEnvy
 
 module RubyRabbitmqJanus
   module Rabbit
@@ -9,7 +8,7 @@ module RubyRabbitmqJanus
       # Initialize connection to server RabbitMQ
       def initialize
         Tools::Log.instance.debug 'Initialize connection with RabbitMQ'
-        @rabbit = Bunny.new(read_options_server)
+        @rabbit = Bunny.new(read_options_server.merge!(option_log_rabbit))
       end
 
       # Create an transaction with rabbitmq and close after response is received
@@ -56,7 +55,7 @@ module RubyRabbitmqJanus
         %w(host port pass user vhost).each do |val|
           opts.merge!(val.to_sym => cfg[val])
         end
-        opts.merge!(option_log_rabbit)
+        opts
       end
 
       # Define option logs for bunny

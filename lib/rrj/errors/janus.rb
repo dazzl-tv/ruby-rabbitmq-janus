@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# :reek:FeatureEnvy
 
 module RubyRabbitmqJanus
   module Errors

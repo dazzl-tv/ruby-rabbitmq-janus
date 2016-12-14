@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# :reek:TooManyInstanceVariables
 
 module RubyRabbitmqJanus
   module Janus
@@ -19,7 +18,6 @@ module RubyRabbitmqJanus
           @lock = Mutex.new
           @condition = ConditionVariable.new
           @thread = Thread.new { initialize_thread }
-          @publish = nil
         end
 
         private

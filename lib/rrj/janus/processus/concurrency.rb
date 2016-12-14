@@ -1,11 +1,16 @@
 # frozen_string_literal: true
+# :reek:TooManyInstanceVariables
 
 module RubyRabbitmqJanus
   module Janus
     # Modules for create autonomous processus
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      # Abstract class for janus Event and Keepalive
+
+      # # Class for manage threads
+      #
+      # @abstract Manage thread in this gem for keepalive message and listen
+      # standard queue.
       class Concurrency
         # Initialize class with elements for thread communication
         def initialize
@@ -14,37 +19,20 @@ module RubyRabbitmqJanus
           @lock = Mutex.new
           @condition = ConditionVariable.new
           @thread = Thread.new { initialize_thread }
-          @thread.abort_on_exception = true
+          @publish = nil
         end
 
         private
 
-        # Initialize a thread
         def initialize_thread
-          rabbit.transaction_long { transaction_running }
+          @rabbit.transaction_long { transaction_running }
         rescue Interrupt
           Tools::Log.instance.info "Stop transaction #{self.class.name}"
-          rabbit.close
-        end
-
-        # Wait an signal
-        def wait
-          @lock.synchronize do
-            @condition.wait(@lock)
-            Tools::Log.instance.info 'Waitting signal'
-            yield
-          end
-        end
-
-        # Send and signal
-        def signal
-          @lock.synchronize do
-            Tools::Log.instance.info 'Sending signal'
-            @condition.signal
-          end
+          @rabbit.close
         end
 
         attr_accessor :rabbit, :publish
+        attr_reader :thread, :lock, :condition
       end
     end
   end

@@ -1,33 +1,31 @@
 # frozen_string_literal: true
-# :reek:InstanceVariableAssumption and :reek:NilCheck
-# :reek:TooManyInstanceVariables and :reek:TooManyStatements
 
 module RubyRabbitmqJanus
-  # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
   module Janus
     module Concurrencies
-      # For listen standard queue ("from-janus" by default)
+      # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+
+      # # Listen standar queue
+      #
+      # Listen standard queue and sending a block code to thread listen.
+      # The default queue is configured in config file.
+      #
+      # @see file:/config/default.md For more information to config file used.
       class Event < Concurrency
         include Singleton
 
-        # Initialize Event object. Is used for listen an standard out queue to
-        # Janus
-        def initialize
-          super
-          @publish = @response = nil
-        end
-
-        # Execute an block code in a thread
+        # Create a thred for execute a block code in a thread
+        #
+        # @yield Send to publisher the actions when a Janus event is received
         def run(&block)
-          @thread.join
+          thread.join
           Thread.new do
-            loop { @thread.thread_variable_get(:publish).listen_events(&block) }
+            loop { thread.thread_variable_get(:publish).listen_events(&block) }
           end
         end
 
         private
 
-        # Initialize a thread
         def transaction_running
           publisher = Rabbit::Publisher::Listener.new(rabbit)
           Thread.current.thread_variable_set(:publish, publisher)

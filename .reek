@@ -5,3 +5,9 @@ UtilityFunction:
 DuplicateMethodCall:
   allow_calls:
     - 'Tools::Log.instance'
+
+DataClump:
+  max_copies: 4
+
+BooleanParameter:
+  enabled: false

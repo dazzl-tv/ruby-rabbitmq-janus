@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.0] - 2016-12-
 ### [Added]
+- Add badge docs
 - Add request/spec for peer (trickle, offer, answer)
 ### [Changed]
 - Update information for default configuration/requests

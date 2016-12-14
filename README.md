@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus)
 [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus)
+[![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus)
 
 # ruby-rabbitmq-janus -- RRJ
 

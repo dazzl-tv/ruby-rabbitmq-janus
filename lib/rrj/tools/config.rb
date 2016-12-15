@@ -55,11 +55,18 @@ module RubyRabbitmqJanus
         @options['queues']['admin']['to']
       end
 
-      # @return [Symbol] read configuration for log lvel used in this gem
+      # @return [Symbol] read configuration for log level used in this gem
       def log_level
         @options['gem']['log']['level'].upcase.to_sym
       rescue
         raise Errors::LevelNotDefine
+      end
+
+      # @param [Fixnum] index determine what field is readint in array plugins
+      #   in configuration file
+      # @return [String] read configuration for plugin with index
+      def plugin_at(index = 0)
+        @options['janus']['plugins'][index].to_s
       end
 
       private

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add badge docs
 - Add request/spec for peer (trickle, offer, answer)
 ### [Changed]
+- Update Config for reading plugin in config file
 - Refractoring transaction
 - Update information for default configuration/requests
 - Update SPEC

@@ -56,14 +56,9 @@ module RubyRabbitmqJanus
 
         # Replace plugin string
         def replace_plugin
-          @request['plugin'] = plugin
+          @request['plugin'] = Tools::Config.instance.plugin_at
         rescue => message
           Tools::Log.instance.warn "Error plugin replace : #{message}"
-        end
-
-        # Return a first plugin to array in config gem
-        def plugin
-          Tools::Config.instance.options['janus']['plugins'][0]
         end
       end
     end

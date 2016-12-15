@@ -7,5 +7,7 @@ WORKDIR /ruby_rabbitmq_janus
 
 ADD . /ruby_rabbitmq_janus
 
+COPY .travis/default.yml /ruby_rabbitmq_janus/config/default.yml
+
 RUN gem install bundler
 RUN bundle install

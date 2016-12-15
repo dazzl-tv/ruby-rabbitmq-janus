@@ -1,0 +1,3 @@
+config/ruby-rabbitmq-janus.yml
+log/*
+doc/*

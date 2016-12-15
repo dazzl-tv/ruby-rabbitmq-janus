@@ -13,8 +13,8 @@ services:
 before_install:
 - docker-compose build
 - docker-compose up -d rabbit
-script:
 - docker-compose up -d janus
+script:
 - docker-compose run gem bundle exec rake
 deploy:
   provider: rubygems

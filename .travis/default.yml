@@ -1,0 +1,25 @@
+rabbit:
+  host: rabbit
+  port: 5672
+  vhost: /
+  user: guest
+  pass: guest
+  admin_pass: janusoverlord
+
+queues:
+  standard:
+    from: from-janus
+    to: to-janus
+  admin:
+    from: from-janus-admin
+    to: to-janus-admin
+
+janus:
+  session:
+    keepalive: 55
+  plugins:
+    - janus.plugin.echotest
+
+gem:
+  log:
+    level: info

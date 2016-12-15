@@ -27,6 +27,8 @@ script:
   - docker-compose build
   - docker-compose up -d rabbit
   - docker-compose up -d janus
+  - docker-compose logs rabbit
+  - docker-compose logs janus
   - docker-compose run gem bundle exec rake
 
 deploy:

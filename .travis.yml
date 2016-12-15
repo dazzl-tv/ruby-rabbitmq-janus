@@ -23,12 +23,16 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-script:
+install:
   - docker-compose build
   - docker-compose up -d rabbit
-  - docker-compose up -d janus
+  - sleep 30
   - docker-compose logs rabbit
+  - docker-compose up -d janus
+  - sleep 30
   - docker-compose logs janus
+
+script:
   - docker-compose run gem bundle exec rake
 
 deploy:

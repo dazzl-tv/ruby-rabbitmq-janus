@@ -1,43 +1,33 @@
 sudo: required
-
 cache: bundler
-
 language: ruby
-
 rvm:
-  - 2.3.1
-
+- 2.3.1
 branches:
   only:
-    - master
-
+  - master
 env:
   DOCKER_COMPOSE_VERSION: 1.8.1
-
 services:
-  - docker
-
+- docker
 before_install:
-  - docker-compose build
-  - docker-compose up -d rabbit
-
+- docker-compose build
+- docker-compose up -d rabbit
 script:
-  - docker-compose up -d janus
-  - docker-compose run gem bundle exec rake
-
+- docker-compose up -d janus
+- docker-compose run gem bundle exec rake
 deploy:
   provider: rubygems
-  api_key:
-    secure: diLyaa7RlXWpoIwy25HuKZHJIhwWonzvpEkLVnx7Gj+mxelFvtC8kdhdHXsEIo0Z625OiNJYOoRZiHsxYrKEIUf66iKhJOegblyK06XbdUkpArx67GJVFVIbzB233L8b/l6DcpZT2GMtqqw0MFEZfmWOtCbp6nma2wzGd75C51ABE+oCnY2nxKHjdpynMgU++dRUWtvW7ObAbEtp3xGqfy7t+7eVFmZArlA2ulKyW385v0IHYs+hdVkb4IxgYyZ1jGe9CeP6UKl9SZeVounk8WmPRNyqEqh+OL+V8QYj4BYdZUrmw/DsvGa/JeAHDx0ArJ+H9Ro/LoqDU0E6g5CobQI/csUXp4zGhjXWjiSXCCAsQoTjZ0HK6igkyavIVF7zbzuuzvWz6NpLt1IqC+f//QOxjjtDEKjHUjornkNxHtqxAKFaJ9mvkS3Pzna5PJi4r+CPTSG15dZ6wq7daAKQvzyaLYJQf+r2MzjWSy+eFqkMYr0XmHo+Dg9a297M8xx6UCFu7UUSa4TTrgPY9tN8FtWOiySiHyzKig+TtjO3Q54sk+ZWoRpIpyiSJShMiluSl44CO7ntI/IzYJr4jC2sh2cJDWH6urIZKVRNdFo1R2nIL6qzmPNhpXXxdcPE/iUNrrLlpVlpyVjz3GpX9+dEG5CHjoIJlaW8T8K30KswlqU=
   gemspec: rrj.gemspec
   gem: ruby_rabbitmq_janus
   on:
     repo: dazzl-tv/ruby-rabbitmq-janus
     tags: true
     branch: master
-
+  api_key:
+    secure: gIQXc5+Pcnb3YCOiDScxnRgXRmYQ/nqjoApYLGlBV9US3IpiHO1wNP9y/6fvjwJuZ/+CfR5d1hdotBjHRfrQP4UHUYfFFb3Ut3L7YMPTCSofv868aVSInocuivCxpK2Hwa54udoqbjsDc7NpDLhTd8ztFVouMdbXoF1cOCMKr3pboPvlcouI52eOC5qK6XVGwzO1iGPaacvFdUbXDD/EeAWZru7wd1QYozfhATQu1UgDpbyUEeLQ8cXdnhPx/AsBG9qRSjaUdOsEmla21DaIGwFoqFkMctceZ0Rpo+GIGF0+ejiRn42+Rm/hA6uJnGqMxzwJmZo7XOayCTAGCnsLQ3SAKTb6c8+OX2waJmcLW2L14PQlElKFrUVBGZlZwz1AK3LN7M28rLAJlVO+KUhTn09msy8tr5U/v7pcHYQcfoO/eTj6n13UOKzRaqY8ST+d+rAunp/DXAprqv/IzJzZDISmsh00JtWJLQwWlYw51ej5wqB5MEQ0qD5uGbVFKsyW7g5zazVkrbQc4uRihyHY38Isrl1ylPcVqf5XDMvbdFwQ2nE/DirxsB57BkCx1mxuruu+Tdzw2koMa00AAMm5irXcOxUKQxdFKMLd2WwyzUZWl05iBb5vNICAqdqmtrprPhLhT8iiM/LxL20KkU6T+yJmqmbzP0Ykt3iF0n+RE8k=
 notifications:
   slack:
     on_success: always
     rooms:
-      - dazzl:2QxrfFB5jYaRrWjt0xwTqUb2
+    - dazzl:2QxrfFB5jYaRrWjt0xwTqUb2

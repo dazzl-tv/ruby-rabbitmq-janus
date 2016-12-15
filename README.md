@@ -21,9 +21,6 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
     * [Generators](#generators)
     * [Requests](#requests)
  * [Usage](#usage)
-    * [Usage Synchrounous](#usage-with-synchronous-request)
-    * [Usage Asynchrounous](#usage-with-asynchronous-request)
-    * [Aliases](#aliases)
 * [Upgrade](#upgrade)
 * [Development](#development)
  * [RSpec](#rspec-test)
@@ -77,70 +74,8 @@ For more explain in requests files see [default requests](config/requests.md).
 
 ### Usage
 
-#### Usage with synchronous request
 
-Exemple usage simple :
-```ruby
-# Initialize gem
-transaction = RubyRabbitmqJanus::RRJ.new
-
-# Send a message type 'create'
-create = transaction.message_template_ask_sync('create')
-=> {"janus"=>"create",
- "transaction"=>"U5MZ8IYNLF",
- "correlation"=>"6e77d355-6c3e-450c-89ad-a5daeb8e006a"}
-create_response = transaction.message_template_response(create)
-=> {"janus"=>"success", "transaction"=>"U5MZ8IYNLF", "data"=>{"id"=>7123088323743398}}
-
-# Destroy session created
-destroy = transaction.message_template_ask_sync('destroy')
-=> {"janus"=>"destroy",
- "session_id"=>7123088323743398,
- "transaction"=>"PKS63VJD8C",
- "correlation"=>"6e34d8d6-814a-4633-bcab-be3e24cc6260"}
-destroy_response = transaction_template_response(destroy)
-=> {"janus"=>"success", "session_id"=>7123088323743398, "transaction"=>"PKS63VJD8C"}
-```
-
-Example usage with a complex request :
-```ruby
-# Initialize gem
-transaction = RubyRabbitmqJanus::RRJ.new
-
-# Send a request type
-transaction.transaction_plugin do |session_running|
-  test = transaction.ask_sync('test', session_running)
-  session = transaction.response_sync(session_running)
-end
-```
-
-#### Usage with asynchronous request
-
-Exemple usage simple :
-
-```ruby
-# Initialize gem
-transaction = RubyRabbitmqJanus::RRJ.new
-
-# Send a message type create
-create = transaction.ask_async('create')
-=> {"janus"=>"success", "session_id"=>1144864650609378, "transaction"=>"0XGUTFDLBK"}
-
-# Send a message type destroy
-transaction.ask_async('destroy', create)
-=> {"janus"=>"success", "session_id"=>1144864650609378, "transaction"=>"UPODB8YEG1"}
-```
-
-#### Aliases
-
-```ruby
-# Aliases to methods synchronous
-message_template_ask_sync => ask_sync
-message_template_response => response_sync
-
-# Aliases to methods asynchronous
-message_template_ask_async => ask_async
-```
+TODO ...
 
 ## Development
 

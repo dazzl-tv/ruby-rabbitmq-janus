@@ -9,7 +9,6 @@ rvm:
 
 branches:
   only:
-    - develop
     - master
 
 env:

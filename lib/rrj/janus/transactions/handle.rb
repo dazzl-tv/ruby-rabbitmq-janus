@@ -17,7 +17,8 @@ module RubyRabbitmqJanus
           @handle = handle
         end
 
-        # Opening a long transaction with rabbitmq
+        # Opening a long transaction with rabbitmq and is ending closing
+        # transaction, so delete exclusive queue
         #
         # @param [Boolean] exclusive
         #   Determine if the message is sending to a exclusive queue or not
@@ -26,9 +27,9 @@ module RubyRabbitmqJanus
         #
         # @return [Fixnum] Sender using in current transaction
         def connect
-          rabbit.transaction_long do
+          rabbit.transaction_short do
             choose_queue
-            create_handle if @handle.eql?(0)
+            create_handle
             yield
           end
           handle

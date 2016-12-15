@@ -9,7 +9,7 @@ services:
       - rabbit
 
   rabbit:
-    image: rabbitmq:3
+    image: rabbitmq
     ports:
       - 5672:5672
 

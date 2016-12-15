@@ -5,7 +5,18 @@ module RubyRabbitmqJanus
     # Modules for create message for Janus
     module Messages
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      # Create an message for janus
+
+      # # Create a message for janus.
+      # Create a message, in hash format, and sending to json format.
+      # It's loading file base and change elements and configure message for
+      # used in rabbitmq.
+      #
+      # @!attribute [r] type
+      #   @return [String]
+      #     Type to request sending ('base::info', 'peer::trickle')
+      #
+      # @see file:/config/requests.md For more information to type requests
+      #   used.
       class Message
         attr_reader :type
 

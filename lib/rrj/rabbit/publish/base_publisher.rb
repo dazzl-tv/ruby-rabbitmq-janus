@@ -6,6 +6,9 @@ module RubyRabbitmqJanus
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
+      # # Parent class for all publisher
+      # This element send and read a message in rabbitmq Queue
+      #
       # @!attribute [r] response
       #   @return [RubyRabbitmqJanus::Janus::Responses::Response]
       #     Given a Janus response

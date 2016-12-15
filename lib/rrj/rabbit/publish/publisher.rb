@@ -4,9 +4,12 @@ module RubyRabbitmqJanus
   module Rabbit
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+
       # This publisher send and read an message in queues
       class Publisher < BasePublisher
         # Intialize a publisher for sending and reading a message
+        # @param [String] rabbit object
+        #
         def initialize(exchange)
           super()
           @exchange = exchange.default_exchange

@@ -7,6 +7,24 @@ module RubyRabbitmqJanus
 
       # This class work with janus and send a series of message
       class Admin < Handle
+        # Opening a long transaction with rabbitmq. If handle is equal to 0
+        # create an handle, send request 'type::atach' before message.
+        #
+        # @param [Boolean] exclusive
+        #   Determine if the message is sending to a exclusive queue or not
+        #
+        # @yield Send a message to Janus
+        #
+        # @return [Fixnum] Sender using in current transaction
+        def connect
+          rabbit.transaction_short do
+            choose_queue
+            create_handle if handle.eql?(0)
+            yield
+          end
+          handle
+        end
+
         # Publish an message in handle
         def publish_message_handle(type, options)
           opts = {

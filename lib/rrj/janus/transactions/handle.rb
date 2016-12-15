@@ -20,9 +20,6 @@ module RubyRabbitmqJanus
         # Opening a long transaction with rabbitmq and is ending closing
         # transaction, so delete exclusive queue
         #
-        # @param [Boolean] exclusive
-        #   Determine if the message is sending to a exclusive queue or not
-        #
         # @yield Send a message to Janus
         #
         # @return [Fixnum] Sender using in current transaction

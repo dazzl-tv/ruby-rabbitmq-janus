@@ -10,9 +10,6 @@ module RubyRabbitmqJanus
         # Opening a long transaction with rabbitmq. If handle is equal to 0
         # create an handle, send request 'type::atach' before message.
         #
-        # @param [Boolean] exclusive
-        #   Determine if the message is sending to a exclusive queue or not
-        #
         # @yield Send a message to Janus
         #
         # @return [Fixnum] Sender using in current transaction

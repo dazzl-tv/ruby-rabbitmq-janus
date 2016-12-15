@@ -3,10 +3,10 @@
 module RubyRabbitmqJanus
   module Errors
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Define errors to message sending and response to janus
-    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Define an exception for initaliser transaction
+    # Define an exception for initalizer transaction
     class JanusTransaction < JanusError
+      # Initialize a error for janus transaction class
+      # @param [String] message Text returning in raise
       def initialize(message)
         super "[Transaction] Error initialize : #{message}"
       end
@@ -14,17 +14,11 @@ module RubyRabbitmqJanus
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     # Define an exception for running_handle
-    class JanusTransactionHandle
+    class JanusTransactionHandle < JanusTransaction
+      # Initialize a error for janus transaction handle class
+      # @param [String] message Text returning in raise
       def initialize(message)
-        super "[Transaction] Error handle #{message}"
-      end
-    end
-
-    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Define an exception for sending_message
-    class JanusTransactionPost < JanusError
-      def initialize(message)
-        super "[Transaction] Error sending message : #{message}"
+        super "[Handle] #{message}"
       end
     end
   end

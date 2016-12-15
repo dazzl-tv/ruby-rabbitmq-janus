@@ -32,6 +32,7 @@ end
 config.autoload_paths += Dir[Rails.root.join('app', 'ruby_rabbitmq_janus')]
       AUTOLOAD
 
+      # Generate initializer with default code
       def add_actions
         # Create an class
         create_file 'app/ruby_rabbitmq_janus/actions.rb', ACTION_CLASS

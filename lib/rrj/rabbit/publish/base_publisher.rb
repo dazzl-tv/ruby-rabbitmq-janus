@@ -5,6 +5,11 @@ module RubyRabbitmqJanus
     # Define an module for create an publisher
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+
+      # @!attribute [r] response
+      #   @return [RubyRabbitmqJanus::Janus::Responses::Response]
+      #     Given a Janus response
+      #
       # @abstract Publish message in RabbitMQ
       class BasePublisher
         attr_reader :response

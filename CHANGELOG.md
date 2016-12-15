@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add request/spec for peer (trickle, offer, answer)
 
 ### [Changed]
+- Complete docs
 - Fix building for travis and add test for admin request
 - Build with travis just for master branche
 - Update Config for reading plugin in config file

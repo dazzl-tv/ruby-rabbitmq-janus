@@ -66,7 +66,8 @@ module RubyRabbitmqJanus
     #   Give an object response to janus server
     #
     # @since 1.0.0
-    def message_simple(type = 'base::info', exclusive = false, options = {})
+    def message_simple(type = 'base::info', exclusive = false,
+                       options = { 'replace' => {}, 'add' => {} })
       Janus::Transactions::Session.new(@session).connect(exclusive) do
         Janus::Messages::Standard.new(type, options)
       end
@@ -88,7 +89,8 @@ module RubyRabbitmqJanus
     #   Give an object response to janus server
     #
     # @since 1.0.0
-    def message_session(type, options = {}, exclusive = true)
+    def message_session(type, options = { 'replace' => {}, 'add' => {} },
+                        exclusive = true)
       Janus::Transactions::Session.new(@session).connect(exclusive) do
         Janus::Messages::Standard.new(type, use_current_session?(options))
       end
@@ -116,7 +118,7 @@ module RubyRabbitmqJanus
     #   Give an object response to janus server
     #
     # @since 1.0.0
-    def message_admin(type, options = { replace: {}, add: {} })
+    def message_admin(type, options = { 'replace' => {}, 'add' => {} })
       @transaction = Janus::Transactions::Admin.new(@session,
                                                     true,
                                                     handle?(options))
@@ -141,7 +143,7 @@ module RubyRabbitmqJanus
     #   Give a object response to janus server
     #
     # @since 1.0.0
-    def message_handle(type, options = { replace: {}, add: {} })
+    def message_handle(type, options = { 'replace' => {}, 'add' => {} })
       @transaction.publish_message_handle(type, options)
     end
 
@@ -191,7 +193,7 @@ module RubyRabbitmqJanus
     #   #=> { 'janus' => 'trickle', ..., 'candidate' => { ... } }
     #
     # @since 1.0.0
-    def handle_message_simple(type, options = { replace: {}, add: {} })
+    def handle_message_simple(type, options = { 'replace' => {}, 'add' => {} })
       @transaction = Janus::Transactions::Handle.new(@session,
                                                      false,
                                                      handle?(options))
@@ -208,8 +210,11 @@ module RubyRabbitmqJanus
       { 'session_id' => @session } unless option.key?('session_id')
     end
 
-    def handle?(option)
-      option[:replace].include?('handle_id') ? replace['handle_id'] : 0
+    def handle?(options)
+      # if options.key?('replace') && options['replace'].key?('handle_id')
+      #   options['replace'].key?('handle_id') ? replace['handle_id'] : 0
+      # end
+      options['replace'].key?('handle_id') ? replace['handle_id'] : 0
     end
   end
 end

@@ -1,21 +1,36 @@
 sudo: required
+
 cache: bundler
+
 language: ruby
+
 rvm:
-- 2.3.1
+  - 2.3.1
+
 branches:
   only:
   - master
+
 env:
   DOCKER_COMPOSE_VERSION: 1.8.1
+
 services:
-- docker
+  - docker
+
 before_install:
-- docker-compose build
-- docker-compose up -d rabbit
-- docker-compose up -d janus
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+install:
+  - docker-compose build
+  - docker-compose up -d rabbit
+  - docker-compose up -d janus
+
 script:
-- docker-compose run gem bundle exec rake
+  - docker-compose run gem bundle exec rake
+
 deploy:
   provider: rubygems
   gemspec: rrj.gemspec
@@ -26,6 +41,7 @@ deploy:
     branch: master
   api_key:
     secure: gIQXc5+Pcnb3YCOiDScxnRgXRmYQ/nqjoApYLGlBV9US3IpiHO1wNP9y/6fvjwJuZ/+CfR5d1hdotBjHRfrQP4UHUYfFFb3Ut3L7YMPTCSofv868aVSInocuivCxpK2Hwa54udoqbjsDc7NpDLhTd8ztFVouMdbXoF1cOCMKr3pboPvlcouI52eOC5qK6XVGwzO1iGPaacvFdUbXDD/EeAWZru7wd1QYozfhATQu1UgDpbyUEeLQ8cXdnhPx/AsBG9qRSjaUdOsEmla21DaIGwFoqFkMctceZ0Rpo+GIGF0+ejiRn42+Rm/hA6uJnGqMxzwJmZo7XOayCTAGCnsLQ3SAKTb6c8+OX2waJmcLW2L14PQlElKFrUVBGZlZwz1AK3LN7M28rLAJlVO+KUhTn09msy8tr5U/v7pcHYQcfoO/eTj6n13UOKzRaqY8ST+d+rAunp/DXAprqv/IzJzZDISmsh00JtWJLQwWlYw51ej5wqB5MEQ0qD5uGbVFKsyW7g5zazVkrbQc4uRihyHY38Isrl1ylPcVqf5XDMvbdFwQ2nE/DirxsB57BkCx1mxuruu+Tdzw2koMa00AAMm5irXcOxUKQxdFKMLd2WwyzUZWl05iBb5vNICAqdqmtrprPhLhT8iiM/LxL20KkU6T+yJmqmbzP0Ykt3iF0n+RE8k=
+
 notifications:
   slack:
     on_success: always

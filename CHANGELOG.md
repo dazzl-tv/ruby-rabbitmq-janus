@@ -6,8 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.2] - 2016-12-16
+### [Added]
+- Errors messages
+
 ### [Changed]
 - Fix handle manipulation in transaction
+- Fix session keepalive thread
 
 ### [Deleted]
 - Remove file in documentations

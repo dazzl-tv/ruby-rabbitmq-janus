@@ -12,7 +12,7 @@ module RubyRabbitmqJanus
     class Config
       include Singleton
 
-      attr_reader :options
+      attr_reader :options, :configuration
 
       # Define HOME RRJ gem
       RRJ_HOME = File.realpath(File.join(File.dirname(__FILE__),
@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
 
       # Initialize configuration file default or customize if exist
       def initialize
-        @options = nil
+        @options = @configuration = nil
         conf_customize
         conf_default
         Tools::Log.instance.save_level(log_level)
@@ -37,29 +37,37 @@ module RubyRabbitmqJanus
 
       # @return [String] read configuration for queue `from`
       def queue_from
-        @options['queues']['standard']['from']
+        @options['queues']['standard']['from'].to_s
       end
 
       # @return [String] read configuration for queue `to`
       def queue_to
-        @options['queues']['standard']['to']
+        @options['queues']['standard']['to'].to_s
       end
 
       # @return [String] read configuration for queue admin `from`
       def queue_admin_from
-        @options['queues']['admin']['from']
+        @options['queues']['admin']['from'].to_s
       end
 
       # @return [String] read configuration for queue admin `to`
       def queue_admin_to
-        @options['queues']['admin']['to']
+        @options['queues']['admin']['to'].to_s
       end
 
       # @return [Symbol] read configuration for log level used in this gem
       def log_level
         @options['gem']['log']['level'].upcase.to_sym
       rescue
-        raise Errors::LevelNotDefine
+        raise Errors::LevelNotDefine, @configuration
+      end
+
+      # @return [Integer]
+      #   read configuration for janus time to live for keepalive messages
+      def time_to_live
+        @options['janus']['session']['keepalive'].to_i
+      rescue
+        raise Errors::TTLNotFound, @configuration
       end
 
       # @param [Fixnum] index determine what field is readint in array plugins
@@ -69,23 +77,26 @@ module RubyRabbitmqJanus
         @options['janus']['plugins'][index].to_s
       end
 
+      alias ttl time_to_live
+
       private
 
-      def load_configuration(file)
-        Tools::Log.instance.info("Loading configuration file : #{file}")
-        YAML.load(ERB.new(File.read(file)).result)
+      def load_configuration
+        log_message = "Loading configuration file : #{@configuration}"
+        Tools::Log.instance.info(log_message)
+        YAML.load(ERB.new(File.read(@configuration)).result)
       rescue
-        raise Errors::ConfigFileNotFound, file
+        raise Errors::FileNotFound, @configuration
       end
 
       def conf_customize
-        file = File.join(Dir.pwd, CONF_CUSTOM)
-        @options = load_configuration(file) if File.exist?(file)
+        @configuration = File.join(Dir.pwd, CONF_CUSTOM)
+        @options = load_configuration if File.exist?(@configuration)
       end
 
       def conf_default
-        file = PATH_DEFAULT
-        @options ||= load_configuration(file)
+        @configuration = PATH_DEFAULT
+        @options ||= load_configuration
       end
     end
   end

@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
 
         # Create a thread
         def initialize
-          @response = nil
+          @response = @publish = nil
           super
         end
 
@@ -22,7 +22,6 @@ module RubyRabbitmqJanus
         def session
           lock.synchronize do
             condition.wait(lock)
-            Tools::Log.instance.info 'Waitting signal'
             running_session
           end
         end
@@ -32,33 +31,38 @@ module RubyRabbitmqJanus
         def transaction_running
           @response = Janus::Responses::Standard.new(create_session)
           lock.synchronize do
-            Tools::Log.instance.info 'Sending signal'
             condition.signal
           end
-          session_keepalive(Tools::Config.instance.ttl)
+          loop_session(Tools::Config.instance.ttl)
         end
 
-        def session_keepalive(time_to_live)
+        def loop_session(time_to_live)
           loop do
             sleep time_to_live
-            publish.send_a_message(message_keepalive)
+            @publish.send_a_message(message_keepalive)
           end
-        rescue => message
-          Tools::Log.instance.debug "Error keepalive : #{message}"
+        rescue => error
+          raise Errors::KeepaliveLoopSession, error
         end
 
         def create_session
-          publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-          publish.send_a_message(Janus::Messages::Standard.new('base::create'))
+          @publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
+          @publish.send_a_message(Janus::Messages::Standard.new('base::create'))
+        rescue => error
+          raise Errors::KeepaliveCreateSession, error
         end
 
         def running_session
           @response.session
+        rescue => error
+          raise Errors::KeepaliveSessionReturn, error
         end
 
         def message_keepalive
-          Janus::Messages::Standard.new('base::keepalive',
-                                        'session_id' => running_session)
+          opt = { 'session_id' => running_session }
+          Janus::Messages::Standard.new('base::keepalive', opt)
+        rescue => error
+          raise Errors::KeepaliveMessage, error
         end
       end
     end

@@ -121,7 +121,7 @@ module RubyRabbitmqJanus
     def message_admin(type, options = { 'replace' => {}, 'add' => {} })
       @transaction = Janus::Transactions::Admin.new(@session,
                                                     true,
-                                                    handle?(options['replace']))
+                                                    handle?(options))
       @transaction.connect { Janus::Messages::Admin.new(type, options) }
     end
 

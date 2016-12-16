@@ -26,7 +26,7 @@ module RubyRabbitmqJanus
         def connect
           rabbit.transaction_short do
             choose_queue
-            create_handle
+            create_handle if @handle.eql?(0)
             yield
           end
           handle

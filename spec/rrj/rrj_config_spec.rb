@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
   end
 
   it 'When janus/session/keepalive default value is loading' do
-    expect(@cfg.ttl).to eq 59
+    expect(@cfg.ttl).to eq 55
   end
 
   it 'When janus/plugins/0 is correct type' do

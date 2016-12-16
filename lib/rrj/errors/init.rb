@@ -60,11 +60,3 @@ module RubyRabbitmqJanus
     end
   end
 end
-
-require 'rrj/errors/janus'
-require 'rrj/errors/janus_message'
-require 'rrj/errors/janus_response'
-require 'rrj/errors/janus_transaction'
-
-require 'rrj/errors/config'
-require 'rrj/errors/rabbit'

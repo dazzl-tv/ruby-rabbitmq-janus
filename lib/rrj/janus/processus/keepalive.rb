@@ -35,7 +35,7 @@ module RubyRabbitmqJanus
             Tools::Log.instance.info 'Sending signal'
             condition.signal
           end
-          session_keepalive(ttl)
+          session_keepalive(Tools::Config.instance.ttl)
         end
 
         def session_keepalive(time_to_live)
@@ -45,12 +45,6 @@ module RubyRabbitmqJanus
           end
         rescue => message
           Tools::Log.instance.debug "Error keepalive : #{message}"
-        end
-
-        def ttl
-          Tools::Config.instance.options['gem']['session']['keepalive'].to_i
-        rescue => error
-          Tools::Log.instance.debug "TTL Not loading - #{error}"
         end
 
         def create_session

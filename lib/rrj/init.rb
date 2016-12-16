@@ -45,6 +45,8 @@ module RubyRabbitmqJanus
       Tools::Log.instance.info "Create an session janus with id : #{@session}"
 
       @transaction = nil
+    rescue => error
+      raise Errors::InstanciateGemFailed, error
     end
 
     # Send an simple message to janus.
@@ -71,6 +73,8 @@ module RubyRabbitmqJanus
       Janus::Transactions::Session.new(@session).connect(exclusive) do
         Janus::Messages::Standard.new(type, options)
       end
+    rescue => error
+      raise Errors::TransactionSessionFailed, error
     end
 
     # Send an message simple in current session.
@@ -95,7 +99,7 @@ module RubyRabbitmqJanus
         Janus::Messages::Standard.new(type, use_current_session?(options))
       end
     rescue => error
-      raise Errors::RRJErrorPost, error
+      raise Errors::TransactionSessionFailed, error
     end
 
     # Send a message simple for admin Janus.
@@ -123,6 +127,8 @@ module RubyRabbitmqJanus
                                                     true,
                                                     handle?(options))
       @transaction.connect { Janus::Messages::Admin.new(type, options) }
+    rescue => error
+      raise Errors::TransactionAdminFailed, error
     end
 
     # Send an message in handle session in current session.
@@ -145,6 +151,8 @@ module RubyRabbitmqJanus
     # @since 1.0.0
     def message_handle(type, options = { 'replace' => {}, 'add' => {} })
       @transaction.publish_message_handle(type, options)
+    rescue => error
+      raise Errors::TransactionMessageFailed, error
     end
 
     # Define an handle transaction and establish connection with janus
@@ -166,7 +174,7 @@ module RubyRabbitmqJanus
       @transaction = Janus::Transactions::Handle.new(@session, exclusive)
       @transaction.connect { yield }
     rescue => error
-      raise Errors::RRJErrorHandle, error
+      raise Errors::TransactionHandleFailed, error
     end
 
     # Start an short transaction. Create an handle and send one message to
@@ -199,7 +207,7 @@ module RubyRabbitmqJanus
                                                      handle?(options))
       @transaction.connect { message_handle(type, options) }
     rescue => error
-      raise Errors::RRJErrorHandle, error
+      raise Errors::TransactionHandleFailed, error
     end
 
     private

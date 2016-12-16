@@ -1,9 +1,8 @@
 # frozen_string_literal: true
+# @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
 module RubyRabbitmqJanus
   module Errors
-    # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
     # Define errors to message sending and response to janus
     class JanusError < RRJError
       # Initialize a error standard for janus module
@@ -14,3 +13,7 @@ module RubyRabbitmqJanus
     end
   end
 end
+
+require 'rrj/errors/janus/janus_message'
+require 'rrj/errors/janus/janus_response'
+require 'rrj/errors/janus/janus_transaction'

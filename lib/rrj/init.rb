@@ -121,7 +121,7 @@ module RubyRabbitmqJanus
     def message_admin(type, options = { 'replace' => {}, 'add' => {} })
       @transaction = Janus::Transactions::Admin.new(@session,
                                                     true,
-                                                    handle?(options))
+                                                    handle?(options['replace']))
       @transaction.connect { Janus::Messages::Admin.new(type, options) }
     end
 
@@ -211,10 +211,8 @@ module RubyRabbitmqJanus
     end
 
     def handle?(options)
-      # if options.key?('replace') && options['replace'].key?('handle_id')
-      #   options['replace'].key?('handle_id') ? replace['handle_id'] : 0
-      # end
-      options['replace'].key?('handle_id') ? replace['handle_id'] : 0
+      replace = options['replace']
+      replace.key?('handle_id') ? replace['handle_id'] : 0
     end
   end
 end

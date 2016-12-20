@@ -87,7 +87,7 @@ module RubyRabbitmqJanus
     #
     # @example Sending an message create
     #   RubyRabbitmqJanus::RRJ.new.message_session('base::create')
-    #   n#=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
+    #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
     #
     # @return [RubyRabbitmqJanus::Janus::Responses::Standard]
     #   Give an object response to janus server
@@ -202,7 +202,7 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def handle_message_simple(type, options = { 'replace' => {}, 'add' => {} })
-      @transaction = Janus::Transactions::Handle.new(@session,
+      @transaction = Janus::Transactions::Handle.new(session?(options),
                                                      false,
                                                      handle?(options))
       @transaction.connect { message_handle(type, options) }
@@ -218,9 +218,17 @@ module RubyRabbitmqJanus
       { 'session_id' => @session } unless option.key?('session_id')
     end
 
+    def session?(options)
+      return_value(options, 'session_id', @session)
+    end
+
     def handle?(options)
-      replace = options['replace']
-      replace.key?('handle_id') ? replace['handle_id'] : 0
+      return_value(options, 'handle_id', 0)
+    end
+
+    def return_value(opt, key, value)
+      replace = opt['replace']
+      replace.key?(key) ? replace[key] : value
     end
   end
 end

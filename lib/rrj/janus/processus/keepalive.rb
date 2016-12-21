@@ -30,19 +30,24 @@ module RubyRabbitmqJanus
 
         def transaction_running
           @response = Janus::Responses::Standard.new(create_session)
-          lock.synchronize do
-            condition.signal
-          end
-          loop_session(Tools::Config.instance.ttl)
+          synchronize
+          create_loop_session
+        rescue => error
+          raise Errors::KeepaliveLoopSession, error
+        end
+
+        def synchronize
+          lock.synchronize { condition.signal }
+        end
+
+        def create_loop_session
+          loop { loop_session(Tools::Config.instance.ttl) }
         end
 
         def loop_session(time_to_live)
-          loop do
-            sleep time_to_live
-            @publish.send_a_message(message_keepalive)
-          end
-        rescue => error
-          raise Errors::KeepaliveLoopSession, error
+          sleep time_to_live
+          @publish.send_a_message(message_keepalive)
+          Tools::Log.instance.info "Keepalive for #{running_session}"
         end
 
         def create_session

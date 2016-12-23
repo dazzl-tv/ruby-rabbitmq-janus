@@ -1,9 +1,23 @@
 # frozen_string_literal: true
+# :reek:TooManyConstants
+
 # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 # Define constant to gem.
 module RubyRabbitmqJanus
   # Define version to gem
   VERSION = '1.2.3'
+
+  # Name to gem
+  GEM_NAME = 'ruby_rabbitmq_janus'
+
+  # Authors
+  AUTHORS = ['VAILLANT Jeremy'].freeze
+
+  # Emails
+  EMAILS = ['jeremy@dazzl.tv'].freeze
+
+  # Licence
+  LICENSE = 'MIT'
 
   # Define a summary description to gem
   SUMMARY = 'Ruby RabbitMQ Janus'

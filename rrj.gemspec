@@ -3,16 +3,16 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rrj/info'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'ruby_rabbitmq_janus'
+  spec.name          = RubyRabbitmqJanus::GEM_NAME
   spec.version       = RubyRabbitmqJanus::VERSION
-  spec.authors       = ['VAILLANT Jeremy']
-  spec.email         = ['jeremy.vaillant@dazzl.tv']
+  spec.authors       = RubyRabbitmqJanus::AUTHORS
+  spec.email         = RubyRabbitmqJanus::EMAILS
 
   spec.summary       = RubyRabbitmqJanus::SUMMARY
   spec.description   = RubyRabbitmqJanus::DESCRIPTION
 
   spec.homepage      = RubyRabbitmqJanus::HOMEPAGE
-  spec.license       = 'MIT'
+  spec.license       = RubyRabbitmqJanus::LICENSE
 
   spec.files         = ['Gemfile', 'LICENSE', 'Rakefile', 'config/default.yml']
   spec.files         += ['README.md']

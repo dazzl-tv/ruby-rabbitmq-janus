@@ -21,7 +21,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.plugin_at).to be_a(String)
   end
 
-  it 'When janus/plugins/0 defualt value is lading' do
+  it 'When janus/plugins/0 default value is loading' do
     expect(@cfg.plugin_at).to eq 'janus.plugin.echotest'
   end
 

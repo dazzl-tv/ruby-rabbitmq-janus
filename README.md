@@ -48,17 +48,11 @@ Use generator for complete installation :
 ```ruby
 rails g -h
 RubyRabbitmqJanus:
-  ruby_rabbitmq_janus:configuration
-  # Generate a custom configuration file.
-
-  ruby_rabbitmq_janus:default_request
-  # Copy base request file sending to janus in application. It's necessary if you want add your request.
-
-  ruby_rabbitmq_janus:initializer
-  # Generate a initializer to this gem for rails application.
-
-  ruby_rabbitmq_janus:create_request
-  # Create an request to json format for RubyRabbitmqJanus transaction.
+  ruby_rabbitmq_janus:configuration     # Generate a custom configuration file.
+  ruby_rabbitmq_janus:create_request    # Create an request to json format for RubyRabbitmqJanus transaction.
+  ruby_rabbitmq_janus:default_request   # Copy base request file sending to janus in application.
+  ruby_rabbitmq_janus:initializer       # Generate a initializer to this gem for rails application.
+  ruby_rabbitmq_janus:install           # Install RubyRabbitmqJanus in your Rails application
 ```
 
 #### Requests
@@ -90,18 +84,26 @@ rabbitmq and use plugin echotest for janus server.
 
 Use tags for rspec :
 
-| Describe                                                      | Type            | Name            |
-| ------------------------------------------------------------- | --------------- | --------------- |
-| Request JSON sending to Rabbitmq -> Janus                     | request         | attach          |
-|                                                               |                 | create          |
-|                                                               |                 | detach          |
-|                                                               |                 | info            |
-|                                                               |                 | test            |
-| Level request sending to janus (admin monitor API or classic) | level           | base            |
-|                                                               |                 | admin           |
-| Internaly function                                            | config          | rabbit          |
-|                                                               |                 | log             |
-|                                                               |                 | config          |
+| Describe                                                          | Type            | Name            |
+| -------------------------------------------------------------     | --------------- | --------------- |
+| **Internaly function**                                            | config          |                 |
+| Use bunny gem                                                     |                 | rabbit          |
+| Test log functions                                                |                 | log             |
+| Test configuration function                                       |                 | config          |
+| **Level request sending to janus (admin monitor API or classic)** | level           |                 |
+| Request with no admin right.                                      |                 | base            |
+| Request with admin right in Janus application.                    |                 | admin           |
+| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                 |
+| Test request attach type                                          |                 | attach          |
+| Test request type create                                          |                 | create          |
+| Test request type detach                                          |                 | detach          |
+| Test request type info                                            |                 | info            |
+| Test request type test                                            |                 | test            |
+
+Example usage rspec with tags :
+```ruby
+rspec --tag --name:config --tag level:base
+```
 
 ## Upgrade
 

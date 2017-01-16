@@ -23,7 +23,8 @@ module RubyRabbitmqJanus
 
         private
 
-        attr_reader :rabbit, :session, :response, :handle, :publish, :exclusive
+        attr_reader :rabbit, :session, :response, :handle, :publisher,
+                    :exclusive
 
         def choose_queue
           chan = @rabbit.channel

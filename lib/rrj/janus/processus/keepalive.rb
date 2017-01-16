@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
 
         # Create a thread
         def initialize
-          @response = @publish = nil
+          @response = @publisher = nil
           super
         end
 
@@ -46,13 +46,14 @@ module RubyRabbitmqJanus
 
         def loop_session(time_to_live)
           sleep time_to_live
-          @publish.send_a_message(message_keepalive)
+          @publisher.publish(message_keepalive)
           Tools::Log.instance.info "Keepalive for #{running_session}"
         end
 
         def create_session
-          @publish = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-          @publish.send_a_message(Janus::Messages::Standard.new('base::create'))
+          @publisher = Rabbit::Publisher::PublishExclusive.new(rabbit.channel,
+                                                               '')
+          @publisher.publish(Janus::Messages::Standard.new('base::create'))
         rescue => error
           raise Errors::KeepaliveCreateSession, error
         end

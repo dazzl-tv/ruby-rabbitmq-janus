@@ -15,8 +15,7 @@ module RubyRabbitmqJanus
             'admin_secret' => admin_secret
           }
           msg = Janus::Messages::Admin.new(type, opts.merge!(options))
-          publisher = publish.send_a_message(msg)
-          Janus::Responses::Standard.new(read_response(publisher))
+          Janus::Responses::Standard.new(read_response(publisher.publish(msg)))
         end
 
         private
@@ -24,13 +23,13 @@ module RubyRabbitmqJanus
         # Define queue used for admin message
         def choose_queue
           chan = rabbit.channel
-          @publish = Rabbit::Publisher::PublisherAdmin.new(chan)
+          @publisher = Rabbit::Publisher::PublisherAdmin.new(chan)
         end
 
         # Override method for publishing an message and reading a response
         def send_a_message
           Tools::Log.instance.info 'Publish a message ...'
-          Janus::Responses::Standard.new(publish.send_a_message(yield))
+          Janus::Responses::Standard.new(publisher.publish(yield))
         end
 
         # Read a admin pass in configuration file to this gem

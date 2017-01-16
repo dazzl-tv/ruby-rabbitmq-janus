@@ -16,7 +16,7 @@ module RubyRabbitmqJanus
         def initialize(session)
           @rabbit = Rabbit::Connect.new
           @session = session
-          @publish = @exclusive = nil
+          @publisher = @exclusive = nil
         rescue => error
           raise Errors::JanusTransaction, error
         end
@@ -27,21 +27,21 @@ module RubyRabbitmqJanus
 
         def choose_queue
           chan = @rabbit.channel
-          @publish = if @exclusive
-                       Tools::Log.instance.debug \
-                         'Choose an queue Exclusive : ampq.gen-xxx'
-                       Rabbit::Publisher::PublishExclusive.new(chan, '')
-                     else
-                       Tools::Log.instance.debug \
-                         'Choose an queue non Exclusive : to-janus'
-                       Rabbit::Publisher::PublishNonExclusive.new(chan)
-                     end
+          @publisher = if @exclusive
+                         Tools::Log.instance.debug \
+                           'Choose an queue Exclusive : ampq.gen-xxx'
+                         Rabbit::Publisher::PublishExclusive.new(chan, '')
+                       else
+                         Tools::Log.instance.debug \
+                           'Choose an queue non Exclusive : to-janus'
+                         Rabbit::Publisher::PublishNonExclusive.new(chan)
+                       end
         end
 
         def send_a_message
           Tools::Log.instance.info 'Publish a message ...'
-          publish = @publish.send_a_message(yield)
-          Janus::Responses::Standard.new(read_response(publish))
+          response = read_response(@publisher.publish(yield))
+          Janus::Responses::Standard.new(response)
         end
 
         def read_response(publish)

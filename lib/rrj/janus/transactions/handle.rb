@@ -36,8 +36,8 @@ module RubyRabbitmqJanus
         def publish_message_handle(type, options)
           opts = { 'session_id' => session, 'handle_id' => handle }
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
-          publisher = publish.send_a_message(msg)
-          Janus::Responses::Standard.new(read_response(publisher))
+          response = read_response(publisher.publish(msg))
+          Janus::Responses::Standard.new(response)
         end
 
         private
@@ -61,7 +61,7 @@ module RubyRabbitmqJanus
         def read_response_exclusive
           chan = rabbit.channel
           tmp_publish = Rabbit::Publisher::PublishExclusive.new(chan, '')
-          tmp_publish.send_a_message(yield)
+          tmp_publish.publish(yield)
         end
       end
     end

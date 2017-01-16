@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
         end
 
         # Send an message to queue and waiting a response
-        def send_a_message(request)
+        def publish(request)
           super(request)
           return_response
         end

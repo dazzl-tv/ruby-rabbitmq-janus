@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
         end
 
         # Publish an message in queue
-        def send_a_message(request)
+        def publish(request)
           Tools::Log.instance.info "Send request type : #{request.type}"
           @message = request
           @exchange.publish(@message.to_json,

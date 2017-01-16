@@ -90,18 +90,18 @@ rabbitmq and use plugin echotest for janus server.
 
 Use tags for rspec :
 
-| type            | name            |
-| --------------- | --------------- |
-| request         | attach          |
-|                 | create          |
-|                 | detach          |
-|                 | info            |
-|                 | test            |
-| level           | base            |
-|                 | admin           |
-| config          | rabbit          |
-|                 | log             |
-|                 | config          |
+| Describe                                                      | Type            | Name            |
+| ------------------------------------------------------------- | --------------- | --------------- |
+| Request JSON sending to Rabbitmq -> Janus                     | request         | attach          |
+|                                                               |                 | create          |
+|                                                               |                 | detach          |
+|                                                               |                 | info            |
+|                                                               |                 | test            |
+| Level request sending to janus (admin monitor API or classic) | level           | base            |
+|                                                               |                 | admin           |
+| Internaly function                                            | config          | rabbit          |
+|                                                               |                 | log             |
+|                                                               |                 | config          |
 
 ## Upgrade
 

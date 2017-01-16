@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.4] - 2016-12-21
 ### [Changed]
+- Change name method send/publish messages
 - Deploy just for master branch pushing
 
 ### [Added]
+- Complete info in README
 - Add number session to log when sending a request keepalive
 
 ## [1.2.3] - 2016-12-20

@@ -7,10 +7,6 @@ language: ruby
 rvm:
   - 2.3.1
 
-branches:
-  only:
-  - master
-
 env:
   DOCKER_COMPOSE_VERSION: 1.8.1
 

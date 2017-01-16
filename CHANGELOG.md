@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.4] - 2016-12-21
+### [Changed]
+- Deploy just for master branch pushing
+
 ### [Added]
 - Add number session to log when sending a request keepalive
 

@@ -1,7 +1,5 @@
 sudo: required
 
-cache: bundler
-
 language: ruby
 
 rvm:

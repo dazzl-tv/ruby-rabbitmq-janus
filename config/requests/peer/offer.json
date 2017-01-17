@@ -4,8 +4,8 @@
   "handle_id": "<number>",
   "transaction": "<string>",
   "body": {
-    "audio": "true",
-    "video": "true"
+    "audio": true,
+    "video": true
   },
   "jsep": {
     "type": "offer",

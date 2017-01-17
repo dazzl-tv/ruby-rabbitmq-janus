@@ -22,7 +22,7 @@ end
 class HashString
   # Initialize an array
   #
-  # @param [Array] It's a string who converted to array
+  # @param [Array] string_array It's a string who converted to array
   def initialize(string_array)
     @array = string_array
     @hash = {}

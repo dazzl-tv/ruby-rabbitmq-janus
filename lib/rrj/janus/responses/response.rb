@@ -8,6 +8,10 @@ module RubyRabbitmqJanus
       # Read and decryt a response to janus
       class Response
         # Instanciate a response
+        #
+        # @param [Hash] response_janus
+        #   Request parsing after Janus/RabbitMQ receive a response to request
+        #   sending by user
         def initialize(response_janus)
           @request = response_janus
         rescue => error

@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
+describe 'RubyRabbitmqJanus::RRJ -- message type offer' do
   before(:example) do
     sdp = <<END
 v=0
 o=- 7041456084360858977 2 IN IP4 127.0.0.1
 s=-
-  t=0 0
+t=0 0
 a=group:BUNDLE audio video
 a=msid-semantic: WMS 2jKToeOlpzKTn7anwnHOJmzFyhvEYt1kpcMY
 m=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 126
@@ -94,12 +94,10 @@ a=ssrc:258141567 mslabel:2jKToeOlpzKTn7anwnHOJmzFyhvEYt1kpcMY
 a=ssrc:258141567 label:25d58816-114a-41d2-aa08-1039e09f942f
 END
     @type = 'peer::offer'
-    @options = { 'replace' => { 'sdp' => sdp }, 'add' => {} }
+    @options = { 'replace' => { 'sdp' => sdp.to_s }, 'add' => {} }
   end
 
   describe '#message_handle', type: :request, level: :peer, name: :offer do
-    let(:sdp) { 'v=0\r\no=[..more sdp stuff..]' }
-
     context 'when queue is exclusive' do
       it_behaves_like 'message_handle should match json schema'
     end

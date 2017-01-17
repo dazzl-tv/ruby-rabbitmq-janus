@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### [Added]
 - Complete info in README
 - Add number session to log when sending a request keepalive
+- Complete tests
+
+### [Fixed]
+- Travis notification and deploy
+- Name execption in init class
 
 ## [1.2.3] - 2016-12-20
 ### [Changed]

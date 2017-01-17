@@ -17,6 +17,7 @@ module RubyRabbitmqJanus
         case @request[key]
         when '<string>' then convert_to_type_string
         when '<number>' then convert_to_type_number
+        when '<boolean>' then convert_to_type_boolean
         end
       end
 
@@ -30,6 +31,15 @@ module RubyRabbitmqJanus
       # Convert a data to Integer type
       def convert_to_type_number
         @data.to_i
+      end
+
+      # Convert a data to Boolean type
+      def convert_to_type_boolean
+        if @data.casecmp('TRUE')
+          true
+        elsif @data.casecmp('FALSE')
+          false
+        end
       end
     end
   end

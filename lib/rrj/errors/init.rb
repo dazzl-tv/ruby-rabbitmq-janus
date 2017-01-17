@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
     end
 
     # Define an exception if gem dont initialize correctly
-    class InstaciateGemFailed < RRJ
+    class InstanciateGemFailed < RRJ
       # Initialize a error for instanciate class. It's a fatal error
       # @param [String] message Text returning in raise
       def initialize(message)

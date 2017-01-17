@@ -36,7 +36,6 @@ deploy:
   gemspec: rrj.gemspec
   gem: ruby_rabbitmq_janus
   on:
-    branch: master
     repo: dazzl-tv/ruby-rabbitmq-janus
   skip_cleanup: true
   api_key:

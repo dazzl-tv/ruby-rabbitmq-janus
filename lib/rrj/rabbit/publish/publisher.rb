@@ -23,6 +23,8 @@ module RubyRabbitmqJanus
           @message = request
           @exchange.publish(@message.to_json,
                             request.options.merge!(reply_to: queue_name))
+        rescue => error
+          raise Errors::RabbitPublishMessage, error, request
         end
 
         private

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Complete info in README
 - Add number session to log when sending a request keepalive
 - Complete tests
+- Add Pre Release with travis
 
 ### [Fixed]
 - Travis notification and deploy

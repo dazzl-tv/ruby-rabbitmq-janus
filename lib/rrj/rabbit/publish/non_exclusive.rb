@@ -14,6 +14,8 @@ module RubyRabbitmqJanus
         end
 
         # Send an message to queue
+        #
+        # @param [String] request JSON request sending to rabbitmq queue
         def publish(request)
           super(request)
         end

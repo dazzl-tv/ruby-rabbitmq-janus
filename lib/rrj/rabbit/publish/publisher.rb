@@ -8,8 +8,9 @@ module RubyRabbitmqJanus
       # This publisher send and read an message in queues
       class Publisher < BasePublisher
         # Intialize a publisher for sending and reading a message
-        # @param [String] rabbit object
         #
+        # @param [String] exchange Determine type exchange used for all
+        #   transaction between gem and rabbitmq
         def initialize(exchange)
           super()
           @exchange = exchange.default_exchange
@@ -18,6 +19,11 @@ module RubyRabbitmqJanus
         end
 
         # Publish an message in queue
+        #
+        # @param [String] request JSON request sending to rabbitmq queue
+        #
+        # @raise [Errors::RabbitPublishMessage] If request is false the
+        #   execption is calling
         def publish(request)
           Tools::Log.instance.info "Send request type : #{request.type}"
           @message = request

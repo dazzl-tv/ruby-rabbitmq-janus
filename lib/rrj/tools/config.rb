@@ -9,6 +9,8 @@ module RubyRabbitmqJanus
     #
     # @!attribute [r] options
     #   @return [Hash] Return all options to configured in config file.
+    # @!attribute [r] configuration
+    #   @return [String] Path to configuration file used
     class Config
       include Singleton
 

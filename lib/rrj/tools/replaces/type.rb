@@ -6,12 +6,19 @@ module RubyRabbitmqJanus
     # to request sending
     class Type
       # Initalize an object for cast a type to data given by app
+      #
+      # @param [Hash] request Request parsing before sending to RabbitMQ/Janus
       def initialize(request)
         @request = request
         @data = nil
       end
 
       # Return an data with a type corresponding to string in request
+      #
+      # @param [String] key Key testing
+      # @param [Hash] option Datas sending by user and adding/replace in request
+      #
+      # @return data with good type for JSON format
       def convert(key, option)
         @data = option[key]
         case @request[key]

@@ -8,6 +8,13 @@ module RubyRabbitmqJanus
       # This class work with janus and send a series of message
       class Admin < Handle
         # Publish an message in handle
+        #
+        # @param [String] type
+        #   Given a type to request. JSON request writing in 'config/requests/'
+        # @param [Hash] options Replace/add element to request
+        #
+        # @return [Janus::Response::Standard] a response to message pusblishing
+        #   in queue Admin API
         def publish_message_handle(type, options)
           opts = {
             'session_id' => session,

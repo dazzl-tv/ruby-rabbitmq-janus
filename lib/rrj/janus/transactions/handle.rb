@@ -33,6 +33,11 @@ module RubyRabbitmqJanus
         end
 
         # Publish an message in handle
+        #
+        # @param [String] type Request file used
+        # @param [Hash] options Replace/add element in request
+        #
+        # @return [Janus::Responses::Standard] Response to message sending
         def publish_message_handle(type, options)
           opts = { 'session_id' => session, 'handle_id' => handle }
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))

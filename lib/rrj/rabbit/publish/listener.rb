@@ -9,6 +9,8 @@ module RubyRabbitmqJanus
       # gem.
       class Listener < BasePublisher
         # Define an publisher
+        #
+        # @param [String] rabbit Information connection to rabbitmq server
         def initialize(rabbit)
           super()
           @rabbit = rabbit.channel

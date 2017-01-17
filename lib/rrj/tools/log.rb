@@ -91,6 +91,8 @@ module RubyRabbitmqJanus
       end
 
       # Save log level used in this gem
+      #
+      # @param [Symbol] gem_level Level used for log in this gem
       def save_level(gem_level)
         @level = LEVELS[gem_level]
       end

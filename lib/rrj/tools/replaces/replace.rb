@@ -8,6 +8,9 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       class Replace
         # Initialize tool replace
+        #
+        # @param [Hash] request Request parsing before sending to RabbitMQ/Janus
+        # @param [Hash] options Replace/Add element in request
         def initialize(request, options = {})
           @request = request
           @opts = options

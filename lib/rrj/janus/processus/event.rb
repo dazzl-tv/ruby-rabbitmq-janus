@@ -16,7 +16,10 @@ module RubyRabbitmqJanus
 
         # Create a thred for execute a block code in a thread
         #
-        # @yield Send to publisher the actions when a Janus event is received
+        # @param [Proc] block Block code for execute action when queue
+        #   standard 'from-janus' receive a message.
+        #
+        # @return [Thread] It's a thread who listen queue and execute action
         def run(&block)
           thread.join
           Thread.new do

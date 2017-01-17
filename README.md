@@ -90,6 +90,7 @@ Use tags for rspec :
 | Use bunny gem                                                     |                 | rabbit          |
 | Test log functions                                                |                 | log             |
 | Test configuration function                                       |                 | config          |
+| Test Gem contains CONSTANTS                                       |                 | describe        |
 | **Level request sending to janus (admin monitor API or classic)** | level           |                 |
 | Request with no admin right.                                      |                 | base            |
 | Request with admin right in Janus application.                    |                 | admin           |

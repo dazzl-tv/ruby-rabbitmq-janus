@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.2.4] - 2016-12-21
+## [1.2.5] - 2017-01-19
+### [Fixed]
+- Delete unless variables @transaction
+
+## [1.2.4] - 2017-01-18
 ### [Changed]
 - Change name method send/publish messages
 - Deploy just for master branch pushing

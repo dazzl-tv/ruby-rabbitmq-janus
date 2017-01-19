@@ -34,7 +34,7 @@ module RubyRabbitmqJanus
     #
     # @example Create a instance to this gem
     #   @rrj = RubyRabbitmqJanus::RRJ.new
-    #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123, @transaction=nil>
+    #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       Tools::Log.instance
       Tools::Config.instance
@@ -43,8 +43,6 @@ module RubyRabbitmqJanus
       # Create an session while time opening
       @session = Janus::Concurrencies::Keepalive.instance.session
       Tools::Log.instance.info "Create an session janus with id : #{@session}"
-
-      @transaction = nil
     rescue => error
       raise Errors::InstanciateGemFailed, error
     end
@@ -123,10 +121,11 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def message_admin(type, options = { 'replace' => {}, 'add' => {} })
-      @transaction = Janus::Transactions::Admin.new(@session,
-                                                    true,
-                                                    handle?(options))
-      @transaction.connect { Janus::Messages::Admin.new(type, options) }
+      Janus::Transactions::Admin.new(@session,
+                                     true,
+                                     handle?(options)).connect do
+                                       Janus::Messages::Admin.new(type, options)
+                                     end
     rescue => error
       raise Errors::TransactionAdminFailed, error
     end
@@ -149,8 +148,9 @@ module RubyRabbitmqJanus
     #   Give a object response to janus server
     #
     # @since 1.0.0
-    def message_handle(type, options = { 'replace' => {}, 'add' => {} })
-      @transaction.publish_message_handle(type, options)
+    def message_handle(type, transaction,
+                       options = { 'replace' => {}, 'add' => {} })
+      transaction.publish_message_handle(type, options)
     rescue => error
       raise Errors::TransactionMessageFailed, error
     end
@@ -163,16 +163,16 @@ module RubyRabbitmqJanus
     # @yield Sending requests to Janus.
     #
     # @example Start a transaction with janus with a exclusive queue
-    #   @rrj.start_handle(true) do
-    #     @rrj.message_handle('peer:trickle')
+    #   @rrj.start_handle(true) do |transaction|
+    #     @rrj.message_handle('peer:trickle', transaction)
     #   end
     #
     # @see #message_handle
     #
     # @since 1.0.0
     def start_handle(exclusive = false)
-      @transaction = Janus::Transactions::Handle.new(@session, exclusive)
-      @transaction.connect { yield }
+      transaction = Janus::Transactions::Handle.new(@session, exclusive)
+      transaction.connect { yield(transaction) }
     rescue => error
       raise Errors::TransactionHandleFailed, error
     end
@@ -202,17 +202,14 @@ module RubyRabbitmqJanus
     #
     # @since 1.0.0
     def handle_message_simple(type, options = { 'replace' => {}, 'add' => {} })
-      @transaction = Janus::Transactions::Handle.new(session?(options),
-                                                     false,
-                                                     handle?(options))
-      @transaction.connect { message_handle(type, options) }
+      transaction = Janus::Transactions::Handle.new(session?(options),
+                                                    false, handle?(options))
+      transaction.connect { message_handle(type, transaction, options) }
     rescue => error
       raise Errors::TransactionHandleFailed, error
     end
 
     private
-
-    attr_accessor :transaction
 
     def use_current_session?(option)
       { 'session_id' => @session } unless option.key?('session_id')

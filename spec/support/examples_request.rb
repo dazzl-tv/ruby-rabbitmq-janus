@@ -36,24 +36,20 @@ end
 
 # Handle request
 shared_examples 'message_handle should match json schema' do
-  let(:message) { @gateway.message_handle(@type, @options) }
-
   it do
-    @gateway.start_handle(true) do
-      expect(message.to_json).to match_json_schema(@type)
+    @gateway.start_handle(true) do |transaction|
+      m = @gateway.message_handle(@type, transaction, @options)
+      expect(m.to_json).to match_json_schema(@type)
     end
   end
 end
 
 shared_examples 'message_handle should match json empty' do
-  let(:message) do
-    options = options.nil? ? { replace: {}, add: {} } : options
-    @gateway.message_handle(@type, options)
-  end
-
   it do
-    @gateway.start_handle(false) do
-      expect(message.to_json).to eq('{}')
+    @gateway.start_handle(false) do |transaction|
+      options = options.nil? ? { replace: {}, add: {} } : options
+      m = @gateway.message_handle(@type, transaction, options)
+      expect(m.to_json).to eq('{}')
     end
   end
 end

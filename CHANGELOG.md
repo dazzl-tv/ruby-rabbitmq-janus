@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.6] - 2017-01-23
+### [Fixed]
+- Send request for candidate 'peer::trickle', (For ONE candiadte)
+- Send request for candidates 'peer::trickles' (For manys candidates in array)
+
 ## [1.2.5] - 2017-01-19
 ### [Fixed]
 - Delete unless variables @transaction

@@ -5,7 +5,7 @@
 # Define constant to gem.
 module RubyRabbitmqJanus
   # Define version to gem
-  VERSION = '1.2.5'
+  VERSION = '1.2.6'
 
   # Name to gem
   GEM_NAME = 'ruby_rabbitmq_janus'

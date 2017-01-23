@@ -12,6 +12,7 @@ module RubyRabbitmqJanus
         def replace_classic
           super
           replace_handle if request.key?('handle_id')
+          replace_candidates if request.key?('candidates')
           replace_candidate if request.key?('candidate')
           replace_sdp if request.key?('jsep')
         end
@@ -23,9 +24,16 @@ module RubyRabbitmqJanus
           Tools::Log.instance.warn "Error handle replace : #{message}"
         end
 
-        # Replace candidate, or candidates
+        # Replace candidates
+        def replace_candidates
+          request['candidates'] = opts['replace']['candidates']
+        rescue => message
+          Tools::Log.instance.warn "Error candidate replace : #{message}"
+        end
+
+        # Replace candidate
         def replace_candidate
-          save_candidate(candidates?)
+          request['candidate'] = opts['replace']['candidate']
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"
         end
@@ -35,27 +43,6 @@ module RubyRabbitmqJanus
           request['jsep']['sdp'] = opts['replace']['sdp'].gsub("\n", "\r\n")
         rescue => message
           Tools::Log.instance.warn "Error sdp replace : #{message}"
-        end
-
-        # Save candidate or candidates in request
-        def save_candidate(value)
-          if opts.key?('candidates')
-            request['candidates'] = value
-          else
-            request['candidate'] = value
-          end
-        end
-
-        # Test candidates or candidate
-        def candidates?
-          options = opts['replace']
-          if options.key?('candidates')
-            request['candidates'] = request['candidate']
-            request.delete('candidate')
-            options['candidates']
-          else
-            options['candidate']
-          end
         end
 
         # Replace other element in request

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.2.7] - 2017-01-24
 ### [Fixed]
 - Fix test with travis
+- Fix sdp sending
 
 ## [1.2.6] - 2017-01-23
 ### [Fixed]

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type offer' do
+describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
   before(:example) do
     sdp = <<END
 v=0

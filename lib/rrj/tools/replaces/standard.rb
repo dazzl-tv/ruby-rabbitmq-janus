@@ -40,7 +40,7 @@ module RubyRabbitmqJanus
 
         # Replace sdp in request
         def replace_sdp
-          request['jsep']['sdp'] = opts['replace']['sdp'].gsub("\n", "\r\n")
+          request['jsep']['sdp'] = opts['replace']['sdp']
         rescue => message
           Tools::Log.instance.warn "Error sdp replace : #{message}"
         end

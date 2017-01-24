@@ -1,4 +1,4 @@
-FROM ruby:2.3.1
+FROM ruby:2.3-alpine
 
 MAINTAINER 'VAILLANT Jeremy' <jeremy.vaillant@dazzl.tv>
 

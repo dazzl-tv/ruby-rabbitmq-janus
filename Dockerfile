@@ -2,7 +2,7 @@
 FROM ruby:2.4-alpine
 
 # Maintainer
-MAINTAINER 'VAILLANT Jeremy' <jeremy.vaillant@dazzl.tv>
+MAINTAINER Jeremy VAILLANT <jeremy.vaillant@dazzl.tv>
 
 # Prepare system
 RUN apk update \

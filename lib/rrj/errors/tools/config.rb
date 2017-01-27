@@ -16,7 +16,6 @@ module RubyRabbitmqJanus
     class FileNotFound < Config
       # Initialize a error for Config class if file don't exist.
       # It's a fatal error
-      # @param [String] file Is a file path
       def initialize
         super 'Error for configuration file, does on exist.', :fatal
       end

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.8] - 2017-01-27
+### [Fixed]
+- Session keepalive cut
+
+### [Changed]
+- Add comment
+- Cleaning code in processus
+- Optimize session management
+
 ## [1.2.7] - 2017-01-24
 ### [Fixed]
 - Fix test with travis

@@ -9,7 +9,7 @@ module RubyRabbitmqJanus
       # # Class for manage threads
       #
       # @abstract Manage thread in this gem for keepalive message and listen
-      # standard queue.
+      #   standard queue.
       class Concurrency
         # Initialize class with elements for thread communication
         def initialize
@@ -29,8 +29,7 @@ module RubyRabbitmqJanus
           @rabbit.close
         end
 
-        attr_accessor :rabbit, :publish
-        attr_reader :thread, :lock, :condition
+        attr_reader :thread, :lock, :condition, :rabbit
       end
     end
   end

@@ -14,10 +14,11 @@ module RubyRabbitmqJanus
       class Event < Concurrency
         include Singleton
 
-        # Create a thred for execute a block code in a thread
+        # Create a thread for execute a block code in a thread
         #
         # @param [Proc] block Block code for execute action when queue
-        #   standard 'from-janus' receive a message.
+        #   standard 'from-janus' receive a message.This block is sending to
+        #   publisher created for this thread.
         #
         # @return [Thread] It's a thread who listen queue and execute action
         def run(&block)

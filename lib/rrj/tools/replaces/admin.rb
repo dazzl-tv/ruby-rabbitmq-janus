@@ -38,7 +38,7 @@ module RubyRabbitmqJanus
 
         # Replace level element
         def replace_level
-          request['level'] = opts['level']
+          request['level'] = type.convert('level', opts)
         rescue => message
           Tools::Log.instance.warn "Error replace level : #{message}"
         end

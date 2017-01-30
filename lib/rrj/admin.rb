@@ -18,24 +18,17 @@ module RubyRabbitmqJanus
     # Send a message simple for admin Janus.
     #
     # @since 1.3.0
-    def message_session_admin(type, transaction,
-                              options = { 'replace' => {}, 'add' => {} })
+    def message_admin(type, transaction,
+                      options = { 'replace' => {}, 'add' => {} })
       transaction.publish_message_session(type, options)
-    end
-
-    # Send a message complex (with handle in request) for admin Janus.
-    #
-    # @since 1.3.0
-    def message_handle_admin(type, transaction,
-                             options = { 'replace' => {}, 'add' => {} })
-      transaction.publish_message_handle(type, options)
     end
 
     # Create a transaction between apps and janus for request without handle
     #
     # @since 1.3.0
     def start_session_admin(options = { 'replace' => {}, 'add' => {} })
-      transaction = Janus::Transactions::Admin.new(session?(options))
+      opts = use_current_session?(options)
+      transaction = Janus::Transactions::Admin.new(opts)
       transaction.connect { yield(transaction) }
     end
 
@@ -43,7 +36,8 @@ module RubyRabbitmqJanus
     #
     # @since 1.3.0
     def start_handle_admin(options = { 'replace' => {}, 'add' => {} })
-      transaction = Janus::Transactions::Admin.new(session?(options),
+      opts = use_current_session?(options)
+      transaction = Janus::Transactions::Admin.new(opts,
                                                    handle?(options))
       transaction.connect { yield(transaction) }
     end

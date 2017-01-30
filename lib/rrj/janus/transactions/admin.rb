@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
 
         def connect
           rabbit.transaction_short do
-            choose_queue
+            @publisher = Rabbit::Publisher::PublisherAdmin.new(rabbit.channel)
             create_handle if @handle.eql?(0)
             yield
           end
@@ -35,12 +35,6 @@ module RubyRabbitmqJanus
           msg = Janus::Messages::Admin.new(type, options)
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
-        end
-
-        # Define queue used for admin message
-        def choose_queue
-          chan = rabbit.channel
-          @publisher = Rabbit::Publisher::PublisherAdmin.new(chan)
         end
 
         # Override method for publishing an message and reading a response

@@ -66,14 +66,18 @@ module RubyRabbitmqJanus
         end
 
         def message_keepalive
-          opt = { 'session_id' => @session }
-          Janus::Messages::Standard.new('base::keepalive', opt)
+          Janus::Messages::Standard.new('base::keepalive',
+                                        'replace' => param_session)
         rescue => error
           raise Errors::KeepaliveMessage, error
         end
 
         def find_session
           Janus::Responses::Standard.new(create_session).to_hash['data']['id']
+        end
+
+        def param_session
+          { 'session_id' => @session }
         end
       end
     end

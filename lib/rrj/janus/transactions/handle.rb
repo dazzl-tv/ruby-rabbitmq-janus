@@ -39,7 +39,8 @@ module RubyRabbitmqJanus
         #
         # @return [Janus::Responses::Standard] Response to message sending
         def publish_message_handle(type, options)
-          msg = Janus::Messages::Standard.new(type, opts.merge!(options))
+          msg = Janus::Messages::Standard.new(type,
+                                              opts['replace'].merge!(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
         end
@@ -49,7 +50,7 @@ module RubyRabbitmqJanus
         # Create an handle for transaction
         def create_handle
           Tools::Log.instance.info 'Create an handle'
-          opt = { 'session_id' => session }
+          opt = { 'replace' => { 'session_id' => session } }
           msg = Janus::Messages::Standard.new('base::attach', opt)
           @handle = send_a_message_exclusive { msg }
         end
@@ -69,7 +70,7 @@ module RubyRabbitmqJanus
         end
 
         def opts
-          { 'session_id' => session, 'handle_id' => handle }
+          { 'replace' => { 'session_id' => session, 'handle_id' => handle } }
         end
       end
     end

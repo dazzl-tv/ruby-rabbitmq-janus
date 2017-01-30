@@ -65,13 +65,12 @@ shared_examples 'message_handle_admin should match json schema' do
   end
 end
 
-shared_examples 'message_admin should match json schema' do
-  let(:message) do
-    @gateway.message_admin(@type)
-  end
-
+shared_examples 'message_session_admin should match json schema' do
   it do
-    expect(message.to_json).to match_json_schema(@type)
+    @gateway_admin.start_session_admin do |transaction|
+      m = @gateway_admin.message_session_admin(@type, transaction)
+      expect(m.to_json).to match_json_schema(@type)
+    end
   end
 end
 

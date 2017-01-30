@@ -8,7 +8,9 @@ describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
     @options = { 'replace' => {}, 'add' => {} }
   end
 
-  describe '#message_handle', type: :request, level: :base, name: :attach do
+  describe '#message_handle', type: :request,
+                              level: :base,
+                              name: :attach do
     context 'when queue is exclusive' do
       it_behaves_like 'message_handle should match json schema'
     end

@@ -8,7 +8,9 @@ describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
     @options = { 'replace' => {}, 'add' => {} }
   end
 
-  describe '#message_handle', type: :request, level: :peer, name: :trickle do
+  describe '#message_handle', type: :request,
+                              level: :base,
+                              name: :trickle do
     let(:cdd) do
       { 'sdpMid' => 'video', 'sdpMLineIndex' => 1, 'candidate' => '...' }
     end

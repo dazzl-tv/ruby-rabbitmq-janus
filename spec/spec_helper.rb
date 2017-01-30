@@ -39,12 +39,20 @@ RSpec.configure do |config|
   end
 
   # Configure requests test before sending request
-  config.before(:example) do
+  config.before(:example, level: :base) do
     Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
     Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
     Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
     Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
     @gateway = RubyRabbitmqJanus::RRJ.new
+  end
+
+  config.before(:example, level: :admin) do
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
+    Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
+    @gateway_admin = RubyRabbitmqJanus::RRJAdmin.new
   end
 
   # Exclude request with tag broken

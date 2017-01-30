@@ -39,7 +39,6 @@ module RubyRabbitmqJanus
         #
         # @return [Janus::Responses::Standard] Response to message sending
         def publish_message_handle(type, options)
-          opts = { 'session_id' => session, 'handle_id' => handle }
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
@@ -67,6 +66,10 @@ module RubyRabbitmqJanus
           chan = rabbit.channel
           tmp_publish = Rabbit::Publisher::PublishExclusive.new(chan, '')
           tmp_publish.publish(yield)
+        end
+
+        def opts
+          { 'session_id' => session, 'handle_id' => handle }
         end
       end
     end

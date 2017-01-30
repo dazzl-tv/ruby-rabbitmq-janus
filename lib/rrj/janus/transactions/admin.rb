@@ -6,26 +6,36 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
       # This class work with janus and send a series of message
-      class Admin < Handle
-        # Publish an message in handle
-        #
-        # @param [String] type
-        #   Given a type to request. JSON request writing in 'config/requests/'
-        # @param [Hash] options Replace/add element to request
-        #
-        # @return [Janus::Response::Standard] a response to message pusblishing
-        #   in queue Admin API
+      class Admin < Session
+        def initialize(session, handle = nil)
+          super(session)
+          @exclusive = true
+          @handle = handle
+        end
+
+        def connect
+          rabbit.transaction_short do
+            choose_queue
+            create_handle if @handle.eql?(0)
+            yield
+          end
+        end
+
         def publish_message_handle(type, options)
-          opts = {
-            'session_id' => session,
-            'handle_id' => handle,
-            'admin_secret' => admin_secret
-          }
-          msg = Janus::Messages::Admin.new(type, opts.merge!(options))
-          Janus::Responses::Standard.new(read_response(publisher.publish(msg)))
+          publish_message(type, opts_complex.merge!(options))
+        end
+
+        def publish_message_session(type, options)
+          publish_message(type, opts_simple.merge(options))
         end
 
         private
+
+        def publish_message(type, options)
+          msg = Janus::Messages::Admin.new(type, options)
+          response = read_response(publisher.publish(msg))
+          Janus::Responses::Standard.new(response)
+        end
 
         # Define queue used for admin message
         def choose_queue
@@ -35,13 +45,20 @@ module RubyRabbitmqJanus
 
         # Override method for publishing an message and reading a response
         def send_a_message
-          Tools::Log.instance.info 'Publish a message ...'
           Janus::Responses::Standard.new(publisher.publish(yield))
         end
 
         # Read a admin pass in configuration file to this gem
         def admin_secret
           Tools::Config.instance.options['rabbit']['admin_pass']
+        end
+
+        def opts_simple
+          { 'session_id' => session, 'admin_secret' => admin_secret }
+        end
+
+        def opts_complex
+          opts_simple.merge('handle_id' => handle)
         end
       end
     end

@@ -2,6 +2,7 @@
 
 # Load all tools necessary to good functionlaty to this gem
 require 'rrj/init'
+require 'rrj/admin'
 
 # Define tools for this gems
 require 'rrj/tools/tools'

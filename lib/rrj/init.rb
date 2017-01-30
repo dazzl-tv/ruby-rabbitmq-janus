@@ -100,36 +100,6 @@ module RubyRabbitmqJanus
       raise Errors::TransactionSessionFailed, error
     end
 
-    # Send a message simple for admin Janus.
-    # **Is used just for sending a message to Janus Monitor/Admin API**. The
-    # queue is exclusive for not transmitting data to anyone.
-    #
-    # @param [String] type
-    #   Given a type to request. JSON request writing in `config/requests/`
-    # @param [Hash] options Fields updating in request sending to janus.
-    #   **This hash must imperatively contains the key `replace`**
-    # @option options [Hash] :replace Contains all fields who be replaced in
-    #   request sending to janus.
-    # @option options [Hash] :add Contains all fields adding to request.
-    #
-    # @example Sending an message create
-    #   RubyRabbitmqJanus::RRJ.new.message_admin('admin::sessions')
-    #   #=> {"janus":"success","sessions": [12345, 8786567465465, ...] }
-    #
-    # @return [RubyRabbitmqJanus::Janus::Responses::Standard]
-    #   Give an object response to janus server
-    #
-    # @since 1.0.0
-    def message_admin(type, options = { 'replace' => {}, 'add' => {} })
-      Janus::Transactions::Admin.new(@session,
-                                     true,
-                                     handle?(options)).connect do
-                                       Janus::Messages::Admin.new(type, options)
-                                     end
-    rescue => error
-      raise Errors::TransactionAdminFailed, error
-    end
-
     # Send an message in handle session in current session.
     #
     # @param [String] type

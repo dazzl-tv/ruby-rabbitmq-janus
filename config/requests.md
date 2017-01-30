@@ -53,7 +53,8 @@ Some fields are customizables. For this fields is a gem to apply a transformatio
 
 Each fields use an type :
 
-* "\<number\>" - Is an integer
+* "\<number\>" - Is a integer
+* "\<number\>" - Is a integer
 * "\<string\>" - Is a string
 * "\<plugin[X]\>" - Is a plugin with X is a key to array in config file
 * "\<array\>" - Is a array. If array contains a single value is transform to string format.

@@ -20,10 +20,12 @@ module RubyRabbitmqJanus
       #
       # @return data with good type for JSON format
       def convert(key, option)
-        @data = option[key]
-        case @request[key]
+        @key = key
+        @data = option['replace'][@key]
+        case @request[@key]
         when '<string>' then convert_to_type_string
         when '<number>' then convert_to_type_number
+        when '<integer>' then convert_to_type_integer
         when '<boolean>' then convert_to_type_boolean
         end
       end
@@ -37,6 +39,11 @@ module RubyRabbitmqJanus
 
       # Convert a data to Integer type
       def convert_to_type_number
+        @data.to_i
+      end
+
+      # Convert a data to Integer type
+      def convert_to_type_integer
         @data.to_i
       end
 

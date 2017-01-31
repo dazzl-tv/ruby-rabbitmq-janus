@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-01-31
+### [Added]
+- Admin feature
+- Complete documentation with example
+
+### [Changed]
+- Session ID management
+- Type converting
+
+### [Deleted]
+- Delete unless method
+
 ## [1.2.8] - 2017-01-27
 ### [Fixed]
 - Session keepalive cut

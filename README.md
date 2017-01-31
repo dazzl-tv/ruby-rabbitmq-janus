@@ -14,17 +14,45 @@ RabbitMQ server in a queue for janus server. janus processes a message and send
 
 This gem is product by [Dazzl.tv](http://dazzl.tv)
 
+```linux
+------------                        ----------                      -------
+|Rails Apps|                        |RabbitMQ|                      |Janus|
+------------                        ----------                      -------
+  |                                   |                                |
+  | Request : { "janus": "info" }     |                                |
+  | --------------------------------> |                                |
+  | Create request json.              |                                |
+  | Sending in queue.                 |                                |
+  |                                   | -----------------------------> |
+  |                                   | Read a message in queue        | ----- |
+  |                                   |                                |       | Return a response
+  |                                   |                                |       | to treatment executed.
+  |                                   |                                | <---- |
+  |                                   |                                |
+  |                                   |                                |
+  |                                   | <----------------------------  |
+  | <-------------------------------- |                                |
+  |                                   |                                |
+  |                                   |                                |
+  |                                   |                                |
+  |                                   |                                |
+```
+
 ## Menu
 * [How to use](#how-to-use)
- * [Installation](#installation)
- * [Configuration](#configuration)
+  * [Installation](#installation)
+  * [Configuration](#configuration)
     * [Generators](#generators)
     * [Requests](#requests)
- * [Usage](#usage)
+  * [Usage](#usage)
+    * [Information](#usage-information)
+    * [Standard request](#standard-request)
+    * [Admin request](#admin-request)
+    * [Listen Janus Event](#listen-janus-event)
 * [Upgrade](#upgrade)
 * [Development](#development)
- * [RSpec](#rspec-test)
- * [Documentation](#documentation)
+  * [RSpec](#rspec-test)
+  * [Documentation](#documentation)
     * [Read documentation](#read-documentation)
     * [Generate developer documentation](#generate-developer-documentation)
 
@@ -32,7 +60,7 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
 
 ### Installation
 
-Use rubygem for installing gem in your application. Add in your Gemfile
+Use rubygem for installing gem in your application. Add in your Gemfile :
 ```ruby
 gem 'ruby_rabbitmq_janus'
 ```
@@ -68,8 +96,52 @@ For more explain in requests files see [default requests](config/requests.md).
 
 ### Usage
 
+#### Usage information
 
-TODO ...
+This gem use rabbitmq for manage request sending to Janus, so see
+[documentation Janus](https://janus.conf.meetecho.com/docs/pages.html) and
+[documentation Rabbitmq](http://www.rabbitmq.com/documentation.html). This gem
+use bunny gem for create connection with rabbitmq. See many guide :
+[bunny documentation](http://rubybunny.info/articles/guides.html).
+
+#### Standard Request
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Initialize standard object
+t = RubyRabbitmqJanus::RRJ.new
+
+# Simple request
+t.message_session('base::info', true, {})
+=> { "janus"=>"server_info", ... }
+
+# Complex request
+sdp = { 'sdpMid' => 'video', 'sdpMLineIndex' => 1, "candidate" => "..." }
+t.start_handle(true) do |transaction|
+  response = t.message_handle('peer:trickle', transaction, { 'candidate' => sdp })
+end
+response.request
+=> { "janus"=>"ack", ... }
+```
+
+#### Admin Request
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Initialize admin object
+t = RubyRabbitmqJanus::RRJAdmin.new
+```
+
+#### Listen Janus Event
+
+```ruby
+```
+
+## Upgrade
+
+For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
 
 ## Development
 
@@ -105,10 +177,6 @@ Example usage rspec with tags :
 ```ruby
 rspec --tag --name:config --tag level:base
 ```
-
-## Upgrade
-
-For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
 
 ### Documentation
 

@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>

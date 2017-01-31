@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
       # @param [Hash] request Request parsing before sending to RabbitMQ/Janus
       def initialize(request)
         @request = request
-        @data = nil
+        @key = @data = nil
       end
 
       # Return an data with a type corresponding to string in request
@@ -21,7 +21,13 @@ module RubyRabbitmqJanus
       # @return data with good type for JSON format
       def convert(key, option)
         @key = key
-        @data = option['replace'][@key]
+        @data = option[@key]
+        convert_data
+      end
+
+      private
+
+      def convert_data
         case @request[@key]
         when '<string>' then convert_to_type_string
         when '<number>' then convert_to_type_number
@@ -29,8 +35,6 @@ module RubyRabbitmqJanus
         when '<boolean>' then convert_to_type_boolean
         end
       end
-
-      private
 
       # Convert a data to String type
       def convert_to_type_string

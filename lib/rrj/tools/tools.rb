@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'rrj/tools/log'
-require 'rrj/tools/config'
-require 'rrj/tools/requests'
+require 'rrj/tools/gem/log'
+require 'rrj/tools/gem/config'
+require 'rrj/tools/gem/requests'
+require 'rrj/tools/gem/option'
 require 'rrj/tools/replaces/type'
 require 'rrj/tools/replaces/replace'
 

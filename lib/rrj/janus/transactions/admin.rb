@@ -21,21 +21,13 @@ module RubyRabbitmqJanus
           end
         end
 
-        def publish_message_handle(type, options)
-          publish_message(type, opts_complex.merge!(options))
-        end
-
-        def publish_message_session(type, options)
-          publish_message(type, opts_simple.merge(options))
-        end
-
-        private
-
-        def publish_message(type, options)
-          msg = Janus::Messages::Admin.new(type, options)
+        def publish_message(type, options = {})
+          msg = Janus::Messages::Admin.new(type, opts.merge(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
         end
+
+        private
 
         # Override method for publishing an message and reading a response
         def send_a_message
@@ -47,12 +39,11 @@ module RubyRabbitmqJanus
           Tools::Config.instance.options['rabbit']['admin_pass']
         end
 
-        def opts_simple
-          { 'session_id' => session, 'admin_secret' => admin_secret }
-        end
-
-        def opts_complex
-          opts_simple.merge('handle_id' => handle)
+        # :reek:NilCheck
+        def opts
+          hash = { 'session_id' => session, 'admin_secret' => admin_secret }
+          hash.merge('handle_id' => @handle) unless @handle.nil?
+          hash
         end
       end
     end

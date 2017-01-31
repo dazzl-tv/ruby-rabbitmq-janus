@@ -36,43 +36,11 @@ module RubyRabbitmqJanus
     #   @rrj = RubyRabbitmqJanus::RRJ.new
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
-      Tools::Log.instance
-      Tools::Config.instance
-      Tools::Requests.instance
-
-      # Create an session while time opening
-      @session = Janus::Concurrencies::Keepalive.instance.session
+      @option = Tools::Option.new
+      @session = @option.keepalive
       Tools::Log.instance.info "Create an session janus with id : #{@session}"
     rescue => error
       raise Errors::InstanciateGemFailed, error
-    end
-
-    # Send an simple message to janus.
-    #
-    # @param [String] type
-    #   Given a type to request. JSON request writing in 'config/requests/'
-    # @param [Bollean] exclusive
-    #   Use an exclusive queue or not
-    # @param [Hash] options Options update in request
-    #
-    # @example Sending an message info in queue 'to-janus'
-    #   RubyRabbitmqJanus::RRJ.new.message_simple('base::info', true)
-    #   #=> {}
-    # @example Sending an message info in queue exclusive 'ampq.gen-xxxxx'
-    #   RubyRabbitmqJanus::RRJ.new.message_simple('base::info')
-    #   #=> {"janus":"server_info","name":"Janus WebRTC Gateway" ... }
-    #
-    # @return [RubyRabbitmqJanus::Janus::Responses::Standard]
-    #   Give an object response to janus server
-    #
-    # @since 1.0.0
-    def message_simple(type = 'base::info', exclusive = false,
-                       options = { 'replace' => {}, 'add' => {} })
-      Janus::Transactions::Session.new(@session).connect(exclusive) do
-        Janus::Messages::Standard.new(type, options)
-      end
-    rescue => error
-      raise Errors::TransactionSessionFailed, error
     end
 
     # Send an message simple in current session.
@@ -91,10 +59,10 @@ module RubyRabbitmqJanus
     #   Give an object response to janus server
     #
     # @since 1.0.0
-    def message_session(type, options = { 'replace' => {}, 'add' => {} },
-                        exclusive = true)
+    def message_session(type, options = {}, exclusive = true)
       Janus::Transactions::Session.new(@session).connect(exclusive) do
-        Janus::Messages::Standard.new(type, use_current_session?(options))
+        Janus::Messages::Standard.new(type,
+                                      @option.use_current_session?(options))
       end
     rescue => error
       raise Errors::TransactionSessionFailed, error
@@ -180,6 +148,8 @@ module RubyRabbitmqJanus
     end
 
     private
+
+    attr_reader :option
 
     def use_current_session?(option)
       { 'session_id' => @session } unless option.key?('session_id')

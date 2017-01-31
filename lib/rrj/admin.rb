@@ -13,32 +13,26 @@ module RubyRabbitmqJanus
   # **The queue is always ***exclusive*** for not transmitting data to
   # anyone.**
   #
+  # @example Create instance
+  #   @rrj = RubyRabbitmqJanus::RRJAdmin.new
+  #   => #<RubyRabbitmqJanus::RRJAdmin:0x...
+  #     @option=#<RubyRabbitmqJanus::Tools::Option:0x... @hash={}>
+  #     @session=3409659256174167>
+  #
+  #   @rrj.start_session_admin do |transaction|
+  #     transaction.publish_message('admin::sessions')
+  #   end
+  #   => #<RubyRabbitmqJanus::Janus::Responses::Standard:0x...
+  #     @request={"janus"=>"success", "sessions"=>[...]}>
+  #
   # @see https://janus.conf.meetecho.com/docs/admin.html
   class RRJAdmin < RRJ
-    # Send a message simple for admin Janus.
-    #
-    # @since 1.3.0
-    def message_admin(type, transaction,
-                      options = { 'replace' => {}, 'add' => {} })
-      transaction.publish_message_session(type, options)
-    end
-
     # Create a transaction between apps and janus for request without handle
     #
-    # @since 1.3.0
-    def start_session_admin(options = { 'replace' => {}, 'add' => {} })
-      opts = use_current_session?(options)
-      transaction = Janus::Transactions::Admin.new(opts)
-      transaction.connect { yield(transaction) }
-    end
-
-    # Create a transaction between apps and janus for request with handle
-    #
-    # @since 1.3.0
-    def start_handle_admin(options = { 'replace' => {}, 'add' => {} })
-      opts = use_current_session?(options)
-      transaction = Janus::Transactions::Admin.new(opts,
-                                                   handle?(options))
+    # @since 2.0.0
+    def start_session_admin(options = {})
+      opts = option.use_current_session?(options)
+      transaction = Janus::Transactions::Admin.new(opts.hash)
       transaction.connect { yield(transaction) }
     end
   end

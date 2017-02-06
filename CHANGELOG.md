@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### [Added]
 - Admin feature
 - Complete documentation with example
+- Customize response (standard/admin)
+- Filter in log for sensitive data (expection debug mode message)
 
 ### [Changed]
 - Session ID management

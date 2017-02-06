@@ -7,16 +7,14 @@ module RubyRabbitmqJanus
 
       # This class work with janus and send a series of message
       class Admin < Session
-        def initialize(session, handle = nil)
+        def initialize(session)
           super(session)
           @exclusive = true
-          @handle = handle
         end
 
         def connect
           rabbit.transaction_short do
             @publisher = Rabbit::Publisher::PublisherAdmin.new(rabbit.channel)
-            create_handle if @handle.eql?(0)
             yield
           end
         end
@@ -41,9 +39,7 @@ module RubyRabbitmqJanus
 
         # :reek:NilCheck
         def opts
-          hash = { 'session_id' => session, 'admin_secret' => admin_secret }
-          hash.merge('handle_id' => @handle) unless @handle.nil?
-          hash
+          { 'session_id' => session, 'admin_secret' => admin_secret }
         end
       end
     end

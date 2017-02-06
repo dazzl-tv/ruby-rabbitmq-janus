@@ -21,7 +21,7 @@ module RubyRabbitmqJanus
   #   @rrj.start_handle_admin do |transaction|
   #     transaction.publish_message('admin::sessions')
   #   end
-  #   => #<RubyRabbitmqJanus::Janus::Responses::Standard:0x...
+  #   => #<RubyRabbitmqJanus::Janus::Responses::Admin:0x...
   #     @request={"janus"=>"success", "sessions"=>[...]}>
   #
   # @see https://janus.conf.meetecho.com/docs/admin.html

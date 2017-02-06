@@ -22,14 +22,14 @@ module RubyRabbitmqJanus
         def publish_message(type, options = {})
           msg = Janus::Messages::Admin.new(type, opts.merge(options))
           response = read_response(publisher.publish(msg))
-          Janus::Responses::Standard.new(response)
+          Janus::Responses::Admin.new(response)
         end
 
         private
 
         # Override method for publishing an message and reading a response
         def send_a_message
-          Janus::Responses::Standard.new(publisher.publish(yield))
+          Janus::Responses::Admin.new(publisher.publish(yield))
         end
 
         # Read a admin pass in configuration file to this gem

@@ -26,7 +26,7 @@ module RubyRabbitmqJanus
       def use_current_session?(options)
         @hash = options
         @hash['session_id'] = @session if session_exist?
-        @hash
+        @hash['session_id']
       end
 
       private

@@ -11,9 +11,17 @@ module RubyRabbitmqJanus
           data_id
         end
 
+        def session_id
+          request['session_id']
+        end
+
         # Return a integer to handle
         def sender
           data_id
+        end
+
+        def handle_id
+          request['sender']
         end
 
         # Read response for plugin request

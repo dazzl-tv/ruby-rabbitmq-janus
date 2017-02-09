@@ -26,6 +26,7 @@ module RubyRabbitmqJanus
         # @example Ask session
         #   Keepalive.instance.session
         #   => 852803383803249
+        #
         # @return [Fixnum] Identifier to session created by Janus
         def session
           lock.synchronize do
@@ -56,6 +57,8 @@ module RubyRabbitmqJanus
           sleep time_to_live
           @pub.publish(message_keepalive)
           Tools::Log.instance.info "Keepalive for #{@session}"
+        rescue => error
+          raise Errors::KeepaliveMessage, error
         end
 
         def create_session

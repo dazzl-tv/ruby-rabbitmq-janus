@@ -6,12 +6,12 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
       # This class work with janus and send a series of message
-      class Handle < Session
+      class Handle < Transaction
         # Initialize a transaction with handle
         #
         # @param [Fixnum] session
         #   Use a session identifier for created message
-        def initialize(session, exclusive, handle = 0)
+        def initialize(exclusive, session, handle = 0)
           super(session)
           @exclusive = exclusive
           @handle = handle
@@ -38,11 +38,15 @@ module RubyRabbitmqJanus
         # @param [Hash] options Replace/add element in request
         #
         # @return [Janus::Responses::Standard] Response to message sending
-        def publish_message_handle(type, options)
-          msg = Janus::Messages::Standard.new(type,
-                                              opts['replace'].merge!(options))
+        def publish_message(type, options = {})
+          msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
+        end
+
+        # Send a message detach
+        def detach
+          publisher.publish(Janus::Messages::Standard.new('base::detach', opts))
         end
 
         private
@@ -50,7 +54,7 @@ module RubyRabbitmqJanus
         # Create an handle for transaction
         def create_handle
           Tools::Log.instance.info 'Create an handle'
-          opt = { 'replace' => { 'session_id' => session } }
+          opt = { 'session_id' => session }
           msg = Janus::Messages::Standard.new('base::attach', opt)
           @handle = send_a_message_exclusive { msg }
         end
@@ -70,7 +74,7 @@ module RubyRabbitmqJanus
         end
 
         def opts
-          { 'replace' => { 'session_id' => session, 'handle_id' => handle } }
+          { 'session_id' => session, 'handle_id' => @handle }
         end
       end
     end

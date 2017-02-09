@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 module RubyRabbitmqJanus
   module Tools
     # Class for converting elemnts given by apps to this gem an type conform
@@ -19,10 +21,17 @@ module RubyRabbitmqJanus
       # @param [Hash] option Datas sending by user and adding/replace in request
       #
       # @return data with good type for JSON format
-      def convert(key, option)
+      def convert(key, option = {})
         @key = key
-        @data = option[@key]
+        @data = option[@key] if option.key?(@key)
         convert_data
+      end
+
+      # Generate a transaction string
+      #
+      # @return [String] String transaction with 10 char
+      def transaction
+        [*('A'..'Z'), *('0'..'9')].sample(10).join
       end
 
       private
@@ -30,34 +39,31 @@ module RubyRabbitmqJanus
       def convert_data
         case @request[@key]
         when '<string>' then convert_to_type_string
-        when '<number>' then convert_to_type_number
-        when '<integer>' then convert_to_type_integer
+        when '<number>', '<integer>' then convert_to_type_number
         when '<boolean>' then convert_to_type_boolean
+        when /<plugin\[[0-9]\]>/ then convert_to_type_plugin
         end
       end
 
-      # Convert a data to String type
       def convert_to_type_string
         @data.to_s
       end
 
-      # Convert a data to Integer type
       def convert_to_type_number
         @data.to_i
       end
 
-      # Convert a data to Integer type
-      def convert_to_type_integer
-        @data.to_i
-      end
-
-      # Convert a data to Boolean type
       def convert_to_type_boolean
         if @data.casecmp('TRUE')
           true
         elsif @data.casecmp('FALSE')
           false
         end
+      end
+
+      def convert_to_type_plugin
+        index = @request[@key].gsub('<plugin[', '').gsub(']>', ']').to_i
+        Config.instance.plugin_at(index)
       end
     end
   end

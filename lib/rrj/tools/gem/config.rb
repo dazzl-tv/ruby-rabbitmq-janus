@@ -32,8 +32,8 @@ module RubyRabbitmqJanus
       # Initialize configuration file default or customize if exist
       def initialize
         @options = @configuration = nil
-        conf_customize
-        conf_default
+        loading_configuration_customize
+        loading_configuration_default
         Tools::Log.instance.save_level(log_level)
       end
 
@@ -91,12 +91,12 @@ module RubyRabbitmqJanus
         raise Errors::FileNotFound, @configuration
       end
 
-      def conf_customize
+      def loading_configuration_customize
         @configuration = File.join(Dir.pwd, CONF_CUSTOM)
         @options = load_configuration if File.exist?(@configuration)
       end
 
-      def conf_default
+      def loading_configuration_default
         @configuration = PATH_DEFAULT
         @options ||= load_configuration
       end

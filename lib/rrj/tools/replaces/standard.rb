@@ -26,21 +26,21 @@ module RubyRabbitmqJanus
 
         # Replace candidates
         def replace_candidates
-          request['candidates'] = opts['replace']['candidates']
+          request['candidates'] = opts['candidates']
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"
         end
 
         # Replace candidate
         def replace_candidate
-          request['candidate'] = opts['replace']['candidate']
+          request['candidate'] = opts['candidate']
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"
         end
 
         # Replace sdp in request
         def replace_sdp
-          request['jsep']['sdp'] = opts['replace']['sdp']
+          request['jsep']['sdp'] = opts['sdp']
         rescue => message
           Tools::Log.instance.warn "Error sdp replace : #{message}"
         end

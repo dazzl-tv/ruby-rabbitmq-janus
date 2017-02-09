@@ -12,24 +12,17 @@ module RubyRabbitmqJanus
   # **The queue is always ***exclusive*** for not transmitting data to
   # anyone.**
   #
-  # @example Create instance
-  #   @rrj = RubyRabbitmqJanus::RRJAdmin.new
-  #   => #<RubyRabbitmqJanus::RRJAdmin:0x...
-  #     @option=#<RubyRabbitmqJanus::Tools::Option:0x... @hash={}>
-  #     @session=3409659256174167>
-  #
-  #   @rrj.start_handle_admin do |transaction|
-  #     transaction.publish_message('admin::sessions')
-  #   end
-  #   => #<RubyRabbitmqJanus::Janus::Responses::Admin:0x...
-  #     @request={"janus"=>"success", "sessions"=>[...]}>
-  #
   # @see https://janus.conf.meetecho.com/docs/admin.html
   class RRJAdmin < RRJ
     # Create a transaction between apps and Janus for request without handle
     #
     # @param [Hash] options
     #   Give a session number for use another session in Janus
+    #
+    # @example Get Janus session
+    #   @rrj.start_transaction_admin do |transaction|
+    #     response = transaction.publish_message('admin:sessions').sessions
+    #   end
     #
     # @since 2.0.0
     def start_transaction_admin(options = {})

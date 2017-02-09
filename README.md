@@ -111,18 +111,6 @@ require 'ruby_rabbitmq_janus'
 
 # Initialize standard object
 t = RubyRabbitmqJanus::RRJ.new
-
-# Simple request
-t.message_session('base::info', true, {})
-=> { "janus"=>"server_info", ... }
-
-# Complex request
-sdp = { 'sdpMid' => 'video', 'sdpMLineIndex' => 1, "candidate" => "..." }
-t.start_handle(true) do |transaction|
-  response = t.message_handle('peer:trickle', transaction, { 'candidate' => sdp })
-end
-response.request
-=> { "janus"=>"ack", ... }
 ```
 
 #### Admin Request
@@ -137,6 +125,13 @@ t = RubyRabbitmqJanus::RRJAdmin.new
 #### Listen Janus Event
 
 ```ruby
+require 'ruby_rabbitmq_janus'
+
+# Create a class in your Rails application
+actions = RubyRabbitmqJanus::ActionEvents.new.action
+
+# Initialize a thread for listen public queue and send class to thread
+RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(@actions)
 ```
 
 ## Upgrade

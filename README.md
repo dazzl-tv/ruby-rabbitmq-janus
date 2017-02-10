@@ -151,22 +151,34 @@ rabbitmq and use plugin echotest for janus server.
 
 Use tags for rspec :
 
-| Describe                                                          | Type            | Name            |
-| -------------------------------------------------------------     | --------------- | --------------- |
-| **Internaly function**                                            | config          |                 |
-| Use bunny gem                                                     |                 | rabbit          |
-| Test log functions                                                |                 | log             |
-| Test configuration function                                       |                 | config          |
-| Test Gem contains CONSTANTS                                       |                 | describe        |
-| **Level request sending to janus (admin monitor API or classic)** | level           |                 |
-| Request with no admin right.                                      |                 | base            |
-| Request with admin right in Janus application.                    |                 | admin           |
-| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                 |
-| Test request attach type                                          |                 | attach          |
-| Test request type create                                          |                 | create          |
-| Test request type detach                                          |                 | detach          |
-| Test request type info                                            |                 | info            |
-| Test request type test                                            |                 | test            |
+| Describe                                                          | Type            | Name              |
+| -------------------------------------------------------------     | --------------- | ---------------   |
+| **Internaly function**                                            | config          |                   |
+| Use bunny gem                                                     |                 | rabbit            |
+| Test log functions                                                |                 | log               |
+| Test configuration function                                       |                 | config            |
+| Test Gem contains CONSTANTS                                       |                 | describe          |
+| **Level request sending to janus (admin monitor API or classic)** | level           |                   |
+| Request with no admin right.                                      |                 | base              |
+| Request with admin right in Janus application.                    |                 | admin             |
+| Request candidate/jsep                                            |                 | peer              |
+| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                   |
+| Test request attach type                                          |                 | attach            |
+| Test request type create                                          |                 | create            |
+| Test request type detach                                          |                 | detach            |
+| Test request type janus info                                      |                 | info              |
+| Test request type test                                            |                 | test              |
+| Test request type handle list                                     |                 | handles           |
+| Test request type sesssion list                                   |                 | sessions          |
+| Test request type handle information                              |                 | handle_info       |
+| Test request type (un)locking debug                               |                 | set_locking_debug |
+| Test request type change log level                                |                 | set_log_level     |
+| ~~Test request type tokens list~~                                 |                 | tokens            |
+| Test request type destroy session                                 |                 | destroy           |
+| Test request keepalive                                            |                 | keepalive         |
+| ~~Test request type sdp offer~~                                   |                 | offer             |
+| Test request type trickle, send on candidate                      |                 | trickle           |
+| Test request type trickles, send array candidate                  |                 | trickles          |
 
 Example usage rspec with tags :
 ```ruby

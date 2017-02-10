@@ -9,7 +9,7 @@ module RubyRabbitmqJanus
         private
 
         # Replace classic elements
-        def replace_classic
+        def replace_element_classic
           super
           replace_handle if request.key?('handle_id')
           replace_candidates if request.key?('candidates')

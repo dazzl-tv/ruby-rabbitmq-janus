@@ -2,12 +2,15 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type sessions list' do
-  before(:example) { @type = 'admin::sessions' }
+describe 'RubyRabbitmqJanus::RRJ -- message type set log level' do
+  before(:example) do
+    @type = 'admin::set_log_level'
+    @options = { 'level' => Random.rand(7) }
+  end
 
   describe '#start_transaction_admin', type: :request,
                                        level: :admin,
-                                       name: :sessions do
+                                       name: :set_log_level do
     include_examples 'transaction admin should match json schema'
   end
 end

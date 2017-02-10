@@ -2,16 +2,16 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
+describe 'RubyRabbitmqJanus::RRJ -- message type trickles' do
   before(:example) do
-    @type = 'peer::trickle'
+    @type = 'peer::trickles'
     candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }
-    @options = { 'candidate' => candidate }
+    @options = { 'candidates' => [candidate, candidate, candidate] }
   end
 
   describe '#start_transaction_handle', type: :request,
                                         level: :base,
-                                        name: :trickle do
+                                        name: :trickles do
     context 'when queue is exclusive' do
       include_examples 'transaction handle should match json schema'
     end

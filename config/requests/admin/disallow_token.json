@@ -1,0 +1,6 @@
+{
+  "janus": "disallow_token",
+  "token": "<string>",
+  "transaction": "<string>",
+  "admin_secret": "<string>"
+}

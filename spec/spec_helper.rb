@@ -45,6 +45,18 @@ RSpec.configure do |config|
     Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
     Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
     @gateway = RubyRabbitmqJanus::RRJ.new
+    @response = nil
+    @options = {}
+  end
+
+  config.before(:example, level: :peer) do
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
+    Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
+    Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
+    @gateway = RubyRabbitmqJanus::RRJ.new
+    @response = nil
+    @options = {}
   end
 
   config.before(:example, level: :admin) do
@@ -52,7 +64,9 @@ RSpec.configure do |config|
     Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
     Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
     Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
-    @gateway_admin = RubyRabbitmqJanus::RRJAdmin.new
+    @gateway = RubyRabbitmqJanus::RRJAdmin.new
+    @response = nil
+    @options = {}
   end
 
   # Exclude request with tag broken

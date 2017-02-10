@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "janus": { "type": "string", "pattern": "success" },
+    "transaction": { "type":  "string" },
+    "locking_debug": { "type":  "boolean" }
+  },
+  "required": [
+    "janus",
+    "transaction",
+    "locking_debug"
+  ]
+}

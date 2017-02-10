@@ -9,7 +9,7 @@ module RubyRabbitmqJanus
         private
 
         # Replace classic elements and for admin elements
-        def replace_classic
+        def replace_element_classic
           super
           replace_admins if request.key?('admin_secret')
           add_secret if opts.key?('add')

@@ -75,7 +75,7 @@ module RubyRabbitmqJanus
         end
 
         def find_session
-          Janus::Responses::Standard.new(create_session).to_hash['data']['id']
+          Janus::Responses::Standard.new(create_session).session
         end
 
         def param_session

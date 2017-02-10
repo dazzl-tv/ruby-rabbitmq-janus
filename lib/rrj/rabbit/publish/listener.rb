@@ -38,7 +38,8 @@ module RubyRabbitmqJanus
           reply = @rabbit.queue(queue_name)
           @rabbit.prefetch(1)
           reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
-            log_message_id(prop)
+            Tools::Log.instance.info \
+              "[X] Message reading ##{prop['correlation_id']}"
             synchronize_response(info, payload)
           end
         end
@@ -53,15 +54,8 @@ module RubyRabbitmqJanus
           { block: false, manual_ack: true, arguments: { 'x-priority': 2 } }
         end
 
-        # Counts transmitted messages
-        def log_message_id(propertie)
-          message_id = propertie.message_id
-          Tools::Log.instance.info "[X] Message reading with ID ##{message_id}"
-        end
-
         # Sending an signal when an response is reading in queue
         def synchronize_response(info, payload)
-          sleep 0.2
           @response = Janus::Responses::Event.new(JSON.parse(payload))
           @rabbit.acknowledge(info.delivery_tag, false)
           lock.synchronize { condition.signal }

@@ -8,8 +8,7 @@ module RubyRabbitmqJanus
       # This class work with janus and send a series of message
       class Admin < Session
         def initialize(session)
-          super(session)
-          @exclusive = true
+          super(true, session)
         end
 
         def connect

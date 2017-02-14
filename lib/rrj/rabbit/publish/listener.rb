@@ -13,18 +13,21 @@ module RubyRabbitmqJanus
         # @param [String] rabbit Information connection to rabbitmq server
         def initialize(rabbit)
           super()
+          @responses = []
           @rabbit = rabbit.channel
-          @response = nil
           subscribe_queue
         end
 
         # Listen a queue and return a body response
         def listen_events
+          Tools::Log.instance.debug 'Waiting event...'
+          @semaphore.wait
+          Tools::Log.instance.info 'Janus event received .. treatment ..'
+          response = nil
           lock.synchronize do
-            condition.wait(lock)
-            Tools::Log.instance.info 'Janus event received .. treatment ..'
-            yield @response.event, @response
+            response = @responses.shift
           end
+          yield response.event, response
         end
 
         private
@@ -56,15 +59,16 @@ module RubyRabbitmqJanus
         # Counts transmitted messages
         def log_message_id(propertie)
           message_id = propertie.message_id
-          Tools::Log.instance.info "[X] Message reading with ID ##{message_id}"
+          Tools::Log.instance.info "[X] Message reading with ID #{message_id}"
         end
 
         # Sending an signal when an response is reading in queue
         def synchronize_response(info, payload)
-          sleep 0.2
-          @response = Janus::Responses::Event.new(JSON.parse(payload))
+          lock.synchronize do
+            @responses.push(Janus::Responses::Event.new(JSON.parse(payload)))
+          end
           @rabbit.acknowledge(info.delivery_tag, false)
-          lock.synchronize { condition.signal }
+          @semaphore.signal
         end
       end
     end

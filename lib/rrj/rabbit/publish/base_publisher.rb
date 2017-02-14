@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'semaphore'
 
 module RubyRabbitmqJanus
   module Rabbit
@@ -15,13 +16,13 @@ module RubyRabbitmqJanus
       #
       # @abstract Publish message in RabbitMQ
       class BasePublisher
-        attr_reader :response
+        attr_reader :responses
 
         # Define a base publisher
         def initialize
           Tools::Log.instance.debug 'Create an publisher'
-          @response = nil
-          @condition = ConditionVariable.new
+          @responses = []
+          @semaphore= Semaphore.new
           @lock = Mutex.new
         end
 
@@ -31,11 +32,14 @@ module RubyRabbitmqJanus
 
         # return an response when signal is trigger
         def return_response
+          Tools::Log.instance.debug 'Waiting response...'
+          @semaphore.wait
+          Tools::Log.instance.debug 'Response received'
+          response = nil
           @lock.synchronize do
-            Tools::Log.instance.debug 'Response received'
-            @condition.wait(@lock)
-            @response
+            response = @responses.shift
           end
+          response
         end
       end
     end

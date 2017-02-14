@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.9] - 2017-02-14
+### [Fixed]
+- Keepalive deadlock, fixed using semaphore in place of condition variable
+
 ## [1.2.8] - 2017-01-27
 ### [Fixed]
 - Session keepalive cut

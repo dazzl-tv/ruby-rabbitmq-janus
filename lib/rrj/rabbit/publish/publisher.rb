@@ -39,8 +39,14 @@ module RubyRabbitmqJanus
         def subscribe_to_queue
           reply.subscribe do |_delivery_info, propertie, payload|
             if @message.correlation.eql?(propertie.correlation_id)
-              @response = JSON.parse payload
-              lock.synchronize { condition.signal }
+              Tools::Log.instance.debug "Parsing response payload......"
+              lock.synchronize do
+                @responses.push(JSON.parse payload)
+              end
+              Tools::Log.instance.debug "Response payload is: #{payload}"
+              @semaphore.signal
+            else
+              Tools::Log.instance.error "Response correlation ID mismatch (#{@message.correlation}!=#{propertie.correlation_id})"
             end
           end
         end

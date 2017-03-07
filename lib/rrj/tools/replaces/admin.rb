@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     module Replaces
       # Format message request with good data to HASH format for Admin request
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      class Admin < Standard
+      class Admin < Handle
         private
 
         # Replace classic elements and for admin elements

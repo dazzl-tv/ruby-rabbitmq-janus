@@ -70,7 +70,7 @@ module RubyRabbitmqJanus
       end
 
       def convert_to_type_array
-        data = @data.count.eql?(1) ? @data[0] : @data
+        data = array_alone
         key = data.is_a?(Hash) ? @key : @key.pluralize
         [key, data]
       end
@@ -78,6 +78,14 @@ module RubyRabbitmqJanus
       def test_boolean(boolean_string, boolean_class)
         @data.is_a?(boolean_class) ||
           (@data.is_a?(String) && @data.casecmp(boolean_string).eql?(0))
+      end
+
+      def array_alone
+        if @data.is_a?(Array)
+          @data.count.eql?(1) ? @data[0] : @data
+        else
+          @data
+        end
       end
     end
   end

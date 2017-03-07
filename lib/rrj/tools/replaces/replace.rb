@@ -40,40 +40,64 @@ module RubyRabbitmqJanus
         attr_reader :request, :opts, :type
 
         def test_presence?(presence_of_key)
-          @opts.key?(presence_of_key) && @request.key?('body')
+          @opts.key?(presence_of_key) && @request.key?('body') &&
+            !@opts[presence_of_key].blank?
+        end
+
+        def replace_other
+          values = @opts['replace']
+          running_hash(rewrite_key_to_string(values))
+        rescue => message
+          Tools::Log.instance.warn "Error REPLACE other field : #{message}"
+        end
+
+        def add_other
+          values = @opts['add']
+          @request['body'].merge!(values)
+        rescue => message
+          Tools::Log.instance.warn "Error ADD other field : #{message}"
+        end
+
+        def rewrite_key_to_string(node)
+          Hash[
+            node.map do |key, value|
+              [key.to_s, value?(value)]
+            end
+          ]
+        end
+
+        def value?(value)
+          value.is_a?(Hash) ? rewrite_key_to_string(value) : value
+        end
+
+        def running_hash(hash, parent = 'body')
+          hash.each do |key, value|
+            if value.is_a?(Hash)
+              running_hash(value, new_parent(key, parent))
+            else
+              @request[parent][key] = value unless key.eql? 'sdp'
+            end
+          end
+        end
+
+        def new_parent(key, parent)
+          "#{parent}#{'.' unless parent.empty?}#{key}"
         end
 
         def replace_element_classic
           replace_transaction if @request.key?('transaction')
-          replace_session if @request.key?('session_id')
-          replace_plugin if @request.key?('plugin')
         end
 
-        # Create an transaction string and replace in request field with an
-        # String format
         def replace_transaction
           @request['transaction'] = @type.convert('transaction')
         rescue => message
           Tools::Log.instance.warn "Error transaction replace : #{message}"
-        end
-
-        # Read option session and replace in request
-        def replace_session
-          @request['session_id'] = @type.convert('session_id', @opts)
-        rescue => message
-          Tools::Log.instance.warn "Error session replace : #{message}"
-        end
-
-        # Replace plugin string
-        def replace_plugin
-          @request['plugin'] = @type.convert('plugin')
-        rescue => message
-          Tools::Log.instance.warn "Error plugin replace : #{message}"
         end
       end
     end
   end
 end
 
-require 'rrj/tools/replaces/standard'
+require 'rrj/tools/replaces/session'
+require 'rrj/tools/replaces/handle'
 require 'rrj/tools/replaces/admin'

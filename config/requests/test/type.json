@@ -8,5 +8,7 @@
   "audio": "<boolean>",
   "plugin1": "<plugin[1]>",
   "first_plugin": "<plugin[0]>",
-  "sdp": "<string>"
+  "sdp": "<string>",
+  "debug": "<integer>",
+  "level": "<integer>"
 }

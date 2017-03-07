@@ -134,5 +134,19 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
 
     include_examples 'test convert type hash', Array
   end
+
+  context 'convert debug' do
+    let(:key) { 'debug' }
+    let(:value) { Random.rand(1..7) }
+
+    include_examples 'test convert type', Integer
+  end
+
+  context 'convert level' do
+    let(:key) { 'level' }
+    let(:value) { Random.rand(1..7) }
+
+    include_examples 'test convert type', Integer
+  end
 end
 # rubocop:enable Metrics/BlockLength

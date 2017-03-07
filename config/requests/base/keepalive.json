@@ -1,5 +1,5 @@
 {
   "janus": "keepalive",
   "session_id": "<number>",
-  "transaction": "<string>"
+  "transaction": "<transaction>"
 }

@@ -1,6 +1,6 @@
 {
   "janus": "remove_token",
   "token": "<string>",
-  "transaction": "<string>",
+  "transaction": "<transaction>",
   "admin_secret": "<string>"
 }

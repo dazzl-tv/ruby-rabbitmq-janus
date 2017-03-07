@@ -1,6 +1,6 @@
 {
   "janus": "attach",
   "session_id": "<number>",
-  "transaction": "<string>",
+  "transaction": "<transaction>",
   "plugin": "<plugin[0]>"
 }

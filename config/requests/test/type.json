@@ -1,11 +1,12 @@
 {
   "session_id": "<number>",
-  "transaction": "<string>",
+  "transaction": "<transaction>",
   "handle_id": "<number>",
   "plugin": "<plugin[2]>",
   "candidate": "<array>",
   "candidates": "<array>",
   "audio": "<boolean>",
   "plugin1": "<plugin[1]>",
-  "first_plugin": "<plugin[0]>"
+  "first_plugin": "<plugin[0]>",
+  "sdp": "<string>"
 }

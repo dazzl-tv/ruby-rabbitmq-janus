@@ -4,9 +4,9 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type trickles' do
   before(:example) do
-    @type = 'peer::trickles'
+    @type = 'peer::trickle'
     candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }
-    @options = { 'candidates' => [candidate, candidate, candidate] }
+    @options = { 'candidate' => [candidate, candidate, candidate] }
   end
 
   describe '#start_transaction_handle', type: :request,

@@ -99,6 +99,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
   end
 
   context 'convert array with many data' do
+    let(:size) { 2 }
     let(:key) { 'candidates' }
     let(:value) do
       [
@@ -108,23 +109,30 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
     end
     let(:value_return) { [key, value] }
 
-    include_examples 'test convert type', Array
+    include_examples 'test convert type array', Array, 2
   end
 
-  context 'convert array with one data' do
-    let(:key) { 'candidate' }
-    let(:value) { [{ one: 'data', and: 'smiley', cool: ':-)' }] }
-    let(:value_return) { [key, value[0]] }
+  context 'convert array random value candidate' do
+    let(:size) { Random.rand(1..99) }
+    let(:key) { 'candidates' }
+    let(:value) do
+      array = []
+      candidate = { super: 'top', array: 'with', many: 'data' }
+      size.times { array.push(candidate) }
+      array
+    end
+    let(:value_return) { [key, value] }
 
-    include_examples 'test convert type', Array
+    include_examples 'test convert type array', Array
   end
 
   context 'convert array with one data' do
     let(:key) { 'candidates' }
     let(:value) { [{ one: 'data', and: 'smiley', cool: ':-)' }] }
-    let(:value_return) { [key, value[0]] }
+    let(:value_hash) { value[0] }
+    let(:value_return) { [key, value_hash] }
 
-    include_examples 'test convert type', Array
+    include_examples 'test convert type hash', Array
   end
 end
 # rubocop:enable Metrics/BlockLength

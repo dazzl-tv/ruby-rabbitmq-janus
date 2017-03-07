@@ -3,6 +3,8 @@
 require 'active_support/core_ext/string'
 
 # :reek:UtilityFunction
+# :reek:TooManyStatements
+# rubocop:disable Metrics/CyclomaticComplexity
 
 module RubyRabbitmqJanus
   module Tools
@@ -29,13 +31,6 @@ module RubyRabbitmqJanus
         convert_data
       end
 
-      # Generate a transaction string
-      #
-      # @return [String] String transaction with 10 char
-      def transaction
-        [*('A'..'Z'), *('0'..'9')].sample(10).join
-      end
-
       private
 
       def convert_data
@@ -44,8 +39,13 @@ module RubyRabbitmqJanus
         when '<number>', '<integer>' then convert_to_type_number
         when '<boolean>' then convert_to_type_boolean
         when '<array>' then convert_to_type_array
+        when '<transaction>' then convert_to_type_transaction
         when /<plugin\[[0-9]\]>/ then convert_to_type_plugin
         end
+      end
+
+      def convert_to_type_transaction
+        [*('A'..'Z'), *('0'..'9')].sample(10).join
       end
 
       def convert_to_type_string
@@ -82,3 +82,4 @@ module RubyRabbitmqJanus
     end
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity

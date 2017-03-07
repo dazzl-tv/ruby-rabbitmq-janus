@@ -45,7 +45,7 @@ module RubyRabbitmqJanus
 
         # Replace debug element
         def replace_debug
-          request['debug'] = opts['debug']
+          request['debug'] = type.convert('debug', opts)
         rescue => message
           Tools::Log.instance.warn "Error replace debug : #{message}"
         end

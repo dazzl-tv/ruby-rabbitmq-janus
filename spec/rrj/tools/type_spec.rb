@@ -4,16 +4,23 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
-  let(:transaction) { RubyRabbitmqJanus::Tools::Type.new('').transaction }
+  subject(:converter) do
+    # Get request JSON file
+    rqe = RubyRabbitmqJanus::Tools::Requests.instance.requests['test::type']
+    # Open request file
+    RubyRabbitmqJanus::Tools::Type.new(JSON.parse(File.read(rqe)))
+  end
 
-  context 'Generate transaction' do
-    it { expect(transaction).to be_kind_of(String) }
-    it { expect(transaction.length).to eql(10) }
+  context 'convert transaction' do
+    let(:key) { 'transaction' }
+    let(:value) { %r{/.*[A-Z][0-9]/} }
+
+    include_examples 'match convert type', String, 10
   end
 
   context 'convert string' do
-    let(:key) { 'transaction' }
-    let(:value) { transaction }
+    let(:key) { 'sdp' }
+    let(:value) { 'v=0\r\no=[..more sdp stuff..]' }
 
     include_examples 'test convert type', String
   end

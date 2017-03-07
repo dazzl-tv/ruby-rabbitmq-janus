@@ -36,7 +36,7 @@ module RubyRabbitmqJanus
 
         # Replace sdp in request
         def replace_sdp
-          request['jsep']['sdp'] = opts['sdp']
+          request['jsep']['sdp'] = type.convert('sdp')
         rescue => message
           Tools::Log.instance.warn "Error sdp replace : #{message}"
         end

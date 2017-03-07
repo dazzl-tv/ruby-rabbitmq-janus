@@ -48,7 +48,7 @@ module RubyRabbitmqJanus
         # Create an transaction string and replace in request field with an
         # String format
         def replace_transaction
-          @request['transaction'].replace @type.transaction
+          @request['transaction'] = @type.convert('transaction')
         rescue => message
           Tools::Log.instance.warn "Error transaction replace : #{message}"
         end

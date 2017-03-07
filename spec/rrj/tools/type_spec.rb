@@ -82,5 +82,42 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
 
     include_examples 'test convert type', String
   end
+
+  context 'convert array with one data' do
+    let(:key) { 'candidate' }
+    let(:value) { { super: 'top', array: 'alone' } }
+    let(:value_return) { [key, value] }
+
+    include_examples 'test convert type', Array
+  end
+
+  context 'convert array with many data' do
+    let(:key) { 'candidates' }
+    let(:value) do
+      [
+        { super: 'top', array: 'with' },
+        { many: 'data', and: 'smiley', cool: ':-)' }
+      ]
+    end
+    let(:value_return) { [key, value] }
+
+    include_examples 'test convert type', Array
+  end
+
+  context 'convert array with one data' do
+    let(:key) { 'candidate' }
+    let(:value) { [{ one: 'data', and: 'smiley', cool: ':-)' }] }
+    let(:value_return) { [key, value[0]] }
+
+    include_examples 'test convert type', Array
+  end
+
+  context 'convert array with one data' do
+    let(:key) { 'candidates' }
+    let(:value) { [{ one: 'data', and: 'smiley', cool: ':-)' }] }
+    let(:value_return) { [key, value[0]] }
+
+    include_examples 'test convert type', Array
+  end
 end
 # rubocop:enable Metrics/BlockLength

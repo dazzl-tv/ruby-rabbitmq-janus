@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Spec for RubyRabbitmqJanus::Tools::Type
 - Add request for testing type
 - Complete default plugins
+- Add type convert_array
 
 ### [Changed]
 - Session ID management

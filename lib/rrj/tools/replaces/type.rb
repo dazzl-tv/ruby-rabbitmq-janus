@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/string'
+
 # :reek:UtilityFunction
 
 module RubyRabbitmqJanus
@@ -41,6 +43,7 @@ module RubyRabbitmqJanus
         when '<string>' then convert_to_type_string
         when '<number>', '<integer>' then convert_to_type_number
         when '<boolean>' then convert_to_type_boolean
+        when '<array>' then convert_to_type_array
         when /<plugin\[[0-9]\]>/ then convert_to_type_plugin
         end
       end
@@ -54,7 +57,6 @@ module RubyRabbitmqJanus
       end
 
       def convert_to_type_boolean
-        Tools::Log.instance.debug "Boolean type : #{@data} -- #{@data.class}"
         if test_boolean('TRUE', TrueClass)
           true
         elsif test_boolean('FALSE', FalseClass)
@@ -65,6 +67,12 @@ module RubyRabbitmqJanus
       def convert_to_type_plugin
         index = @request[@key].gsub('<plugin[', '').gsub(']>', ']').to_i
         Config.instance.plugin_at(index)
+      end
+
+      def convert_to_type_array
+        data = @data.count.eql?(1) ? @data[0] : @data
+        key = data.is_a?(Hash) ? @key : @key.pluralize
+        [key, data]
       end
 
       def test_boolean(boolean_string, boolean_class)

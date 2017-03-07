@@ -12,7 +12,6 @@ module RubyRabbitmqJanus
         def replace_element_classic
           super
           replace_handle if request.key?('handle_id')
-          replace_candidates if request.key?('candidates')
           replace_candidate if request.key?('candidate')
           replace_sdp if request.key?('jsep')
         end
@@ -24,16 +23,13 @@ module RubyRabbitmqJanus
           Tools::Log.instance.warn "Error handle replace : #{message}"
         end
 
-        # Replace candidates
-        def replace_candidates
-          request['candidates'] = opts['candidates']
-        rescue => message
-          Tools::Log.instance.warn "Error candidate replace : #{message}"
-        end
-
         # Replace candidate
+        # :reek:TooManyStatements
         def replace_candidate
-          request['candidate'] = opts['candidate']
+          cdn = type.convert('candidate', opts)
+          key = cdn[0]
+          request['candidate'] = request.delete(key)
+          request[key] = cdn[1]
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"
         end

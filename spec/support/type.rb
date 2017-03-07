@@ -26,3 +26,27 @@ shared_examples 'test convert type hash' do |klass|
   it { expect(value_test[1]).to be_kind_of(Hash) }
   it { expect(value_test[1]).to eql(value_hash) }
 end
+
+shared_examples 'test replace in request' do |element, type|
+  let(:transform) { replace.transform_request }
+  let(:value) { defined?(value_return) ? value_return : element }
+
+  it { expect(transform[element]).to be_kind_of(type) }
+  it { expect(transform[element]).to eql(options[value]) }
+end
+
+shared_examples 'test replace in request nil' do |element|
+  let(:transform) { replace.transform_request }
+
+  it 'option should equal nil' do
+    expect(options[element]).to be(nil)
+  end
+
+  it 'result be a kind of String' do
+    expect(transform[element]).to be_kind_of(String)
+  end
+
+  it 'result should not equal to nil' do
+    expect(transform[element]).not_to be_nil
+  end
+end

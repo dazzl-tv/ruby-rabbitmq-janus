@@ -39,6 +39,10 @@ module RubyRabbitmqJanus
 
         attr_reader :request, :opts, :type
 
+        def test_presence?(presence_of_key)
+          @opts.key?(presence_of_key) && @request.key?('body')
+        end
+
         def replace_element_classic
           replace_transaction if @request.key?('transaction')
           replace_session if @request.key?('session_id')

@@ -54,9 +54,10 @@ module RubyRabbitmqJanus
       end
 
       def convert_to_type_boolean
-        if @data.casecmp('TRUE')
+        Tools::Log.instance.debug "Boolean type : #{@data} -- #{@data.class}"
+        if test_boolean('TRUE', TrueClass)
           true
-        elsif @data.casecmp('FALSE')
+        elsif test_boolean('FALSE', FalseClass)
           false
         end
       end
@@ -64,6 +65,11 @@ module RubyRabbitmqJanus
       def convert_to_type_plugin
         index = @request[@key].gsub('<plugin[', '').gsub(']>', ']').to_i
         Config.instance.plugin_at(index)
+      end
+
+      def test_boolean(boolean_string, boolean_class)
+        @data.is_a?(boolean_class) ||
+          (@data.is_a?(String) && @data.casecmp(boolean_string).eql?(0))
       end
     end
   end

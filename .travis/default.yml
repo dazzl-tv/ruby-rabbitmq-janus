@@ -19,6 +19,8 @@ janus:
     keepalive: 55
   plugins:
     - janus.plugin.echotest
+    - janus.plugin.videoroom
+    - janus.plugin.sip
 
 gem:
   log:

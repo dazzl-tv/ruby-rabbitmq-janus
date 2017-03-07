@@ -1,0 +1,9 @@
+{
+  "session_id": "<number>",
+  "transaction": "<string>",
+  "handle_id": "<number>",
+  "plugin": "<plugin[2]>",
+  "candidate": "<array>",
+  "candidates": "<array>",
+  "audio": "<boolean>"
+}

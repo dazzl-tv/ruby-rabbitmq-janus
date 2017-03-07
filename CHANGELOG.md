@@ -11,10 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Complete documentation with example
 - Customize response (standard/admin)
 - Filter in log for sensitive data (expection debug mode message)
+- Spec for RubyRabbitmqJanus::Tools::Type
+- Add request for testing type
+- Complete default plugins
 
 ### [Changed]
 - Session ID management
 - Type converting
+- Delete many method for simplify gem usage
 
 ### [Deleted]
 - Delete unless method

@@ -5,5 +5,7 @@
   "plugin": "<plugin[2]>",
   "candidate": "<array>",
   "candidates": "<array>",
-  "audio": "<boolean>"
+  "audio": "<boolean>",
+  "plugin1": "<plugin[1]>",
+  "first_plugin": "<plugin[0]>"
 }

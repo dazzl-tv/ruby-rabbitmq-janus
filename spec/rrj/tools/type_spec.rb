@@ -62,7 +62,21 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
     include_examples 'test convert type', FalseClass
   end
 
-  context 'convert plugin random' do
+  context 'convert plugin #0' do
+    let(:key) { 'first_plugin' }
+    let(:value) { 'janus.plugin.echotest' }
+
+    include_examples 'test convert type', String
+  end
+
+  context 'convert plugin #1' do
+    let(:key) { 'plugin1' }
+    let(:value) { 'janus.plugin.videoroom' }
+
+    include_examples 'test convert type', String
+  end
+
+  context 'convert plugin #2' do
     let(:key) { 'plugin' }
     let(:value) { 'janus.plugin.sip' }
 

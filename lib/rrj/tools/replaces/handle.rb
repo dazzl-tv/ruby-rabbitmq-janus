@@ -29,8 +29,8 @@ module RubyRabbitmqJanus
         def replace_candidate
           cdn = type.convert(determine_key_candidate, opts)
           key = cdn[0]
-          request['candidate'] = request.delete(key)
           request[key] = cdn[1]
+          delete_key_unless
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"
         end
@@ -47,6 +47,16 @@ module RubyRabbitmqJanus
             'candidate'
           else
             'candidates'
+          end
+        end
+
+        def delete_key_unless
+          singular = request['candidate']
+          plural = request['candidates']
+          if singular.eql?('<array>')
+            request.delete('candidate')
+          elsif plural.eql?('candidates')
+            request.delete['candidates']
           end
         end
       end

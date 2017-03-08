@@ -18,7 +18,6 @@ module RubyRabbitmqJanus
         # Add string secret for admin request
         def add_secret
           values = opts['add']
-          Tools::Log.instance.debug "Values add : #{values}"
           request.merge!(values)
         end
 

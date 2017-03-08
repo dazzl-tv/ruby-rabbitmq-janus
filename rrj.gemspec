@@ -4,10 +4,9 @@ require 'rrj/info'
 
 Gem::Specification.new do |spec|
   spec.name          = RubyRabbitmqJanus::GEM_NAME
-  if (ENV['TRAVIS'] && ENV['TRAVIS_BRANCH'].eql?('master')) || !ENV['TRAVIS']
-    spec.version     = RubyRabbitmqJanus::VERSION
-  else
-    spec.version     = "#{RubyRabbitmqJanus::VERSION}-#{ENV['TRAVIS_BUILD_NUMBER']}"
+  spec.version       = RubyRabbitmqJanus::VERSION
+  if ENV['TRAVIS'] && ENV['TRAVIS_BRANCH'].eql?('develop')
+    spec.version     = "#{sepc.version}-#{ENV['TRAVIS_BUILD_NUMBER']}"
   end
   spec.authors       = RubyRabbitmqJanus::AUTHORS
   spec.email         = RubyRabbitmqJanus::EMAILS
@@ -27,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.files         += Dir['lib/**/*']
   spec.files         += Dir['spec/**/*']
   spec.files         += Dir['tmp/**/*']
+
   spec.require_paths = ['lib']
 
   spec.post_install_message = RubyRabbitmqJanus::POST_INSTALL

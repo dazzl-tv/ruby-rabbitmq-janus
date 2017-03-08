@@ -5,7 +5,7 @@ require 'rrj/info'
 Gem::Specification.new do |spec|
   spec.name          = RubyRabbitmqJanus::GEM_NAME
   if !ENV['TRAVIS_BRANCH'].eql?('master')
-    spec.version     = "#{RubyRabbitmqJanus::VERISON}-#{ENV['TRAVIS_BUILD_NUMBER']}"
+    spec.version     = "#{RubyRabbitmqJanus::VERSION}-#{ENV['TRAVIS_BUILD_NUMBER']}"
   else
     spec.version     = RubyRabbitmqJanus::VERSION
   end

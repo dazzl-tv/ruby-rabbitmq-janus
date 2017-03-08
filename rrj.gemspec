@@ -5,9 +5,9 @@ require 'rrj/info'
 Gem::Specification.new do |spec|
   spec.name          = RubyRabbitmqJanus::GEM_NAME
   if !ENV['TRAVIS_BRANCH'].eql?('master')
-    spec.version     = "#{spec.version}-#{ENV['TRAVIS_BUILD_NUMBER']}"
+    spec.version     = "#{RubyRabbitmqJanus::VERISON}-#{ENV['TRAVIS_BUILD_NUMBER']}"
   else
-    spec.version       = RubyRabbitmqJanus::VERSION
+    spec.version     = RubyRabbitmqJanus::VERSION
   end
   spec.authors       = RubyRabbitmqJanus::AUTHORS
   spec.email         = RubyRabbitmqJanus::EMAILS

@@ -19,9 +19,6 @@ module RubyRabbitmqJanus
 
         # Opening a short transaction with rabbitmq and close when is ending
         #
-        # @param [Boolean] exclusive
-        #   Determine if the message is sending to a exclusive queue or not
-        #
         # @yield Send a message to Janus
         def connect
           rabbit.transaction_short do

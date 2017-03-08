@@ -25,11 +25,9 @@ module RubyRabbitmqJanus
         end
 
         # Replace candidate
-        # :reek:TooManyStatements
         def replace_candidate
           cdn = type.convert(determine_key_candidate, opts)
-          key = cdn[0]
-          request[key] = cdn[1]
+          request[cdn[0]] = cdn[1]
           delete_key_unless
         rescue => message
           Tools::Log.instance.warn "Error candidate replace : #{message}"

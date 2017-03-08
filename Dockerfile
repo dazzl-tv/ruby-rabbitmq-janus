@@ -18,7 +18,7 @@ WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus
 
 # Add configuration for travis test
-COPY .travis/default.yml /ruby_rabbitmq_janus/config/default.yml
+COPY .travis/default.yml /ruby_rabbitmq_janus/lib/config/default.yml
 
 # Configure GEM
 RUN echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc

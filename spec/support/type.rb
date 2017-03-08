@@ -33,11 +33,8 @@ shared_examples 'test replace in request' do |element, type|
 
   include_examples 'keys', element
 
-  it do
-    p "Keys : #{transform}"
-    expect(transform['jsep']['sdp']).to be_kind_of(type)
-  end
-  it { expect(transform['jsep']['sdp']).to eql(options[value]) }
+  it { expect(keys).to be_kind_of(type) }
+  it { expect(keys).to eql(options[value]) }
 end
 
 shared_examples 'test replace in request nil' do |element|

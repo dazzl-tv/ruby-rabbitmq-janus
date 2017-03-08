@@ -14,7 +14,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :replace_session do
 
   context 'replace classic element' do
     let(:opt_session) { Random.rand(123_456_789..987_654_321) }
-    let(:opt_plugin) { 'janus.plugin.sip' }
+    let(:opt_plugin) { 'janus.plugin.echotest' }
     let(:options) do
       {
         'session_id' => opt_session,
@@ -43,24 +43,12 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :replace_session do
       include_examples 'test replace in request', 'plugin', String
     end
 
-    context 'transform request candidate' do
-      include_examples 'test replace in request nil', 'candidate'
-    end
-
     context 'transform request candidates' do
       include_examples 'test replace in request nil', 'candidates'
     end
 
     context 'transform request audio' do
       include_examples 'test replace in request nil', 'audio'
-    end
-
-    context 'transform request plugin1' do
-      include_examples 'test replace in request nil', 'plugin1'
-    end
-
-    context 'transform request first_plugin' do
-      include_examples 'test replace in request nil', 'first_plugin'
     end
 
     context 'transform request sdp' do

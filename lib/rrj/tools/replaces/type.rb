@@ -34,7 +34,7 @@ module RubyRabbitmqJanus
       private
 
       def convert_data
-        case @request[@key]
+        case search_key
         when '<string>' then convert_to_type_string
         when '<number>', '<integer>' then convert_to_type_number
         when '<boolean>' then convert_to_type_boolean
@@ -42,6 +42,18 @@ module RubyRabbitmqJanus
         when '<transaction>' then convert_to_type_transaction
         when /<plugin\[[0-9]\]>/ then convert_to_type_plugin
         end
+      end
+
+      def search_key
+        field = @request[@key]
+        if field.blank?
+          @request.each do |key, value|
+            test = @request[key]
+            field = test[@key] \
+              if value.is_a?(Hash) && test.key?(@key)
+          end
+        end
+        field
       end
 
       def convert_to_type_transaction

@@ -7,14 +7,14 @@ module RubyRabbitmqJanus
       class Admin < Standard
         # List of sessions running in Janus Instance.
         #
-        # @return [Hash] List of sessions
+        # @return [Array] List of sessions
         def sessions
           request['sessions']
         end
 
         # List of handles running in one session in Janus Instance.
         #
-        # @return [Hash] List of handles
+        # @return [Array] List of handles
         def handles
           request['handles']
         end

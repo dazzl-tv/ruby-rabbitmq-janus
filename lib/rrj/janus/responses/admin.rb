@@ -5,17 +5,23 @@ module RubyRabbitmqJanus
     module Responses
       # Response for admin request
       class Admin < Standard
-        # Return a list of sessions
+        # List of sessions running in Janus Instance.
+        #
+        # @return [Hash] List of sessions
         def sessions
           request['sessions']
         end
 
-        # Return a list of handles
+        # List of handles running in one session in Janus Instance.
+        #
+        # @return [Hash] List of handles
         def handles
           request['handles']
         end
 
-        # Return info to session or handle
+        # Info to session or handle in Janus Instance
+        #
+        # @return [Hash] Information to session/handle
         def info
           request['info']
         end

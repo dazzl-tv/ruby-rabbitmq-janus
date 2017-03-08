@@ -3,12 +3,13 @@
 module RubyRabbitmqJanus
   module Tools
     module Replaces
-      # Format message request with good data to HASH format
+      # Format message request with good data to HASH format for Handle request.
+      # Manage sdp, handle_id, candidate or candidates.
+      #
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       class Handle < Session
         private
 
-        # Replace classic elements
         def replace_element_classic
           super
           replace_sdp if request.key?('jsep')
@@ -17,14 +18,12 @@ module RubyRabbitmqJanus
             if request.key?('candidate') || request.key?('candidates')
         end
 
-        # Replace handle integer
         def replace_handle
           request['handle_id'] = type.convert('handle_id', opts)
         rescue => message
           Tools::Log.instance.warn "Error handle replace : #{message}"
         end
 
-        # Replace candidate
         def replace_candidate
           cdn = type.convert(determine_key_candidate, opts)
           request[cdn[0]] = cdn[1]
@@ -33,7 +32,6 @@ module RubyRabbitmqJanus
           Tools::Log.instance.warn "Error candidate replace : #{message}"
         end
 
-        # Replace sdp in request
         def replace_sdp
           request['jsep']['sdp'] = type.convert('sdp', opts)
         rescue => message

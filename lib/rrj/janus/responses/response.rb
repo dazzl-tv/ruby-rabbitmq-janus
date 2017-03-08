@@ -5,6 +5,7 @@ module RubyRabbitmqJanus
     # Modules for manipulate responses sending by Janus
     module Responses
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+      #
       # Read and decryt a response to janus
       class Response
         # Instanciate a response

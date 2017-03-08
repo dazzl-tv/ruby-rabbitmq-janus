@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Manage keepalive message
       #
       # Create a thread for sending a message with type keepalive to session

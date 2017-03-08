@@ -46,7 +46,6 @@ module RubyRabbitmqJanus
 
         private
 
-        # Read a hash and return an identifier
         def data_id
           data['id'].to_i
         rescue => error

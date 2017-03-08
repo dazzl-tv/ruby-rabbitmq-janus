@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # This class work with janus and send a series of message
       class Handle < Transaction
         # Initialize a transaction with handle
@@ -51,7 +51,6 @@ module RubyRabbitmqJanus
 
         private
 
-        # Create an handle for transaction
         def create_handle
           Tools::Log.instance.info 'Create an handle'
           opt = { 'session_id' => session }
@@ -59,14 +58,12 @@ module RubyRabbitmqJanus
           @handle = send_a_message_exclusive { msg }
         end
 
-        # Send a messaeg in exclusive queue
         def send_a_message_exclusive
           Janus::Responses::Standard.new(read_response_exclusive do
             yield
           end).sender
         end
 
-        # Read an response in queue exclusive
         def read_response_exclusive
           chan = rabbit.channel
           tmp_publish = Rabbit::Publisher::PublishExclusive.new(chan, '')

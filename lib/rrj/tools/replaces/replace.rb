@@ -6,12 +6,12 @@ module RubyRabbitmqJanus
     module Replaces
       # # Prepare request
       #
-      # Tools for replace elements in request sending to Rabbitmq. It's used
-      # for basic request. (with session_id or not).
+      # Tools for replace elements in request sending to Rabbitmq. It's a basic
+      # class. Manage just transaction element.
       #
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       class Replace
-        # Initialize tool replace
+        # Initialize tool replace.
         #
         # @param [Hash] request Request parsing before sending to RabbitMQ/Janus
         # @param [Hash] options Elements to be replaced in request
@@ -22,7 +22,7 @@ module RubyRabbitmqJanus
         end
 
         # Replace element in hash request with information used for this
-        # transaction
+        # transaction.
         #
         # @return [Hash] request with element replace
         def transform_request

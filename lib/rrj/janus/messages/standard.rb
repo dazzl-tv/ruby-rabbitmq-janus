@@ -4,6 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     module Messages
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+      #
       # # Create an standard message
       class Standard < Message
         # Return options to message for rabbitmq
@@ -15,9 +16,6 @@ module RubyRabbitmqJanus
 
         private
 
-        # Transform raw request in request to janus, so replace element
-        # <string>, <number>
-        # and other with real value
         def prepare_request(options)
           @request = Tools::Replaces::Handle.new(request,
                                                  options).transform_request

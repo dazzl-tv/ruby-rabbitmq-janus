@@ -4,8 +4,9 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Manage a transaction
+      #
       # Manage a transaction with message if contains a session identifier
       class Session < Transaction
         # Initialize a transaction with handle

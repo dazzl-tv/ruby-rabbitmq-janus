@@ -29,7 +29,6 @@ module RubyRabbitmqJanus
 
         attr_accessor :condition, :lock
 
-        # return an response when signal is trigger
         def return_response
           @lock.synchronize do
             Tools::Log.instance.debug 'Response received'

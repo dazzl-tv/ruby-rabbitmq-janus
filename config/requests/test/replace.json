@@ -8,7 +8,7 @@
   "jsep": {
     "sdp": "<string>"
   },
-  "debug": "<integer>",
+  "debug": "<boolean>",
   "level": "<integer>",
   "admin_secret": "<string>",
   "body": {}

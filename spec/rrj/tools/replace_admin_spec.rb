@@ -17,7 +17,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :replace_admin do
     let(:opt_handle) { Random.rand(123_456_789..987_654_321) }
     let(:opt_plugin) { 'janus.plugin.echotest' }
     let(:opt_level) { Random.rand(1..7) }
-    let(:opt_debug) { Random.rand(1..7) }
+    let(:opt_debug) { true }
     let(:opt_candidates) do
       array = []
       Random.rand(2..35).times { array.push('hdg': 'kjhdgf') }
@@ -73,7 +73,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :replace_admin do
     end
 
     context 'transform request debug' do
-      include_examples 'test replace in request', 'debug', Integer
+      include_examples 'test replace in request', 'debug', TrueClass
     end
 
     context 'transform request level' do

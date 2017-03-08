@@ -137,9 +137,9 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
 
   context 'convert debug' do
     let(:key) { 'debug' }
-    let(:value) { Random.rand(1..7) }
+    let(:value) { false }
 
-    include_examples 'test convert type', Integer
+    include_examples 'test convert type', FalseClass
   end
 
   context 'convert level' do

@@ -9,7 +9,7 @@
   "plugin1": "<plugin[1]>",
   "first_plugin": "<plugin[0]>",
   "sdp": "<string>",
-  "debug": "<integer>",
+  "debug": "<boolean>",
   "level": "<integer>",
   "admin_secret": "<string>"
 }

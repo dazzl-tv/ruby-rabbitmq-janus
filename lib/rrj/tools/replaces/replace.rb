@@ -19,7 +19,6 @@ module RubyRabbitmqJanus
           @request = request
           @opts = options
           @type = Tools::Type.new(@request)
-          Tools::Log.instance.debug "Element to replace : #{@opts}"
         end
 
         # Replace element in hash request with information used for this

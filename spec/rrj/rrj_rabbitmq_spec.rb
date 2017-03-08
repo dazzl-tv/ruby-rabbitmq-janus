@@ -9,7 +9,7 @@ describe 'RubyRabbitmqJanus::RabitMQ', type: :config, name: :rabbit do
   end
 
   it 'Close connection with RabbitMQ Server' do
-    expect(RubyRabbitmqJanus::Rabbit::Connect.new.close).to eq :closed
+    expect(RubyRabbitmqJanus::Rabbit::Connect.new.close).to eq(true)
   end
 
   it 'Propertie to message sending in rabbit' do

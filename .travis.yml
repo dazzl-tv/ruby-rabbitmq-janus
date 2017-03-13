@@ -33,11 +33,19 @@ script:
   - docker-compose run gem rubocop
   - docker-compose run gem reek
 
+before_deploy:
+  - gem install dpl
+
 deploy:
-  provider: script
-  gemspec: .travis/deploy.sh
+  provider: rubygems
+  api_key:
+    secure: Vkhh5xBPJ1r1w3m8002wRiMStreBhXiTZwDck+iyMiZf3RqYmqndG7bx3XFvgGuQnKeyEva6FgZ9HuD3zIQ3TFFx7kl79TA6DSmrMfdNH9uauuK+9xSKXa30/E4dnZI7yKr+KsAAwTV0Ay5nlqpJ2r7m3fRsiH+EEZogCgRfd+Qgvu6boKiu9v0sSwE3vSY6RWfrVG3TigKHRWx/omW2Br3r6uTHQU2l/UsGlKCrkycugcmKoBdFN96wsAY07scAtuG4j/rKzSBZjQZGVKus1mBgXjVE6ODinW5h4TtR0w3MtvSsQRF00NHNRbNZDsnnivYhQRWKRVwahSaTlxWvdaxqb4B1bxFXRe4rvjsEsQv5linynz1o1ruHzRLsFuFPPL8An9HopskDyIutn/1Z0NDdM2OTKpMlqr8DbNhP9AXI8k3ld7yLuwHriPLH/xDKU9hBjHBR8Sk0YSjiUxZAvuseK7ktzeRibSseEMo1MZJuD4j3zvPHWVBp/OXRJKhBeTdfGZutH5sbwUe8DKQTnJ3ElQ4VBjHVJ+WWsQGZti0QFHZlMsPgp0K7tHq4gx0cQslq+d6aw6eJvCJdlbCSlKo8o5yKINsi61R3+8AaHpGlsXsbCpU7i7qSTIEc8bHWXQpjr/h7ap9sz39IF6qMpWHn9KJSLP4P/ERkZh8wclk=
+  gemspec: rrj.gemspec
+  gem: ruby_rabbitmq_janus
   on:
+    repo: dazzl-tv/ruby-rabbitmq-janus/
     all_branches: true
+  skip_cleanup: true
 
 notifications:
   email: false

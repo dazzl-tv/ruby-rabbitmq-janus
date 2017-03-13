@@ -43,7 +43,7 @@ deploy:
   gemspec: rrj.gemspec
   gem: ruby_rabbitmq_janus
   on:
-    repo: dazzl-tv/ruby-rabbitmq-janus/
+    repo: dazzl-tv/ruby-rabbitmq-janus
     all_branches: true
   skip_cleanup: true
 

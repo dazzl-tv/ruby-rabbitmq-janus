@@ -1,8 +1,4 @@
-[![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus)
-[![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus)
-[![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus)
-
-# ruby-rabbitmq-janus -- RRJ
+# Ruby RabbitMQ Janus | [![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus) [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus) [![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus)
 
 Ruby Gem for Janus WebRTC Gateway integration using RabbitMQ message queue
 
@@ -39,6 +35,7 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
 ```
 
 ## Menu
+
 * [How to use](#how-to-use)
   * [Installation](#installation)
   * [Configuration](#configuration)
@@ -55,14 +52,29 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
   * [Documentation](#documentation)
     * [Read documentation](#read-documentation)
     * [Generate developer documentation](#generate-developer-documentation)
+* [Contributing](#contributing)
+* [Plus](#plus)
 
 ## How to use
 
 ### Installation
 
 Use rubygem for installing gem in your application. Add in your Gemfile :
+
 ```ruby
 gem 'ruby_rabbitmq_janus'
+```
+
+And then execute :
+
+```linux
+bundle
+```
+
+Or install it yourself as :
+
+```linux
+gem install evostream-event
 ```
 
 ### Configuration
@@ -217,3 +229,15 @@ yard server
 ```
 
 [See Yard Getting Started](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/dazzl-tv/ruby-rabbitmq-janus This project is intended to be a
+safe, welcoming space for collaboration, and contributors are expected to adhere
+to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## Plus
+
+Janus Admin Monitor project use this gem for manage data in Janus Meetecho with
+Admin/Monitor API.

@@ -12,3 +12,4 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'rrj.gemspec'

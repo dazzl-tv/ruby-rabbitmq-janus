@@ -1,16 +1,21 @@
+# frozen_string_literal: true
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'rrj/info'
 
 Gem::Specification.new do |spec|
+  version = RubyRabbitmqJanus::VERSION
+
   spec.name          = RubyRabbitmqJanus::GEM_NAME
-  if ENV['TRAVIS'] && !ENV['TRAVIS_BRANCH'].eql?('master')
-    spec.version     = "#{RubyRabbitmqJanus::VERSION}-#{ENV['TRAVIS_BUILD_NUMBER']}"
-  else
-    spec.version     = RubyRabbitmqJanus::VERSION
-  end
   spec.authors       = RubyRabbitmqJanus::AUTHORS
   spec.email         = RubyRabbitmqJanus::EMAILS
+  spec.version       = if ENV['TRAVIS'] && !ENV['TRAVIS_BRANCH'].eql?('master')
+                         "#{version}-#{ENV['TRAVIS_BUILD_NUMBER']}"
+                       else
+                         version
+                       end
 
   spec.summary       = RubyRabbitmqJanus::SUMMARY
   spec.description   = RubyRabbitmqJanus::DESCRIPTION
@@ -36,9 +41,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.0'
   spec.add_development_dependency 'rspec', '~> 3.5', '>= 3.5.0'
   spec.add_development_dependency 'overcommit', '~> 0.34.2'
-  spec.add_development_dependency 'rubocop', '~> 0.42.0'
+  spec.add_development_dependency 'rubocop', '>= 0.42.0'
   spec.add_development_dependency 'yard', '~> 0.9.5'
-  spec.add_development_dependency 'reek', '~> 4.2', '>= 4.2.4'
+  spec.add_development_dependency 'reek', '>= 4.2.4'
   spec.add_development_dependency 'fuubar', '~> 2.2'
   spec.add_development_dependency 'aruba', '~> 0.14.2'
   spec.add_development_dependency 'pry-byebug', '~> 3.4'

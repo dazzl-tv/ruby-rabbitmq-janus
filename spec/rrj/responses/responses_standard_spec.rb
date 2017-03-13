@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable Metrics/BlockLength
 describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
                                                         name: :standard do
   let(:message) do
@@ -42,4 +41,3 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

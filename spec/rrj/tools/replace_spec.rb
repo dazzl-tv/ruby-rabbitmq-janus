@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable Metrics/BlockLength
 describe 'RubyRabbitmqJanus::Log', type: :tools, name: :replace do
   subject(:replace) do
     # Get request JSON file

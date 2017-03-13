@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable Metrics/BlockLength
 describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
   subject(:converter) do
     # Get request JSON file
@@ -149,4 +148,3 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
     include_examples 'test convert type', Integer
   end
 end
-# rubocop:enable Metrics/BlockLength

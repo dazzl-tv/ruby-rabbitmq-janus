@@ -86,7 +86,7 @@ module RubyRabbitmqJanus
       def load_configuration
         log_message = "Loading configuration file : #{@configuration}"
         Tools::Log.instance.info(log_message)
-        YAML.load(ERB.new(File.read(@configuration)).result)
+        YAML.safe_load(ERB.new(File.read(@configuration)).result)
       rescue
         raise Errors::FileNotFound, @configuration
       end

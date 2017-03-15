@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add request for testing type
 - Complete default plugins
 - Add type convert_array
+- add type "<transaction>"
 
 ### [Changed]
 - Session ID management

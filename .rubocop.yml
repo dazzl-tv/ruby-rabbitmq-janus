@@ -11,5 +11,5 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*'
-    - 'rrj.gemspec'
+    - spec/**/*
+    - ruby_rabbitmq_janus.gemspec

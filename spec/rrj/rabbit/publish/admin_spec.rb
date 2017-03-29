@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Rabbit::Connect, type: :rabbit,
-                                             name: :publish do
+                                             name: :publisher_admin do
   let(:pusblish) { RubyRabbitmqJanus::Rabbot::Publisher::PublisherAdmin.new }
+
+  # @todo Complete test publisherAdmin
+  describe 'PublisherAdmin' do
+  end
 end

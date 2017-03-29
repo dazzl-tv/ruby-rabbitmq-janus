@@ -9,7 +9,7 @@ describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
     RubyRabbitmqJanus::Rabbit::Publisher::Listener.new(rabbit)
   end
 
-  describe '#new' do
-    it { expect(publish).to have_attributes(response: nil) }
+  # @todo Complete spec publisher listener
+  describe 'Listener' do
   end
 end

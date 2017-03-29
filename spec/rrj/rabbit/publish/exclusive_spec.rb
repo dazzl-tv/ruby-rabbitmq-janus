@@ -3,10 +3,10 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
-                                               name: :base_publisher do
-  let(:publish) { RubyRabbitmqJanus::Rabbit::Publisher::BasePublisher.new }
+                                               name: :exclusive do
+  let(:publish) { RubyRabbitmqJanus::Rabbit::Publisher::Exclusive.new }
 
-  describe '#new' do
-    it { expect(publish).to have_attributes(response: nil) }
+  # @todo Complete Publisher exclusive test
+  describe 'Exclusive' do
   end
 end

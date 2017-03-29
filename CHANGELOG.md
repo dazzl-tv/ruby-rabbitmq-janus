@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.0] - 2017-01-31
+## [2.0.0] - 2017-03-29
 ### [Added]
 - Admin feature
 - Complete documentation with example
@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add type convert_array
 - add type "<transaction>"
 - Spec for RubyRabbitmqJanus::Messages
+- Spec for RubyRabbitmqJanus::Rabbit
 
 ### [Changed]
 - Session ID management

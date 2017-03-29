@@ -8,7 +8,7 @@ describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
 
   describe 'BasePublisher' do
     describe '#new' do
-      it { expect(publish).to have_attributes(response: []) }
+      it { expect(publish).to have_attributes(responses: []) }
     end
   end
 end

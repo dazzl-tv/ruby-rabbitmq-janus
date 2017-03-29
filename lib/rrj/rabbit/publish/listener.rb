@@ -21,9 +21,7 @@ module RubyRabbitmqJanus
 
         # Listen a queue and return a body response
         def listen_events
-          Tools::Log.instance.debug 'Waiting event...'
-          @semaphore.wait
-          Tools::Log.instance.info 'Janus event received .. treatment ..'
+          semaphore.wait
           response = nil
           lock.synchronize do
             response = @responses.shift
@@ -63,7 +61,7 @@ module RubyRabbitmqJanus
             @responses.push(Janus::Responses::Event.new(JSON.parse(payload)))
           end
           @rabbit.acknowledge(info.delivery_tag, false)
-          @semaphore.signal
+          semaphore.signal
         end
       end
     end

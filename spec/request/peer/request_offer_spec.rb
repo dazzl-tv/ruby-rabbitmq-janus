@@ -6,19 +6,19 @@ describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
   before(:example) do
     @type = 'peer::offer'
     @options = {
-      'sdp' => <<SDP
-v=0
-o=alice 2890844526 2890844526 IN IP4 host.atlanta.example.com
-s=
-c=IN IP4 host.atlanta.example.com
-t=0 0
-m=audio 49170 RTP/AVP 0 8 97
-a=rtpmap:0 PCMU/8000
-a=rtpmap:8 PCMA/8000
-a=rtpmap:97 iLBC/8000
-m=video 51372 RTP/AVP 31 32
-a=rtpmap:31 H261/90000
-a=rtpmap:32 MPV/90000
+      'sdp' => <<-SDP
+  v=0
+  o=alice 2890844526 2890844526 IN IP4 host.atlanta.example.com
+  s=
+  c=IN IP4 host.atlanta.example.com
+  t=0 0
+  m=audio 49170 RTP/AVP 0 8 97
+  a=rtpmap:0 PCMU/8000
+  a=rtpmap:8 PCMA/8000
+  a=rtpmap:97 iLBC/8000
+  m=video 51372 RTP/AVP 31 32
+  a=rtpmap:31 H261/90000
+  a=rtpmap:32 MPV/90000
 SDP
     }
   end

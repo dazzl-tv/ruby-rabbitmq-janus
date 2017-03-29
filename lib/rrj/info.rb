@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # :reek:TooManyConstants
 
 # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -24,11 +25,11 @@ module RubyRabbitmqJanus
 
   # Define a long description to gem
   DESCRIPTION = <<-DESC
-This gem is used to communicate to a server Janus through RabbitMQ software
-(Message-oriented middleware). It waiting a messages to Rails API who send to
-RabbitMQ server in a queue for janus server. Janus processes a message and send
-to RabbitMQ server in a queue for gem. Once the received message is decoded and
-returned through the Rails API.
+  This gem is used to communicate to a server Janus through RabbitMQ software
+  (Message-oriented middleware). It waiting a messages to Rails API who send to
+  RabbitMQ server in a queue for janus server. Janus processes a message and
+  send to RabbitMQ server in a queue for gem. Once the received message is
+  decoded and returned through the Rails API.
     DESC
 
   # Define homepage

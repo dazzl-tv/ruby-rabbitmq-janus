@@ -6,25 +6,25 @@ module RubyRabbitmqJanus
     class InitializerGenerator < Rails::Generators::Base
       desc 'Generate a initializer to this gem for rails application.'
       INITIALIZER = <<-INIT
-# frozen_string_literal: true
+  # frozen_string_literal: true
 
-require 'actions'
+  require 'actions'
 
-# Initialize a gem and create an session with a keepalive
-::RRJ = RubyRabbitmqJanus::RRJ.new
+  # Initialize a gem and create an session with a keepalive
+  ::RRJ = RubyRabbitmqJanus::RRJ.new
 
-# For admin management
-# ::RRJ = RubyRabbitmqJanus::RRJAdmin.new
+  # For admin management
+  # ::RRJ = RubyRabbitmqJanus::RRJAdmin.new
 
-# This test disable this gems execution when you running an task with rake
-unless File.basename($PROGRAM_NAME) == 'rake'
-  Rails.configuration.after_initialize do
-    # If you don't want listen a standard queue, comment this lines and
-    # "require 'actions'"
-    actions = RubyRabbitmqJanus::ActionEvents.new.actions
-    RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
+  # This test disable this gems execution when you running an task with rake
+  unless File.basename($PROGRAM_NAME) == 'rake'
+    Rails.configuration.after_initialize do
+      # If you don't want listen a standard queue, comment this lines and
+      # "require 'actions'"
+      actions = RubyRabbitmqJanus::ActionEvents.new.actions
+      RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
+    end
   end
-end
         INIT
 
       # Create an initializer

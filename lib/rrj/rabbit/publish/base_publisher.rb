@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'semaphore'
 
 module RubyRabbitmqJanus
@@ -22,7 +23,7 @@ module RubyRabbitmqJanus
         def initialize
           Tools::Log.instance.debug 'Create an publisher'
           @responses = []
-          @semaphore= Semaphore.new
+          @semaphore = Semaphore.new
           @lock = Mutex.new
         end
 
@@ -31,9 +32,7 @@ module RubyRabbitmqJanus
         attr_accessor :condition, :lock
 
         def return_response
-          Tools::Log.instance.debug 'Waiting response...'
           @semaphore.wait
-          Tools::Log.instance.debug 'Response received'
           response = nil
           @lock.synchronize do
             response = @responses.shift

@@ -1,8 +1,6 @@
 AllCops:
   Exclude:
-    - Gemfile
-    - rrj.gemspec
-    - bin/**/*
+    - 'bin/**/*'
   TargetRubyVersion: 2.3
 
 Style/Encoding:
@@ -10,3 +8,8 @@ Style/Encoding:
 
 Metrics/LineLength:
   Max: 80
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - ruby_rabbitmq_janus.gemspec

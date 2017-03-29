@@ -39,14 +39,54 @@ RSpec.configure do |config|
   end
 
   # Configure requests test before sending request
-  config.before(:example) do
-    Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
-    Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
-    Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
-    Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
-    @gateway = RubyRabbitmqJanus::RRJ.new
-  end
+  config.before(:example, level: :base) { gateway }
+  config.before(:example, level: :peer) { gateway }
+  config.before(:example, level: :admin) { gateway_admin }
+  config.before(:example, type: :responses) { gateway }
+  config.before(:example, type: :messages) { gateway }
+  config.before(:example, name: :admin) { gateway_admin }
+  config.before(:example, name: :event) { gateway }
+  config.before(:example, name: :standard) { gateway }
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
+end
+
+# :reek:UtilityFunction
+def singleton
+  Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
+  Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
+  Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
+  Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
+end
+
+def gateway
+  singleton
+  @gateway = RubyRabbitmqJanus::RRJ.new
+  @response = nil
+  @options = {}
+end
+
+def gateway_admin
+  singleton
+  @gateway = RubyRabbitmqJanus::RRJAdmin.new
+  @response = nil
+  @options = {}
+end
+
+def gateway_event
+  actions = EventTest.new.actions
+  @event = RubyRabbitmq::Janus::Concurencies::Event.instance
+  @event.run(&actions)
+  gateway
+end
+
+# Test events response
+class EventTest
+  def actions
+    lambda do |reason, payload|
+      p "Reason : #{reason}"
+      p "Payload : #{payload}"
+    end
+  end
 end

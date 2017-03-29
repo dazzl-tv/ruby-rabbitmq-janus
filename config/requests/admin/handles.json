@@ -1,6 +1,6 @@
 {
   "janus": "list_handles",
   "session_id": "<number>",
-  "transaction": "<string>",
+  "transaction": "<transaction>",
   "admin_secret": "<string>"
 }

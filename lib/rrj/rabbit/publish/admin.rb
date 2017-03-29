@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
         #
         # @param [String] exchange Exchange used for the transaction
         def initialize(exchange)
-          @reply = exchange.queue(queue_from)
+          @reply = exchange.queue(Tools::Config.instance.queue_admin_from)
           super(exchange)
           subscribe_to_queue
         end
@@ -29,11 +29,6 @@ module RubyRabbitmqJanus
         private
 
         attr_reader :reply
-
-        # Define queue used for posting a message to API admin
-        def queue_from
-          Tools::Config.instance.queue_admin_from
-        end
       end
     end
   end

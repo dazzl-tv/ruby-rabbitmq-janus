@@ -1,0 +1,6 @@
+{
+  "janus" : "set_locking_debug",
+  "debug" : "<boolean>",
+  "transaction": "<transaction>",
+  "admin_secret": "<string>"
+}

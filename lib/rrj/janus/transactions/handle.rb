@@ -4,14 +4,14 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # This class work with janus and send a series of message
-      class Handle < Session
+      class Handle < Transaction
         # Initialize a transaction with handle
         #
         # @param [Fixnum] session
         #   Use a session identifier for created message
-        def initialize(session, exclusive, handle = 0)
+        def initialize(exclusive, session, handle = 0)
           super(session)
           @exclusive = exclusive
           @handle = handle
@@ -38,16 +38,19 @@ module RubyRabbitmqJanus
         # @param [Hash] options Replace/add element in request
         #
         # @return [Janus::Responses::Standard] Response to message sending
-        def publish_message_handle(type, options)
-          opts = { 'session_id' => session, 'handle_id' => handle }
+        def publish_message(type, options = {})
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
         end
 
+        # Send a message detach
+        def detach
+          publisher.publish(Janus::Messages::Standard.new('base::detach', opts))
+        end
+
         private
 
-        # Create an handle for transaction
         def create_handle
           Tools::Log.instance.info 'Create an handle'
           opt = { 'session_id' => session }
@@ -55,18 +58,20 @@ module RubyRabbitmqJanus
           @handle = send_a_message_exclusive { msg }
         end
 
-        # Send a messaeg in exclusive queue
         def send_a_message_exclusive
           Janus::Responses::Standard.new(read_response_exclusive do
             yield
           end).sender
         end
 
-        # Read an response in queue exclusive
         def read_response_exclusive
           chan = rabbit.channel
           tmp_publish = Rabbit::Publisher::PublishExclusive.new(chan, '')
           tmp_publish.publish(yield)
+        end
+
+        def opts
+          { 'session_id' => session, 'handle_id' => @handle }
         end
       end
     end

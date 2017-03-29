@@ -4,10 +4,11 @@ module RubyRabbitmqJanus
   # Define all error in gem
   module Errors
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+    #
     # Define errors to gems
     class RRJError < StandardError
       # Initialize a error standard in this gem
+      #
       # @param [String] message Text returning in raise
       # @param [Symbol] level Important to error
       def initialize(message, level)

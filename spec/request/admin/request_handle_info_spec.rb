@@ -2,13 +2,19 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type handle_info' do
-  before(:example) { @type = 'admin::handle_info' }
-
-  describe '#message_admin', type: :request, level: :admin,
-                             name: :handle_info, broken: true do
-    include_examples 'message_handle_admin should match json schema'
+describe 'RubyRabbitmqJanus::RRJ -- message type handle info' do
+  before(:example) do
+    @type = 'admin::handle_info'
+    sender = nil
+    @gateway.start_transaction do |transaction|
+      sender = transaction.publish_message('base::attach').sender
+    end
+    @options = { 'handle_id' => sender }
   end
 
-  # after(:example) { @gateway.handle_message_simple('base::detach') }
+  describe '#start_transaction_admin', type: :request,
+                                       level: :admin,
+                                       name: :handle_info do
+    include_examples 'transaction admin should match json schema'
+  end
 end

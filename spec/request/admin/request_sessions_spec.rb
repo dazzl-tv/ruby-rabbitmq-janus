@@ -2,11 +2,12 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type sessions' do
+describe 'RubyRabbitmqJanus::RRJ -- message type sessions list' do
   before(:example) { @type = 'admin::sessions' }
 
-  describe '#message_admin', type: :request, level: :admin, name: :sessions,
-                             broken: true do
-    include_examples 'message_admin should match json schema'
+  describe '#start_transaction_admin', type: :request,
+                                       level: :admin,
+                                       name: :sessions do
+    include_examples 'transaction admin should match json schema'
   end
 end

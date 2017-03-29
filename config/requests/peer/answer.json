@@ -2,7 +2,7 @@
   "janus": "message",
   "session_id": "<number>",
   "handle_id": "<number>",
-  "transaction": "<string>",
+  "transaction": "<transaction>",
   "body": {
     "request": "configure"
   },

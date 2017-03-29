@@ -1,0 +1,15 @@
+{
+  "session_id": "<number>",
+  "transaction": "<transaction>",
+  "handle_id": "<number>",
+  "plugin": "<plugin[0]>",
+  "candidates": "<array>",
+  "audio": "<boolean>",
+  "jsep": {
+    "sdp": "<string>"
+  },
+  "debug": "<boolean>",
+  "level": "<integer>",
+  "admin_secret": "<string>",
+  "body": {}
+}

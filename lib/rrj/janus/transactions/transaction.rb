@@ -5,8 +5,9 @@ module RubyRabbitmqJanus
     # Define an module for manipulate messages between apps and Janus
     module Transactions
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Manage a transactions
+      #
       # This class work with Janus and send a series of message
       class Transaction
         # Initialize a transaction

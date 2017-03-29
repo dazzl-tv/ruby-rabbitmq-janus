@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Janus
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Manage keepalive message
       #
       # Create a thread for sending a message with type keepalive to session
@@ -26,6 +26,7 @@ module RubyRabbitmqJanus
         # @example Ask session
         #   Keepalive.instance.session
         #   => 852803383803249
+        #
         # @return [Fixnum] Identifier to session created by Janus
         def session
           lock.synchronize do
@@ -56,6 +57,8 @@ module RubyRabbitmqJanus
           sleep time_to_live
           @pub.publish(message_keepalive)
           Tools::Log.instance.info "Keepalive for #{@session}"
+        rescue => error
+          raise Errors::KeepaliveMessage, error
         end
 
         def create_session
@@ -66,14 +69,17 @@ module RubyRabbitmqJanus
         end
 
         def message_keepalive
-          opt = { 'session_id' => @session }
-          Janus::Messages::Standard.new('base::keepalive', opt)
+          Janus::Messages::Standard.new('base::keepalive', param_session)
         rescue => error
           raise Errors::KeepaliveMessage, error
         end
 
         def find_session
-          Janus::Responses::Standard.new(create_session).to_hash['data']['id']
+          Janus::Responses::Standard.new(create_session).session
+        end
+
+        def param_session
+          { 'session_id' => @session }
         end
       end
     end

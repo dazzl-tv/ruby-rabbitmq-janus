@@ -1,7 +1,0 @@
-{
-  "janus": "trickle",
-  "session_id": "<number>",
-  "handle_id": "<number>",
-  "transaction": "<string>",
-  "candidates": "<array>"
-}

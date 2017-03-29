@@ -35,6 +35,8 @@ janus:
   # Create an array to plugin
   plugins:
     - janus.plugin.echotest
+    - janus.plugin.videoroom
+    - janus.plugin.sip
 
 # Options gem
 gem:

@@ -5,38 +5,19 @@ require 'spec_helper'
 describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
   before(:example) do
     @type = 'peer::trickle'
-    @options = { 'replace' => {}, 'add' => {} }
+    candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }
+    @options = { 'candidate' => candidate }
   end
 
-  describe '#message_handle', type: :request, level: :peer, name: :trickle do
-    let(:cdd) do
-      { 'sdpMid' => 'video', 'sdpMLineIndex' => 1, 'candidate' => '...' }
-    end
-    let(:candidate) { { 'candidate' => cdd } }
-    let(:candidates) { { 'candidates' => [cdd, cdd] } }
-
-    context 'when queue is exclusive and send 1 candidate' do
-      it_behaves_like 'message_handle should match json schema' do
-        let(:options) { { replace: { candidates: candidate } } }
-      end
+  describe '#start_transaction_handle', type: :request,
+                                        level: :base,
+                                        name: :trickle do
+    context 'when queue is exclusive' do
+      include_examples 'transaction handle should match json schema'
     end
 
-    context 'when queue is not exclusive and send 1 candidate' do
-      it_behaves_like 'message_handle should match json empty' do
-        let(:options) { { replace: { candidates: candidate } } }
-      end
-    end
-
-    context 'when queue is exclusive and send 1 candidate' do
-      it_behaves_like 'message_handle should match json schema' do
-        let(:options) { { replace: { candidates: candidates } } }
-      end
-    end
-
-    context 'when queue is exclusive and send many candidates' do
-      it_behaves_like 'message_handle should match json empty' do
-        let(:options) { { replace: { candidates: candidates } } }
-      end
+    context 'when queue is not exclusive' do
+      include_examples 'transaction handle should match json empty'
     end
   end
 end

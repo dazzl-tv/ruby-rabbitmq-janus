@@ -4,6 +4,7 @@ module RubyRabbitmqJanus
   module Rabbit
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+      #
       # # Publish message
       #
       # Publish message in queue exclusive. Bunny create automaticaly a name for

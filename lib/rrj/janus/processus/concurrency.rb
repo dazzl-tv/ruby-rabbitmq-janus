@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     # Modules for create autonomous processus
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Class for manage threads
       #
       # @abstract Manage thread in this gem for keepalive message and listen

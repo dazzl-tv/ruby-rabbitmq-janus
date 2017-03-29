@@ -3,7 +3,8 @@
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-    # Class for manage connection with rabbitmq
+    #
+    # Class for manage connection with RabbitMQ
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
@@ -48,7 +49,6 @@ module RubyRabbitmqJanus
 
       private
 
-      # Read option for bunny instance (connection with rabbitmq)
       def read_options_server
         cfg = Tools::Config.instance.options['rabbit']
         opts = {}
@@ -58,7 +58,6 @@ module RubyRabbitmqJanus
         opts
       end
 
-      # Define option logs for bunny
       def option_log_rabbit
         if Tools::Log.instance.level.zero?
           {

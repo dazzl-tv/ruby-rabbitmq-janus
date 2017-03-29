@@ -3,9 +3,11 @@
 module RubyRabbitmqJanus
   module Errors
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    #
     # Define an exception for initalizer transaction
     class JanusTransaction < Janus
       # Initialize a error for janus transaction class
+      #
       # @param [String] message Text returning in raise
       def initialize(message)
         super "[Transaction]#{message}"
@@ -13,9 +15,11 @@ module RubyRabbitmqJanus
     end
 
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
+    #
     # Define an exception for running_handle
     class JanusTransactionHandle < JanusTransaction
       # Initialize a error for janus transaction handle class
+      #
       # @param [String] message Text returning in raise
       def initialize(message)
         super "[Handle] #{message}"

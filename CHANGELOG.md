@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-03-29
+### [Added]
+- Admin feature
+- Complete documentation with example
+- Customize response (standard/admin)
+- Filter in log for sensitive data (expection debug mode message)
+- Spec for RubyRabbitmqJanus::Tools::Type
+- Add request for testing type
+- Complete default plugins
+- Add type convert_array
+- add type "<transaction>"
+- Spec for RubyRabbitmqJanus::Messages
+- Spec for RubyRabbitmqJanus::Rabbit
+
+### [Changed]
+- Session ID management
+- Type converting
+- Delete many method for simplify gem usage
+
+### [Deleted]
+- Delete unless method
+
 ## [1.2.9] - 2017-02-14
 ### [Fixed]
 - Keepalive deadlock, fixed using semaphore in place of condition variable

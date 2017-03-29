@@ -13,7 +13,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.ttl).to be_a(Integer)
   end
 
-  it 'When janus/session/keepalive default value is loading' do
+  it 'When janus/session/keepalive default value is 55' do
     expect(@cfg.ttl).to eq 55
   end
 
@@ -21,7 +21,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.plugin_at).to be_a(String)
   end
 
-  it 'When janus/plugins/0 default value is loading' do
+  it 'When janus/plugins/0 default value is janus.plugin.echotest' do
     expect(@cfg.plugin_at).to eq 'janus.plugin.echotest'
   end
 
@@ -29,7 +29,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.queue_from).to be_a(String)
   end
 
-  it 'When queues/standard/from default value is loading' do
+  it 'When queues/standard/from default value is from-janus' do
     expect(@cfg.queue_from).to eq 'from-janus'
   end
 
@@ -37,7 +37,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.queue_to).to be_a(String)
   end
 
-  it 'When queues/standard/to default value is loading' do
+  it 'When queues/standard/to default value is to-janus' do
     expect(@cfg.queue_to).to eq 'to-janus'
   end
 
@@ -45,7 +45,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.queue_admin_from).to be_a(String)
   end
 
-  it 'When queues/admin/from default value is loading' do
+  it 'When queues/admin/from default value is from-janus-admin' do
     expect(@cfg.queue_admin_from).to eq 'from-janus-admin'
   end
 
@@ -53,7 +53,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.queue_admin_to).to be_a(String)
   end
 
-  it 'When queues/admin/to default value is loading' do
+  it 'When queues/admin/to default value is to-janus-admin' do
     expect(@cfg.queue_admin_to).to  eq 'to-janus-admin'
   end
 
@@ -61,7 +61,7 @@ describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
     expect(@cfg.log_level).to be_a(Symbol)
   end
 
-  it 'When gem/log/level default value is loading' do
+  it 'When gem/log/level default value is INFO' do
     expect(@cfg.log_level).to eq :INFO
   end
 end

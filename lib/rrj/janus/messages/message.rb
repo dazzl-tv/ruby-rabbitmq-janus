@@ -5,8 +5,9 @@ module RubyRabbitmqJanus
     # Modules for create message for Janus
     module Messages
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Create a message for janus.
+      #
       # Create a message, in hash format, and sending to json format.
       # It's loading file base and change elements and configure message for
       # used in rabbitmq.
@@ -21,11 +22,13 @@ module RubyRabbitmqJanus
         attr_reader :type
 
         # Instanciate an message
+        #
         # @param template_request [String] Name of request prepare
         # @param [Hash] options Options to request
         # @option options [String] :session_id Identifier to session
         # @option options [String] :handle_id Identifier to session manipulate
         # @option options [Hash] :other Element contains in request sending
+        #
         # @example Initialize a message
         #   Message.new('test', {
         #     "session_id": 42,
@@ -48,6 +51,8 @@ module RubyRabbitmqJanus
         end
 
         # Return request to json format
+        #
+        # @return [String] Request to JSON format
         def to_json
           @request.to_json
         rescue => error
@@ -55,6 +60,8 @@ module RubyRabbitmqJanus
         end
 
         # Return request to json format with nice format
+        #
+        # @return [String] Request to JSON format with indent
         def to_nice_json
           JSON.pretty_generate to_hash
         rescue => error
@@ -62,6 +69,8 @@ module RubyRabbitmqJanus
         end
 
         # Return request to hash format
+        #
+        # @return [Hash] Request to Hash format
         def to_hash
           @request
         rescue => error
@@ -69,6 +78,8 @@ module RubyRabbitmqJanus
         end
 
         # Return correlation to message
+        #
+        # @return [String] Correlation string
         def correlation
           @properties.correlation
         end
@@ -77,18 +88,15 @@ module RubyRabbitmqJanus
 
         attr_accessor :properties, :request
 
-        # Load raw request
         def load_request_file
           @request = request_instance
           Tools::Log.instance.debug "Opening request : #{to_json}"
         end
 
-        # Transform JSON request with elements necessary
         def prepare_request(_options)
           Tools::Log.instance.debug "Prepare request for janus : #{to_json}"
         end
 
-        # Return request to json format
         def request_instance
           JSON.parse File.read Tools::Requests.instance.requests[@type]
         end

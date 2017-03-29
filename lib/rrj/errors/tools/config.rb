@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
 module RubyRabbitmqJanus

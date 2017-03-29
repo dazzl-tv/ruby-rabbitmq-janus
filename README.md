@@ -1,8 +1,4 @@
-[![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus)
-[![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus)
-[![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus)
-
-# ruby-rabbitmq-janus -- RRJ
+# Ruby RabbitMQ Janus | [![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus) [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus) [![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus)
 
 Ruby Gem for Janus WebRTC Gateway integration using RabbitMQ message queue
 
@@ -14,27 +10,71 @@ RabbitMQ server in a queue for janus server. janus processes a message and send
 
 This gem is product by [Dazzl.tv](http://dazzl.tv)
 
+```linux
+------------                        ----------                      -------
+|Rails Apps|                        |RabbitMQ|                      |Janus|
+------------                        ----------                      -------
+  |                                   |                                |
+  | Request : { "janus": "info" }     |                                |
+  | --------------------------------> |                                |
+  | Create request json.              |                                |
+  | Sending in queue.                 |                                |
+  |                                   | -----------------------------> |
+  |                                   | Read a message in queue        | ----- |
+  |                                   |                                |       | Return a response
+  |                                   |                                |       | to treatment executed.
+  |                                   |                                | <---- |
+  |                                   |                                |
+  |                                   |                                |
+  |                                   | <----------------------------  |
+  | <-------------------------------- |                                |
+  |                                   |                                |
+  |                                   |                                |
+  |                                   |                                |
+  |                                   |                                |
+```
+
 ## Menu
+
 * [How to use](#how-to-use)
- * [Installation](#installation)
- * [Configuration](#configuration)
+  * [Installation](#installation)
+  * [Configuration](#configuration)
     * [Generators](#generators)
     * [Requests](#requests)
- * [Usage](#usage)
+  * [Usage](#usage)
+    * [Information](#usage-information)
+    * [Standard request](#standard-request)
+    * [Admin request](#admin-request)
+    * [Listen Janus Event](#listen-janus-event)
 * [Upgrade](#upgrade)
 * [Development](#development)
- * [RSpec](#rspec-test)
- * [Documentation](#documentation)
+  * [RSpec](#rspec-test)
+  * [Documentation](#documentation)
     * [Read documentation](#read-documentation)
     * [Generate developer documentation](#generate-developer-documentation)
+* [Contributing](#contributing)
+* [Plus](#plus)
 
 ## How to use
 
 ### Installation
 
-Use rubygem for installing gem in your application. Add in your Gemfile
+Use rubygem for installing gem in your application. Add in your Gemfile :
+
 ```ruby
 gem 'ruby_rabbitmq_janus'
+```
+
+And then execute :
+
+```linux
+bundle
+```
+
+Or install it yourself as :
+
+```linux
+gem install evostream-event
 ```
 
 ### Configuration
@@ -68,8 +108,61 @@ For more explain in requests files see [default requests](config/requests.md).
 
 ### Usage
 
+#### Usage information
 
-TODO ...
+This gem use rabbitmq for manage request sending to Janus, so see
+[documentation Janus](https://janus.conf.meetecho.com/docs/pages.html) and
+[documentation Rabbitmq](http://www.rabbitmq.com/documentation.html). This gem
+use bunny gem for create connection with rabbitmq. See many guide :
+[bunny documentation](http://rubybunny.info/articles/guides.html).
+
+#### Standard Request
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Initialize standard object
+t = RubyRabbitmqJanus::RRJ.new
+
+# Ask info Janus Instance
+t.start_transaction do |transaction|
+  transaction.publish_message('base::info')
+end
+
+=> @request={"janus"=>"server_info" ... }
+```
+
+#### Admin Request
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Initialize admin object
+t = RubyRabbitmqJanus::RRJAdmin.new
+
+# Ask info sessions in Janus Instance
+t.start_transaction_admin do |transaction|
+  transaction.publish_message('admin::sessions')
+end
+
+=> @request={"janus"=>"success" ... "sessions"=>[123, 456, 789]}
+```
+
+#### Listen Janus Event
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Create a class in your Rails application
+actions = RubyRabbitmqJanus::ActionEvents.new.action
+
+# Initialize a thread for listen public queue and send class to thread
+RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(@actions)
+```
+
+## Upgrade
+
+For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
 
 ## Development
 
@@ -84,31 +177,39 @@ rabbitmq and use plugin echotest for janus server.
 
 Use tags for rspec :
 
-| Describe                                                          | Type            | Name            |
-| -------------------------------------------------------------     | --------------- | --------------- |
-| **Internaly function**                                            | config          |                 |
-| Use bunny gem                                                     |                 | rabbit          |
-| Test log functions                                                |                 | log             |
-| Test configuration function                                       |                 | config          |
-| Test Gem contains CONSTANTS                                       |                 | describe        |
-| **Level request sending to janus (admin monitor API or classic)** | level           |                 |
-| Request with no admin right.                                      |                 | base            |
-| Request with admin right in Janus application.                    |                 | admin           |
-| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                 |
-| Test request attach type                                          |                 | attach          |
-| Test request type create                                          |                 | create          |
-| Test request type detach                                          |                 | detach          |
-| Test request type info                                            |                 | info            |
-| Test request type test                                            |                 | test            |
+| Describe                                                          | Type            | Name              |
+| -------------------------------------------------------------     | --------------- | ---------------   |
+| **Internaly function**                                            | config          |                   |
+| Use bunny gem                                                     |                 | rabbit            |
+| Test log functions                                                |                 | log               |
+| Test configuration function                                       |                 | config            |
+| Test Gem contains CONSTANTS                                       |                 | describe          |
+| **Level request sending to janus (admin monitor API or classic)** | level           |                   |
+| Request with no admin right.                                      |                 | base              |
+| Request with admin right in Janus application.                    |                 | admin             |
+| Request candidate/jsep                                            |                 | peer              |
+| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                   |
+| Test request attach type                                          |                 | attach            |
+| Test request type create                                          |                 | create            |
+| Test request type detach                                          |                 | detach            |
+| Test request type janus info                                      |                 | info              |
+| Test request type test                                            |                 | test              |
+| Test request type handle list                                     |                 | handles           |
+| Test request type sesssion list                                   |                 | sessions          |
+| Test request type handle information                              |                 | handle_info       |
+| Test request type (un)locking debug                               |                 | set_locking_debug |
+| Test request type change log level                                |                 | set_log_level     |
+| ~~Test request type tokens list~~                                 |                 | tokens            |
+| Test request type destroy session                                 |                 | destroy           |
+| Test request keepalive                                            |                 | keepalive         |
+| ~~Test request type sdp offer~~                                   |                 | offer             |
+| Test request type trickle, send on candidate                      |                 | trickle           |
+| Test request type trickles, send array candidate                  |                 | trickles          |
 
 Example usage rspec with tags :
 ```ruby
 rspec --tag --name:config --tag level:base
 ```
-
-## Upgrade
-
-For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
 
 ### Documentation
 
@@ -128,3 +229,15 @@ yard server
 ```
 
 [See Yard Getting Started](http://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md)
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/dazzl-tv/ruby-rabbitmq-janus This project is intended to be a
+safe, welcoming space for collaboration, and contributors are expected to adhere
+to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## Plus
+
+Janus Admin Monitor project use this gem for manage data in Janus Meetecho with
+Admin/Monitor API.

@@ -1,6 +1,0 @@
-{
-  "janus": "set_log_level",
-  "level": "<integer>",
-  "transaction": "<string>",
-  "admin_secret": "<string>"
-}

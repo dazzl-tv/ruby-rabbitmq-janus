@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
 
         private
 
-        attr_accessor :condition, :lock
+        attr_accessor :semaphore, :lock
 
         def return_response
           @semaphore.wait

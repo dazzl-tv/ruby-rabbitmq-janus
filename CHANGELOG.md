@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Complete default plugins
 - Add type convert_array
 - add type "<transaction>"
+- Spec for RubyRabbitmqJanus::Messages
 
 ### [Changed]
 - Session ID management

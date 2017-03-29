@@ -51,6 +51,8 @@ module RubyRabbitmqJanus
         end
 
         # Return request to json format
+        #
+        # @return [String] Request to JSON format
         def to_json
           @request.to_json
         rescue => error
@@ -58,6 +60,8 @@ module RubyRabbitmqJanus
         end
 
         # Return request to json format with nice format
+        #
+        # @return [String] Request to JSON format with indent
         def to_nice_json
           JSON.pretty_generate to_hash
         rescue => error
@@ -65,6 +69,8 @@ module RubyRabbitmqJanus
         end
 
         # Return request to hash format
+        #
+        # @return [Hash] Request to Hash format
         def to_hash
           @request
         rescue => error
@@ -72,6 +78,8 @@ module RubyRabbitmqJanus
         end
 
         # Return correlation to message
+        #
+        # @return [String] Correlation string
         def correlation
           @properties.correlation
         end

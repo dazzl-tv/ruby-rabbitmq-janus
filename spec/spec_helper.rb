@@ -42,7 +42,8 @@ RSpec.configure do |config|
   config.before(:example, level: :base) { gateway }
   config.before(:example, level: :peer) { gateway }
   config.before(:example, level: :admin) { gateway_admin }
-  config.before(:example, name: :response) { gateway }
+  config.before(:example, type: :responses) { gateway }
+  config.before(:example, type: :messages) { gateway }
   config.before(:example, name: :admin) { gateway_admin }
   config.before(:example, name: :event) { gateway }
   config.before(:example, name: :standard) { gateway }

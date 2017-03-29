@@ -6,7 +6,10 @@ module RubyRabbitmqJanus
     module Responses
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       #
-      # Read and decryt a response to janus
+      # # Read and parse a response to janus.
+      #
+      # Read a message in rabbitmq queue. This message is formatted to JSON
+      # or Hash format. For developpment it's possible to used a `nice` JSON.
       class Response
         # Instanciate a response
         #
@@ -23,26 +26,29 @@ module RubyRabbitmqJanus
         end
 
         # Return request to json format
+        #
+        # @return [String] Response to JSON format
         def to_json
           @request.to_json
         rescue => error
-          Tools::Log.instance.debug "Request error [to_json] : #{@request}"
           raise Errors::JanusResponseJson, [error, @request]
         end
 
         # Return request to json format with nice format
+        #
+        # @return [String] Response to JSON format with indent
         def to_nice_json
           JSON.pretty_generate to_hash
         rescue => error
-          Tools::Log.instance.debug "Request error [to_nice_json] : #{@request}"
           raise Errors::JanusResponsePrettyJson, error
         end
 
         # Return request to hash format
+        #
+        # @return [Hash] Response to Hash foramt
         def to_hash
           @request
         rescue => error
-          Tools::Log.instance.debug "Request error [to_hash] : #{@request}"
           raise Errors::JanusResponseHash, [error, @request]
         end
 

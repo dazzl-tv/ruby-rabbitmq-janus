@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Janus::Messages::Standard, type: :messages,
-                                                       name: :standard do
+describe RubyRabbitmqJanus::Janus::Messages::Admin, type: :messages,
+                                                    name: :admin do
   let(:template) { 'base::info' }
-  let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Standard.new(template) }
+  let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Admin.new(template) }
 
   describe '#options' do
     let(:message) { msg_new.options }

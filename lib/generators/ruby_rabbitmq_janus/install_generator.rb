@@ -44,6 +44,9 @@ module RubyRabbitmqJanus
 
         # Add initializer
         generate 'ruby_rabbitmq_janus:initializer'
+
+        # Copy basic request
+        generate 'ruby_rabbitmq_janus:default_request'
       end
     end
   end

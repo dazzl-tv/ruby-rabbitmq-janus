@@ -29,8 +29,10 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
   |                                   | <----------------------------  |
   | <-------------------------------- |                                |
   |                                   |                                |
-  |                                   |                                |
-  |                                   |                                |
+  |                                   |                                | # If asynchron message
+  |                                   |                                | # send a response after execution
+  |                                   | <----------------------------  | # but a acknoledge message is
+  | <-------------------------------- |                                | # sending when request is received
   |                                   |                                |
 ```
 

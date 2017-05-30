@@ -44,7 +44,7 @@ module RubyRabbitmqJanus
 
       # @return [String] read configuration for queue `to`
       def queue_to
-        @options['queues']['standard']['to'].to_s
+        Tools::Cluster.instance.queue_to
       end
 
       # @return [String] read configuration for queue admin `from`
@@ -81,12 +81,7 @@ module RubyRabbitmqJanus
 
       # @return [Boolean] Read option file for a janus cluster section
       def cluster?
-        cluster = @options['janus']['cluster']['enabled'].to_s
-        if cluster.eql?('true')
-          true
-        elsif cluster.eql?('false')
-          false
-        end
+        @options['janus']['cluster']['enabled'].to_s.eql?('true') ? true : false
       end
 
       alias ttl time_to_live

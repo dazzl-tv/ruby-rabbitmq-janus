@@ -15,9 +15,7 @@ module RubyRabbitmqJanus
         Log.instance
         Config.instance
         Requests.instance
-        Tools::Log.instance 'Create session in cluster class ...'
         @session = Cluster.instance.sessions
-        Tools::Log.instance "Session created : #{@session}"
       end
 
       # Give number session to keepalive

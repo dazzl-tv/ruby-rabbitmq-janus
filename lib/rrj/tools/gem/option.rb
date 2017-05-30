@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
         Log.instance
         Config.instance
         Requests.instance
-        @session = Janus::Concurrencies::Keepalive.instance.session
+        @session = Cluster.instance.sessions
       end
 
       # Give number session to keepalive

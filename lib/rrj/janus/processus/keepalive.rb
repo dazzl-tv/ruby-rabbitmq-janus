@@ -39,18 +39,10 @@ module RubyRabbitmqJanus
 
         def transaction_running
           @session = find_session
-          synchronize
-          create_loop_session
+          lock.synchronize { condition.signal }
+          loop { loop_session(Tools::Config.instance.ttl) }
         rescue => error
           raise Errors::KeepaliveLoopSession, error
-        end
-
-        def synchronize
-          lock.synchronize { condition.signal }
-        end
-
-        def create_loop_session
-          loop { loop_session(Tools::Config.instance.ttl) }
         end
 
         def loop_session(time_to_live)

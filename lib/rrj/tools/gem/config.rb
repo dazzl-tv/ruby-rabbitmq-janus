@@ -79,6 +79,16 @@ module RubyRabbitmqJanus
         @options['janus']['plugins'][index].to_s
       end
 
+      # @return [Boolean] Read option file for a janus cluster section
+      def cluster?
+        cluster = @options['janus']['cluster']['enabled'].to_s
+        if cluster.eql?('true')
+          true
+        elsif cluster.eql?('false')
+          false
+        end
+      end
+
       alias ttl time_to_live
 
       private

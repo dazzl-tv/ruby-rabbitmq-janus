@@ -36,4 +36,5 @@ module RubyRabbitmqJanus
 end
 
 require 'rrj/janus/processus/keepalive'
+require 'rrj/janus/processus/keepalives'
 require 'rrj/janus/processus/event'

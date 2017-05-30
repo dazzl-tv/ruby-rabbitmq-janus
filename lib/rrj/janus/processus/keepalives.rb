@@ -3,7 +3,7 @@
 module RubyRabbitmqJanus
   module Janus
     module Concurrencies
-      class Keepalives < Concurrencies
+      class Keepalives < Concurrency
         include Singleton
 
         def initialize

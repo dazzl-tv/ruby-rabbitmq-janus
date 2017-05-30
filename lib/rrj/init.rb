@@ -56,6 +56,7 @@ module RubyRabbitmqJanus
     #
     # @since 2.0.0
     def start_transaction(exclusive = true, options = {})
+      Tools::Log.instance.info "OPTIONS FOR TRANSACTION : #{options}"
       session = @option.use_current_session?(options)
       transaction = Janus::Transactions::Session.new(exclusive, session)
       transaction.connect { yield(transaction) }
@@ -86,6 +87,7 @@ module RubyRabbitmqJanus
     #
     # @since 2.0.0
     def start_transaction_handle(exclusive = true, options = {})
+      Tools::Log.instance.info "OPTIONS FOR TRANSACTION : #{options}"
       session = @option.use_current_session?(options)
       handle = @option.use_current_handle?(options)
       transaction = Janus::Transactions::Handle.new(exclusive, session, handle)

@@ -56,6 +56,7 @@ module RubyRabbitmqJanus
         def create_session
           @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
           @pub.publish(Janus::Messages::Standard.new('base::create'))
+          # @pub.publish(Janus::Messages::Standard.new('base::create', param_create))
         rescue => error
           raise Errors::KeepaliveCreateSession, error
         end
@@ -70,7 +71,16 @@ module RubyRabbitmqJanus
           Janus::Responses::Standard.new(create_session).session
         end
 
+        def param_create
+          if defined?(::WORKER)
+            { 'instance' => ::WORKER }
+          else
+            { 'instance' => 1 }
+          end
+        end
+
         def param_session
+          # params_create.merge('session_id' => @session)
           { 'session_id' => @session }
         end
       end

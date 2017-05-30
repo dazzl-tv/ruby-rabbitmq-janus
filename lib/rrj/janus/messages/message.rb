@@ -40,10 +40,14 @@ module RubyRabbitmqJanus
         #     "add": {
         #       "subtitle": true
         #     })
+        # def initialize(template_request, options = { 'instance' => 1 })
         def initialize(template_request, options = {})
           @request = {}
           @type = template_request
+          Tools::Log.instance.warn "OPTIONS MSG : #{options} -- #{options['instance']}"
+          # @properties = Rabbit::Propertie.new(options['instance'])
           @properties = Rabbit::Propertie.new
+          Tools::Log.instance.info "PROPERTIES MESSAGE : #{@properties.options.inspect}"
           load_request_file
           prepare_request(options)
         rescue => error

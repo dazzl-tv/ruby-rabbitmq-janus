@@ -15,11 +15,14 @@ module RubyRabbitmqJanus
       def initialize
         Tools::Log.instance.debug 'initalize a propertie to message'
         @correlation = SecureRandom.uuid
+        # @instance = instance
+        # Tools::Log.instance.info "Inspect : #{self.inspect}"
       end
 
       # Define options sending to rabbitmq
       def options
         Tools::Log.instance.debug 'Add options to propertie to message'
+        # routing = @instance.empty? ? Tools::Config.instance.queue_to : @instance
         {
           routing_key: Tools::Config.instance.queue_to,
           correlation_id: @correlation,

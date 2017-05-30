@@ -21,6 +21,12 @@ module RubyRabbitmqJanus
       end
 
       def queue_to
+        #queue = Tools::Config.instance.options['queues']['standard']['to']
+        #if defined?(::WORKER)
+        #    "#{queue}-#{::WORKER + 1}"
+        #else
+        #  queue
+        #end
         Tools::Config.instance.options['queues']['standard']['to'] + \
           "-#{::WORKER + 1}"
       end

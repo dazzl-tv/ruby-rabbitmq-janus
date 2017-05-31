@@ -51,6 +51,13 @@ module RubyRabbitmqJanus
           publisher.publish(Janus::Messages::Standard.new('base::detach', opts))
         end
 
+        # Send a message detach and disable session for deleting in
+        # Janus Instance
+        def detach_for_deleting
+          detach
+          Tools::JanusInstance.disable(opts['session_id'])
+        end
+
         private
 
         def create_handle

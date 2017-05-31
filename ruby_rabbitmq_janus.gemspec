@@ -56,5 +56,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'thread', '~> 0.2.2'
   spec.add_runtime_dependency 'semaphore', '~> 0.0.1'
-  spec.add_runtime_dependency 'redis', '~> 3.3'
+  spec.add_runtime_dependency 'file_db', '~> 1.2'
 end

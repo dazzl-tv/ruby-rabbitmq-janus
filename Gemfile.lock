@@ -3,8 +3,8 @@ PATH
   specs:
     ruby_rabbitmq_janus (2.0.0.pre.42)
       bunny (~> 2.5)
+      file_db (~> 1.2)
       key_path (~> 1.2)
-      redis (~> 3.3)
       semaphore (~> 0.0.1)
       thread (~> 0.2.2)
 
@@ -65,6 +65,7 @@ GEM
     faraday_middleware (0.11.0.1)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
+    file_db (1.2.1)
     fuubar (2.2.0)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
@@ -115,7 +116,6 @@ GEM
       websocket (~> 1.0)
     rainbow (2.2.1)
     rake (12.0.0)
-    redis (3.3.3)
     reek (4.5.6)
       codeclimate-engine-rb (~> 0.4.0)
       parser (>= 2.3.1.2, < 2.5)

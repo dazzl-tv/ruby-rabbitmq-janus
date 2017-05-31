@@ -11,24 +11,36 @@ module RubyRabbitmqJanus
       attr_reader :number, :enable
 
       def initialize
+        @current_instance = define_worker
         @enable = Config.instance.cluster?
         @number = Config.instance.options['janus']['cluster']['count'].to_i \
           if @enable
       end
 
+      def find_sessions(instance)
+        @current_instance = instance
+        Tools::JanusInstance.find_by(instance: instance).session
+      end
+
       def sessions
-        Janus::Concurrencies::Keepalive.instance.session
+        Tools::JanusInstance.create(instance: define_worker,
+                                    session: session_number,
+                                    enable: true).session
       end
 
       def queue_to
-        #queue = Tools::Config.instance.options['queues']['standard']['to']
-        #if defined?(::WORKER)
-        #    "#{queue}-#{::WORKER + 1}"
-        #else
-        #  queue
-        #end
         Tools::Config.instance.options['queues']['standard']['to'] + \
-          "-#{::WORKER + 1}"
+          "-#{@current_instance}"
+      end
+
+      private
+
+      def define_worker
+        defined?(::WORKER) ? ::WORKER + 1 : 1
+      end
+
+      def session_number
+        Janus::Concurrencies::Keepalive.instance.session
       end
     end
   end

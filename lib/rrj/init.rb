@@ -90,8 +90,20 @@ module RubyRabbitmqJanus
       Tools::Log.instance.info "OPTIONS FOR TRANSACTION : #{options}"
       session = @option.use_current_session?(options)
       handle = @option.use_current_handle?(options)
+      Tools::Log.instance.info "OPTIONS FOR TRANSACTION AFTER: #{session}"
       transaction = Janus::Transactions::Handle.new(exclusive, session, handle)
-      transaction.connect { yield(transaction) }
+      transaction.connect do
+        yield(transaction)
+      end
+    end
+
+    # Delete all resources to JanusInstance reference.
+    # Warning: All data in database and Janus Instance is delete
+    #
+    # @since 2.1.0
+    def cleanup_connection
+      Tools::Log.instance.info 'Cleannup Janus Instances'
+      Tools::JanusInstance.destroys
     end
 
     private

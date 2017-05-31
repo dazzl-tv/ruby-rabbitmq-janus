@@ -39,7 +39,9 @@ module RubyRabbitmqJanus
         #
         # @return [Janus::Responses::Standard] Response to message sending
         def publish_message(type, options = {})
-          msg = Janus::Messages::Standard.new(type, opts.merge!(options))
+          optss = opts.merge!(options)
+          optss['handle_id'] = @handle if Tools::Cluster.instance.enable
+          msg = Janus::Messages::Standard.new(type, optss)
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
         end
@@ -55,7 +57,9 @@ module RubyRabbitmqJanus
           Tools::Log.instance.info 'Create an handle'
           opt = { 'session_id' => session }
           msg = Janus::Messages::Standard.new('base::attach', opt)
+          Tools::Log.instance.info "Send message attach -- #{@handle}"
           @handle = send_a_message_exclusive { msg }
+          Tools::Log.instance.info "Message attach is sending -- #{@handle}"
         end
 
         def send_a_message_exclusive

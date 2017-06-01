@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
     # Define an exception for janus message class
-    class JanusMessage < Janus
+    class JanusMessage < BaseJanus
       # Initialize a error for janus message module
       #
       # @param [String] message Text returning in raise

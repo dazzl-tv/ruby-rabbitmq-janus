@@ -17,6 +17,8 @@ module RubyRabbitmqJanus
           @pub = @session = nil
           @instance = instance
           super()
+        rescue
+          raise Errors::Janus::Keepalive::Initializer
         end
 
         # Give a session Integer created when this gem is intanciate.
@@ -32,6 +34,8 @@ module RubyRabbitmqJanus
             condition.wait(lock)
             @session
           end
+        rescue
+          raise Errors::Janus::Keepalive::Session
         end
 
         private
@@ -40,34 +44,22 @@ module RubyRabbitmqJanus
           @session = find_session
           lock.synchronize { condition.signal }
           loop { loop_session(Tools::Config.instance.ttl) }
-        rescue => error
-          raise Errors::KeepaliveLoopSession, error
         end
 
         def loop_session(time_to_live)
           sleep time_to_live
           @pub.publish(message_keepalive)
           Tools::Log.instance.info "Keepalive for #{@session}"
-        rescue => error
-          raise Errors::KeepaliveMessage, error
         end
 
         def create_session
           @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
           msg = Janus::Messages::Standard.new('base::create', param_instance)
           @pub.publish(msg)
-        rescue => error
-          raise Errors::KeepaliveCreateSession, error
-        end
-
-        def give_ins
-          { 'instance' => @instance }
         end
 
         def message_keepalive
           Janus::Messages::Standard.new('base::keepalive', param_session)
-        rescue => error
-          raise Errors::KeepaliveMessage, error
         end
 
         def find_session
@@ -75,7 +67,7 @@ module RubyRabbitmqJanus
         end
 
         def param_instance
-          { 'instance' => @instance}
+          { 'instance' => @instance }
         end
 
         def param_session

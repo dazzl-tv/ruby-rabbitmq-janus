@@ -18,6 +18,8 @@ module RubyRabbitmqJanus
           @lock = Mutex.new
           @condition = ConditionVariable.new
           @thread = Thread.new { initialize_thread }
+        rescue
+          raise Errors::Janus::Concurencies::Initializer
         end
 
         private

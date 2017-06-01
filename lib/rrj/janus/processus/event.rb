@@ -14,6 +14,12 @@ module RubyRabbitmqJanus
       class Event < Concurrency
         include Singleton
 
+        def initalize
+          super
+        rescue
+          raise Errors::Janus::Event::Initializer
+        end
+
         # Create a thread for execute a block code in a thread
         #
         # @param [Proc] block Block code for execute action when queue
@@ -26,6 +32,8 @@ module RubyRabbitmqJanus
           Thread.new do
             loop { thread.thread_variable_get(:publish).listen_events(&block) }
           end
+        rescue
+          raise Errors::Janus::Event::Run
         end
 
         private

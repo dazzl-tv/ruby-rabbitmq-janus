@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
     # Define an error primary for response
-    class JanusResponse < Janus
+    class JanusResponse < BaseJanus
       # Initialize a error for janus response module
       #
       # @param [String] message Text returning in raise

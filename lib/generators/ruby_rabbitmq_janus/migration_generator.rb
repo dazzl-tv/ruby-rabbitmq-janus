@@ -1,6 +1,6 @@
 # frozen_string-literal: true
 
-module RubyrabbitmqJanus
+module RubyRabbitmqJanus
   module Generators
     require 'rails/generators/active_record'
 

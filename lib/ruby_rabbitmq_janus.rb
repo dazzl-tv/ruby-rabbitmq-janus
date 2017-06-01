@@ -16,3 +16,5 @@ require 'rrj/janus/janus'
 
 # Define errors in gems
 require 'rrj/errors/error'
+
+require 'rrj/railtie' if defined?(Rails)

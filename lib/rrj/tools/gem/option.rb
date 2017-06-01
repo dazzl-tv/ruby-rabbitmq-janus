@@ -2,6 +2,13 @@
 
 # :reek:FeatureEnvy :reek:UtilityFunction
 
+require 'rrj/tools/gem/janus_instance/janus_instance_concern'
+if defined?(Mongoid)
+  require 'rrj/tools/gem/janus_instance/mongoid'
+else
+  require 'rrj/tools/gem/janus_instance/active_record'
+end
+
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>

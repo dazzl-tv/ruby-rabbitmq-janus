@@ -29,6 +29,8 @@ module RubyRabbitmqJanus
       session = option.use_current_session?(options)
       transaction = Janus::Transactions::Admin.new(session)
       transaction.connect { yield(transaction) }
+    rescue
+      raise Errors::RRJAdmin::StartTransactionAdmin, opts
     end
   end
 end

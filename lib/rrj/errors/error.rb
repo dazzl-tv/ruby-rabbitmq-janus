@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/errors/init'
+require 'rrj/errors/base/init'
 require 'rrj/errors/janus/janus'
 require 'rrj/errors/tools/tools'
 require 'rrj/errors/rabbit/rabbit'

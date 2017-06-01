@@ -37,10 +37,8 @@ module RubyRabbitmqJanus
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       @option = Tools::Option.new
-      @session = @option.keepalive
-      Tools::Log.instance.info "Create an session janus with id : #{@session}"
     rescue => error
-      raise Errors::InstanciateGemFailed, error
+      raise Errors::RRJ::InstanciateGem, error
     end
 
     # Start a transaction with Janus. Request use session_id information.
@@ -56,10 +54,11 @@ module RubyRabbitmqJanus
     #
     # @since 2.0.0
     def start_transaction(exclusive = true, options = {})
-      Tools::Log.instance.info "OPTIONS FOR TRANSACTION : #{options}"
       session = @option.use_current_session?(options)
       transaction = Janus::Transactions::Session.new(exclusive, session)
       transaction.connect { yield(transaction) }
+    rescue
+      raise Errors::RRJ::StartTransaction, exclusive, options
     end
 
     # Start a transaction with Janus. Request used session_id/handle_id
@@ -87,14 +86,12 @@ module RubyRabbitmqJanus
     #
     # @since 2.0.0
     def start_transaction_handle(exclusive = true, options = {})
-      Tools::Log.instance.info "OPTIONS FOR TRANSACTION : #{options}"
       session = @option.use_current_session?(options)
       handle = @option.use_current_handle?(options)
-      Tools::Log.instance.info "OPTIONS FOR TRANSACTION AFTER: #{session}"
       transaction = Janus::Transactions::Handle.new(exclusive, session, handle)
-      transaction.connect do
-        yield(transaction)
-      end
+      transaction.connect { yield(transaction) }
+    rescue
+      raise Errors::RRJ::StartTransactionHandle, exclusive, options
     end
 
     # Delete all resources to JanusInstance reference.
@@ -102,8 +99,9 @@ module RubyRabbitmqJanus
     #
     # @since 2.1.0
     def cleanup_connection
-      Tools::Log.instance.info 'Cleannup Janus Instances'
       Models::JanusInstance.destroys
+    rescue
+      raise Errors::RRJ::CleanupConnection
     end
 
     private

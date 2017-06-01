@@ -22,16 +22,9 @@ module RubyRabbitmqJanus
         Log.instance
         Config.instance
         Requests.instance
-        @session = Cluster.instance.sessions
-      end
-
-      # Give number session to keepalive
-      #
-      # @return [Fixnum] Session ID
-      #
-      # @since 2.0.0
-      def keepalive
-        @session
+        Cluster.instance.create_sessions
+      rescue
+        raise Errors::Tools::Options::Initializer
       end
 
       # Determine session_id used
@@ -45,6 +38,8 @@ module RubyRabbitmqJanus
         hash = options
         hash['session_id'] = @session unless hash.key?('session_id')
         hash['session_id']
+      rescue
+        raise Errors::Tools::Options::UseCurrentSession, options, @session
       end
 
       # Determine handle_id used
@@ -58,6 +53,8 @@ module RubyRabbitmqJanus
         hash = options
         hash['handle_id'] = 0 unless hash.key?('handle_id')
         hash['handle_id']
+      rescue
+        raise Errors::Tools::Options::UseCurrentHandle, options
       end
     end
   end

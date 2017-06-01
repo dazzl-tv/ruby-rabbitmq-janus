@@ -55,7 +55,7 @@ module RubyRabbitmqJanus
         # Janus Instance
         def detach_for_deleting
           detach
-          Tools::JanusInstance.disable(opts['session_id'])
+          Models::JanusInstance.disable(opts['session_id'])
         end
 
         private

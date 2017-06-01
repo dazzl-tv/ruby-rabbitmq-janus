@@ -15,15 +15,17 @@ module RubyRabbitmqJanus
         @enable = Config.instance.cluster?
         @number = Config.instance.options['janus']['cluster']['count'].to_i \
           if @enable
+        @apps_with_no_worker = defined?(::WORKER) ? true : false
+        Tools::Log.instance.info "Woker configurer ? #{@apps_with_no_worker}"
       end
 
       def find_sessions(instance)
         @current_instance = instance
-        Tools::JanusInstance.find_by(instance: instance).session
+        Models::JanusInstance.find_by(instance: instance).session
       end
 
       def sessions
-        Tools::JanusInstance.create(instance: define_worker,
+        Models::JanusInstance.create(instance: define_worker,
                                     session: session_number,
                                     enable: true).session
       end

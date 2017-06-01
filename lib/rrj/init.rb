@@ -103,7 +103,7 @@ module RubyRabbitmqJanus
     # @since 2.1.0
     def cleanup_connection
       Tools::Log.instance.info 'Cleannup Janus Instances'
-      Tools::JanusInstance.destroys
+      Models::JanusInstance.destroys
     end
 
     private

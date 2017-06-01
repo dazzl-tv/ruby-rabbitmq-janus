@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  module Tools
+  module Models
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
     # Store instance information for MongoID database
-    module JanusInstance
+    class JanusInstance
       include Mongoid::Document
-      include JanusInstanceConcern
+      include RubyRabbitmqJanus::Models::JanusInstanceConcern
 
       field :instance, type: Integer
       field :session, type: Integer

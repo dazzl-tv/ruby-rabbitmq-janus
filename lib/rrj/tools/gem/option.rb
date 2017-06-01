@@ -23,8 +23,8 @@ module RubyRabbitmqJanus
         Config.instance
         Requests.instance
         Cluster.instance.create_sessions
-      rescue
-        raise Errors::Tools::Option::Initializer
+      rescue => error
+        raise Errors::Tools::Option::Initializer, error
       end
 
       # Determine session_id used

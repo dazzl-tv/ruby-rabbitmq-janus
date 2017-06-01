@@ -12,19 +12,18 @@ module RubyRabbitmqJanus
       #
       # @see https://ruby-doc.org/stdlib-2.4.0/libdoc/singleton/rdoc/Singleton.html
       class Keepalive < Concurrency
-        include Singleton
-
         # Initialize a singleton object for sending keepalive to janus
-        def initialize
+        def initialize(instance)
           @pub = @session = nil
-          super
+          @instance = instance
+          super()
         end
 
         # Give a session Integer created when this gem is intanciate.
         # Is waiting a thread return a response to message created sending.
         #
         # @example Ask session
-        #   Keepalive.instance.session
+        #   Keepalive.session
         #   => 852803383803249
         #
         # @return [Fixnum] Identifier to session created by Janus
@@ -55,10 +54,14 @@ module RubyRabbitmqJanus
 
         def create_session
           @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-          @pub.publish(Janus::Messages::Standard.new('base::create'))
-          # @pub.publish(Janus::Messages::Standard.new('base::create', param_create))
+          msg = Janus::Messages::Standard.new('base::create', param_instance)
+          @pub.publish(msg)
         rescue => error
           raise Errors::KeepaliveCreateSession, error
+        end
+
+        def give_ins
+          { 'instance' => @instance }
         end
 
         def message_keepalive
@@ -71,17 +74,12 @@ module RubyRabbitmqJanus
           Janus::Responses::Standard.new(create_session).session
         end
 
-        def param_create
-          if defined?(::WORKER)
-            { 'instance' => ::WORKER }
-          else
-            { 'instance' => 1 }
-          end
+        def param_instance
+          { 'instance' => @instance}
         end
 
         def param_session
-          # params_create.merge('session_id' => @session)
-          { 'session_id' => @session }
+          { 'session_id' => @session }.merge(param_instance)
         end
       end
     end

@@ -24,7 +24,7 @@ module RubyRabbitmqJanus
         Requests.instance
         Cluster.instance.create_sessions
       rescue
-        raise Errors::Tools::Options::Initializer
+        raise Errors::Tools::Option::Initializer
       end
 
       # Determine session_id used
@@ -39,7 +39,7 @@ module RubyRabbitmqJanus
         hash['session_id'] = @session unless hash.key?('session_id')
         hash['session_id']
       rescue
-        raise Errors::Tools::Options::UseCurrentSession, options, @session
+        raise Errors::Tools::Option::UseCurrentSession, options, @session
       end
 
       # Determine handle_id used
@@ -54,7 +54,7 @@ module RubyRabbitmqJanus
         hash['handle_id'] = 0 unless hash.key?('handle_id')
         hash['handle_id']
       rescue
-        raise Errors::Tools::Options::UseCurrentHandle, options
+        raise Errors::Tools::Option::UseCurrentHandle, options
       end
     end
   end

@@ -13,14 +13,14 @@ module RubyRabbitmqJanus
       # @param [Symbol] level Important to error
       def initialize(message, level)
         super(message)
-        log = Tools::Log.instance
-        Tools::Log.instance_method(level).bind(log).call(message)
+        log = RubyRabbitmqJanus::Tools::Log.instance
+        RubyRabbitmqJanus::Tools::Log.instance_method(level).bind(log).call(message)
       end
     end
   end
 end
 
-require 'rrj/errors/base/init'
+require 'rrj/errors/base/base'
 require 'rrj/errors/janus/janus'
 require 'rrj/errors/tools/tools'
 require 'rrj/errors/rabbit/rabbit'

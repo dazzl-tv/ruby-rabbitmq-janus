@@ -45,8 +45,7 @@ module RubyRabbitmqJanus
           @request = {}
           @type = template_request
           Tools::Log.instance.warn "OPTIONS MSG : #{options} -- #{options['instance']}"
-          # @properties = Rabbit::Propertie.new(options['instance'])
-          @properties = Rabbit::Propertie.new
+          @properties = Rabbit::Propertie.new(options['instance'])
           Tools::Log.instance.info "PROPERTIES MESSAGE : #{@properties.options.inspect}"
           load_request_file
           prepare_request(options)

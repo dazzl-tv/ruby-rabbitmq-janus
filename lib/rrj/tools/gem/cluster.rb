@@ -28,9 +28,14 @@ module RubyRabbitmqJanus
                                     enable: true).session
       end
 
-      def queue_to
+      def queue_to(instance = nil)
         Tools::Config.instance.options['queues']['standard']['to'] + \
-          "-#{@current_instance}"
+          "-#{instance.blank? ? @current_instance : instance}"
+      end
+
+      def queue_admin_to(instance = nil)
+        Tools::Config.instance.options['queues']['admin']['to'] + \
+          "-#{instance.blank? ? @current_instance : instance}"
       end
 
       private

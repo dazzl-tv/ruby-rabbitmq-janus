@@ -12,19 +12,17 @@ module RubyRabbitmqJanus
       attr_reader :correlation
 
       # Initialize a message sending to rabbitmq
-      def initialize
+      def initialize(instance = nil)
         Tools::Log.instance.debug 'initalize a propertie to message'
         @correlation = SecureRandom.uuid
-        # @instance = instance
-        # Tools::Log.instance.info "Inspect : #{self.inspect}"
+        @instance = instance
       end
 
       # Define options sending to rabbitmq
       def options
         Tools::Log.instance.debug 'Add options to propertie to message'
-        # routing = @instance.empty? ? Tools::Config.instance.queue_to : @instance
         {
-          routing_key: Tools::Config.instance.queue_to,
+          routing_key: Tools::Cluster.instance.queue_to(@instance),
           correlation_id: @correlation,
           content_type: 'application/json'
         }
@@ -34,7 +32,7 @@ module RubyRabbitmqJanus
       def options_admin
         Tools::Log.instance.debug 'Add options to propertie to message'
         {
-          routing_key: Tools::Config.instance.queue_admin_to,
+          routing_key: Tools::Cluster.instance.queue_admin_to(@instance),
           correlation_id: @correlation,
           content_type: 'application/json'
         }

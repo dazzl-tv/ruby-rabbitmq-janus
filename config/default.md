@@ -17,11 +17,14 @@ queues:
   standard:
     from: from-janus
     to: to-janus
-    admin:
-      from: from-janus-admin
-      to: to-janus-admin
+  admin:
+    from: from-janus-admin
+    to: to-janus-admin
 
 janus:
+  cluster:
+    enabled: false
+    count: 0
   session:
     keepalive: 45
   plugins:

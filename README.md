@@ -41,6 +41,7 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
 * [How to use](#how-to-use)
   * [Installation](#installation)
   * [Configuration](#configuration)
+    * [Janus](#janus)
     * [Generators](#generators)
     * [Requests](#requests)
   * [Usage](#usage)
@@ -76,12 +77,20 @@ bundle
 Or install it yourself as :
 
 ```linux
-gem install evostream-event
+gem install ruby_rabbitmq_janus
 ```
 
 ### Configuration
 
 If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.md)
+
+#### Janus
+
+Configure one (or many) Janus server.
+[See janus gateway documentation.](https://janus.conf.meetecho.com/docs/)
+
+Configure the queue with rabbit with incremental number. So the first instance
+take a name `to-janus-1` and all queues `from` sending in same queue.
 
 #### Generators
 

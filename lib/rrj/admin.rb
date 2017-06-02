@@ -30,7 +30,7 @@ module RubyRabbitmqJanus
       transaction = Janus::Transactions::Admin.new(session)
       transaction.connect { yield(transaction) }
     rescue
-      raise Errors::RRJAdmin::StartTransactionAdmin, opts
+      raise Errors::RRJAdmin::StartTransactionAdmin, options
     end
   end
 end

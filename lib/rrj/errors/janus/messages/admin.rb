@@ -19,7 +19,7 @@ module RubyRabbitmqJanus
           end
         end
 
-        class Option < RubyRabbitmqJanus::Errors::Janus::BaseMessageAdmin
+        class Options < RubyRabbitmqJanus::Errors::Janus::BaseMessageAdmin
           def initialize
             super 'Return properties message admin failed'
           end

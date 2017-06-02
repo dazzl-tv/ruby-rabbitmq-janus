@@ -15,9 +15,9 @@ module RubyRabbitmqJanus
 
         # Return options to message for rabbitmq
         def options
-          properties.options_admin
-        rescue => error
-          raise Errors::JanusMessagePropertie, error
+          properties.options_admin(@type)
+        rescue
+          raise Errors::Janus::MessageAdmin::Options
         end
 
         private

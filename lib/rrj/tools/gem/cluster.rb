@@ -20,13 +20,6 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Cluster::Initializer
       end
 
-      def find_sessions(instance)
-        @current_instance = instance
-        Models::JanusInstance.find_by(instance: instance).session
-      rescue
-        raise Errors::Tools::Cluster::FindSession
-      end
-
       # Create all session. One by instance
       def create_sessions
         (1..@number).each do |janus_instance|

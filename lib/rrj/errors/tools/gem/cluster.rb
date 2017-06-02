@@ -18,12 +18,6 @@ module RubyRabbitmqJanus
           end
         end
 
-        class FindSession < RubyRabbitmqJanus::Errors::Tools::BaseCluster
-          def initalize
-            super 'Error for finding session assiocate to instance.'
-          end
-        end
-
         class CreateSessions < RubyRabbitmqJanus::Errors::Tools::BaseCluster
           def initalize
             super 'Error for creating sessions'

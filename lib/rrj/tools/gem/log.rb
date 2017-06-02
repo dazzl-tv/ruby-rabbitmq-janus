@@ -40,6 +40,8 @@ module RubyRabbitmqJanus
         @level = logs.level
         @progname = logs.progname
         @logs = ActiveSupport::TaggedLogging.new(logs)
+      rescue
+        raise Errors::Tools::Log::Initializer
       end
 
       # Write a message in log with a `UNKNOWN` level
@@ -47,6 +49,8 @@ module RubyRabbitmqJanus
       # @param message [String] Message writing in warning level in log
       def unknown(message)
         write_tag { @logs.unknown(filter(message)) }
+      rescue
+        raise Errors::Tools::Log::Unknow
       end
 
       # Write a message in log with a `FATAL` level
@@ -54,6 +58,8 @@ module RubyRabbitmqJanus
       # @param message [String] Message writing in warning level in log
       def fatal(message)
         write_tag { @logs.fatal(filter(message)) } if test_level?(Logger::FATAL)
+      rescue
+        raise Errors::Tools::Log::Fatal
       end
 
       # Write a message in log with a `ERROR` level
@@ -61,12 +67,16 @@ module RubyRabbitmqJanus
       # @param message [String] Message writing in warning level in log
       def error(message)
         write_tag { @logs.error(filter(message)) } if test_level?(Logger::ERROR)
+      rescue
+        raise Errors::Tools::Log::Error
       end
 
       # Write a message in log with a `WARN` level
       # @param message [String] Message writing in warning level in log
       def warn(message)
         write_tag { @logs.warn(filter(message)) } if test_level?(Logger::WARN)
+      rescue
+        raise Errors::Tools::Log::Warn
       end
 
       # Write a message in log with a `INFO` level
@@ -74,6 +84,8 @@ module RubyRabbitmqJanus
       # @param message [String] Message writing in info level in log
       def info(message)
         write_tag { @logs.info(filter(message)) } if test_level?(Logger::INFO)
+      rescue
+        raise Errors::Tools::Log::Info
       end
 
       # Write a message in log with a `DEBUG` level
@@ -81,16 +93,22 @@ module RubyRabbitmqJanus
       # @param message [String] Message writing in debug level in log
       def debug(message)
         write_tag { @logs.debug(filter(message)) } if test_level?(Logger::DEBUG)
+      rescue
+        raise Errors::Tools::Log::Debug
       end
 
       # @return [RubyRabbitmqJanus::Tools::Log] the instance to logger
       def logger
         @logs
+      rescue
+        raise Errors::Tools::Log::Logger
       end
 
-      # @return [String] name of file to lgger used
+      # @return [String] name of file to logger used
       def logdev
         @logs.instance_variable_get(:'@logdev').filename
+      rescue
+        raise Errors::Tools::Log::Logdev
       end
 
       # Save log level used in this gem
@@ -98,6 +116,8 @@ module RubyRabbitmqJanus
       # @param [Symbol] gem_level Level used for log in this gem
       def save_level(gem_level)
         @level = LEVELS[gem_level]
+      rescue
+        raise Errors::Tools::Log::SaveLevel
       end
 
       private

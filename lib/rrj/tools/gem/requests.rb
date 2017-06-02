@@ -31,6 +31,8 @@ module RubyRabbitmqJanus
             each_folder(File.basename(file))
           end
         end
+      rescue
+        raise Errors::Tools::Request::Initializer
       end
 
       private

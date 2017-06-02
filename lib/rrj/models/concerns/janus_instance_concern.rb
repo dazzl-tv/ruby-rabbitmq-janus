@@ -27,6 +27,12 @@ module RubyRabbitmqJanus
         rescue
           false
         end
+
+        def find_by_session(session_search)
+          JanusInstance.find_by(session: session_search)
+        rescue
+          nil
+        end
       end
     end
   end

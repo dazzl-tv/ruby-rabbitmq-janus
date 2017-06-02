@@ -9,6 +9,8 @@ module RubyRabbitmqJanus
       class Admin < Session
         def initialize(session)
           super(true, session)
+        rescue
+          raise Errors::Janus::TransactionAdmin::Initialize
         end
 
         # Begin connection with RabbitMQ
@@ -17,6 +19,8 @@ module RubyRabbitmqJanus
             @publisher = Rabbit::Publisher::PublisherAdmin.new(rabbit.channel)
             yield
           end
+        rescue
+          raise Errors::Janus::TransactionAdmin::Connect
         end
 
         # Write a message in queue in RabbitMQ
@@ -24,6 +28,8 @@ module RubyRabbitmqJanus
           msg = Janus::Messages::Admin.new(type, opts.merge(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Admin.new(response)
+        rescue
+          raise Errors::Janus::TransactionAdmin::PublishMessage
         end
 
         private

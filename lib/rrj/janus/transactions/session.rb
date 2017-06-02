@@ -16,6 +16,8 @@ module RubyRabbitmqJanus
         def initialize(exclusive, session)
           super(session)
           @exclusive = exclusive
+        rescue
+          raise Errors::Janus::TransactionSession::Initialize
         end
 
         # Opening a short transaction with rabbitmq and close when is ending
@@ -26,12 +28,16 @@ module RubyRabbitmqJanus
             choose_queue
             yield
           end
+        rescue
+          raise Errors::Janus::TransactionSession::Connect
         end
 
         def publish_message(type, options = {})
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
+        rescue
+          raise Errors::Janus::TransactionSession::PublishMessage
         end
 
         private

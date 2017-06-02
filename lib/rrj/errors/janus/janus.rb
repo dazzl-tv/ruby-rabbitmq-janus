@@ -9,18 +9,27 @@ module RubyRabbitmqJanus
       # Initialize a error standard for janus module
       #
       # @param [String] message Text returning in raise
-      def initialize(message)
-        super "[JANUS]#{message}", :fatal
+      def initialize(message, level)
+        super "[JANUS]#{message}", level
       end
     end
   end
 end
 
-require 'rrj/errors/janus/concurency'
-require 'rrj/errors/janus/keepalive'
-require 'rrj/errors/janus/event'
+require 'rrj/errors/janus/processus/concurency'
+require 'rrj/errors/janus/processus/keepalive'
+require 'rrj/errors/janus/processus/event'
 
-require 'rrj/errors/janus/message'
-require 'rrj/errors/janus/response'
+require 'rrj/errors/janus/messages/message'
+require 'rrj/errors/janus/messages/admin'
+require 'rrj/errors/janus/messages/standard'
 
-require 'rrj/errors/janus/transaction'
+require 'rrj/errors/janus/responses/response'
+require 'rrj/errors/janus/responses/admin'
+require 'rrj/errors/janus/responses/event'
+require 'rrj/errors/janus/responses/standard'
+
+require 'rrj/errors/janus/transactions/transaction'
+require 'rrj/errors/janus/transactions/admin'
+require 'rrj/errors/janus/transactions/handle'
+require 'rrj/errors/janus/transactions/session'

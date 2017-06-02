@@ -10,6 +10,8 @@ module RubyRabbitmqJanus
         # @return [Array] List of sessions
         def sessions
           request['sessions']
+        rescue
+          raise Errors::Janus::ResponseAdmin::Sessions
         end
 
         # List of handles running in one session in Janus Instance.
@@ -17,6 +19,8 @@ module RubyRabbitmqJanus
         # @return [Array] List of handles
         def handles
           request['handles']
+        rescue
+          raise Errors::Janus::ResponseAdmin::Handles
         end
 
         # Info to session or handle in Janus Instance
@@ -24,6 +28,7 @@ module RubyRabbitmqJanus
         # @return [Hash] Information to session/handle
         def info
           request['info']
+          raise Errors::Janus::ResponseAdmin::Info
         end
       end
     end

@@ -7,9 +7,14 @@ module RubyRabbitmqJanus
       #
       # Create an message for janus
       class Admin < Message
+        def initialize(template_request, options = {})
+          super(template_request, options)
+        rescue
+          raise Errors::Janus::MessageAdmin::Initializer
+        end
+
         # Return options to message for rabbitmq
         def options
-          Tools::Log.instance.debug 'Options used for admin message'
           properties.options_admin
         rescue => error
           raise Errors::JanusMessagePropertie, error

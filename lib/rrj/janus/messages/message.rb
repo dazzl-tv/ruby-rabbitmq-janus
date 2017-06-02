@@ -44,13 +44,11 @@ module RubyRabbitmqJanus
         def initialize(template_request, options = {})
           @request = {}
           @type = template_request
-          Tools::Log.instance.warn "OPTIONS MSG : #{options} -- #{options['instance']}"
           @properties = Rabbit::Propertie.new(options['instance'])
-          Tools::Log.instance.info "PROPERTIES MESSAGE : #{@properties.options.inspect}"
           load_request_file
           prepare_request(options)
-        rescue => error
-          raise Errors::JanusMessage, error
+        rescue
+          raise Errors::Janus::Message::Initializer
         end
 
         # Return request to json format
@@ -58,8 +56,8 @@ module RubyRabbitmqJanus
         # @return [String] Request to JSON format
         def to_json
           @request.to_json
-        rescue => error
-          raise Errors::JanusMessageJson, error
+        rescue
+          raise Errors::Janus::Message::ToJson
         end
 
         # Return request to json format with nice format
@@ -67,8 +65,8 @@ module RubyRabbitmqJanus
         # @return [String] Request to JSON format with indent
         def to_nice_json
           JSON.pretty_generate to_hash
-        rescue => error
-          raise Errors::JanusMessagePrettyJson, error
+        rescue
+          raise Errors::Janus::Message::ToNiceJson
         end
 
         # Return request to hash format
@@ -76,8 +74,8 @@ module RubyRabbitmqJanus
         # @return [Hash] Request to Hash format
         def to_hash
           @request
-        rescue => error
-          raise Errors::JanusMessageHash, error
+        rescue
+          raise Errors::Janus::Message::ToHash
         end
 
         # Return correlation to message
@@ -85,6 +83,8 @@ module RubyRabbitmqJanus
         # @return [String] Correlation string
         def correlation
           @properties.correlation
+        rescue
+          raise Errors::Janus::Message::Correlation
         end
 
         private

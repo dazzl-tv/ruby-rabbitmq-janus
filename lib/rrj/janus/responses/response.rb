@@ -18,11 +18,8 @@ module RubyRabbitmqJanus
         #   sending by user
         def initialize(response_janus)
           @request = response_janus
-        rescue => error
-          Tools::Log.instance.debug "Request error [initialize] : #{@request}"
-          raise Errors::JanusResponseInit, error
-        else
-          Tools::Log.instance.debug "Response return : #{to_json}"
+        rescue
+          raise Errors::Janus::Response::Initializer
         end
 
         # Return request to json format
@@ -30,8 +27,8 @@ module RubyRabbitmqJanus
         # @return [String] Response to JSON format
         def to_json
           @request.to_json
-        rescue => error
-          raise Errors::JanusResponseJson, [error, @request]
+        rescue
+          raise Errors::Janus::Response::ToJson
         end
 
         # Return request to json format with nice format
@@ -39,8 +36,8 @@ module RubyRabbitmqJanus
         # @return [String] Response to JSON format with indent
         def to_nice_json
           JSON.pretty_generate to_hash
-        rescue => error
-          raise Errors::JanusResponsePrettyJson, error
+        rescue
+          raise Errors::Janus::Response::ToNiceJson
         end
 
         # Return request to hash format
@@ -48,8 +45,8 @@ module RubyRabbitmqJanus
         # @return [Hash] Response to Hash foramt
         def to_hash
           @request
-        rescue => error
-          raise Errors::JanusResponseHash, [error, @request]
+        rescue
+          raise Errors::Janus::Response::ToHash
         end
 
         private

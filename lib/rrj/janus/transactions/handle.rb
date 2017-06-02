@@ -15,6 +15,8 @@ module RubyRabbitmqJanus
           super(session)
           @exclusive = exclusive
           @handle = handle
+        rescue
+          raise Errors::Janus::TransactionHandle::Initialize
         end
 
         # Opening a long transaction with rabbitmq and is ending closing
@@ -30,6 +32,8 @@ module RubyRabbitmqJanus
             yield
           end
           handle
+        rescue
+          raise Errors::Janus::TransactionHandle::Connect
         end
 
         # Publish an message in handle
@@ -44,11 +48,15 @@ module RubyRabbitmqJanus
           msg = Janus::Messages::Standard.new(type, optss)
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
+        rescue
+          raise Errors::Janus::TransactionHandle::PublishMessage
         end
 
         # Send a message detach
         def detach
           publisher.publish(Janus::Messages::Standard.new('base::detach', opts))
+        rescue
+          raise Errors::Janus::TransactionHandle::Detach
         end
 
         # Send a message detach and disable session for deleting in
@@ -56,6 +64,8 @@ module RubyRabbitmqJanus
         def detach_for_deleting
           detach
           Models::JanusInstance.disable(opts['session_id'])
+        rescue
+          raise Errors::Janus::TransactionHandle::DetachForDeleting
         end
 
         private

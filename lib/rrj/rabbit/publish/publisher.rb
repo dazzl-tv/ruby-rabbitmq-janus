@@ -15,7 +15,8 @@ module RubyRabbitmqJanus
           super()
           @exchange = exchange.default_exchange
           @message = nil
-          Tools::Log.instance.info "Create/Connect to queue -- #{reply.name}"
+        rescue
+          raise Errors::Rabbit::Publish::Initialize
         end
 
         # Publish an message in queue
@@ -25,12 +26,11 @@ module RubyRabbitmqJanus
         # @raise [Errors::RabbitPublishMessage] If request is false the
         #   execption is calling
         def publish(request)
-          Tools::Log.instance.info "Send request type : #{request.type}"
           @message = request
           @exchange.publish(@message.to_json,
                             request.options.merge!(reply_to: reply.name))
-        rescue => error
-          raise Errors::RabbitPublishMessage, error, request
+        rescue
+          raise Errors::Rabbit::Publish::Publish
         end
 
         private

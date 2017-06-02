@@ -21,10 +21,11 @@ module RubyRabbitmqJanus
 
         # Define a base publisher
         def initialize
-          Tools::Log.instance.debug 'Create an publisher'
           @responses = []
           @semaphore = Semaphore.new
           @lock = Mutex.new
+        rescue
+          raise Errors::Rabbit::BasePublisher::Initialize
         end
 
         private

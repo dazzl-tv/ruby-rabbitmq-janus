@@ -17,6 +17,8 @@ module RubyRabbitmqJanus
       def initialize(request)
         @request = request
         @key = @data = nil
+      rescue
+        raise Errors::Tools::Type::Initializer
       end
 
       # Return an data with a type corresponding to string in request
@@ -29,6 +31,8 @@ module RubyRabbitmqJanus
         @key = key
         @data = option[@key] if option.key?(@key)
         convert_data
+      rescue
+        raise Errors::Tools::Type::Convert
       end
 
       private

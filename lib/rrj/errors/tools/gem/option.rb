@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Errors
     module Tools
       # Define a super class for all error in Option class
-      class BaseOption < RRJError
+      class BaseOption < BaseTools
         def initialize(message, level)
           super("[Option] #{message}", level)
         end

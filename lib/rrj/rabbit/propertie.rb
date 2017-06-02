@@ -16,6 +16,8 @@ module RubyRabbitmqJanus
         Tools::Log.instance.debug 'initalize a propertie to message'
         @correlation = SecureRandom.uuid
         @instance = instance
+      rescue
+        raise Errors::Rabbit::Propertie::Initialize
       end
 
       # Define options sending to rabbitmq
@@ -26,6 +28,8 @@ module RubyRabbitmqJanus
           correlation_id: @correlation,
           content_type: 'application/json'
         }
+      rescue
+        raise Errors::Rabbit::Propertie::Options
       end
 
       # Define option sending to rabbitmq for janus admin message
@@ -36,6 +40,8 @@ module RubyRabbitmqJanus
           correlation_id: @correlation,
           content_type: 'application/json'
         }
+      rescue
+        raise Errors::Rabbit::Propertie::Options_admin
       end
     end
   end

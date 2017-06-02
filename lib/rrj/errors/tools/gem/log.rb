@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Errors
     module Tools
       # Define super class for all errors in Log class
-      class BaseLog < RRJError
+      class BaseLog < BaseTools
         def initialize(message, level = :warn)
           super("[Log] #{message}", level)
         end

@@ -13,6 +13,8 @@ module RubyRabbitmqJanus
           @reply = exchange.queue(Tools::Config.instance.queue_admin_from)
           super(exchange)
           subscribe_to_queue
+        rescue
+          raise Errors::Rabbit::PublisherAdmin::Initialize
         end
 
         # Send an message to queue and waiting a response
@@ -24,6 +26,8 @@ module RubyRabbitmqJanus
         def publish(request)
           super(request)
           return_response
+        rescue
+          raise Errors::Rabbit::PublisherAdmin::Pusblish
         end
 
         private

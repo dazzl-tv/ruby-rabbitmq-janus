@@ -19,6 +19,8 @@ module RubyRabbitmqJanus
           @request = request
           @opts = options
           @type = Tools::Type.new(@request)
+        rescue
+          raise Errors::Tools::Replace::Initializer
         end
 
         # Replace element in hash request with information used for this
@@ -32,6 +34,8 @@ module RubyRabbitmqJanus
             add_other if test_presence?('add')
           end
           @request
+        rescue
+          raise Errors::Tools::Replace::TransformRequest
         end
 
         private

@@ -19,7 +19,7 @@ module RubyRabbitmqJanus
     #
     # @since 2.1.0
     def start_transaction_handle(exclusive = true, options = {})
-      session = Models::JanusInstance.find_by(options['instance'])
+      session = Models::JanusInstance.find_by(options['instance']).session
       handle = 0 # Create always a new handle
       transaction = Janus::Transactions::Handle.new(exclusive, session, handle)
       transaction.connect { yield(transaction) }

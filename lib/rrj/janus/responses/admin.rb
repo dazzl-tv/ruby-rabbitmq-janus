@@ -28,6 +28,7 @@ module RubyRabbitmqJanus
         # @return [Hash] Information to session/handle
         def info
           request['info']
+      rescue
           raise Errors::Janus::ResponseAdmin::Info
         end
       end

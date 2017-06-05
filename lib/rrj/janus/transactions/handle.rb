@@ -11,10 +11,11 @@ module RubyRabbitmqJanus
         #
         # @param [Fixnum] session
         #   Use a session identifier for created message
-        def initialize(exclusive, session, handle = 0)
+        def initialize(exclusive, session, handle = 0, instance = 1)
           super(session)
           @exclusive = exclusive
           @handle = handle
+          @instance = instance
         rescue
           raise Errors::Janus::TransactionHandle::Initialize
         end
@@ -72,7 +73,7 @@ module RubyRabbitmqJanus
 
         def create_handle
           Tools::Log.instance.info 'Create an handle'
-          opt = { 'session_id' => session }
+          opt = { 'session_id' => session, 'instance' => @instance }
           msg = Janus::Messages::Standard.new('base::attach', opt)
           Tools::Log.instance.info "Send message attach -- #{@handle}"
           @handle = send_a_message_exclusive { msg }

@@ -88,7 +88,8 @@ module RubyRabbitmqJanus
     def start_transaction_handle(exclusive = true, options = {})
       session = @option.use_current_session?(options)
       handle = @option.use_current_handle?(options)
-      transaction = Janus::Transactions::Handle.new(exclusive, session, handle)
+      instance = options['instance'] || 1
+      transaction = Janus::Transactions::Handle.new(exclusive, session, handle, instance)
       transaction.connect { yield(transaction) }
     rescue
       raise Errors::RRJ::StartTransactionHandle, exclusive, options

@@ -5,7 +5,7 @@ namespace :rrj do
   task delete_instances: :environment do
     @timelaps = Time.now.utc
 
-    RubyRabbitmqJanus::Models::JanusInstance.delete_all
+    RubyRabbitmqJanus::Models::JanusInstance.destroy_all
 
     Rails.logger.info "Executed in #{Time.now.utc - @timelaps} ms"
   end

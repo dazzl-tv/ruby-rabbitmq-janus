@@ -15,6 +15,25 @@ module RubyRabbitmqJanus
       raise Errors::RRJTask::Initialize
     end
 
+    # Start a transaction with Janus. Request use session_id information.
+    #
+    # @param [Hash] options
+    #   Give a session number for use another session in Janus
+    #
+    # @example Get Janus information
+    #   @rrj.start_transaction do |transaction|
+    #     response = transaction.publish_message('base::info').to_hash
+    #   end
+    #
+    # @since 2.1.0
+    def start_transaction(options = {})
+      transaction = Janus::Transactions::Session.new(true,
+                                                     options['session_id'])
+      transaction.connect { yield(transaction) }
+    rescue
+      raise Errors::RRJ::StartTransaction.new(true, options)
+    end
+
     # Create a transaction betwwen apps and janus with a handle
     #
     # @since 2.1.0

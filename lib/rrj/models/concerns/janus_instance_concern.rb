@@ -8,8 +8,10 @@ module RubyRabbitmqJanus
 
       # Send an action for destroying a session in Janus Gateway instance
       def destroy_before_action
-        options = { 'session_id' => intance.session }
-        Janus::Messages::Standard.new('base::destroy', options)
+        options = { 'session_id' => session, 'instance' => instance }
+        ::RRJ.start_transaction(options) do |transaction|
+          transaction.publish_message('base::destroy', options)
+        end
       end
 
       # Class methods for JanusInstance model

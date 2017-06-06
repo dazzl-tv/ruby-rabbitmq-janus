@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class CreateRubyRabbitmqJanusTables < ActiveRecord::Migration
+# Fields for JanusInstance model
+class CreateRubyRabbitmqJanusTables < ActiveRecord::Migration[5.0]
   def change
     create_table :janus_instances do |t|
       t.integer :instance

@@ -1,9 +1,11 @@
 # frozen_string-literal: true
 
 module RubyRabbitmqJanus
+  # Module for generators
   module Generators
     require 'rails/generators/active_record'
 
+    # Create a migration for rails project with active record
     class MigrationGenerator < ::Rails::Generators::Base
       include Rails::Generators::Migration
       desc 'Add to rails project RubyRabbitmqJanus migration file.'
@@ -18,6 +20,6 @@ module RubyRabbitmqJanus
       def self.next_migration_number(dirname)
         ActiveRecord::Generators::Base.next_migration_number(dirname)
       end
-    end if defined?(ActiveRecord) && !defined?(Mongo)
-  end
+    end
+  end if defined?(ActiveRecord) && !defined?(Mongo)
 end

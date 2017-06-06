@@ -3,40 +3,47 @@
 module RubyRabbitmqJanus
   module Errors
     module Janus
-      class BaseTransactionHandle < RubyRabbitmqJanus::Errors::Janus::BaseTransaction
+      # Define a super class for error in Janus::Transactions::TransactionHandle
+      class BaseTransactionHandle < BaseTransaction
         def initialize(message, level = :fatal)
           super "[Handle] #{message}", level
         end
       end
 
       module TransactionHandle
-        class Initialize < RubyRabbitmqJanus::Errors::Janus::BaseTransactionHandle
+        # Error for Janus::Transactions::TransactionHandle#initialize
+        class Initialize < Errors::Janus::BaseTransactionHandle
           def initialize
             super 'Error in initializer'
           end
         end
 
-        class Connect < RubyRabbitmqJanus::Errors::Janus::BaseTransactionHandle
+        # Error for Janus::Transactions::TransactionHandle#connect
+        class Connect < Errors::Janus::BaseTransactionHandle
           def initialize
             super 'Error for connect to RabbitMQ'
           end
         end
 
-        class PublishMessage < RubyRabbitmqJanus::Errors::Janus::BaseTransactionHandle
+        # Error for Janus::Transactions::TransactionHandle#publish_message
+        class PublishMessage < Errors::Janus::BaseTransactionHandle
           def initialize
             super 'Error for publishing message'
           end
         end
 
-        class Detach < RubyRabbitmqJanus::Errors::Janus::BaseTransactionHandle
+        # Error for Janus::Transactions::TransactionHandle#detach
+        class Detach < Errors::Janus::BaseTransactionHandle
           def initialize
             super 'Error for sending message to type detach'
           end
         end
 
-        class DetachForDeleting < RubyRabbitmqJanus::Errors::Janus::BaseTransactionHandle
+        # Error for Janus::Transactions::TransactionHandle#detach_for_deleteing
+        class DetachForDeleting < Errors::Janus::BaseTransactionHandle
           def initialize
-            super 'Error for sending message detach and update in database Janus instance'
+            super 'Error for sending message detach ' \
+                  'and update in database Janus instance'
           end
         end
       end

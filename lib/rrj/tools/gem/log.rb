@@ -24,7 +24,7 @@ module RubyRabbitmqJanus
       }.freeze
 
       # Sensitive data
-      SENSITIVES = %i(admin_secret apisecret).freeze
+      SENSITIVES = %i[admin_secret apisecret].freeze
 
       attr_reader :level
 

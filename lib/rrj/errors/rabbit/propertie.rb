@@ -11,18 +11,21 @@ module RubyRabbitmqJanus
       end
 
       module Propertie
+        # Error for Rabbit::Propertie#initialize
         class Initialize < RubyRabbitmqJanus::Errors::Rabbit::BasePropertie
           def initialize
             super 'Error in initializer'
           end
         end
 
+        # Error for Rabbit::Propertie#options
         class Options < RubyRabbitmqJanus::Errors::Rabbit::BasePropertie
           def initialize
             super 'Error for create hash to propertie message'
           end
         end
 
+        # Error for Rabbit::Propertie#options_admin
         class OptionsAdmin < RubyRabbitmqJanus::Errors::Rabbit::BasePropertie
           def initialize
             super 'Error for create hash to propertie message admin'

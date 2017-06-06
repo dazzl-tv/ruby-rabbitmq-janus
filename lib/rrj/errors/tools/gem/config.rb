@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
       end
 
       module Config
-        # Error for Config#new
+        # Error for Config#initialize
         class Initializer < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error in initalizer'
@@ -66,7 +66,7 @@ module RubyRabbitmqJanus
         # Error for Config#plugin_at
         class PluginAt < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize(parameter)
-            super "Plugin is not found in configuration file, " \
+            super 'Plugin is not found in configuration file, ' \
                   "with parameter #{parameter}", :warn
           end
         end

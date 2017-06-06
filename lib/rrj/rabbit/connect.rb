@@ -56,7 +56,7 @@ module RubyRabbitmqJanus
       def read_options_server
         cfg = Tools::Config.instance.options['rabbit']
         opts = {}
-        %w(host port pass user vhost).each do |val|
+        %w[host port pass user vhost].each do |val|
           opts.merge!(val.to_sym => cfg[val])
         end
         opts

@@ -2,6 +2,7 @@
 
 module RubyRabbitmqJanus
   module Errors
+    # Define a super class for all error in module Rabbit
     class BaseRabbit < RRJError
       def initialize(message, level = :fatal)
         super "[Rabbit]#{message}", level

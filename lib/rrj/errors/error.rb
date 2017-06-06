@@ -13,8 +13,9 @@ module RubyRabbitmqJanus
       # @param [Symbol] level Important to error
       def initialize(message, level)
         super(message)
-        log = RubyRabbitmqJanus::Tools::Log.instance
-        RubyRabbitmqJanus::Tools::Log.instance_method(level).bind(log).call(message)
+        logger = RubyRabbitmqJanus::Tools::Log
+        log = logger.instance
+        logger.instance_method(level).bind(log).call(message)
       end
     end
   end

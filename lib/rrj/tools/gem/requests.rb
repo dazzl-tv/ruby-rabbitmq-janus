@@ -24,13 +24,7 @@ module RubyRabbitmqJanus
       def initialize
         @requests = {}
         Tools::Log.instance.info "Loading all requests in : #{PATH_REQUEST}"
-        Dir[File.join(PATH_REQUEST, '*')].count do |file|
-          if File.file?(file)
-            read_file(file)
-          elsif File.directory?(file)
-            each_folder(File.basename(file))
-          end
-        end
+        Dir[File.join(PATH_REQUEST, '*')].count { |file| each_files(file) }
       rescue
         raise Errors::Tools::Request::Initializer
       end
@@ -53,6 +47,14 @@ module RubyRabbitmqJanus
 
       def read_folder(folder, file)
         @requests[folder + File.basename(file, '.json').to_s] = File.path(file)
+      end
+
+      def each_files(file)
+        if File.file?(file)
+          read_file(file)
+        elsif File.directory?(file)
+          each_folder(File.basename(file))
+        end
       end
     end
   end

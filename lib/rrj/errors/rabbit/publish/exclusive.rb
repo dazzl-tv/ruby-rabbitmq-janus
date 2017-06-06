@@ -3,6 +3,8 @@
 module RubyRabbitmqJanus
   module Errors
     module Rabbit
+      # Define a super class for all errors in
+      # Rabbit::Publisher::PublishExclusive
       class BasePublishExclusive < BaseErrorPublisher
         def initialize(message, level = :fatal)
           super "[Exclusive] #{message}", level
@@ -10,13 +12,15 @@ module RubyRabbitmqJanus
       end
 
       module PublishExclusive
-        class Initialize < RubyRabbitmqJanus::Errors::Rabbit::BasePublishExclusive
+        # Error for Rabbit::Publisher::PublishExclusive#initialize
+        class Initialize < Errors::Rabbit::BasePublishExclusive
           def initialize
             super 'Error in initializer'
           end
         end
 
-        class Publish < RubyRabbitmqJanus::Errors::Rabbit::BasePublishExclusive
+        # Error for Rabbit::Publisher::PublishExclusive#publish
+        class Publish < Errors::Rabbit::BasePublishExclusive
           def initialize
             super 'Error for publish message'
           end

@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
     end
 
     module RRJ
-      # Error for RRJ#new
+      # Error for RRJ#initialize
       class InstanciateGem < RubyRabbitmqJanus::Errors::BaseRRJ
         def initialize(message)
           super "Gem is not instanciate correctly : #{message}", :fatal

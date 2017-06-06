@@ -6,6 +6,7 @@ module RubyRabbitmqJanus
   module Errors
     # Define errors to message sending and response to janus
     module Janus
+      # Define a super class for all error in Janus::Message
       class BaseMessageStandard < BaseMessage
         def initialize(message, level = :fatal)
           super "[Standard] #{message}", level
@@ -13,13 +14,15 @@ module RubyRabbitmqJanus
       end
 
       module MessageStandard
-        class Initializer < RubyRabbitmqJanus::Errors::Janus::BaseMessageStandard
+        # Error for Janus::MessageStandard#initialize
+        class Initializer < BaseMessageStandard
           def initialize
             super 'Error in initializer'
           end
         end
 
-        class Option < RubyRabbitmqJanus::Errors::Janus::BaseMessageStandard
+        # Error for Janus::MessageStandard#option
+        class Option < BaseMessageStandard
           def initialize
             super 'Return properties message admin failed'
           end

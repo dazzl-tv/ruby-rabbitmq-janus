@@ -22,7 +22,6 @@ module RubyRabbitmqJanus
 
       # Define options sending to rabbitmq
       def options
-        Tools::Log.instance.debug 'Add options to propertie to message'
         {
           routing_key: Tools::Cluster.instance.queue_to(@instance),
           correlation_id: @correlation,
@@ -34,19 +33,23 @@ module RubyRabbitmqJanus
 
       # Define option sending to rabbitmq for janus admin message
       def options_admin(type_request)
-        Tools::Log.instance.debug 'Add options to propertie to message'
-        routing_key = if type_request.include?('admin')
-                        Tools::Cluster.instance.queue_admin_to(@instance)
-                      else
-                        Tools::Cluster.instance.queue_to(@instance)
-                      end
         {
-          routing_key: routing_key,
+          routing_key: determine_routing_key(type_request),
           correlation_id: @correlation,
           content_type: 'application/json'
         }
       rescue
         raise Errors::Rabbit::Propertie::Options_admin
+      end
+
+      private
+
+      def determine_routing_key(type_request)
+        if type_request.include?('admin')
+          Tools::Cluster.instance.queue_admin_to(@instance)
+        else
+          Tools::Cluster.instance.queue_to(@instance)
+        end
       end
     end
   end

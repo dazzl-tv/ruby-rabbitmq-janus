@@ -23,6 +23,7 @@ RSpec.configure do |config|
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)
+  ActiveRecord::Base.connection.create_table('janus_instance')
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
@@ -58,6 +59,9 @@ RSpec.configure do |config|
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
+
+  # Delete database created
+  config.after(:all) { FileUtils.rm('db/spec.sqlite3') }
 end
 
 # :reek:UtilityFunction

@@ -36,7 +36,7 @@ end
 
 shared_examples 'transaction handle should match json schema' do
   let(:message) do
-    @gateway.start_transaction_handle do |transaction|
+    @gateway.start_transaction_handle(true, @session_instance) do |transaction|
       @response = transaction.publish_message(@type, @options)
     end
   end

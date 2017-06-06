@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### [Added]
 - Janus Instance management
 - Initializer for rake task
+- Task for deleting all sessions in database
 
 ## [2.0.0] - 2017-03-29
 ### [Added]

@@ -23,7 +23,7 @@ RSpec.configure do |config|
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)
-  config.before do
+  config.before(:all) do
     unless ActiveRecord::Base.connection.table_exists? 'janus_instances'
       ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
         table.integer :instance
@@ -67,9 +67,6 @@ RSpec.configure do |config|
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
-
-  # Delete database created
-  config.after { FileUtils.rm('db/spec.sqlite3') }
 end
 
 # :reek:UtilityFunction
@@ -77,7 +74,7 @@ def singleton
   Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
   Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
   Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
-  Singleton.__init__(RubyRabbitmqJanus::Janus::Concurrencies::Keepalive)
+  Singleton.__init__(RubyRabbitmqJanus::Tools::Cluster)
 end
 
 def gateway
@@ -85,6 +82,7 @@ def gateway
   @gateway = RubyRabbitmqJanus::RRJ.new
   @response = nil
   @options = {}
+  get_instance
 end
 
 def gateway_admin
@@ -92,6 +90,7 @@ def gateway_admin
   @gateway = RubyRabbitmqJanus::RRJAdmin.new
   @response = nil
   @options = {}
+  get_instance
 end
 
 def gateway_event
@@ -99,6 +98,14 @@ def gateway_event
   @event = RubyRabbitmq::Janus::Concurencies::Event.instance
   @event.run(&actions)
   gateway
+  get_instance
+end
+
+def get_instance
+  ji = RubyRabbitmqJanus::Models::JanusInstance.first
+  @session = { 'session_id' => ji.session }
+  @instance = { 'instance' => ji.instance }
+  @session_instance = @session.merge(@instance)
 end
 
 # Test events response

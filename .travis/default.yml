@@ -1,5 +1,5 @@
 rabbit:
-  host: rabbit
+  host: localhost
   port: 5672
   vhost: /
   user: guest
@@ -15,6 +15,9 @@ queues:
     to: to-janus-admin
 
 janus:
+  cluster:
+    enabled: false
+    count: 1
   session:
     keepalive: 55
   plugins:

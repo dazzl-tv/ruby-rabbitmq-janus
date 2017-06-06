@@ -55,11 +55,13 @@
       "type": "hash",
       "properties": {
         "plugins": { "type": "hash" },
-        "session": { "type": "hash" }
+        "session": { "type": "hash" },
+        "cluster": { "type": "hash" }
       },
       "required": [
         "session",
-        "plugins"
+        "plugins",
+        "cluster"
       ]
     },
     "gem": {

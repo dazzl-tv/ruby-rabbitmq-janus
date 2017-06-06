@@ -8,27 +8,26 @@ module RubyRabbitmqJanus
       # Define a super class for all error in class Config
       class BaseConfig < BaseTools
         def initialize(message, level = :fatal)
-          msg = "[Config] #{message} -- #{Tools::Log.instance.configuration}"
-          super(msg, level)
+          super("[Config] #{message}", level)
         end
       end
 
       module Config
-        # Error for Config#initialize
-        class Initializer < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+        # Error for Tools::Config#initialize
+        class Initialize < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error in initalizer'
           end
         end
 
-        # Error for Config#queue_from
+        # Error for Tools::Config#queue_from
         class QueueFrom < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error for reading standard queue from'
           end
         end
 
-        # Error for Config#queue_to
+        # Error for Tools::Config#queue_to
         class QueueTo < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error for reading standard queue to'
@@ -42,28 +41,28 @@ module RubyRabbitmqJanus
           end
         end
 
-        # Error for Config#queue_admin_to
+        # Error for Tools::Config#queue_admin_to
         class QueueAdminTo < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error for reading admin queue to'
           end
         end
 
-        # Error for Config#log_level
+        # Error for Tools::Config#log_level
         class LevelNotDefine < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error for reading option level', :warn
           end
         end
 
-        # Error for Config#time_to_live (or #ttl)
+        # Error for Tools::Config#time_to_live (or #ttl)
         class TTLNotFound < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Keepalive TTL option is not reading in config file', :warn
           end
         end
 
-        # Error for Config#plugin_at
+        # Error for Tools::Config#plugin_at
         class PluginAt < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize(parameter)
             super 'Plugin is not found in configuration file, ' \
@@ -71,14 +70,14 @@ module RubyRabbitmqJanus
           end
         end
 
-        # Error for Config#cluster
+        # Error for Tools::Config#cluster
         class Cluster < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error for reading cluster enabled option', :fatal
           end
         end
 
-        # Error for Config#number_of_instance
+        # Error for Tools::Config#number_of_instance
         class NumberOfinstance < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super 'Error for reading cluster instance count', :fatal

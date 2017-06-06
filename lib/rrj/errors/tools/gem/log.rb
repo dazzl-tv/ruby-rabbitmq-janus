@@ -12,7 +12,7 @@ module RubyRabbitmqJanus
 
       module Log
         # Error for Tools::Log#initialize
-        class Initializer < RubyRabbitmqJanus::Errors::Tools::BaseLog
+        class Initialize < RubyRabbitmqJanus::Errors::Tools::BaseLog
           def initialize
             super 'Error in initializer', :fatal
           end

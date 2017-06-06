@@ -41,7 +41,7 @@ module RubyRabbitmqJanus
         @progname = logs.progname
         @logs = ActiveSupport::TaggedLogging.new(logs)
       rescue
-        raise Errors::Tools::Log::Initializer
+        raise Errors::Tools::Log::Initialize
       end
 
       # Write a message in log with a `UNKNOWN` level
@@ -123,7 +123,7 @@ module RubyRabbitmqJanus
       private
 
       def logger_rails
-        Rails.logger
+        defined?(RSpec) ? logger_develop : Rails.logger
       end
 
       def logger_develop

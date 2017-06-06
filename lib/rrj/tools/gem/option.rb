@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# :reek:FeatureEnvy :reek:UtilityFunction
+# :reek:FeatureEnvy
 
 require 'rrj/models/concerns/janus_instance_concern'
 if defined?(Mongoid)
@@ -24,7 +24,7 @@ module RubyRabbitmqJanus
         Requests.instance
         Cluster.instance.create_sessions
       rescue => error
-        raise Errors::Tools::Option::Initializer, error
+        raise Errors::Tools::Option::Initialize, error
       end
 
       # Determine session_id used
@@ -35,11 +35,13 @@ module RubyRabbitmqJanus
       #
       # @since 2.0.0
       def use_current_session?(options)
-        hash = options
-        hash['session_id'] = @session unless hash.key?('session_id')
-        hash['session_id']
+        if options.key?('session_id')
+          options['session_id']
+        else
+          Models::JanusInstance.first.session
+        end
       rescue
-        raise Errors::Tools::Option::UseCurrentSession, options, @session
+        raise Errors::Tools::Option::UseCurrentSession, options
       end
 
       # Determine handle_id used
@@ -50,9 +52,7 @@ module RubyRabbitmqJanus
       #
       # @since 2.0.0
       def use_current_handle?(options)
-        hash = options
-        hash['handle_id'] = 0 unless hash.key?('handle_id')
-        hash['handle_id']
+        options.key?('handle_id') ? 0 : options['handle_id']
       rescue
         raise Errors::Tools::Option::UseCurrentHandle, options
       end

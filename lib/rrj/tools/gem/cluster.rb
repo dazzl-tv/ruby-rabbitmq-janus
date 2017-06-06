@@ -13,8 +13,9 @@ module RubyRabbitmqJanus
       # Initalize object for managing each instance to Janus
       def initialize
         @current_instance = nil
-        @enable = Config.instance.cluster
-        @number = Config.instance.number_of_instance
+        config = Config.instance
+        @enable = config.cluster
+        @number = config.number_of_instance
         @sessions = []
       rescue
         raise Errors::Tools::Cluster::Initializer

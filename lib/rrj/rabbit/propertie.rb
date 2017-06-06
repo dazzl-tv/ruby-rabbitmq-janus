@@ -45,10 +45,12 @@ module RubyRabbitmqJanus
       private
 
       def determine_routing_key(type_request)
+        cluster = Tools::Cluster.instance
+
         if type_request.include?('admin')
-          Tools::Cluster.instance.queue_admin_to(@instance)
+          cluster.queue_admin_to(@instance)
         else
-          Tools::Cluster.instance.queue_to(@instance)
+          cluster.queue_to(@instance)
         end
       end
     end

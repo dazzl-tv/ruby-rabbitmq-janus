@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:TooManyStatements
+
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher

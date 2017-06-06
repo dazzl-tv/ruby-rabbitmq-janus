@@ -23,7 +23,13 @@ RSpec.configure do |config|
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)
-  ActiveRecord::Base.connection.create_table('janus_instance')
+  config.before(:all) do
+    ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
+      table.integer :instance
+      table.integer :session, limit: 8
+      table.boolean :enable
+    end
+  end
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

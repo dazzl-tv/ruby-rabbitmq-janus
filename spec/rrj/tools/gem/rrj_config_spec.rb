@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Tools::Config, type: :config, name: :config do
+describe RubyRabbitmqJanus::Tools::Config, type: :tools, name: :config do
   before(:context) { @cfg = RubyRabbitmqJanus::Tools::Config.instance }
 
   it 'When file is correct' do

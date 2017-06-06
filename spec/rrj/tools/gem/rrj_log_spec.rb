@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::Log', type: :config, name: :log do
+describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
   it 'Log instance is correctly loading' do
     expect(RubyRabbitmqJanus::Tools::Log.instance).not_to be(nil)
   end

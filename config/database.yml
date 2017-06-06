@@ -2,4 +2,5 @@
 
 adapter: :sqlite3
 encoding: utf-8
-database: db/spec.sqlite3
+database: ':memory:'
+timeout: 5000

@@ -23,7 +23,6 @@ RSpec.configure do |config|
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)
-  ActiveRecord::Base.connection.create_database(configuration['database'])
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

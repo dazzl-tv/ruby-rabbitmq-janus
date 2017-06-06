@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'ruby_rabbitmq_janus'
 require 'pry'
 require 'json-schema-rspec'
+require 'rails'
+require 'active_record'
+require 'ruby_rabbitmq_janus'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
@@ -16,6 +18,13 @@ end
 end
 
 RSpec.configure do |config|
+  # Configure active record
+  configuration = YAML::load(File.open('config/database.yml'))
+
+  # Connect to database
+  ActiveRecord::Base.establish_connection(configuration)
+  ActiveRecord::Base.connection.create_database(configuration['database'])
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end

@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
     # Store instance information for MongoID database
-    class JanusInstance < ActiveRecord::Base
+    class JanusInstance < ::ActiveRecord::Base
       include RubyRabbitmqJanus::Models::JanusInstanceConcern
 
       before_destroy { destroy_before_action }

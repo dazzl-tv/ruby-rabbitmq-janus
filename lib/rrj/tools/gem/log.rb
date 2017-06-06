@@ -127,7 +127,7 @@ module RubyRabbitmqJanus
       end
 
       def logger_develop
-        log = Logger.new('log/rails-rabbit-janus.log')
+        log = Logger.new("log/ruby-rabbitmq-janus.log")
         log.formatter = proc do |severity, _datetime, _progname, msg|
           "#{severity[0, 1].upcase}, #{msg}\n"
         end

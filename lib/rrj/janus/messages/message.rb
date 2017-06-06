@@ -107,7 +107,7 @@ module RubyRabbitmqJanus
         def find_instance(options)
           if options.key?('instance')
             options['instance']
-          elsif options['session_id']
+          else
             Models::JanusInstance.find_by_session(options['session_id'])
           end
         end

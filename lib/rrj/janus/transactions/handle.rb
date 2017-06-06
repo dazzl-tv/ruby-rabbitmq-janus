@@ -44,9 +44,9 @@ module RubyRabbitmqJanus
         #
         # @return [Janus::Responses::Standard] Response to message sending
         def publish_message(type, options = {})
-          optss = opts.merge!(options)
-          optss['handle_id'] = @handle if Tools::Cluster.instance.enable
-          msg = Janus::Messages::Standard.new(type, optss)
+          # optss = opts.merge!(options)
+          # optss['handle_id'] = @handle if Tools::Cluster.instance.enable
+          msg = Janus::Messages::Standard.new(type, options.merge(opts))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
         rescue

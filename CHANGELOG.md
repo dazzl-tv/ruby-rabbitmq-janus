@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Janus Instance management
 - Initializer for rake task
 - Task for deleting all sessions in database
+- Add generator migration for active record
 
 ## [2.0.0] - 2017-03-29
 ### [Added]

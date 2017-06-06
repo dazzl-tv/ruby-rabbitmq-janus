@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+# :reek:FeatureEnvy
+
 # Fields for JanusInstance model
 class CreateRubyRabbitmqJanusTables < ActiveRecord::Migration[5.0]
   def change
-    create_table :janus_instances do |t|
-      t.integer :instance
-      t.integer :session, limit: 8
-      t.boolean :enable
+    create_table :janus_instances do |table|
+      table.integer :instance
+      table.integer :session, limit: 8
+      table.boolean :enable
     end
   end
 end

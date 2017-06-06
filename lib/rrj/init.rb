@@ -10,6 +10,8 @@ require 'key_path'
 require 'active_support'
 require 'erb'
 
+# :reek:TooManyStatements
+
 # Primary module for this gem
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -58,7 +60,7 @@ module RubyRabbitmqJanus
       transaction = Janus::Transactions::Session.new(exclusive, session)
       transaction.connect { yield(transaction) }
     rescue
-      raise Errors::RRJ::StartTransaction, exclusive, options
+      raise Errors::RRJ::StartTransaction.new(exclusive, options)
     end
 
     # Start a transaction with Janus. Request used session_id/handle_id

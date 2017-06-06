@@ -47,13 +47,7 @@ module RubyRabbitmqJanus
         end
 
         def read_response(publish)
-          if @exclusive
-            Tools::Log.instance.info '... and read a janus response'
-            publish
-          else
-            Tools::Log.instance.info '... and return an empty response'
-            {}
-          end
+          @exclusive ? publish : {}
         end
       end
     end

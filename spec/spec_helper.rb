@@ -23,11 +23,13 @@ RSpec.configure do |config|
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)
-  config.before(:all) do
-    ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
-      table.integer :instance
-      table.integer :session, limit: 8
-      table.boolean :enable
+  config.before do
+    unless ActiveRecord::Base.connection.table_exists? 'janus_instances'
+      ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
+        table.integer :instance
+        table.integer :session, limit: 8
+        table.boolean :enable
+      end
     end
   end
 
@@ -67,7 +69,7 @@ RSpec.configure do |config|
   config.filter_run_excluding broken: true
 
   # Delete database created
-  config.after(:all) { FileUtils.rm('db/spec.sqlite3') }
+  config.after { FileUtils.rm('db/spec.sqlite3') }
 end
 
 # :reek:UtilityFunction

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# :reek:FeatureEnvy
-
 require 'rrj/models/concerns/janus_instance_concern'
 if defined?(Mongoid)
   require 'rrj/models/mongoid'
 else
   require 'rrj/models/active_record'
 end
+
+# :reek:FeatureEnvy
 
 module RubyRabbitmqJanus
   module Tools

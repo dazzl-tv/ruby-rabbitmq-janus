@@ -11,8 +11,8 @@ module RubyRabbitmqJanus
       end
 
       module Option
-        # Error for Tools::Option#new
-        class Initializer < RubyRabbitmqJanus::Errors::Tools::BaseOption
+        # Error for Tools::Option#initialize
+        class Initialize < RubyRabbitmqJanus::Errors::Tools::BaseOption
           def initialize(msg)
             super "Error in initializer : #{msg}", :fatal
           end

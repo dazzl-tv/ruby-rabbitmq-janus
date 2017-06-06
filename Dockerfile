@@ -7,7 +7,7 @@ MAINTAINER Jeremy VAILLANT <jeremy.vaillant@dazzl.tv>
 # Prepare system
 RUN apk update \
   && apk upgrade \
-  && apk add --no-cache make g++ gcc \
+  && apk add --no-cache make g++ gcc sqlite-dev \
   && rm -rf /var/cache/apk/*
 
 # Prepare container for gem test

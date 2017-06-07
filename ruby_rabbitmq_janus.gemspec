@@ -54,6 +54,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'activerecord', '~> 4.2'
   spec.add_development_dependency 'rails', '~> 4.2'
   spec.add_development_dependency 'sqlite3', '~> 1.3'
+  spec.add_development_dependency 'mongoid', '~> 5.2'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
   spec.add_runtime_dependency 'key_path', '~> 1.2'

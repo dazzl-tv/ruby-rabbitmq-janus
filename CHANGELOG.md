@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initializer for rake task
 - Task for deleting all sessions in database
 - Add generator migration for active record
+- spec for two instances to Janus
+- spec for cluster class
+- spec for models ActiveRecord
+- spec for models Mongoid
+
+### [Fixed]
+- Regex transaction is correct
+- Travis execute test for master only (rubocop and reek)
 
 ## [2.0.0] - 2017-03-29
 ### [Added]

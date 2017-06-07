@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'bin/**/*'
+    - 'Rakefile'
   TargetRubyVersion: 2.3
 
 Style/Encoding:

@@ -19,7 +19,11 @@ end
 
 RSpec.configure do |config|
   # Configure active record
-  configuration = YAML.safe_load(File.open('config/database.yml'))
+  # rubocop:disable Style/ColonMethodCall
+  # rubocop:disable Security/YAMLLoad
+  configuration = YAML::load(File.open('config/database.yml'))
+  # rubocop:enable Style/ColonMethodCall
+  # rubocop:enable Security/YAMLLoad
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)

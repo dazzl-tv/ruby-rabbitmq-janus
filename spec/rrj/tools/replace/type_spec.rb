@@ -12,7 +12,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
 
   context 'convert transaction' do
     let(:key) { 'transaction' }
-    let(:value) { /.*[A-Z][0-9]/ }
+    let(:value) { /.*[A-Z0-9]/ }
 
     include_examples 'match convert type', String, 10
   end

@@ -73,6 +73,6 @@ describe RubyRabbitmqJanus::Tools::Config, type: :tools, name: :config do
 
   context 'gem/log/level' do
     let(:method) { @cfg.log_level }
-    it_behaves_like 'type and default value', Symbol, :INFO
+    it_behaves_like 'type and default value', Symbol, :DEBUG
   end
 end

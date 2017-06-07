@@ -50,4 +50,4 @@ gem:
   log:
     # Define level to log
     # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
-    level: info
+    level: debug

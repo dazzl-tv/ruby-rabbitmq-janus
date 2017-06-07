@@ -11,8 +11,16 @@ describe RubyRabbitmqJanus::Rabbit::Propertie, type: :rabbit,
   end
 
   describe '#options_admin' do
-    it do
-      expect(rabbit.options_admin).to match_json_schema(:rabbit_options_admin)
+    context 'For admin request' do
+      it do
+        expect(rabbit.options_admin('admin::sessions')).to match_json_schema(:rabbit_options_admin)
+      end
+    end
+
+    context 'For base request' do
+      it do
+        expect(rabbit.options_admin('request::create')).to match_json_schema(:rabbit_options_admin_base)
+      end
     end
   end
 end

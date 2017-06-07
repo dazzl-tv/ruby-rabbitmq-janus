@@ -6,7 +6,7 @@ describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
   before(:example) do
     @type = 'peer::trickle'
     candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }
-    @options = { 'candidate' => candidate }
+    @options = { 'candidate' => candidate }.merge(@session_instance)
   end
 
   describe '#start_transaction_handle', type: :request,

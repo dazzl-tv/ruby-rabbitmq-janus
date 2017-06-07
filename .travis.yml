@@ -33,8 +33,8 @@ install:
 script:
   - docker-compose run gem bundle exec rake all
   - docker-compose run gem bundle exec rake two_instances
-  - if [ "$TRAVIS_BRANCH" == "develop" ]; docker-compose run gem rubocop; fi
-  - if [ "$TRAVIS_BRANCH" == "develop" ]; docker-compose run gem reek; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi
 
 before_deploy:
   - gem install dpl

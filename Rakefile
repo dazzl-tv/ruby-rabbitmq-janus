@@ -9,4 +9,8 @@ RSpec::Core::RakeTask.new(:no_request_spec) do |t|
   t.rspec_opts = '--tag ~type:request'
 end
 
+RSpec::Core::RakeTask.new(:info) do |t|
+  t.rspec_opts = '--tag name:info'
+end
+
 task default: :spec

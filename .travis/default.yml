@@ -27,4 +27,4 @@ janus:
 
 gem:
   log:
-    level: info
+    level: debug

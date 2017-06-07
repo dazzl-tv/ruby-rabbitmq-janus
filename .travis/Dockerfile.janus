@@ -1,6 +1,7 @@
 FROM quay.io/dazzl/janus-gateway
 
+COPY janus.cfg /usr/local/etc/janus/janus.cfg
 COPY janus.transport.rabbitmq.cfg /usr/local/etc/janus/janus.transport.rabbitmq.cfg
 
 ENTRYPOINT ["/usr/local/bin/janus"]
-CMD [""]
+CMD ["-d7"]

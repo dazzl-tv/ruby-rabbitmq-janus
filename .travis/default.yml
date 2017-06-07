@@ -1,5 +1,5 @@
 rabbit:
-  host: localhost
+  host: rabbit
   port: 5672
   vhost: /
   user: guest

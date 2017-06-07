@@ -112,7 +112,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :type do
   end
 
   context 'convert array random value candidate' do
-    let(:size) { Random.rand(1..99) }
+    let(:size) { Random.rand(2..99) }
     let(:key) { 'candidates' }
     let(:value) do
       array = []

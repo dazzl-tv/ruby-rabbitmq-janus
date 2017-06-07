@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "routing_key": { "type": "string", "pattern": "to-janus" },
+    "routing_key": { "type": "string", "pattern": "to-janus-admin-2" },
     "correlation_id": { "type": "string" },
     "content_type": { "type": "String", "pattern": "application/json" }
   },

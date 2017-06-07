@@ -25,11 +25,14 @@ install:
   - sleep 30
   - docker-compose logs rabbit
   - docker-compose up -d janus
+  - docker-compose up -d janus2
   - sleep 30
   - docker-compose logs janus
+  - docker-compose logs janus2
 
 script:
-  - docker-compose run gem bundle exec rake
+  - docker-compose run gem bundle exec rake all
+  - docker-compose run gem bundle exec rake two_instances
   - docker-compose run gem rubocop
   - docker-compose run gem reek
 

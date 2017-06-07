@@ -97,11 +97,14 @@ RSpec::Core::RakeTask.new(:except_request) do |t|
   t.rspec_opts = '--tag ~type:request'
 end
 
+RSpec::Core::RakeTask.new(:instances) do |t|
+  t.rspec_opts = '--tag instances:true'
+end
+
 task default: :spec
 
 task all: [:info, :handle_info, :sessions, :set_locking_debug,
            :set_log_level, :tokens, :attach, :create, :destroy,
            :detach, :keepalive, :offer, :trickle, :trickles,
            :except_request]
-           #:type_message, :type_tools, :type_cluster,
-           #:type_config, :type_responses, :type_rabbit]
+task two_instances: :instances

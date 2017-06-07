@@ -19,3 +19,10 @@ services:
       dockerfile: Dockerfile.janus
     links:
       - rabbit
+
+  janus2:
+    build:
+      context: ./.travis
+      dockerfile: Dockerfile.janus2
+    links:
+      - rabbit

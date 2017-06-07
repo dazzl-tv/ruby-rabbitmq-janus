@@ -19,7 +19,7 @@ end
 
 RSpec.configure do |config|
   # Configure active record
-  configuration = YAML::load(File.open('config/database.yml'))
+  configuration = YAML.safe_load(File.open('config/database.yml'))
 
   # Connect to database
   ActiveRecord::Base.establish_connection(configuration)
@@ -82,7 +82,7 @@ def gateway
   @gateway = RubyRabbitmqJanus::RRJ.new
   @response = nil
   @options = {}
-  get_instance
+  find_instance
 end
 
 def gateway_admin
@@ -90,7 +90,7 @@ def gateway_admin
   @gateway = RubyRabbitmqJanus::RRJAdmin.new
   @response = nil
   @options = {}
-  get_instance
+  find_instance
 end
 
 def gateway_event
@@ -98,10 +98,10 @@ def gateway_event
   @event = RubyRabbitmq::Janus::Concurencies::Event.instance
   @event.run(&actions)
   gateway
-  get_instance
+  find_instance
 end
 
-def get_instance
+def find_instance
   ji = RubyRabbitmqJanus::Models::JanusInstance.first
   @session = { 'session_id' => ji.session }
   @instance = { 'instance' => ji.instance }

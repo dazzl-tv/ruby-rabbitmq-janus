@@ -15,10 +15,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - spec for cluster class
 - spec for models ActiveRecord
 - spec for models Mongoid
+- Complete initializer template
+
+### [Changed]
+- Use templates for generators initializer
 
 ### [Fixed]
 - Regex transaction is correct
 - Travis execute test for master only (rubocop and reek)
+- Generators copy/template files
 
 ## [2.0.0] - 2017-03-29
 ### [Added]

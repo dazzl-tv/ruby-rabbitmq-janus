@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
       # Define a super class for all errors in Janus::Transactions::Transaction
       class BaseTransaction < BaseJanus
         def initialize(message, level = :fatal)
-          super "[Transaction] #{message}", level
+          super "[Transaction]#{message}", level
         end
       end
 

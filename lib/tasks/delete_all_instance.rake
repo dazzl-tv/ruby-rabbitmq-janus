@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 namespace :rrj do
-  desc 'Delete all instances in database.'
-  task delete_instances: :environment do
-    @timelaps = Time.now.utc
+  namespace :delete do
+    desc 'Delete all instances in database'
+    task delete_instances: :environment do
+      timelaps = Time.now.utc
 
-    RubyRabbitmqJanus::Models::JanusInstance.destroy_all
+      RubyRabbitmqJanus::Models::JanusInstance.destroy_all
 
-    Rails.logger.info "Executed in #{Time.now.utc - @timelaps} ms"
+      Rails.logger.info "Executed in #{Time.now.utc - timelaps} ms"
+    end
   end
 end

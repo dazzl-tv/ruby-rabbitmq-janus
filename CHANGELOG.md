@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### [Added]
 - Janus Instance management
 - Initializer for rake task
-- Task for deleting all sessions in database
+- Task for deleting all sessions in database and janus
+- Task for deleting one sessions in database and janus
 - Add generator migration for active record
 - spec for two instances to Janus
 - spec for cluster class
 - spec for models ActiveRecord
 - spec for models Mongoid
 - Complete initializer template
+- Destroy session when gem is deleted
 
 ### [Changed]
 - Use templates for generators initializer

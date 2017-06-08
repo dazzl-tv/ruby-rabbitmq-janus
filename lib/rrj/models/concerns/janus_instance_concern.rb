@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
       # Send an action for destroying a session in Janus Gateway instance
       def destroy_before_action
         options = { 'session_id' => session, 'instance' => instance }
-        ::RRJ.start_transaction(true, options) do |transaction|
+        search_initializer(options) do |transaction|
           transaction.publish_message('base::destroy', options)
         end
       end
@@ -40,6 +40,20 @@ module RubyRabbitmqJanus
           JanusInstance.find_by(session: session_search)
         rescue
           nil
+        end
+      end
+
+      private
+
+      def search_initializer(options)
+        if File.basename($PROGRAM_NAME) == 'rake'
+          ::RRJ.start_transaction(options) do |transaction|
+            yield(transaction)
+          end
+        else
+          ::RRJ.start_transaction(true, options) do |transaction|
+            yield(transaction)
+          end
         end
       end
     end

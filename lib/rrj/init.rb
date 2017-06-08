@@ -39,6 +39,7 @@ module RubyRabbitmqJanus
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       @option = Tools::Option.new
+      ObjectSpace.define_finalizer(self, RRJ.method(:delete).to_proc)
     rescue => error
       raise Errors::RRJ::InstanciateGem, error
     end
@@ -113,5 +114,13 @@ module RubyRabbitmqJanus
     private
 
     attr_reader :option
+
+    def self.delete(_id)
+      Tools::Cluster.instance.sessions.each do |janus_instance|
+        puts "Instance : #{janus_instance.instance}"
+        puts "Session : #{janus_instance.session}"
+        `rake rrj:delete:one_instance[#{janus_instance.instance},#{janus_instance.session}]`
+      end
+    end
   end
 end

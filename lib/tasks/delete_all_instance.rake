@@ -2,7 +2,7 @@
 
 namespace :rrj do
   namespace :delete do
-    desc 'Delete all instances in database'
+    desc 'Delete all instances in database and janus'
     task all_instances: :environment do
       timelaps = Time.now.utc
 

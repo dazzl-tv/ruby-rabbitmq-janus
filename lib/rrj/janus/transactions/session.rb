@@ -17,7 +17,7 @@ module RubyRabbitmqJanus
           super(session)
           @exclusive = exclusive
         rescue
-          raise Errors::Janus::TransactionSession::Initialize
+          raise Errors::Janus::TransactionSessions::Initialize
         end
 
         # Opening a short transaction with rabbitmq and close when is ending
@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
             yield
           end
         rescue
-          raise Errors::Janus::TransactionSession::Connect
+          raise Errors::Janus::TransactionSessions::Connect
         end
 
         def publish_message(type, options = {})
@@ -37,7 +37,7 @@ module RubyRabbitmqJanus
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
         rescue
-          raise Errors::Janus::TransactionSession::PublishMessage
+          raise Errors::Janus::TransactionSessions::PublishMessage
         end
 
         private

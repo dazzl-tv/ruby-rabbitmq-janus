@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/ConstantName
+
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
@@ -23,3 +25,4 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     require 'active_record' unless defined?(ActiveRecord)
   end
 end
+# rubocop:enable Style/ConstantName

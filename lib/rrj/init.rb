@@ -117,8 +117,11 @@ module RubyRabbitmqJanus
 
     def self.delete(_id)
       Tools::Cluster.instance.sessions.each do |janus_instance|
-        `rake rrj:delete:one_instance[#{janus_instance.instance},#{janus_instance.session}]`
+        array_ji = "#{janus_instance.instance},#{janus_instance.session}"
+        `rake rrj:delete:one_instance[#{array_ji}]`
       end
     end
+
+    private_class_method :delete
   end
 end

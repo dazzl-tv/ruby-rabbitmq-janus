@@ -36,7 +36,7 @@ module RubyRabbitmqJanus
       raise Errors::RRJ::StartTransaction.new(true, options)
     end
 
-    # Create a transaction betwwen apps and janus with a handle
+    # Create a transaction between apps and janus with a handle
     #
     # @since 2.1.0
     def start_transaction_handle(exclusive = true, options = {})

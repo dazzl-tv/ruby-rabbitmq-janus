@@ -80,6 +80,12 @@ Or install it yourself as :
 gem install ruby_rabbitmq_janus
 ```
 
+Install basic configuration :
+
+```linux
+rails g ruby_rabbitmq_janus:install
+```
+
 ### Configuration
 
 If you want used a customize configuration see [ruby-rabbitmq-janus.yml](config/default.md)

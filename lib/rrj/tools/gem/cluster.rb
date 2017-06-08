@@ -8,7 +8,7 @@ module RubyRabbitmqJanus
     class Cluster
       include Singleton
 
-      attr_reader :number, :enable
+      attr_reader :number, :enable, :sessions
 
       # Initalize object for managing each instance to Janus
       def initialize

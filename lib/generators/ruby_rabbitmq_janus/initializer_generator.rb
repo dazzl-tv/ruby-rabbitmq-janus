@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
     class InitializerGenerator < Rails::Generators::Base
       desc 'Generate a initializer to this gem for rails application.'
 
-      source_root File.expand_path('../template', __FILE__)
+      source_root File.expand_path('../templates', __FILE__)
 
       # Create an initializer
       def copy_initializer

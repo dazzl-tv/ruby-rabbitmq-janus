@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - 'bin/**/*'
     - 'Rakefile'
+    - 'lib/tasks/*'
   TargetRubyVersion: 2.3
 
 Style/Encoding:

@@ -3,7 +3,7 @@
 namespace :rrj do
   namespace :delete do
     desc 'Delete all instances in database'
-    task delete_instances: :environment do
+    task all_instances: :environment do
       timelaps = Time.now.utc
 
       RubyRabbitmqJanus::Models::JanusInstance.destroy_all

@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
 
       source_root File.expand_path('../templates', __FILE__)
 
-      # Generate initializer with default code
+      # Generate files with default code
       def add_actions
         # Create an class
         template 'actions.rb', 'app/ruby_rabbitmq_janus/actions.rb'

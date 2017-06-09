@@ -9,8 +9,10 @@ namespace :rrj do
       Rails.logger.info \
         "Delete instance #{args[:instance]} with session #{args[:session]}"
 
-      RubyRabbitmqJanus::Models::JanusInstance\
-        .find_by_session(args[:session]).destroy
+      janus_instance = RubyRabbitmqJanus::Models::JanusInstance\
+        .find_by_session(args[:session])
+
+      janus_instance.destroy if janus_instance
 
       Rails.logger.info "Executed in #{Time.now.utc - timelaps} ms"
     end

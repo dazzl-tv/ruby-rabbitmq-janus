@@ -72,12 +72,9 @@ module RubyRabbitmqJanus
         private
 
         def create_handle
-          Tools::Log.instance.info 'Create an handle'
           opt = { 'session_id' => session, 'instance' => @instance }
           msg = Janus::Messages::Standard.new('base::attach', opt)
-          Tools::Log.instance.info "Send message attach -- #{@handle}"
           @handle = send_a_message_exclusive { msg }
-          Tools::Log.instance.info "Message attach is sending -- #{@handle}"
         end
 
         def send_a_message_exclusive

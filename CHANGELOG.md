@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Complete initializer template
 - Destroy session when gem is deleted
 - RabbitMQ logger level
+- Format log for task
 
 ### [Changed]
 - Use templates for generators initializer

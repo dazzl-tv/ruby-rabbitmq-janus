@@ -39,7 +39,9 @@ module RubyRabbitmqJanus
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       @option = Tools::Option.new
-      ObjectSpace.define_finalizer(self, RRJ.method(:delete).to_proc)
+      puts "Base Program : #{$PROGRAM_NAME}"
+      ObjectSpace.define_finalizer(self, RRJ.method(:delete).to_proc) \
+        unless File.basename($PROGRAM_NAME).eql?('rspec')
     rescue => error
       raise Errors::RRJ::InstanciateGem, error
     end

@@ -21,6 +21,7 @@ By default this gem contains many request :
 │   ├── answer.json
 │   ├── offer.json
 │   ├── trickle.json
+│   ├── trickles.json
 ```
 
 * Folder `admin` contains admin requests for interact with Janus Admin/Monitor

@@ -12,6 +12,7 @@ rabbit:
     user: guest
     pass: guest
     admin_pass: janusoverlord
+    level: :info
 
 queues:
   standard:

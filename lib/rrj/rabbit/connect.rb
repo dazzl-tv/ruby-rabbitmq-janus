@@ -63,14 +63,10 @@ module RubyRabbitmqJanus
       end
 
       def option_log_rabbit
-        if Tools::Log.instance.level.zero?
-          {
-            log_level: Tools::Log.instance.level,
-            log_file: Tools::Log.instance.logdev
-          }
-        else
-          {}
-        end
+        {
+          log_level: Tools::Config.instance.log_level_rabbit,
+          log_file: Tools::Log.instance.logdev
+        }
       end
     end
   end

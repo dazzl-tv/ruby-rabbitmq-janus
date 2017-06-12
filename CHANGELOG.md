@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - spec for models Mongoid
 - Complete initializer template
 - Destroy session when gem is deleted
+- RabbitMQ logger level
 
 ### [Changed]
 - Use templates for generators initializer

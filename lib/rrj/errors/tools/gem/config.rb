@@ -55,6 +55,13 @@ module RubyRabbitmqJanus
           end
         end
 
+        # Error for Tools::Config#log_level
+        class LevelRabbitMissing < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super 'Error for reading option level for rabbitmq', :warn
+          end
+        end
+
         # Error for Tools::Config#time_to_live (or #ttl)
         class TTLNotFound < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize

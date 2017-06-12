@@ -10,8 +10,10 @@ rabbit:
   user: guest
   # Precise RabbitMQ password - Default 'guest'
   pass: guest
-    # Password for admin request
+  # Password for admin request
   admin_pass: janusoverlord
+  # Logger level for rabbitmq message
+  level: info
 
 # RabbitMQ Queue information
 queues:

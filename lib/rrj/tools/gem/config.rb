@@ -77,7 +77,13 @@ module RubyRabbitmqJanus
 
       # @return [Symbol] read configuration for log level used in this gem
       def log_level
-        @options['gem']['log']['level'].upcase.to_sym
+        @options['gem']['log']['level'].upcase.to_sym || :INFO
+      rescue
+        raise Errors::Tools::Config::LevelNotDefine
+      end
+
+      def log_level_rabbit
+        @options['rabbit']['level'].upcase.to_sym || :INFO
       rescue
         raise Errors::Tools::Config::LevelNotDefine
       end

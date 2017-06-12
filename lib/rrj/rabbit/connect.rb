@@ -63,8 +63,9 @@ module RubyRabbitmqJanus
       end
 
       def option_log_rabbit
+        lvl = Tools::Config.instance.log_level_rabbit.upcase.to_sym
         {
-          log_level: Tools::Config.instance.log_level_rabbit,
+          log_level: Tools::Log::LEVELS[lvl],
           log_file: Tools::Log.instance.logdev
         }
       end

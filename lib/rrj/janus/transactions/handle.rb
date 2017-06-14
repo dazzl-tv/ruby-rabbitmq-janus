@@ -55,7 +55,10 @@ module RubyRabbitmqJanus
 
         # Send a message detach
         def detach
-          publisher.publish(Janus::Messages::Standard.new('base::detach', opts))
+          options = opts.merge('instance' => @instance)
+          Tools::Log.instance.debug "Detach handle #{options}"
+          publisher.publish(Janus::Messages::Standard.new('base::detach',
+                                                          options))
         rescue
           raise Errors::Janus::TransactionHandle::Detach
         end

@@ -30,12 +30,6 @@ queues:
 
 # Janus plugin used
 janus:
-  # Options for clusturing Janus Instance
-  cluster:
-    # Enable/Disable cluster mode
-    enabled: false
-    # Number to cluster
-    count: 1
   # Option for sessions
   session:
     # Define time to send a keepalive message in seconds

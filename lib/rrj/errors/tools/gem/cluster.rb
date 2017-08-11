@@ -18,13 +18,6 @@ module RubyRabbitmqJanus
           end
         end
 
-        # Error for Tools::Option#create_sessions
-        class CreateSessions < RubyRabbitmqJanus::Errors::Tools::BaseCluster
-          def initalize
-            super 'Error for creating sessions'
-          end
-        end
-
         # Error for Tools::Option#queue_to
         class QueueTo < RubyRabbitmqJanus::Errors::Tools::BaseCluster
           def initalize

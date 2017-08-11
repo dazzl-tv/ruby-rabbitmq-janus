@@ -15,14 +15,13 @@ module RubyRabbitmqJanus
 
     # # Utility for manage option to this gem.
     #
-    # This class start all singleton, Log, Config, Request and Keepalice
-    # instance. It's alos used for testing session/handle used in request.
+    # This class start all singleton, Log, Config, Request and Keepalive
+    # instance. It's also used for testing session/handle used in request.
     class Option
       def initialize
         Log.instance
         Config.instance
         Requests.instance
-        Cluster.instance.create_sessions
       rescue => error
         raise Errors::Tools::Option::Initialize, error
       end

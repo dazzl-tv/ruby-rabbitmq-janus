@@ -107,20 +107,6 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Config::PluginAt, index
       end
 
-      # @return [Boolean] Read option file for a janus cluster section
-      def cluster
-        @options['janus']['cluster']['enabled'].to_s.eql?('true') ? true : false
-      rescue
-        raise Errors::Tools::Config::Cluster
-      end
-
-      # Count number of Janus instances
-      def number_of_instance
-        @options['janus']['cluster']['count'].to_i || 1
-      rescue
-        raise Errors::Tools::Config::NumberOfInstance
-      end
-
       private
 
       def load_configuration

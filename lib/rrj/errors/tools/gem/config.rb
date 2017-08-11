@@ -76,20 +76,6 @@ module RubyRabbitmqJanus
                   "with parameter #{parameter}", :warn
           end
         end
-
-        # Error for Tools::Config#cluster
-        class Cluster < RubyRabbitmqJanus::Errors::Tools::BaseConfig
-          def initialize
-            super 'Error for reading cluster enabled option', :fatal
-          end
-        end
-
-        # Error for Tools::Config#number_of_instance
-        class NumberOfinstance < RubyRabbitmqJanus::Errors::Tools::BaseConfig
-          def initialize
-            super 'Error for reading cluster instance count', :fatal
-          end
-        end
       end
     end
   end

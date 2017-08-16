@@ -42,6 +42,13 @@ janus:
 
 # Options gem
 gem:
+  # Options for clusturing Janus Instance
+  cluster:
+    # Enable/Disable cluster mode
+    # if you disable cluster mode, the initializer to this gem start a session
+    # automatically with Janus, but if you enable think to start a session for
+    # each instance
+    enabled: true
   # Option for logs
   log:
     # Define level to log

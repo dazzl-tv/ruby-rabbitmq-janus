@@ -107,6 +107,13 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Config::PluginAt, index
       end
 
+      # @return [Boolean] Read option file for a janus cluster section
+      def cluster
+        @options['gem']['cluster']['enabled'].to_s.eql?('true') ? true : false
+      rescue
+        raise Errors::Tools::Config::Cluster
+      end
+
       private
 
       def load_configuration

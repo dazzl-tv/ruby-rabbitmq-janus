@@ -23,15 +23,14 @@ queues:
     to: to-janus-admin
 
 janus:
-  cluster:
-    enabled: false
-    count: 0
   session:
     keepalive: 45
   plugins:
     - janus.plugin.echotest
 
 gem:
+  cluster:
+    enabled: true
   log:
     level: info
 ```
@@ -42,7 +41,7 @@ For customizing a configuration add a yml file in your rails project in
 `config/ruby-rabbitmq-janus.yml`, or use rails generator with command `rails generate
 ruby_rabbitmq_janus:configuration`.
 
-## Ressources
+## Resources
 
 * [Configuration of RabbitMQ](https://www.rabbitmq.com/configure.html#config-items)
 * [Configuration of Janus queue](https://janus.conf.meetecho.com/docs/rest.html#rabbit)

@@ -109,7 +109,7 @@ module RubyRabbitmqJanus
 
       # @return [Boolean] Read option file for a janus cluster section
       def cluster
-        @options['gem']['cluster']['enabled'].to_s.eql?('true') ? true : false
+        @options['gem']['cluster']['enabled'].to_s.match?('true') ? true : false
       rescue
         raise Errors::Tools::Config::Cluster
       end

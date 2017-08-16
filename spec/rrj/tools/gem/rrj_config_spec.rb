@@ -41,14 +41,9 @@ describe RubyRabbitmqJanus::Tools::Config, type: :tools, name: :config do
     it_behaves_like 'type and default value', String, ''
   end
 
-  context 'janus/cluster/enabled' do
+  context 'gem/cluster/enabled' do
     let(:method) { @cfg.cluster }
     it_behaves_like 'type and default value', FalseClass, false
-  end
-
-  context 'janus/cluster/count' do
-    let(:method) { @cfg.number_of_instance }
-    it_behaves_like 'type and default value', Integer, 1
   end
 
   context 'queues/standard/from' do

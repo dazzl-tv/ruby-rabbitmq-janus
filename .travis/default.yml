@@ -16,9 +16,6 @@ queues:
     to: to-janus-admin
 
 janus:
-  cluster:
-    enabled: false
-    count: 1
   session:
     keepalive: 55
   plugins:
@@ -27,5 +24,7 @@ janus:
     - janus.plugin.sip
 
 gem:
+  cluster:
+    enabled: false
   log:
     level: debug

@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
       # Read a message in rabbitmq queue. This message is formatted to JSON
       # or Hash format. For developpment it's possible to used a `nice` JSON.
       class Response
-        # Instanciate a response
+        # Instantiate a response
         #
         # @param [Hash] response_janus
         #   Request parsing after Janus/RabbitMQ receive a response to request
@@ -47,6 +47,13 @@ module RubyRabbitmqJanus
           @request
         rescue
           raise Errors::Janus::Response::ToHash
+        end
+
+        # Test if response it's an error
+        #
+        # @return [Boolean]
+        def error?
+          @request['janus'].match?('error')
         end
 
         private

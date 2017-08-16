@@ -18,6 +18,14 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Cluster::Initializer
       end
 
+      # Create session (just one Janus Instance)
+      def create_session
+        @current_instance = 1
+        create_session_instance
+      rescue
+        raise Errors::Tools::Cluster::CreateSession
+      end
+
       # Specify a name to queue
       def queue_to(instance = nil)
         Tools::Config.instance.options['queues']['standard']['to'] + \

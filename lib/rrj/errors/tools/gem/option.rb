@@ -31,6 +31,13 @@ module RubyRabbitmqJanus
             super "Error for test use current handle -- #{opts}", :fatal
           end
         end
+
+        # Error for Tools::Option#cluster_mode
+        class ClusterMode < RubyRabbitmqJanus::Errors::Tools::BaseOption
+          def initialize
+            super 'Error for create session in cluster mode disable', :fatal
+          end
+        end
       end
     end
   end

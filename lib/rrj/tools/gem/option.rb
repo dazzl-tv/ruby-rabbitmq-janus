@@ -22,6 +22,7 @@ module RubyRabbitmqJanus
         Log.instance
         Config.instance
         Requests.instance
+        cluster_mode
       rescue => error
         raise Errors::Tools::Option::Initialize, error
       end
@@ -54,6 +55,14 @@ module RubyRabbitmqJanus
         options.key?('handle_id') ? options['handle_id'] : 0
       rescue
         raise Errors::Tools::Option::UseCurrentHandle, options
+      end
+
+      private
+
+      def cluster_mode
+        Cluster.instance.create_session unless Config.instance.cluster
+      rescue
+        raise Errors::Tools::Option::ClusterMode
       end
     end
   end

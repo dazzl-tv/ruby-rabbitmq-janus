@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'timeout'
+
 module RubyRabbitmqJanus
   module Janus
     module Concurrencies
@@ -16,6 +18,7 @@ module RubyRabbitmqJanus
         def initialize(instance)
           @pub = @session = nil
           @instance = instance
+          @time_to_live = Tools::Config.instance.ttl
           super()
         rescue
           raise Errors::Janus::Keepalive::Initializer
@@ -41,18 +44,18 @@ module RubyRabbitmqJanus
         private
 
         def transaction_running
-          initialize_thread
+          initialize_keepalive
           lock.synchronize { condition.signal }
-          loop { loop_session(Tools::Config.instance.ttl) }
+          loop { loop_session }
         end
 
-        def initialize_thread
+        def initialize_keepalive
           @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
           @session = find_session
         end
 
-        def loop_session(time_to_live)
-          sleep time_to_live
+        def loop_session
+          sleep @time_to_live
           publish_message
         end
 
@@ -72,11 +75,17 @@ module RubyRabbitmqJanus
         #   Janus Instance has no session -> Recreate session and loop continue
         #   Janus Instance it's broken    -> Inaccessible so stop thread
         def publish_message
-          if message_error?
-            Tools::Log.instance.warn 'Session broken, recreate a session'
-            maj_document(find_session)
+          Timeout.timeout(@time_to_live + 1) do
+            maj_document(find_session) if message_error?
+            Tools::Log.instance.info "Keepalive for #{@session}"
           end
-          Tools::Log.instance.info "Keepalive for #{@session}"
+        rescue Timeout::Error
+          janus_instance_down
+        end
+
+        def janus_instance_down
+          Tools::Log.instance.fatal "Janus Instance [##{@instance}] is down !!"
+          document.set(enable: false)
         end
 
         def message_error?
@@ -97,13 +106,17 @@ module RubyRabbitmqJanus
         end
 
         def maj_document(new_session)
+          Tools::Log.instance.fatal \
+            "Session broken, recreate a session in instance #{@instance}"
           @session = new_session
-          Tools::Log.instance.debug "Update document to instance #{@instance}"
-          document = \
-            RubyRabbitmqJanus::Models::JanusInstance.find_by_instance(@instance)
           Tools::Log.instance.debug \
-            "Change session (#{document.session}) with #{@session}"
+            "Change session #{document.session} to #{@session}"
           document.set(session: new_session)
+          document.set(enable: true)
+        end
+
+        def document
+          RubyRabbitmqJanus::Models::JanusInstance.find_by_instance(@instance)
         end
       end
     end

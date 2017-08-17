@@ -26,6 +26,16 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Cluster::CreateSession
       end
 
+      # Restart a thread keepalive for an instance
+      def restart_session
+        RubyRabbitmqJanus::Models::JanusInstance.enabled.each do |janus|
+          @current_instance = janus.instance
+          janus.set(session: initialize_session)
+        end
+      rescue
+        raise Errors::Tools::Cluster::RestartInstance
+      end
+
       # Specify a name to queue
       def queue_to(instance = nil)
         Tools::Config.instance.options['queues']['standard']['to'] + \

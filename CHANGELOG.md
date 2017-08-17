@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Recreate session when error in thread keepalive
 - Add method for test if Janus response it's a error
 - Test Janus instance is down and recreate when instance is start
+- Restart automatically session when start
 
 ### [Fixed]
 - Create session only cluster mode is disabled

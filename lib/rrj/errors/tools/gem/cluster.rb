@@ -31,6 +31,13 @@ module RubyRabbitmqJanus
             super 'Error for create string queue_admin_to'
           end
         end
+
+        # Error if restart thread to instance failed
+        class RestartInstance < RubyRabbitmqJanus::Errors::Tools::BaseCluster
+          def initialize(option)
+            super "Error for restart thread to instance #{option}"
+          end
+        end
       end
     end
   end

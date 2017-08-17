@@ -60,7 +60,8 @@ module RubyRabbitmqJanus
       private
 
       def cluster_mode
-        Cluster.instance.create_session unless Config.instance.cluster
+        method = Config.instance.cluster ? :restart_session : :create_session
+        Cluster.instance.send(method)
       rescue
         raise Errors::Tools::Option::ClusterMode
       end

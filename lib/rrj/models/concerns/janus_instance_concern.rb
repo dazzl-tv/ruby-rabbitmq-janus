@@ -41,6 +41,10 @@ module RubyRabbitmqJanus
         rescue
           nil
         end
+
+        def enabled
+          JanusInstance.where(enable: true)
+        end
       end
 
       private

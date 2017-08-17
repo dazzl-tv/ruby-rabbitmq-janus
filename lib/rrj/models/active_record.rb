@@ -6,9 +6,12 @@ module RubyRabbitmqJanus
     #
     # Store instance information for MongoID database
     class JanusInstance < ::ActiveRecord::Base
-      include RubyRabbitmqJanus::Models::JanusInstanceConcern
+      include RubyRabbitmqJanus::Models::JanusInstanceMethods
+      include RubyRabbitmqJanus::Models::JanusInstanceCallback
 
-      before_destroy { destroy_before_action }
+      after_create { callback_create_after }
+      after_update { callback_update_after }
+      before_destroy { callback_destroy_before }
     end
   end
 end

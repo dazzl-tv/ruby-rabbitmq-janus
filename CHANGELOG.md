@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Create session only cluster mode is disabled
 - Cleaning cluster classes
 - Get settings to cluster mode
+- Managing thread for session with document
 
 ## [2.1.1] - 2017-06-14
 ### [Fixed]

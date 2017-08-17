@@ -21,17 +21,14 @@ module RubyRabbitmqJanus
       # Create session (just one Janus Instance)
       def create_session
         @current_instance = 1
-        create_session_instance
+        Models::JanusInstance.create(instance: @current_instance)
       rescue
         raise Errors::Tools::Cluster::CreateSession
       end
 
       # Restart a thread keepalive for an instance
       def restart_session
-        RubyRabbitmqJanus::Models::JanusInstance.enabled.each do |janus|
-          @current_instance = janus.instance
-          janus.set(session: initialize_session)
-        end
+        Models::JanusInstance.enabled.each(&:callback_update_after)
       rescue
         raise Errors::Tools::Cluster::RestartInstance
       end
@@ -50,20 +47,6 @@ module RubyRabbitmqJanus
           "-#{instance.blank? ? @current_instance : instance}"
       rescue
         raise Errors::Tools::Cluster::QueueAdminTo
-      end
-
-      private
-
-      # Create a thread for manage a session/keepalive with Janus
-      def initialize_session
-        Janus::Concurrencies::Keepalive.new(@current_instance).session
-      end
-
-      # create a new instance in database
-      def create_session_instance
-        Models::JanusInstance.create(instance: @current_instance,
-                                     session: initialize_session,
-                                     enable: true)
       end
     end
   end

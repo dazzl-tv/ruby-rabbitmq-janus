@@ -5,16 +5,8 @@
 module RubyRabbitmqJanus
   module Models
     # Add method for JanusInstance model
-    module JanusInstanceConcern
+    module JanusInstanceMethods
       extend ActiveSupport::Concern
-
-      # Send an action for destroying a session in Janus Gateway instance
-      def destroy_before_action
-        options = { 'session_id' => session, 'instance' => instance }
-        search_initializer(options) do |transaction|
-          transaction.publish_message('base::destroy', options)
-        end
-      end
 
       # Class methods for JanusInstance model
       module ClassMethods
@@ -42,6 +34,7 @@ module RubyRabbitmqJanus
           nil
         end
 
+        # Get all instance active
         def enabled
           JanusInstance.where(enable: true)
         end
@@ -59,6 +52,10 @@ module RubyRabbitmqJanus
             yield(transaction)
           end
         end
+      end
+
+      def initialize_thread
+        RubyRabbitmqJanus::Janus::Concurrencies::Keepalive.new(instance)
       end
     end
   end

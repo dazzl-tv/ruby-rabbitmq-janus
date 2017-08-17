@@ -2,6 +2,8 @@
 
 require 'timeout'
 
+# :reek:TooManyMethods
+
 module RubyRabbitmqJanus
   module Janus
     module Concurrencies
@@ -39,6 +41,11 @@ module RubyRabbitmqJanus
           end
         rescue
           raise Errors::Janus::Keepalive::Session
+        end
+
+        # Kill this thread
+        def stop
+          thread.kill
         end
 
         private

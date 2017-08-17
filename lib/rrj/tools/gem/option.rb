@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require 'rrj/models/concerns/janus_instance_concern'
-if defined?(Mongoid)
-  require 'rrj/models/mongoid'
-else
-  require 'rrj/models/active_record'
-end
+require 'rrj/models/concerns/janus_instance_methods'
+require 'rrj/models/concerns/janus_instance_callback'
+require "rrj/models/#{defined?(Mongoid) ? 'mongoid' : 'active_record'}"
 
 # :reek:FeatureEnvy
 

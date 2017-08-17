@@ -15,8 +15,8 @@ describe RubyRabbitmqJanus::Tools::Cluster, type: :tools, name: :cluster do
 
   context 'when created sessions with active record' do
     it do
-      expect(RubyRabbitmqJanus::Tools::Cluster.instance.create_sessions).to \
-        be_a(Range)
+      expect(RubyRabbitmqJanus::Tools::Cluster.instance.create_session).to \
+        be_a(Integer)
     end
   end
 end

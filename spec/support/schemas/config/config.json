@@ -55,13 +55,11 @@
       "type": "hash",
       "properties": {
         "plugins": { "type": "hash" },
-        "session": { "type": "hash" },
-        "cluster": { "type": "hash" }
+        "session": { "type": "hash" }
       },
       "required": [
         "session",
-        "plugins",
-        "cluster"
+        "plugins"
       ]
     },
     "gem": {
@@ -75,10 +73,20 @@
           "required": [
             "level"
           ]
+        },
+        "cluster": {
+          "type": "hash",
+          "properties": {
+            "enabled": { "type": "boolean" }
+          },
+          "required": [
+            "enabled"
+          ]
         }
       },
       "required": [
-        "log"
+        "log",
+        "cluster"
       ]
     }
   },

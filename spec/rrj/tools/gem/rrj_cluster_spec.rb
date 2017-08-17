@@ -3,10 +3,6 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Tools::Cluster, type: :tools, name: :cluster do
-  it { expect(RubyRabbitmqJanus::Tools::Cluster.instance.enable).to eql(false) }
-
-  it { expect(RubyRabbitmqJanus::Tools::Cluster.instance.number).to eql(1) }
-
   it do
     expect(RubyRabbitmqJanus::Tools::Cluster.instance.queue_to(42)).to \
       eql('to-janus-42')

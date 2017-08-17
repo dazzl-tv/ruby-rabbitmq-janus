@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-# :reek:UtilityFunction
-
 module RubyRabbitmqJanus
+  # Contains all model for this gem
   module Models
-    # Add method for JanusInstance model
+    # Configure callback for Janus Instance models
     module JanusInstanceCallback
+      extend ActiveSupport::Concern
+
       def callback_create_after
         Tools::Log.instance.debug 'Janus Instance Callback CREATE'
         create_janus_session if enable
@@ -26,11 +27,11 @@ module RubyRabbitmqJanus
       # Create an session in Janus Instance and save references in database
       def create_janus_session
         Tools::Log.instance.debug 'Create Janus Session'
-        thread = initialize_thread
+        janus = RubyRabbitmqJanus::Janus::Concurrencies::Keepalive.new(instance)
 
-        set(thread: thread.object_id)
-        set(session: thread.session)
-        set(enable: true)
+        set(session: janus.session)
+
+        session.zero? ? instance_dead(janus) : isntance_running
       end
 
       # Send an action for destroying a session in Janus Gateway instance
@@ -45,6 +46,16 @@ module RubyRabbitmqJanus
 
         ObjectSpace._id2ref(thread).stop
       end
+    end
+
+    def instance_running
+      set(thread: thread.object_id)
+      set(enable: true)
+    end
+
+    def instance_dead(thread)
+      thread.stop
+      set(enable: false)
     end
   end
 end

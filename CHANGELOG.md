@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add method for test if Janus response it's a error
 - Test Janus instance is down and recreate when instance is start
 - Restart automatically session when start
+- Timeout for session created
 
 ### [Fixed]
 - Create session only cluster mode is disabled

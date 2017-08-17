@@ -35,10 +35,9 @@ module RubyRabbitmqJanus
         #
         # @return [Fixnum] Identifier to session created by Janus
         def session
-          lock.synchronize do
-            condition.wait(lock)
-            @session
-          end
+          Timeout.timeout(5) { session_synchroinze }
+        rescue Timeout::Error
+          janus_instance_down
         rescue
           raise Errors::Janus::Keepalive::Session
         end
@@ -50,6 +49,13 @@ module RubyRabbitmqJanus
 
         private
 
+        def session_synchronize
+          lock.synchronize do
+            condition.wait(lock)
+            @session
+          end
+        end
+
         def transaction_running
           initialize_keepalive
           lock.synchronize { condition.signal }
@@ -57,14 +63,8 @@ module RubyRabbitmqJanus
         end
 
         def initialize_keepalive
-          Timeout.timeout(15) do
-            @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-            @session = find_session
-          end
-        rescue Timeout::Error
-          Tools::Log.instance.fatal "Instance (#{@instance}) it's not " \
-            'accessible. Disable in database and delete thread.'
-          stop
+          @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
+          @session = find_session
         end
 
         def loop_session

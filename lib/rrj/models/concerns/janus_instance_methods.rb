@@ -53,10 +53,6 @@ module RubyRabbitmqJanus
           end
         end
       end
-
-      def initialize_thread
-        RubyRabbitmqJanus::Janus::Concurrencies::Keepalive.new(instance)
-      end
     end
   end
 end

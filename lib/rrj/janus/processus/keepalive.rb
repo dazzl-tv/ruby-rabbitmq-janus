@@ -57,8 +57,14 @@ module RubyRabbitmqJanus
         end
 
         def initialize_keepalive
-          @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
-          @session = find_session
+          Timeout.timeout(15) do
+            @pub = Rabbit::Publisher::PublishExclusive.new(rabbit.channel, '')
+            @session = find_session
+          end
+        rescue Timeout::Error
+          Tools::Log.instance.fatal "Instance (#{@instance}) it's not " \
+            'accessible. Disable in database and delete thread.'
+          stop
         end
 
         def loop_session

@@ -31,7 +31,7 @@ module RubyRabbitmqJanus
 
         set(session: janus.session)
 
-        session.zero? ? instance_dead(janus) : isntance_running
+        session.zero? ? instance_dead(janus) : instance_running
       end
 
       # Send an action for destroying a session in Janus Gateway instance

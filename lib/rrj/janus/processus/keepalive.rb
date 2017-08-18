@@ -35,7 +35,7 @@ module RubyRabbitmqJanus
         #
         # @return [Fixnum] Identifier to session created by Janus
         def session
-          Timeout.timeout(5) { session_synchroinze }
+          Timeout.timeout(5) { session_synchronize }
         rescue Timeout::Error
           janus_instance_down
         rescue
@@ -90,7 +90,6 @@ module RubyRabbitmqJanus
         def publish_message
           Timeout.timeout(@time_to_live + 1) do
             maj_document(find_session) if message_error?
-            Tools::Log.instance.info "Keepalive for #{@session}"
           end
         rescue Timeout::Error
           janus_instance_down

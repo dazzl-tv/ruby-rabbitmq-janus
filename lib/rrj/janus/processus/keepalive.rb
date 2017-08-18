@@ -42,11 +42,6 @@ module RubyRabbitmqJanus
           raise Errors::Janus::Keepalive::Session
         end
 
-        # Kill this thread
-        def stop
-          thread.kill
-        end
-
         private
 
         def session_synchronize
@@ -89,7 +84,7 @@ module RubyRabbitmqJanus
         #   Janus Instance it's broken    -> Inaccessible so stop thread
         def publish_message
           Timeout.timeout(@time_to_live + 1) do
-            maj_document(find_session) if message_error?
+            maj_document(find_session) if message_no_error?
           end
         rescue Timeout::Error
           janus_instance_down
@@ -100,7 +95,7 @@ module RubyRabbitmqJanus
           document.set(enable: false)
         end
 
-        def message_error?
+        def message_no_error?
           msg = @pub.publish(message_keepalive)
           RubyRabbitmqJanus::Janus::Responses::Response.new(msg).error?
         end
@@ -121,7 +116,7 @@ module RubyRabbitmqJanus
           Tools::Log.instance.fatal \
             "Session broken, recreate a session in instance #{@instance}"
           @session = new_session
-          Tools::Log.instance.debug \
+          Tools::Log.instance.info \
             "Change session #{document.session} to #{@session}"
           document.set(session: new_session)
           document.set(enable: true)

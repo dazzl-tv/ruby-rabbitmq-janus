@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
         Tools::Log.instance.debug 'Create Janus Session'
         janus = RubyRabbitmqJanus::Janus::Concurrencies::Keepalive.new(instance)
         set(session: janus.session.to_i)
-        session.zero? ? instance_dead(janus) : instance_running
+        session.zero? ? instance_dead(janus) : instance_running(janus)
       end
 
       # Send an action for destroying a session in Janus Gateway instance
@@ -42,17 +42,17 @@ module RubyRabbitmqJanus
           transaction.publish_message('base::destroy', options)
         end
 
-        ObjectSpace._id2ref(thread).stop
+        instance_dead(ObjectSpace._id2ref(thread))
       end
 
-      def instance_running
-        set(thread: thread.object_id)
+      def instance_running(janus_thread)
+        set(thread: janus_thread.object_id)
         set(enable: true)
       end
 
-      def instance_dead(thread)
-        thread.stop
+      def instance_dead(janus_thread)
         set(enable: false)
+        %i[thread session].each { |data| set(data => 0) }
       end
     end
   end

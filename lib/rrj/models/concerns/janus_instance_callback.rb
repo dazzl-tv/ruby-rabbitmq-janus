@@ -28,9 +28,7 @@ module RubyRabbitmqJanus
       def create_janus_session
         Tools::Log.instance.debug 'Create Janus Session'
         janus = RubyRabbitmqJanus::Janus::Concurrencies::Keepalive.new(instance)
-
-        set(session: janus.session)
-
+        set(session: janus.session.to_i)
         session.zero? ? instance_dead(janus) : instance_running
       end
 
@@ -46,16 +44,16 @@ module RubyRabbitmqJanus
 
         ObjectSpace._id2ref(thread).stop
       end
-    end
 
-    def instance_running
-      set(thread: thread.object_id)
-      set(enable: true)
-    end
+      def instance_running
+        set(thread: thread.object_id)
+        set(enable: true)
+      end
 
-    def instance_dead(thread)
-      thread.stop
-      set(enable: false)
+      def instance_dead(thread)
+        thread.stop
+        set(enable: false)
+      end
     end
   end
 end

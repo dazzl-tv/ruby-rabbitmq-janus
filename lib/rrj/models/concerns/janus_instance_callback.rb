@@ -26,10 +26,9 @@ module RubyRabbitmqJanus
 
       # Create an session in Janus Instance and save references in database
       def create_janus_session
-        Tools::Log.instance.debug 'Create Janus Session'
         janus = RubyRabbitmqJanus::Janus::Concurrencies::Keepalive.new(instance)
         set(session: janus.session.to_i)
-        session.zero? ? instance_dead(janus) : instance_running(janus)
+        session.zero? ? instance_dead(janus.object_id) : instance_running(janus)
       end
 
       # Send an action for destroying a session in Janus Gateway instance
@@ -46,13 +45,12 @@ module RubyRabbitmqJanus
       end
 
       def instance_running(janus_thread)
-        set(thread: janus_thread.object_id)
-        set(enable: true)
+        set(thread: janus_thread.object_id, enable: true)
       end
 
       def instance_dead(janus_thread)
-        set(enable: false)
-        %i[thread session].each { |data| set(data => 0) }
+        janus_thread.stop
+        unset(%i[thread session enable])
       end
     end
   end

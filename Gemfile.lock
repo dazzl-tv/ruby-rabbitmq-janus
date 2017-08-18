@@ -1,11 +1,12 @@
 PATH
   remote: .
   specs:
-    ruby_rabbitmq_janus (2.1.0.pre.42)
+    ruby_rabbitmq_janus (2.2.0.pre.42)
       bunny (~> 2.5)
       key_path (~> 1.2)
       semaphore (~> 0.0.1)
       thread (~> 0.2.2)
+      timers (~> 4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -111,6 +112,7 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     highline (1.7.8)
+    hitimes (1.2.6)
     i18n (0.8.4)
     ice_nine (0.11.2)
     iniparse (1.4.3)
@@ -232,6 +234,8 @@ GEM
     thor (0.19.4)
     thread (0.2.2)
     thread_safe (0.3.6)
+    timers (4.1.2)
+      hitimes
     travis (1.8.8)
       backports
       faraday (~> 0.9)
@@ -279,4 +283,4 @@ DEPENDENCIES
   yard (~> 0.9.5)
 
 BUNDLED WITH
-   1.14.6
+   1.15.3

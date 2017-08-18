@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'timeout'
-
-# :reek:TooManyMethods
+require 'rrj/janus/processus/keepalive_timer'
 
 module RubyRabbitmqJanus
   module Janus
@@ -13,20 +11,18 @@ module RubyRabbitmqJanus
       #
       # Create a thread for sending a message with type keepalive to session
       # created by this instanciate gem
-      #
-      # @see https://ruby-doc.org/stdlib-2.4.0/libdoc/singleton/rdoc/Singleton.html
       class Keepalive < Concurrency
         # Initialize a singleton object for sending keepalive to janus
         def initialize(instance)
           @pub = @session = nil
           @instance = instance
-          @time_to_live = Tools::Config.instance.ttl
           super()
+          @timer = KeepaliveTimer.new
         rescue
           raise Errors::Janus::Keepalive::Initializer
         end
 
-        # Give a session Integer created when this gem is intanciate.
+        # Give a session Integer created when this gem is instantiate.
         # Is waiting a thread return a response to message created sending.
         #
         # @example Ask session
@@ -35,26 +31,27 @@ module RubyRabbitmqJanus
         #
         # @return [Fixnum] Identifier to session created by Janus
         def session
-          Timeout.timeout(5) { session_synchronize }
-        rescue Timeout::Error
-          janus_instance_down
+          lock.synchronize do
+            @timer.session do
+              condition.wait(lock)
+              @session
+            end
+          end
         rescue
           raise Errors::Janus::Keepalive::Session
         end
 
-        private
-
-        def session_synchronize
-          lock.synchronize do
-            condition.wait(lock)
-            @session
-          end
+        # Stop sending keepalive message to Janus Instance
+        def stop
+          @timer.stop
         end
+
+        private
 
         def transaction_running
           initialize_keepalive
           lock.synchronize { condition.signal }
-          loop { loop_session }
+          @timer.loop_keepalive { publish_message if document.session? }
         end
 
         def initialize_keepalive
@@ -62,14 +59,12 @@ module RubyRabbitmqJanus
           @session = find_session
         end
 
-        def loop_session
-          sleep @time_to_live
-          publish_message
+        def create_session
+          @pub.publish(message_create)
         end
 
-        def create_session
-          msg = Janus::Messages::Standard.new('base::create', param_instance)
-          @pub.publish(msg)
+        def message_create
+          Janus::Messages::Standard.new('base::create', param_instance)
         end
 
         def message_keepalive
@@ -83,16 +78,7 @@ module RubyRabbitmqJanus
         #   Janus Instance has no session -> Recreate session and loop continue
         #   Janus Instance it's broken    -> Inaccessible so stop thread
         def publish_message
-          Timeout.timeout(@time_to_live + 1) do
-            maj_document(find_session) if message_no_error?
-          end
-        rescue Timeout::Error
-          janus_instance_down
-        end
-
-        def janus_instance_down
-          Tools::Log.instance.fatal "Janus Instance [##{@instance}] is down !!"
-          document.set(enable: false)
+          maj_document(find_session) if message_no_error?
         end
 
         def message_no_error?

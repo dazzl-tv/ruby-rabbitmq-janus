@@ -34,21 +34,21 @@ module RubyRabbitmqJanus
       def start
         @rabbit.start
       rescue
-        raise Errors::Rabbit::Start
+        raise Errors::Rabbit::Connect::Start
       end
 
       # Close connection to server RabbitMQ
       def close
         @rabbit.close
       rescue
-        raise Errors::Rabbit::Close
+        raise Errors::Rabbit::Connect::Close
       end
 
       # Create an channel
       def channel
         @rabbit.create_channel
       rescue
-        raise Errors::Rabbit::Channel
+        raise Errors::Rabbit::Connect::Channel
       end
 
       private

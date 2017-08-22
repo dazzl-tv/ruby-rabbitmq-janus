@@ -9,8 +9,7 @@ module RubyRabbitmqJanus
       class KeepaliveThread < Thread
         attr_reader :timer, :instance, :session
 
-        def initialize(instance, rabbit, &block)
-          @rabbit = rabbit
+        def initialize(instance, &block)
           @timer = KeepaliveTimer.new
           @message = KeepaliveMessage.new(instance)
           @publisher = RubyRabbitmqJanus::Rabbit::Publisher::PublishExclusive
@@ -21,7 +20,8 @@ module RubyRabbitmqJanus
         # Initialize a transaction with Janus Instance.
         # Create a session and save response
         def initialize_janus_session
-          @publisher = @publisher.new(@rabbit.channel, '')
+          rabbit = RubyRabbitmqJanus::Rabbit::Connect.instance.channel
+          @publisher = @publisher.new(rabbit, '')
           @session = response_session
         end
 

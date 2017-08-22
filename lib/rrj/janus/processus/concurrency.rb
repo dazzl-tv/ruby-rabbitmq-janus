@@ -14,8 +14,7 @@ module RubyRabbitmqJanus
         # Initialize class with elements for thread communication
         def initialize
           Tools::Log.instance.info info_thread
-          puts info_thread
-          @rabbit = Rabbit::Connect.new
+          @rabbit = RubyRabbitmqJanus::Rabbit::Connect.instance
           @lock = Mutex.new
           @condition = ConditionVariable.new
         rescue

@@ -6,6 +6,8 @@ module RubyRabbitmqJanus
     #
     # Class for manage connection with RabbitMQ
     class Connect
+      include Singleton
+
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(read_options_server.merge!(option_log_rabbit))

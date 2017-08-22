@@ -17,7 +17,7 @@ module RubyRabbitmqJanus
         # Initialize a singleton object for sending keepalive to janus
         def initialize(instance)
           super()
-          @thread = KeepaliveThread.new(instance, rabbit) { initialize_thread }
+          @thread = KeepaliveThread.new(instance) { initialize_thread }
         rescue
           raise Errors::Janus::KeepaliveInitializer::Initializer
         end
@@ -33,7 +33,7 @@ module RubyRabbitmqJanus
         # Is waiting a thread return a response to message created sending.
         #
         # @example Ask session
-        #   KeepaliveInitializer.new(123, @rabbit).session
+        #   KeepaliveInitializer.new(123).session
         #   => 852803383803249
         #
         # @return [Fixnum] Identifier to session created by Janus
@@ -51,7 +51,7 @@ module RubyRabbitmqJanus
         # Ask Object ID to thread managing keepalive message
         #
         # @example Ask ID
-        #   KeepaliveInitializer.new(123, @rabbit).thread
+        #   KeepaliveInitializer.new(123).thread
         #   => 70233080652140
         #
         # @return [Integer] Identifier to thread in Ruby

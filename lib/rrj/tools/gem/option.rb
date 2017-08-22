@@ -19,6 +19,7 @@ module RubyRabbitmqJanus
       def initialize
         Log.instance
         Config.instance
+        RubyRabbitmqJanus::Rabbit::Connect.instance
         Requests.instance
         cluster_mode
       rescue => error

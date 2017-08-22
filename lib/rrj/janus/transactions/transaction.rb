@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
         # @param [Fixnum] session
         #   Use a session identifier for created message
         def initialize(session)
-          @rabbit = Rabbit::Connect.new
+          @rabbit = RubyRabbitmqJanus::Rabbit::Connect.instance
           @session = session
           @publisher = @exclusive = nil
         rescue

@@ -17,7 +17,6 @@ module RubyRabbitmqJanus
       # Enable or Disable transaction
       def callback_update_after
         Tools::Log.instance.debug 'Callback AFTER_UPDATE'
-        puts "Change ?? #{enable_changed?}"
         if enable && enable_changed?
           create_a_session_in_janus_instance
         elsif !enable && enable_changed?
@@ -37,20 +36,17 @@ module RubyRabbitmqJanus
         info_instance('Create session')
         janus_instance = keepalive_object_new
         set(session: janus_instance.session, thread: janus_instance.thread_id)
-        info_threads
       end
 
       def disable_a_session_in_janus_instance
         info_instance('Destroy session')
         keepalive_object_thread.kill
         unset(%I[thread session])
-        info_threads
       end
 
       def destroy_a_session_in_janus_instance
         info_instance('Destroy session')
         keepalive_object_thread.kill
-        info_threads
       end
 
       def keepalive_object
@@ -67,10 +63,6 @@ module RubyRabbitmqJanus
 
       def info_instance(text)
         Tools::Log.instance.debug "#{text} in Janus Instance [##{instance}]"
-      end
-
-      def info_threads
-        puts "Number of thread : #{Thread.list.count}"
       end
     end
   end

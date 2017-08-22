@@ -25,9 +25,11 @@ module RubyRabbitmqJanus
         # Get thread with Ruby ID
         def self.thread(thread)
           ObjectSpace._id2ref(thread)
+        rescue RangeError
+          puts "No thread with ID : #{thread}"
         end
 
-        # Give a session Integer created when this gem is instantiate.
+        # Give a session Integer  his gem is instantiate.
         # Is waiting a thread return a response to message created sending.
         #
         # @example Ask session
@@ -64,6 +66,7 @@ module RubyRabbitmqJanus
         def transaction_running
           @thread.initialize_janus_session
           lock.synchronize { condition.signal }
+          @thread.start
         end
       end
     end

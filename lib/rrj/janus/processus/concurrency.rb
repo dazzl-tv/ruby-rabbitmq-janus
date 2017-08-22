@@ -13,11 +13,11 @@ module RubyRabbitmqJanus
       class Concurrency
         # Initialize class with elements for thread communication
         def initialize
-          Tools::Log.instance.info "Create an thread -- #{self.class.name}"
+          Tools::Log.instance.info info_thread
+          puts info_thread
           @rabbit = Rabbit::Connect.new
           @lock = Mutex.new
           @condition = ConditionVariable.new
-          @thread = Thread.new { initialize_thread }
         rescue
           raise Errors::Janus::Concurencies::Initializer
         end
@@ -31,11 +31,15 @@ module RubyRabbitmqJanus
           @rabbit.close
         end
 
-        attr_reader :thread, :lock, :condition, :rabbit
+        def info_thread
+          "Create an thread -- #{self.class.name}"
+        end
+
+        attr_reader :lock, :condition, :rabbit
       end
     end
   end
 end
 
-require 'rrj/janus/processus/keepalive'
+require 'rrj/janus/processus/keepalive/keepalive_initializer'
 require 'rrj/janus/processus/event'

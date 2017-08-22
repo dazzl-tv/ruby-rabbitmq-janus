@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
-      # # Listen standar queue
+      # # Listen public queue to all Janus instance
       #
       # Listen standard queue and sending a block code to thread listen.
       # The default queue is configured in config file.
@@ -16,6 +16,7 @@ module RubyRabbitmqJanus
 
         def initalize
           super
+          @thread = Thread.new { initialize_thread }
         rescue
           raise Errors::Janus::Event::Initializer
         end

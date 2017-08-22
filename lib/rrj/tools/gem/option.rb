@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require 'rrj/models/concerns/janus_instance_callbacks'
 require 'rrj/models/concerns/janus_instance_methods'
-require 'rrj/models/concerns/janus_instance_callback'
+require 'rrj/models/concerns/janus_instance_validations'
 require "rrj/models/#{defined?(Mongoid) ? 'mongoid' : 'active_record'}"
 
 # :reek:FeatureEnvy

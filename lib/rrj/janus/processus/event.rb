@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
       class Event < Concurrency
         include Singleton
 
-        def initalize
+        def initialize
           super
           @thread = Thread.new { initialize_thread }
         rescue
@@ -29,9 +29,11 @@ module RubyRabbitmqJanus
         #
         # @return [Thread] It's a thread who listen queue and execute action
         def run(&block)
-          thread.join
+          @thread.join
           Thread.new do
-            loop { thread.thread_variable_get(:publish).listen_events(&block) }
+            loop do
+              @thread.thread_variable_get(:publish).listen_events(&block)
+            end
           end
         rescue
           raise Errors::Janus::Event::Run
@@ -41,7 +43,7 @@ module RubyRabbitmqJanus
 
         def transaction_running
           publisher = Rabbit::Publisher::Listener.new(rabbit)
-          Thread.current.thread_variable_set(:publish, publisher)
+          @thread.thread_variable_set(:publish, publisher)
         end
       end
     end

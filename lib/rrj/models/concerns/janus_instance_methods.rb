@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
           JanusInstance.find_by(session: session_id).set(enable: false)
         end
 
-        # Delete all instance disabled
+        # Clean all instance disabled
         def destroys
           JanusInstance.where(enable: false).delete_all
         end
@@ -37,21 +37,6 @@ module RubyRabbitmqJanus
         # Get all instance active
         def enabled
           JanusInstance.where(enable: true)
-        end
-
-        # Get instance associated to thread ID
-        def find_by_thread(janus_thread)
-          JanusInstance.find_by(thread: janus_thread)
-        end
-
-        # Save basic information for thread connected to Janus Instance
-        def start(thread_id, session_id)
-          set(thread: thread_id, session: session_id)
-        end
-
-        # Reset document. Delete value for thread and session
-        def reset(thread)
-          JanusInstance.find_by_thread(thread).unset(%I[thread session])
         end
       end
 

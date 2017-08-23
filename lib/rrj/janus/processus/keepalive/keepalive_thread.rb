@@ -10,18 +10,16 @@ module RubyRabbitmqJanus
         attr_reader :timer, :instance, :session
 
         def initialize(instance, &block)
+          @publisher = @session = nil
           @timer = KeepaliveTimer.new
           @message = KeepaliveMessage.new(instance)
-          @publisher = RubyRabbitmqJanus::Rabbit::Publisher::PublishExclusive
-          @session = nil
           super(&block)
         end
 
         # Initialize a transaction with Janus Instance.
         # Create a session and save response
         def initialize_janus_session
-          rabbit = RubyRabbitmqJanus::Rabbit::Connect.instance.channel
-          @publisher = @publisher.new(rabbit, '')
+          @publisher = publisher
           @session = response_session
         end
 
@@ -35,6 +33,14 @@ module RubyRabbitmqJanus
         end
 
         private
+
+        def publisher
+          RubyRabbitmqJanus::Rabbit::Publisher::PublishKeepalive.new(rabbit)
+        end
+
+        def rabbit
+          RubyRabbitmqJanus::Rabbit::Connect.instance.channel
+        end
 
         def response_session
           @message.response_session(publish(@message.session))

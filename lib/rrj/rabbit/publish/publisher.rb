@@ -70,4 +70,5 @@ end
 
 require 'rrj/rabbit/publish/admin'
 require 'rrj/rabbit/publish/exclusive'
+require 'rrj/rabbit/publish/keepalive'
 require 'rrj/rabbit/publish/non_exclusive'

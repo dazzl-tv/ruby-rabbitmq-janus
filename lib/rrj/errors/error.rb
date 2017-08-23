@@ -7,15 +7,27 @@ module RubyRabbitmqJanus
     #
     # Define errors to gems
     class RRJError < StandardError
-      # Initialize a error standard in this gem
+      # Initialize a error standard in this gem and writing in log file
       #
       # @param [String] message Text returning in raise
       # @param [Symbol] level Important to error
       def initialize(message, level)
         super(message)
-        log = RubyRabbitmqJanus::Tools::Log.instance
-        RubyRabbitmqJanus::Tools::Log.instance_method(level)\
-                                     .bind(log).call(message)
+        write_error(message, level)
+      end
+
+      private
+
+      def log
+        RubyRabbitmqJanus::Tools::Log
+      end
+
+      def logger
+        log.instance
+      end
+
+      def write_error(message, level)
+        log.instance_method(level).bind(logger).call(message)
       end
     end
   end

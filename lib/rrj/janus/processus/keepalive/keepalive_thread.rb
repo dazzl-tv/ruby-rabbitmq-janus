@@ -33,6 +33,15 @@ module RubyRabbitmqJanus
           super
         end
 
+        def instance_is_down
+          janus = Models::JanusInstance.find_by_session(@session)
+          janus.set(enable: false)
+
+          Tools::Log.instance.fatal \
+            "Janus Instance [#{janus.instance}] is down, kill thread."
+          Thread.instance_method(:kill).bind(self).call
+        end
+
         private
 
         def publisher

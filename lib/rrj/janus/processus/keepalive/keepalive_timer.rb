@@ -30,14 +30,15 @@ module RubyRabbitmqJanus
         # to Janus Instance
         def loop_keepalive(&block)
           @timer.now_and_every(TIME_TO_LIVE) { prepare_loop(&block) }
-          loop { execute_loop }
+          loop { @timer.wait }
         end
 
         # Test if session is present/exist in Janus Instance
-        def session
+        def session(&block)
           Timeout.timeout(TIME_SESSION) { yield }
         rescue Timeout::Error
           stop_timer
+          block.binding.receiver.instance_is_down
         end
 
         # Stop timer to keepalive thread
@@ -52,14 +53,13 @@ module RubyRabbitmqJanus
 
         private
 
-        def prepare_loop
-          Timeout.timeout(TIME_PUBLISH) { yield }
+        def prepare_loop(&block)
+          Timeout.timeout(TIME_PUBLISH) do
+            yield
+          end
         rescue Timeout::Error
           stop_timer
-        end
-
-        def execute_loop
-          @timer.wait
+          block.binding.receiver.instance_is_down
         end
       end
     end

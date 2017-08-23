@@ -17,7 +17,7 @@ module RubyRabbitmqJanus
         # Initialize a singleton object for sending keepalive to janus
         def initialize(instance)
           super()
-          @thread = KeepaliveThread.new(instance) { initialize_thread }
+          @thread = KeepaliveThread.new(instance, rabbit) { initialize_thread }
         rescue
           raise Errors::Janus::KeepaliveInitializer::Initializer
         end

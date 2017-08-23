@@ -9,8 +9,9 @@ module RubyRabbitmqJanus
       class KeepaliveThread < Thread
         attr_reader :timer, :instance, :session
 
-        def initialize(instance, &block)
+        def initialize(instance, rabbit, &block)
           @publisher = @session = nil
+          @rabbit = rabbit
           @timer = KeepaliveTimer.new
           @message = KeepaliveMessage.new(instance)
           super(&block)
@@ -35,11 +36,7 @@ module RubyRabbitmqJanus
         private
 
         def publisher
-          RubyRabbitmqJanus::Rabbit::Publisher::PublishKeepalive.new(rabbit)
-        end
-
-        def rabbit
-          RubyRabbitmqJanus::Rabbit::Connect.instance.channel
+          Rabbit::Publisher::PublishKeepalive.new(@rabbit.channel)
         end
 
         def response_session

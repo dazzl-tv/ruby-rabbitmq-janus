@@ -28,7 +28,9 @@ module RubyRabbitmqJanus
 
       # Restart a thread keepalive for an instance
       def restart_session
-        Models::JanusInstance.enabled.each(&:create_a_session_in_janus_instance)
+        Models::JanusInstance.enabled.each do |ji|
+          ji.send(:create_a_session_in_janus_instance)
+        end
       rescue
         raise Errors::Tools::Cluster::RestartInstance
       end

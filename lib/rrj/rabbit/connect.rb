@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:TooManyStatements
+
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -11,8 +13,8 @@ module RubyRabbitmqJanus
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(read_options_server.merge!(option_log_rabbit))
-      rescue
-        raise Errors::Rabbit::Connect::Initialize
+      rescue => error
+        raise Errors::Rabbit::Connect::Initialize, error
       end
 
       # Create an transaction with rabbitmq and close after response is received
@@ -20,37 +22,37 @@ module RubyRabbitmqJanus
         response = transaction_long { yield }
         close
         response
-      rescue
-        raise Errors::Rabbit::Connect::TransactionShort
+      rescue => error
+        raise Errors::Rabbit::Connect::TransactionShort, error
       end
 
       # Create an transaction with rabbitmq and not close
       def transaction_long
         start
         yield
-      rescue
-        raise Errors::Rabbit::Connect::TransactionLong
+      rescue => error
+        raise Errors::Rabbit::Connect::TransactionLong, error
       end
 
       # Openning a connection with Rabbitmq
       def start
         @rabbit.start
-      rescue
-        raise Errors::Rabbit::Connect::Start
+      rescue => error
+        raise Errors::Rabbit::Connect::Start, error
       end
 
       # Close connection to server RabbitMQ
       def close
         @rabbit.close
-      rescue
-        raise Errors::Rabbit::Connect::Close
+      rescue => error
+        raise Errors::Rabbit::Connect::Close, error
       end
 
       # Create an channel
       def channel
         @rabbit.create_channel
-      rescue
-        raise Errors::Rabbit::Connect::Channel
+      rescue => error
+        raise Errors::Rabbit::Connect::Channel, error
       end
 
       private

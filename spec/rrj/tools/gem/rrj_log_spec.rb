@@ -3,53 +3,81 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
+  let(:levels) {
+    {
+      DEBUG: Logger::DEBUG,
+      INFO: Logger::INFO,
+      WARN: Logger::WARN,
+      ERROR: Logger::ERROR,
+      FATAL: Logger::FATAL,
+      UNKNOWN: Logger::UNKNOWN
+    }
+  }
+  let(:sensitives) { %i[admin_secret apisecret] }
+  let(:log) { RubyRabbitmqJanus::Tools::Log.instance }
+  let(:log_constant) { RubyRabbitmqJanus::Tools::Log }
+  let(:new_level) { Random.new.rand(5) }
+  let(:message) { '## test ##' }
+  let(:last_line) { IO.readlines('log/ruby-rabbitmq-janus.log')[-1..-1][0] }
+
+  it 'Default levels' do
+    expect(log_constant::LEVELS).to eql(levels)
+  end
+
+  it 'Defaults sensitives word' do
+    expect(log_constant::SENSITIVES).to eql(sensitives)
+  end
+
   it 'Log instance is correctly loading' do
-    expect(RubyRabbitmqJanus::Tools::Log.instance).not_to be(nil)
+    expect(log).not_to be(nil)
   end
 
   it 'Default level log is INFO' do
     # 0 = debug
     # ...
     # 5 = unknown
-    expect(RubyRabbitmqJanus::Tools::Log.instance.level).to eq(0)
+    expect(log.level).to eq(0)
   end
 
-  let(:message) { '## test ##' }
-  let(:last_line) { IO.readlines('log/ruby-rabbitmq-janus.log')[-1..-1][0] }
-
   context 'when write a message unknown' do
-    before { RubyRabbitmqJanus::Tools::Log.instance.unknown(message) }
+    before { log.unknown(message) }
 
     it { expect(last_line).to include('A, [RubyRabbitmqJanus] ## test ##') }
   end
 
   context 'when write a message fatal' do
-    before { RubyRabbitmqJanus::Tools::Log.instance.fatal(message) }
+    before { log.fatal(message) }
 
     it { expect(last_line).to include('F, [RubyRabbitmqJanus] ## test ##') }
   end
 
   context 'when write a message error' do
-    before { RubyRabbitmqJanus::Tools::Log.instance.error(message) }
+    before { log.error(message) }
 
     it { expect(last_line).to include('E, [RubyRabbitmqJanus] ## test ##') }
   end
 
   context 'when write a message warn' do
-    before { RubyRabbitmqJanus::Tools::Log.instance.warn(message) }
+    before { log.warn(message) }
 
     it { expect(last_line).to include('W, [RubyRabbitmqJanus] ## test ##') }
   end
 
   context 'when write a message info' do
-    before { RubyRabbitmqJanus::Tools::Log.instance.info(message) }
+    before { log.info(message) }
 
     it { expect(last_line).to include('I, [RubyRabbitmqJanus] ## test ##') }
   end
 
   context 'when write a message debug' do
-    before { RubyRabbitmqJanus::Tools::Log.instance.debug(message) }
+    before { log.debug(message) }
 
     it { expect(last_line).to include('D, [RubyRabbitmqJanus] ## test ##') }
+  end
+
+  context 'Whane level is changed' do
+    it 'Change level' do
+      expect(log.save_level(new_level)).to eql(log.level)
+    end
   end
 end

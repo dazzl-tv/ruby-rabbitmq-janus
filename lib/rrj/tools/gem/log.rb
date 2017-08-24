@@ -40,8 +40,6 @@ module RubyRabbitmqJanus
         @level = logs.level
         @progname = logs.progname
         @logs = ActiveSupport::TaggedLogging.new(logs)
-      rescue
-        raise Errors::Tools::Log::Initialize
       end
 
       # Write a message in log with a `UNKNOWN` level
@@ -50,7 +48,7 @@ module RubyRabbitmqJanus
       def unknown(message)
         write_tag { @logs.unknown(filter(message)) }
       rescue
-        raise Errors::Tools::Log::Unknow
+        raise Errors::Tools::Log::Unknown
       end
 
       # Write a message in log with a `FATAL` level

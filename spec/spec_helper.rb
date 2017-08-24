@@ -6,6 +6,7 @@ require 'json-schema-rspec'
 require 'rails'
 require 'database_cleaner'
 require 'config/methods'
+require 'config/instance'
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'ruby_rabbitmq_janus'
 

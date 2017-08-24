@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   context 'mongoid model' do
     let(:model) { RubyRabbitmqJanus::Models::JanusInstance }
 
-    it { expect(model.attribute_names).to include('id') }
+    it { expect(model.attribute_names).to include('_id') }
     it { expect(model.attribute_names).to include('instance') }
     it { expect(model.attribute_names).to include('session') }
     it { expect(model.attribute_names).to include('enable') }

@@ -5,12 +5,13 @@ require 'pry'
 require 'json-schema-rspec'
 require 'rails'
 require 'database_cleaner'
-require 'config/initializer'
-require 'config/methods'
-require 'config/instance'
 ENV['MONGO']='true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
+
 require 'ruby_rabbitmq_janus'
+require 'config/initializer'
+require 'config/database'
+require 'config/instance'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
@@ -48,16 +49,6 @@ RSpec.configure do |config|
     json_index = "#{json_type}::#{json_name}"
     config.json_schemas[json_index] = json_file
   end
-
-  # Configure requests test before sending request
-  config.before(:example, level: :base) { gateway }
-  config.before(:example, level: :peer) { gateway }
-  config.before(:example, level: :admin) { gateway_admin }
-  config.before(:example, type: :responses) { gateway }
-  config.before(:example, type: :messages) { gateway }
-  config.before(:example, name: :admin) { gateway_admin }
-  config.before(:example, name: :event) { gateway }
-  config.before(:example, name: :standard) { gateway }
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true

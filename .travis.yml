@@ -34,7 +34,7 @@ install:
 
 script:
   - docker-compose run gem bundle exec rake spec
-  - docker-compose run gem MONGO=false bundle exec rake spec
+  - docker-compose run gem env MONGO=false bundle exec rake spec
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop; fi
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi
 

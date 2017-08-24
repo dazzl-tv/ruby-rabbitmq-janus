@@ -69,3 +69,6 @@ spec/support/schemas/request/videocast
 ## Unitaire test for request customize
 spec/request/channel
 spec/request/videocast
+
+## Development / Test localy
+lib/config

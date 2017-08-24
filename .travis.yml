@@ -26,11 +26,11 @@ install:
   - docker-compose up -d rabbit
   - sleep 30
   - docker-compose logs rabbit
-  - docker-compose up -d janus
-  - docker-compose up -d janus2
+  - docker-compose up -d janus_1
+  - docker-compose up -d janus_2
   - sleep 30
-  - docker-compose logs janus
-  - docker-compose logs janus2
+  - docker-compose logs janus_1
+  - docker-compose logs janus_2
 
 script:
   - docker-compose run gem bundle exec rake spec

@@ -1,0 +1,12 @@
+---
+
+# Used for MongoID in spec
+
+test:
+  clients:
+    default:
+      database: localhost
+      hosts:
+        rrrj_test
+  options:
+    raise_not_found_error: true

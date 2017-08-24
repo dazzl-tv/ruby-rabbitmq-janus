@@ -1,0 +1,8 @@
+---
+
+# Used for Activerecord in spec
+
+adapter: :sqlite3
+encoding: utf-8
+database: ':memory:'
+timeout: 5000

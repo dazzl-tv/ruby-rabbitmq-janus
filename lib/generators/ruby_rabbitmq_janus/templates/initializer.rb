@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # This test disable this gems execution when you running an task with rake
-if File.basename($PROGRAM_NAME) == 'rake'
+# or if your start a Rails Console
+if File.basename($PROGRAM_NAME).match?('rake') || defined?(::Rails::Console)
   # Configure RRJ for rake task
   ::RRJ = RubyRabbitmqJanus::RRJTask.new
 else

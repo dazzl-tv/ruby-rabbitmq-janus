@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Restart automatically session when start
 - Timeout for session created
 - Add validation to model JanusInstance
+- Don't start session initialisation when start rails console
 
 ### [Fixed]
 - Create session only cluster mode is disabled

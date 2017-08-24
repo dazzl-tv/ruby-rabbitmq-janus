@@ -17,6 +17,14 @@ describe RubyRabbitmqJanus::Tools::Cluster, type: :tools, name: :cluster do
     expect(cluster.queue_admin_to(number_of_instance)).to eql(name_queue_admin)
   end
 
+  it do
+    expect { cluster.create_session }.not_to raise_error
+  end
+
+  it do
+    expect { cluster.restart_session }.not_to raise_error
+  end
+
   context 'When active record is loaded', orm: :active_record do
     it do
       expect(cluster.create_session).to be_a(model)

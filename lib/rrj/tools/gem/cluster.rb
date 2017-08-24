@@ -8,12 +8,9 @@ module RubyRabbitmqJanus
     class Cluster
       include Singleton
 
-      attr_reader :sessions
-
       # Initialize object for managing each instance to Janus
       def initialize
         @current_instance = nil
-        @sessions = []
       end
 
       # Create session (just one Janus Instance)

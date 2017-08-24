@@ -61,6 +61,8 @@ RSpec.configure do |config|
                end
 
     ji = RubyRabbitmqJanus::Models::JanusInstance.first
+    @response = nil
+    @options = {}
     @session = { 'session_id' => ji.session }
     @instance = { 'instance' => ji.instance }
     @session_instance = @session.merge(@instance)

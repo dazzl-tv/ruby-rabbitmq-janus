@@ -10,8 +10,6 @@ class EventTest
   end
 end
 
-@response = @options = nil
-
 # Initialize listener
 actions = EventTest.new.actions
 @event = RubyRabbitmqJanus::Janus::Concurrencies::Event.instance

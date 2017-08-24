@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type sessions list', broken: true do
+describe 'RubyRabbitmqJanus::RRJ -- message type sessions list' do
   before(:example) { @type = 'admin::sessions' }
 
   describe '#start_transaction_admin', type: :request,

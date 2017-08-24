@@ -14,14 +14,14 @@ services:
     ports:
       - 5672:5672
 
-  janus:
+  janus_1:
     build:
       context: ./.travis
       dockerfile: Dockerfile.janus
     links:
       - rabbit
 
-  janus2:
+  janus_2:
     build:
       context: ./.travis
       dockerfile: Dockerfile.janus2

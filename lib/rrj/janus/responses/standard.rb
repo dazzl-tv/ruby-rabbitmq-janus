@@ -54,8 +54,6 @@ module RubyRabbitmqJanus
 
         def data_id
           data['id'].to_i
-        rescue => error
-          raise Errors::JanusResponseDataId, error
         end
       end
     end

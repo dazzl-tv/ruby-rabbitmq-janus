@@ -3,20 +3,29 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Tools::Cluster, type: :tools, name: :cluster do
+  let(:cluster) { RubyRabbitmqJanus::Tools::Cluster.instance }
+  let(:model) { RubyRabbitmqJanus::Models::JanusInstance }
+  let(:number_of_instance) { Random.new.rand(100) }
+  let(:name_queue) { "to-janus-#{number_of_instance}" }
+  let(:name_queue_admin) { "to-janus-admin-#{number_of_instance}" }
+
   it do
-    expect(RubyRabbitmqJanus::Tools::Cluster.instance.queue_to(42)).to \
-      eql('to-janus-42')
+    expect(cluster.queue_to(number_of_instance)).to eql(name_queue)
   end
 
   it do
-    expect(RubyRabbitmqJanus::Tools::Cluster.instance.queue_admin_to(42)).to \
-      eql('to-janus-admin-42')
+    expect(cluster.queue_admin_to(number_of_instance)).to eql(name_queue_admin)
   end
 
-  context 'when created sessions with active record' do
+  context 'When active record is loaded', orm: :active_record do
     it do
-      expect(RubyRabbitmqJanus::Tools::Cluster.instance.create_session).to \
-        be_a(Integer)
+      expect(cluster.create_session).to be_a(model)
+    end
+  end
+
+  context 'When mongoid is loaded', orm: :mongoid do
+    it do
+      expect(cluster.create_session).to be_a(model)
     end
   end
 end

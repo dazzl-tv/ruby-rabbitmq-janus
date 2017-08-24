@@ -5,8 +5,8 @@
 test:
   clients:
     default:
-      database: localhost
+      database: rrj_test
       hosts:
-        rrrj_test
+        - mongo.dazzl.local:27017
   options:
     raise_not_found_error: true

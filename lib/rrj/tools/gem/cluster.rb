@@ -14,8 +14,6 @@ module RubyRabbitmqJanus
       def initialize
         @current_instance = nil
         @sessions = []
-      rescue
-        raise Errors::Tools::Cluster::Initializer
       end
 
       # Create session (just one Janus Instance)

@@ -4,7 +4,9 @@ require 'bundler/setup'
 require 'pry'
 require 'json-schema-rspec'
 require 'rails'
-require 'active_record'
+require 'database_cleaner'
+require 'config/methods'
+require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'ruby_rabbitmq_janus'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
@@ -18,24 +20,9 @@ end
 end
 
 RSpec.configure do |config|
-  # Configure active record
-  # rubocop:disable Style/ColonMethodCall
-  # rubocop:disable Security/YAMLLoad
-  configuration = YAML::load(File.open('config/database.yml'))
-  # rubocop:enable Style/ColonMethodCall
-  # rubocop:enable Security/YAMLLoad
-
-  # Connect to database
-  ActiveRecord::Base.establish_connection(configuration)
-  config.before(:all) do
-    unless ActiveRecord::Base.connection.table_exists? 'janus_instances'
-      ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
-        table.integer :instance
-        table.integer :session, limit: 8
-        table.boolean :enable
-      end
-    end
-  end
+  DatabaseCleaner.strategy = :truncation
+  ENV['MONGO'].match?('true') ? load_mongo : load_active_record
+  after_load_database
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

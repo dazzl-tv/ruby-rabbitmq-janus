@@ -103,16 +103,27 @@ RSpec::Core::RakeTask.new(:instances) do |t|
   t.rspec_opts = '--tag instances:true'
 end
 
-RSpec::Core::RakeTask.new(:mongoid) do |t|
-  ENV['MONGO'] = 'true'
-  t.rspec_opts = '--tag orm:mongoid'
+def mongo
+  ENV['MONGO']='true'
+  yield
 end
 
-task default: :spec
+def active_record
+  ENV['MONGO']='false'
+  yield
+end
 
-task all: [:info, :handle_info, :sessions, :set_locking_debug,
-           :set_log_level, :tokens, :attach, :create, :destroy,
-           :detach, :keepalive, :offer, :trickle, :trickles,
-           :except_request]
-task two_instances: :instances
-task mongo: :mongoid
+def array_tasks
+  %i[info handle_info sessions set_locking_debug set_log_level tokens attach
+     create destroy detach keepalive offer trickle trickles except_request]
+end
+
+def instances
+  %i[instances]
+end
+
+task all_mongo: mongo { array_tasks }
+task all_active_record: active_record { array_tasks }
+
+task two_instances_mongo: mongo { instances }
+task two_instances_active_record: active_record { instances }

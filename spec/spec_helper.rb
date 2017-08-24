@@ -5,6 +5,7 @@ require 'pry'
 require 'json-schema-rspec'
 require 'rails'
 require 'database_cleaner'
+require 'config/initializer'
 require 'config/methods'
 require 'config/instance'
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
@@ -59,53 +60,4 @@ RSpec.configure do |config|
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
-end
-
-# :reek:UtilityFunction
-def singleton
-  Singleton.__init__(RubyRabbitmqJanus::Tools::Log)
-  Singleton.__init__(RubyRabbitmqJanus::Tools::Config)
-  Singleton.__init__(RubyRabbitmqJanus::Tools::Requests)
-  Singleton.__init__(RubyRabbitmqJanus::Tools::Cluster)
-end
-
-def gateway
-  singleton
-  @gateway = RubyRabbitmqJanus::RRJ.new
-  @response = nil
-  @options = {}
-  find_instance
-end
-
-def gateway_admin
-  singleton
-  @gateway = RubyRabbitmqJanus::RRJAdmin.new
-  @response = nil
-  @options = {}
-  find_instance
-end
-
-def gateway_event
-  actions = EventTest.new.actions
-  @event = RubyRabbitmq::Janus::Concurencies::Event.instance
-  @event.run(&actions)
-  gateway
-  find_instance
-end
-
-def find_instance
-  ji = RubyRabbitmqJanus::Models::JanusInstance.first
-  @session = { 'session_id' => ji.session }
-  @instance = { 'instance' => ji.instance }
-  @session_instance = @session.merge(@instance)
-end
-
-# Test events response
-class EventTest
-  def actions
-    lambda do |reason, payload|
-      p "Reason : #{reason}"
-      p "Payload : #{payload}"
-    end
-  end
 end

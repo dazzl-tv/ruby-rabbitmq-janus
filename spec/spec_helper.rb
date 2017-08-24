@@ -8,6 +8,7 @@ require 'database_cleaner'
 require 'config/initializer'
 require 'config/methods'
 require 'config/instance'
+ENV['MONGO']='true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'ruby_rabbitmq_janus'
 

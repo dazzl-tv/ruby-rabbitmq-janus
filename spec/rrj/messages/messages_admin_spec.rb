@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Janus::Messages::Admin, type: :messages,
+                                                    level: :admin,
                                                     name: :admin do
   let(:template) { 'base::info' }
   let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Admin.new(template) }

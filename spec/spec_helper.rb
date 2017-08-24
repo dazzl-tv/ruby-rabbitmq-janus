@@ -52,4 +52,17 @@ RSpec.configure do |config|
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
+
+  config.before(:example) do |example|
+    @gateway = if example.metadata[:level]
+                 RubyRabbitmqJanus::RRJAdmin.new
+               else
+                 RubyRabbitmqJanus::RRJ.new
+               end
+
+    ji = RubyRabbitmqJanus::Models::JanusInstance.first
+    @session = { 'session_id' => ji.session }
+    @instance = { 'instance' => ji.instance }
+    @session_instance = @session.merge(@instance)
+  end
 end

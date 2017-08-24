@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::Janus::Messages::Message, type: :messages,
                                                       name: :message do
-  before { gateway }
+before { @gateway }
   let(:template) { 'base::info' }
   let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Message.new(template) }
 

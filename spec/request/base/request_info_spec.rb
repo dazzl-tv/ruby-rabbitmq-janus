@@ -3,7 +3,11 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type info' do
-  before(:example) { @type = 'base::info' }
+  before(:example) do
+    @gateway = RubyRabbitmqJanus::RRJ.new
+
+    @type = 'base::info'
+  end
 
   describe '#start_transaction', type: :request,
                                  level: :base,

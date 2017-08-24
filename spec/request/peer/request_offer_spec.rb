@@ -4,6 +4,8 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
   before(:example) do
+    @gateway = RubyRabbitmqJanus::RRJ.new
+
     @type = 'peer::offer'
     @options = {
       'sdp' => <<-SDP

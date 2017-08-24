@@ -3,7 +3,11 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type destroy' do
-  before(:example) { @type = 'base::destroy' }
+  before(:example) do
+    @gateway = RubyRabbitmqJanus::RRJ.new
+
+    @type = 'base::destroy'
+  end
 
   describe '#start_transaction', type: :request,
                                  level: :base,

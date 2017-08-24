@@ -3,7 +3,11 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
-  before(:example) { @type = 'base::attach' }
+  before(:example) do
+    @gateway = RubyRabbitmqJanus::RRJ.new
+
+    @type = 'base::attach'
+  end
 
   describe '#start_transaction', type: :request,
                                  level: :base,

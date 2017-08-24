@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
+                                                     level: :admin,
+                                                     broken: true,
                                                      name: :admin do
   let(:message) do
     @gateway.start_transaction_admin do |transaction|

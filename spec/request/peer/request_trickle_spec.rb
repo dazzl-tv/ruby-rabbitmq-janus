@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
+describe 'RubyRabbitmqJanus::RRJ -- message type trickle', broken: true do
   before(:example) do
     @type = 'peer::trickle'
     candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }

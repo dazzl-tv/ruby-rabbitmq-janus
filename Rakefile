@@ -3,7 +3,7 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
-ENV['MONGO'] = 'false'
+ENV['MONGO'] = 'false' if ENV['MONGO'].nil?
 
 RSpec::Core::RakeTask.new(:spec)
 

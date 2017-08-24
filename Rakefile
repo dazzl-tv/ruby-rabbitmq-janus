@@ -3,6 +3,8 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
+ENV['MONGO'] = 'false'
+
 RSpec::Core::RakeTask.new(:spec)
 
 RSpec::Core::RakeTask.new(:no_request_spec) do |t|
@@ -101,6 +103,11 @@ RSpec::Core::RakeTask.new(:instances) do |t|
   t.rspec_opts = '--tag instances:true'
 end
 
+RSpec::Core::RakeTask.new(:mongoid) do |t|
+  ENV['MONGO'] = 'true'
+  t.rspec_opts = '--tag orm:mongoid'
+end
+
 task default: :spec
 
 task all: [:info, :handle_info, :sessions, :set_locking_debug,
@@ -108,3 +115,4 @@ task all: [:info, :handle_info, :sessions, :set_locking_debug,
            :detach, :keepalive, :offer, :trickle, :trickles,
            :except_request]
 task two_instances: :instances
+task mongo: :mongoid

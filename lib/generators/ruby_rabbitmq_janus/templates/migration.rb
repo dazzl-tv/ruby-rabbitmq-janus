@@ -9,7 +9,7 @@ class CreateRubyRabbitmqJanusTables < ActiveRecord::Migration[5.0]
       table.integer :instance
       table.integer :session, limit: 8
       table.boolean :enable
-      table.boolean :thread
+      table.integer :thread, limit: 8
     end
   end
 end

@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
       #
       # @param [Hash] List of attribute to update with this value
       def set(attributes)
-        update_attributes!(attributes)
+        update_columns(attributes)
       end
     end
   end

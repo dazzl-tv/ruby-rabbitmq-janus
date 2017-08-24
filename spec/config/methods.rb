@@ -11,7 +11,7 @@ def load_active_record
       table.integer :instance
       table.integer :session, limit: 8
       table.boolean :enable
-      table.boolean :thread
+      table.integer :thread, limit: 8
     end
   end
 end

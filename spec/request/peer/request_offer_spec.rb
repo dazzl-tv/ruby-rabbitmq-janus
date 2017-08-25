@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type offer' do
+# @todo Create a message reading by janus
+describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
   before(:example) do
     clear
     attach_base

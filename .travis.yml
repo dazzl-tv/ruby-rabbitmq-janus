@@ -2,7 +2,9 @@ sudo: required
 
 language: ruby
 
-cache: bundler
+cache:
+  directories:
+    - /usr/local/bundle
 
 rvm:
   - 2.4.0

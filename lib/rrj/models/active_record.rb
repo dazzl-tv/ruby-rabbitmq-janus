@@ -10,6 +10,8 @@ module RubyRabbitmqJanus
       include RubyRabbitmqJanus::Models::JanusInstanceMethods
       include RubyRabbitmqJanus::Models::JanusInstanceValidations
 
+      alias_attribute :instance, :id
+
       after_create      { callback_create_after }
       after_update      { callback_update_after }
       after_destroy     { callback_destroy_after }

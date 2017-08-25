@@ -5,6 +5,7 @@ require 'spec_helper'
 describe 'RubyRabbitmqJanus::RRJ -- message type keepalive' do
   before(:example) do
     clear
+    session
     @type = 'base::keepalive'
   end
 

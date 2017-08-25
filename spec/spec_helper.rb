@@ -53,18 +53,10 @@ RSpec.configure do |config|
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
 
+  # Configure Initializer RRJ and create session with Janus Instance
   config.before(:example) do |example|
-    @gateway = if example.metadata[:level]
-                 RubyRabbitmqJanus::RRJAdmin.new
-               else
-                 RubyRabbitmqJanus::RRJ.new
-               end
-
-    ji = RubyRabbitmqJanus::Models::JanusInstance.first
-    @response = nil
-    @options = {}
-    @session = { 'session_id' => ji.session }
-    @instance = { 'instance' => ji.instance }
-    @session_instance = @session.merge(@instance)
+    initializer_rrj(example.metadata)
+    clear
+    find_instance
   end
 end

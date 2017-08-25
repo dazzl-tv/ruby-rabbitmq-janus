@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
   before(:example) do
-    @gateway = RubyRabbitmqJanus::RRJ.new
-
+    clear
     @type = 'base::attach'
   end
 

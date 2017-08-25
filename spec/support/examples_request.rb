@@ -17,7 +17,7 @@ end
 shared_examples 'transaction should match json empty' do
   let(:message) do
     @gateway.start_transaction(false, @session_instance) do |transaction|
-      @response = transaction.publish_message(@type)
+      @response = transaction.publish_message(@type, @options)
     end
   end
 
@@ -27,7 +27,7 @@ end
 shared_examples 'transaction should match json schema' do
   let(:message) do
     @gateway.start_transaction(true, @session_instance) do |transaction|
-      @response = transaction.publish_message(@type)
+      @response = transaction.publish_message(@type, @options)
     end
   end
 

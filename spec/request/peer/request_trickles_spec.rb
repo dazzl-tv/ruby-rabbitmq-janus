@@ -2,11 +2,14 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type trickles', broken: true do
+describe 'RubyRabbitmqJanus::RRJ -- message type trickles' do
   before(:example) do
+    clear
+    attach_base
+
     @type = 'peer::trickle'
     candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }
-    @options = { 'candidate' => [candidate, candidate, candidate] }
+    @options.merge!('candidates' => [candidate, candidate, candidate])
   end
 
   describe '#start_transaction_handle', type: :request,

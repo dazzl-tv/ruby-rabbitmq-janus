@@ -4,13 +4,9 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type handle info' do
   before(:example) do
+    clear
+    attach_admin
     @type = 'admin::handle_info'
-    sender = nil
-    @gateway.start_transaction_admin(@session_instance) do |transaction|
-      sender = transaction.publish_message('base::attach',
-                                           @session_instance).sender
-    end
-    @options = { 'handle_id' => sender }.merge(@session_instance)
   end
 
   describe '#start_transaction_admin', type: :request,

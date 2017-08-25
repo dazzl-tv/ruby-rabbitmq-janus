@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type destroy' do
   before(:example) do
-    @gateway = RubyRabbitmqJanus::RRJ.new
-
+    clear
+    session
     @type = 'base::destroy'
   end
 

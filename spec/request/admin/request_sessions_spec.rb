@@ -3,7 +3,10 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type sessions list' do
-  before(:example) { @type = 'admin::sessions' }
+  before(:example) do
+    clear
+    @type = 'admin::sessions'
+  end
 
   describe '#start_transaction_admin', type: :request,
                                        level: :admin,

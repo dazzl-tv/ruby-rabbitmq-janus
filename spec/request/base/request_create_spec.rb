@@ -4,8 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type create' do
   before(:example) do
-    @gateway = RubyRabbitmqJanus::RRJ.new
-
+    clear
     @type = 'base::create'
   end
 

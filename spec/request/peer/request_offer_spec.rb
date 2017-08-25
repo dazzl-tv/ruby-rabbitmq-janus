@@ -2,12 +2,13 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
+describe 'RubyRabbitmqJanus::RRJ -- message type offer' do
   before(:example) do
-    @gateway = RubyRabbitmqJanus::RRJ.new
+    clear
+    attach_base
 
     @type = 'peer::offer'
-    @options = {
+    @options.merge!({
       'sdp' => <<-SDP
   v=0
   o=alice 2890844526 2890844526 IN IP4 host.atlanta.example.com
@@ -22,7 +23,7 @@ describe 'RubyRabbitmqJanus::RRJ -- message type offer', broken: true do
   a=rtpmap:31 H261/90000
   a=rtpmap:32 MPV/90000
 SDP
-    }
+    })
   end
 
   describe '#start_transaction_handle', type: :request,

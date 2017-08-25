@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type set locking debug' do
   before(:example) do
+    clear
     @type = 'admin::set_locking_debug'
     @options = { 'debug' => [true, false].sample }
   end

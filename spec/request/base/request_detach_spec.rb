@@ -2,8 +2,12 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- mesage type detach', broken: true do
-  before(:example) { @type = 'base::detach' }
+describe 'RubyRabbitmqJanus::RRJ -- mesage type detach' do
+  before(:example) do
+    clear
+    attach_base
+    @type = 'base::detach'
+  end
 
   describe '#start_transaction_handle', type: :request,
                                         level: :base,

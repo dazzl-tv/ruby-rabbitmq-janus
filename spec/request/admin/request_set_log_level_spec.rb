@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type set log level' do
   before(:example) do
+    clear
     @type = 'admin::set_log_level'
     @options = { 'level' => Random.rand(7) }
   end

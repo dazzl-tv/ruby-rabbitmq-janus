@@ -2,8 +2,11 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type keepalive', broken: true do
-  before(:example) { @type = 'base::keepalive' }
+describe 'RubyRabbitmqJanus::RRJ -- message type keepalive' do
+  before(:example) do
+    clear
+    @type = 'base::keepalive'
+  end
 
   describe '#start_transaction', type: :request,
                                  level: :base,

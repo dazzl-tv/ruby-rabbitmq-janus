@@ -17,14 +17,14 @@ services:
   janus_1:
     build:
       context: ./.travis
-      dockerfile: Dockerfile.janus
+      dockerfile: Dockerfile.janus_1
     links:
       - rabbit
 
   janus_2:
     build:
       context: ./.travis
-      dockerfile: Dockerfile.janus2
+      dockerfile: Dockerfile.janus_2
     links:
       - rabbit
 

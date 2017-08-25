@@ -56,7 +56,7 @@ end
 
 shared_examples 'transaction admin should match json schema' do
   let(:message) do
-    @gateway.start_transaction_admin do |transaction|
+    @gateway.start_transaction_admin(@instance) do |transaction|
       @response = transaction.publish_message(@type, @options)
     end
   end

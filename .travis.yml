@@ -32,7 +32,9 @@ install:
   - docker-compose logs janus_1 janus_2
 
 script:
-  - docker-compose run gem bundle exec rake spec
+  - echo '## Test for MONGODB database'
+  - docker-compose run gem env MONGO=true bundle exec rake spec
+  - echo '## Test for SQLITE database'
   - docker-compose run gem env MONGO=false bundle exec rake spec
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop; fi
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi

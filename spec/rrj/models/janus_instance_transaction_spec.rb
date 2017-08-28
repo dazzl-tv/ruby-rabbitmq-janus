@@ -10,7 +10,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     create_janus_instances
   end
 
-  let(:janus_id) {
+  let(:janus_id) do
     random_instance = [1, 2].sample
 
     if ENV['MONGO'].match?('true')
@@ -18,10 +18,8 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     else
       { id: random_instance }
     end
-  }
+  end
   let(:model) { RubyRabbitmqJanus::Models::JanusInstance }
-  let(:janus) { FactoryGirl.create(:janus_instance, enable: false) }
-  let(:many_janus) { FactoryGirl.create(:janus_isntance, 5, enable: false) }
 
   context 'Janus Instance simple transaction' do
     it { expect(model.count).to eq(0) }
@@ -38,6 +36,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     it { expect(model.count).to eq(6) }
     it { expect(model.enabled.count).to eq(1) }
     it { expect(model.find_by_session(one.session).thread).to eq(one.thread) }
+    it { expect(model.find_by_instance(one.instance).session).to eq(one.session) }
   end
 
   context 'Janus Instance enable' do

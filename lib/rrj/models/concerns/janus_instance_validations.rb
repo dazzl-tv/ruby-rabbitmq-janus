@@ -8,8 +8,7 @@ module RubyRabbitmqJanus
 
       included do
         # This instance it's a state (enable or disable)
-        validates :enable, presence: true,
-                           inclusion: { in: [true, false] }
+        validates :enable, inclusion: { in: [true, false] }
       end
     end
   end

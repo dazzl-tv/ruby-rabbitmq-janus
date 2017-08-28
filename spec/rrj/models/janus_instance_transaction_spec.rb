@@ -5,6 +5,10 @@ require 'spec_helper'
 describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
                                                    name: :janus_instance do
   before { RubyRabbitmqJanus::Models::JanusInstance.delete_all }
+  after do
+    RubyRabbitmqJanus::Models::JanusInstance.delete_all
+    create_janus_instances
+  end
 
   let(:janus_id) {
     random_instance = [1, 2].sample

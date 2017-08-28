@@ -4,6 +4,7 @@ require 'bundler/setup'
 require 'pry'
 require 'json-schema-rspec'
 require 'rails'
+require 'factory_girl'
 require 'database_cleaner'
 ENV['MONGO']='true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
@@ -12,6 +13,7 @@ require 'ruby_rabbitmq_janus'
 require 'config/initializer'
 require 'config/database'
 require 'config/instance'
+Dir['spec/factories/*.rb'].each { |f| require File.expand_path(f) }
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
@@ -52,6 +54,9 @@ RSpec.configure do |config|
 
   # Exclude request with tag broken
   config.filter_run_excluding broken: true
+
+  # Configure Factory Girl
+  config.include FactoryGirl::Syntax::Methods
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before(:example) do |example|

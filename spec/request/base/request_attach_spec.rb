@@ -6,12 +6,13 @@ describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
   before(:example) do
     clear
     @type = 'base::attach'
+    @options = @session_instance
   end
 
   describe '#start_transaction', type: :request,
                                  level: :base,
                                  name: :attach do
-    context 'when queue is exclusive', broken: true do
+    context 'when queue is exclusive' do
       include_examples 'transaction should match json schema'
     end
 

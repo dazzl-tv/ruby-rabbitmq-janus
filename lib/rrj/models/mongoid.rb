@@ -11,10 +11,11 @@ module RubyRabbitmqJanus
       include RubyRabbitmqJanus::Models::JanusInstanceMethods
       include RubyRabbitmqJanus::Models::JanusInstanceValidations
 
-      field :_id,       type: String, as: :instance
-      field :session,   type: Integer
+      field :session,   type: Integer, as: :session_id
       field :enable,    type: Boolean
-      field :thread,    type: Integer
+      field :thread,    type: Integer, as: :thread_id
+
+      alias_attribute :instance, :_id
 
       set_callback(:create,     :after)   { callback_create_after }
       set_callback(:update,     :after)   { callback_update_after }

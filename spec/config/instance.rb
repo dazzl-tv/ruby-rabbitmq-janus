@@ -4,7 +4,13 @@ def create_janus_instances
   instance = RubyRabbitmqJanus::Models::JanusInstance
 
   (1..2).each do |number|
-    instance.create!(instance: number, enable: true)
+    id_instance = if ENV['MONGO'].match?('true')
+                 { _id: number.to_s }
+               else
+                 { id: number }
+               end
+    janus = instance.create(id_instance.merge(enable: true))
+    janus.save
   end
 end
 
@@ -38,10 +44,12 @@ def clear
 end
 
 def find_instance
-  ji = RubyRabbitmqJanus::Models::JanusInstance.all.sample
-  @session = { 'session_id' => ji.session }
-  @instance = { 'instance' => ji.instance }
-  @session_instance = @session.merge(@instance)
+  janus_instance = RubyRabbitmqJanus::Models::JanusInstance.all.sample
+  unless janus_instance.nil?
+    @session = { 'session_id' => janus_instance.session_id }
+    @instance = { 'instance' => janus_instance.instance }
+    @session_instance = @session.merge(@instance)
+  end
 end
 
 def initializer_rrj(metadata)

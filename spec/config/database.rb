@@ -8,7 +8,6 @@ def load_active_record
   ActiveRecord::Base.establish_connection(active_record)
   unless ActiveRecord::Base.connection.table_exists? 'janus_instances'
     ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
-      table.integer :instance
       table.integer :session, limit: 8
       table.boolean :enable
       table.integer :thread, limit: 8

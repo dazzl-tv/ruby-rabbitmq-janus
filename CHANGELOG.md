@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.2.0] - 2017-08-11
+### [Changed]
+- Janus Instance use id field for identify instance
+
 ### [Added]
 - Change option for default cluster mode enabled
 - Recreate session when error in thread keepalive
@@ -15,6 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Timeout for session created
 - Add validation to model JanusInstance
 - Don't start session initialisation when start rails console
+- Add aliases for Jnaus Instance :
+ - session -> session_id
+ - thread -> thread_id
+ - id -> instance
+- spec for Janus Instance model
 
 ### [Fixed]
 - Create session only cluster mode is disabled

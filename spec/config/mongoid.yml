@@ -7,7 +7,6 @@ test:
     default:
       database: rrj_test
       hosts:
-        - mongo.dazzl.local:27017
-          # - mongo:27017
+        - mongo:27017
   options:
     raise_not_found_error: true

@@ -28,6 +28,7 @@ module RubyRabbitmqJanus
         def restart_session
           @session = response_session
           response_keepalive
+          update_model
         end
 
         # Start a timer for TTL
@@ -42,7 +43,7 @@ module RubyRabbitmqJanus
         end
 
         def instance_is_down
-          janus = Models::JanusInstance.find_by_session(@session)
+          janus = update_model
           janus.set(enable: false)
 
           Tools::Log.instance.fatal \
@@ -51,6 +52,10 @@ module RubyRabbitmqJanus
         end
 
         private
+
+        def update_model
+          Models::JanusInstance.find_by_session(@session)
+        end
 
         def publisher
           Rabbit::Publisher::PublishKeepalive.new(@rabbit.channel)

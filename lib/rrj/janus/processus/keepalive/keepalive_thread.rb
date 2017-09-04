@@ -24,10 +24,18 @@ module RubyRabbitmqJanus
           @session = response_session
         end
 
+        # Restart session
+        def restart_session
+          puts 'Restart session ...'
+          @session = response_session
+        end
+
+        # Start a timer for TTL
         def start
           @timer.loop_keepalive { response_keepalive }
         end
 
+        # Kill session and disable instance
         def kill
           response_destroy
           super

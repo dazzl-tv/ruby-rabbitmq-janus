@@ -52,7 +52,7 @@ module RubyRabbitmqJanus
 
         def prepare_loop(&block)
           Timeout.timeout(@time_publish) do
-            yield
+            block.binding.receiver.restart_session if yield
           end
         rescue Timeout::Error
           stop_timer

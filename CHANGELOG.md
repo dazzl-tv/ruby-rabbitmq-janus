@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add method for test if Janus response it's a error
 - Test Janus instance is down and recreate when instance is start
 - Restart automatically session when start
+- Restart session when ack it's an error
 - Timeout for session created
 - Add validation to model JanusInstance
 - Don't start session initialisation when start rails console

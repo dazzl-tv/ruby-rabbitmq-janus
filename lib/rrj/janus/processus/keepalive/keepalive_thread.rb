@@ -26,8 +26,8 @@ module RubyRabbitmqJanus
 
         # Restart session
         def restart_session
-          puts 'Restart session ...'
           @session = response_session
+          response_keepalive
         end
 
         # Start a timer for TTL

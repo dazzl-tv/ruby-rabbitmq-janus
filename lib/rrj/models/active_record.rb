@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 module RubyRabbitmqJanus
   module Models
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -25,6 +27,13 @@ module RubyRabbitmqJanus
       # @param [Hash] List of attribute to update with this value
       def set(attributes)
         update_columns(attributes)
+      end
+
+      # Destroy data to column
+      #
+      # @param [Array] List to attribute to delete in document
+      def unset(attributes)
+        Hash[attributes.map { |key, _value| [key, nil] }]
       end
     end
   end

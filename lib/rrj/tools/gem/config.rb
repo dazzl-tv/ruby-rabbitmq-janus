@@ -35,6 +35,8 @@ module RubyRabbitmqJanus
         loading_configuration_customize
         loading_configuration_default
         Tools::Log.instance.save_level(log_level)
+      rescue
+        raise Errors::Tools::Config::Initialize
       end
 
       # Get to name queue_from (pattern)

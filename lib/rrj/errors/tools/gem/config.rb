@@ -12,6 +12,12 @@ module RubyRabbitmqJanus
       end
 
       module Config
+        class Initialize < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[Initialize] Error when initialize configuration to RRJ Gem'
+          end
+        end
+
         class QueueFrom < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super '[QueueFrom] Error for reading standard queue from'

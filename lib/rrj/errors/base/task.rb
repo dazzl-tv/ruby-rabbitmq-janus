@@ -7,8 +7,8 @@ module RubyRabbitmqJanus
   module Errors
     # Define a super class for all errors in RRJ Class
     class BaseRRJTask < RRJError
-      def initalize(message, level = :fatal)
-        super "[RRJAdmin] #{message}", level
+      def initialize(message, level = :fatal)
+        super "[RRJAdmin]#{message}", level
       end
     end
 
@@ -16,15 +16,15 @@ module RubyRabbitmqJanus
       # Error for RRJTask#initialize
       class Initialize < BaseRRJTask
         def initialize
-          super 'Error in initializer'
+          super '[Task] Error in initializer'
         end
       end
 
       # Error for RRJTask#start_transaction_handle
       class StartTransactionHandle < BaseRRJTask
         def initialize(exclu, opts)
-          super "Transaction admin failed with -- #{opts} in queue #{exclu}",
-                :fatal
+          super '[Task] Transaction admin failed with -- ' \
+            "#{opts} in queue #{exclu}", :fatal
         end
       end
     end

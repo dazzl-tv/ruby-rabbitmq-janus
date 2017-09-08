@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - spec for Janus Instance model
 
 ### [Fixed]
+- Model for ActiveRecord
 - Create session only cluster mode is disabled
 - Cleaning cluster classes
 - Get settings to cluster mode

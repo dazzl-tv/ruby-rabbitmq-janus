@@ -10,6 +10,8 @@ module RubyRabbitmqJanus
       include RubyRabbitmqJanus::Models::JanusInstanceMethods
       include RubyRabbitmqJanus::Models::JanusInstanceValidations
 
+      self.primary_key = :id
+
       alias_attribute :instance,    :id
       alias_attribute :session_id,  :session
       alias_attribute :thread_id,   :thread

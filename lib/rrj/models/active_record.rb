@@ -20,8 +20,6 @@ module RubyRabbitmqJanus
       after_update      { callback_update_after }
       after_destroy     { callback_destroy_after }
 
-      private
-
       # Update attributes to document
       #
       # @param [Hash] List of attribute to update with this value

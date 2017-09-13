@@ -6,7 +6,12 @@ module RubyRabbitmqJanus
   module Janus
     module Concurrencies
       # Manage message used for keepalive thread
+      #
+      # @attribute [r] instance
+      #   @return [String] ID to Janus Instance
       class KeepaliveMessage
+        attr_reader :instance
+
         def initialize(instance)
           @instance = instance
         end

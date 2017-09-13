@@ -11,15 +11,18 @@ module RubyRabbitmqJanus
       # # Manage time for thread
       #
       # Configure all timer used in keepalive class
+      #
+      # @!attribute [r] time_to_live
+      #   @return [Integer] Time for interval between keepalive message
+      # @!attribute [r] time_to_die
+      #   @return [Integer] Time before timer stop it
       class KeepaliveTimer
+        attr_reader :time_to_live, :time_to_die
+
         # Initialize timer to keeaplive thread.
-        # Configure timer with :
-        #   - interval for each keepalive message
-        #   - timeout for session response
-        #   - timeout for publish message
         def initialize
           @time_to_live = Tools::Config.instance.ttl
-          @time_publish = @time_to_live + 5
+          @time_to_die = @time_to_live + 5
           @timer = Timers::Group.new
         end
 
@@ -32,7 +35,7 @@ module RubyRabbitmqJanus
 
         # Test if session is present/exist in Janus Instance
         def session(&block)
-          Timeout.timeout(@time_publish) { yield }
+          Timeout.timeout(@time_to_die) { yield }
         rescue Timeout::Error
           stop_timer
           block.binding.receiver.instance_is_down
@@ -51,7 +54,7 @@ module RubyRabbitmqJanus
         private
 
         def prepare_loop(&block)
-          Timeout.timeout(@time_publish) do
+          Timeout.timeout(@time_to_die) do
             block.binding.receiver.restart_session if yield
           end
         rescue Timeout::Error

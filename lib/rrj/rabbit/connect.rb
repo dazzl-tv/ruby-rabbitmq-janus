@@ -56,12 +56,9 @@ module RubyRabbitmqJanus
       private
 
       def read_options_server
+        conn = %w[host port pass user vhost]
         cfg = Tools::Config.instance.options['rabbit']
-        opts = {}
-        %w[host port pass user vhost].each do |val|
-          opts.merge!(val.to_sym => cfg[val])
-        end
-        opts
+        Hash[conn.map { |value| [value.to_sym, cfg[value]] }]
       end
 
       def option_log_rabbit

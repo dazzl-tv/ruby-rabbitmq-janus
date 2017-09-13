@@ -8,10 +8,17 @@ AllCops:
 Style/Encoding:
   Enabled: true
 
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - lib/rrj/errors/**/*
+
 Metrics/LineLength:
   Max: 80
   Exclude:
     - spec/**/*
+    - lib/rrj/errors/**/*
+
 
 Metrics/BlockLength:
   Exclude:

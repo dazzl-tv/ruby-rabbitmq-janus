@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
       # @!attribute [r] session
       #   @return [Integer] Number to session linked to Janus Instance
       class KeepaliveThread < Thread
-        attr_reader :timer, :instance, :session
+        attr_reader :timer, :session
 
         def initialize(instance, rabbit, &block)
           @publisher = @session = nil
@@ -73,7 +73,7 @@ module RubyRabbitmqJanus
 
         private
 
-        attr_reader :timer
+        attr_reader :instance
 
         def find_model
           if @session.blank?

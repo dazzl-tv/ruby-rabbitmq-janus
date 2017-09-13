@@ -24,6 +24,8 @@ module RubyRabbitmqJanus
           @time_to_live = Tools::Config.instance.ttl
           @time_to_die = @time_to_live + 5
           @timer = Timers::Group.new
+        rescue
+          raise Errors::Janus::KeepaliveTimer::Initializer
         end
 
         # Execute a loop with timer for sending keepalive message
@@ -31,6 +33,8 @@ module RubyRabbitmqJanus
         def loop_keepalive(&block)
           @timer.now_and_every(@time_to_live) { prepare_loop(&block) }
           loop { @timer.wait }
+        rescue
+          raise Errors::Janus::KeepaliveTimer::LoopKeepalive
         end
 
         # Test if session is present/exist in Janus Instance
@@ -39,16 +43,22 @@ module RubyRabbitmqJanus
         rescue Timeout::Error
           stop_timer
           block.binding.receiver.instance_is_down
+        rescue
+          raise Errors::Janus::KeepaliveTimer::Session
         end
 
         # Stop timer to keepalive thread
         def stop_timer
           @timer.pause
+        rescue
+          raise Errors::Janus::KeepaliveTimer::StopTimer
         end
 
         # Start timer to keepalive thread
         def start_timer
           @timer.resume
+        rescue
+          raise Errors::Janus::KeepaliveTimer::StartTimer
         end
 
         private

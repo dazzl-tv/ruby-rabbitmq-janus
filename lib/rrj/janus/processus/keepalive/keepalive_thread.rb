@@ -18,6 +18,8 @@ module RubyRabbitmqJanus
           @timer = KeepaliveTimer.new
           @message = KeepaliveMessage.new(instance)
           super(&block)
+        rescue
+          raise Errors::Janus::KeepaliveThread::Initializer
         end
 
         # Initialize a transaction with Janus Instance.
@@ -25,15 +27,18 @@ module RubyRabbitmqJanus
         def initialize_janus_session
           @publisher = publisher
           @session = response_session
+        rescue
+          raise Errors::Janus::KeepaliveThread::InitializeJanusSession
         end
 
         # Restart session
         def restart_session
           Tools::Log.instance.warn 'Restart session ...'
-          janus = find_model
           @session = response_session
           response_keepalive
-          janus.set(session: @session)
+          find_model.set(session: @session)
+        rescue
+          raise Errors::Janus::KeepaliveThread::RestartSession
         end
 
         # Start a timer for TTL
@@ -43,12 +48,16 @@ module RubyRabbitmqJanus
               "#{@message.instance} with TTL #{@timer.time_to_live}"
             response_keepalive
           end
+        rescue
+          raise Errors::Janus::KeepaliveThread::Start
         end
 
         # Kill session and disable instance
         def kill
           response_destroy
           super
+        rescue
+          raise Errors::Janus::KeepaliveThread::Kill
         end
 
         def instance_is_down
@@ -58,6 +67,8 @@ module RubyRabbitmqJanus
           Tools::Log.instance.fatal \
             "Janus Instance [#{janus.instance}] is down, kill thread."
           Thread.instance_method(:kill).bind(self).call
+        rescue
+          raise Errors::Janus::KeepaliveThread::InstanceIsDown
         end
 
         private
@@ -65,7 +76,11 @@ module RubyRabbitmqJanus
         attr_reader :timer
 
         def find_model
-          Models::JanusInstance.find_by_session(@session)
+          if @session.blank?
+            Models::JanusInstance.find(@message.instance)
+          else
+            Models::JanusInstance.find_by_session(@session)
+          end
         end
 
         def publisher

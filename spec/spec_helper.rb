@@ -6,7 +6,7 @@ require 'json-schema-rspec'
 require 'rails'
 require 'factory_girl'
 require 'database_cleaner'
-ENV['MONGO']='true' if ENV['MONGO'].nil?
+ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 
 require 'ruby_rabbitmq_janus'
@@ -28,7 +28,6 @@ end
 RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
-  after_load_database
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
@@ -60,8 +59,11 @@ RSpec.configure do |config|
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before(:example) do |example|
-    initializer_rrj(example.metadata)
-    clear
-    find_instance
+    unless example.metadata[:type].match?(/thread/)
+      after_load_database
+      initializer_rrj(example.metadata)
+      clear
+      find_instance
+    end
   end
 end

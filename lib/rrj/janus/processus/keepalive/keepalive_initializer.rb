@@ -26,7 +26,7 @@ module RubyRabbitmqJanus
         def self.thread(thread)
           ObjectSpace._id2ref(thread)
         rescue RangeError
-          puts "No thread with ID : #{thread}"
+          Tools::Log.instance.fatal "No thread with ID : #{thread}"
         end
 
         # Give a session Integer  his gem is instantiate.

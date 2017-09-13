@@ -5,7 +5,10 @@
 module RubyRabbitmqJanus
   module Janus
     module Concurrencies
-      # Object thread
+      # Object thread for manage keep a live with Janus Instance
+      #
+      # @!attribute [r] session
+      #   @return [Integer] Number to session linked to Janus Instance
       class KeepaliveThread < Thread
         attr_reader :timer, :instance, :session
 
@@ -35,7 +38,11 @@ module RubyRabbitmqJanus
 
         # Start a timer for TTL
         def start
-          @timer.loop_keepalive { response_keepalive }
+          @timer.loop_keepalive do
+            Tools::Log.instance.info 'Send keepalive to instance ' \
+              "#{@message.instance} with TTL #{@timer.time_to_live}"
+            response_keepalive
+          end
         end
 
         # Kill session and disable instance
@@ -54,6 +61,8 @@ module RubyRabbitmqJanus
         end
 
         private
+
+        attr_reader :timer
 
         def find_model
           Models::JanusInstance.find_by_session(@session)

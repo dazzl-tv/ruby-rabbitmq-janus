@@ -1,3 +1,5 @@
+---
+
 AllCops:
   Exclude:
     - 'bin/**/*'
@@ -18,7 +20,6 @@ Metrics/LineLength:
   Exclude:
     - spec/**/*
     - lib/rrj/errors/**/*
-
 
 Metrics/BlockLength:
   Exclude:

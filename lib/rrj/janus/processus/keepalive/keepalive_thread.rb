@@ -54,7 +54,9 @@ module RubyRabbitmqJanus
 
         # Kill session and disable instance
         def kill
-          response_destroy
+          if @session.present? && @message.present?
+            response_destroy if find_model.enable
+          end
           super
         rescue
           raise Errors::Janus::KeepaliveThread::Kill
@@ -62,11 +64,10 @@ module RubyRabbitmqJanus
 
         def instance_is_down
           janus = find_model
-          janus.set(enable: false)
-
+          janus.set(enable: false).unset(%I[thread session])
           Tools::Log.instance.fatal \
             "Janus Instance [#{janus.instance}] is down, kill thread."
-          Thread.instance_method(:kill).bind(self).call
+          prepare_kill_thread
         rescue
           raise Errors::Janus::KeepaliveThread::InstanceIsDown
         end
@@ -74,6 +75,11 @@ module RubyRabbitmqJanus
         private
 
         attr_reader :instance
+
+        def prepare_kill_thread
+          @session = @message = nil
+          KeepaliveThread.instance_method(:kill).bind(self).call
+        end
 
         def find_model
           if @session.blank?

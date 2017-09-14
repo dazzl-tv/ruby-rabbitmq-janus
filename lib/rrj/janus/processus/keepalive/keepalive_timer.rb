@@ -3,6 +3,8 @@
 require 'timeout'
 require 'timers'
 
+# :reek:DuplicateMethodCall
+
 module RubyRabbitmqJanus
   module Janus
     module Concurrencies
@@ -22,7 +24,7 @@ module RubyRabbitmqJanus
         # Initialize timer to keeaplive thread.
         def initialize
           @time_to_live = Tools::Config.instance.ttl
-          @time_to_die = @time_to_live + 5
+          @time_to_die = test_time_to_die >= 60 ? 59 : test_time_to_die
           @timer = Timers::Group.new
         rescue
           raise Errors::Janus::KeepaliveTimer::Initializer
@@ -70,6 +72,10 @@ module RubyRabbitmqJanus
         rescue Timeout::Error
           stop_timer
           block.binding.receiver.instance_is_down
+        end
+
+        def test_time_to_die
+          @time_to_live + 5
         end
       end
     end

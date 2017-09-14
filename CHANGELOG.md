@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.2.0] - 2017-08-11
+## [2.2.0] - 2017-09-14
 ### [Changed]
 - Janus Instance use id field for identify instance
 
@@ -19,10 +19,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Timeout for session created
 - Add validation to model JanusInstance
 - Don't start session initialisation when start rails console
-- Add aliases for Jnaus Instance :
- - session -> session_id
- - thread -> thread_id
- - id -> instance
+- Add aliases for Janus Instance :
+  - session -> session_id
+  - thread -> thread_id
+  - id -> instance
 - spec for Janus Instance model
 
 ### [Fixed]
@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Cleaning cluster classes
 - Get settings to cluster mode
 - Managing thread for session with document
+- Kill JanusInstance
 
 ## [2.1.1] - 2017-06-14
 ### [Fixed]

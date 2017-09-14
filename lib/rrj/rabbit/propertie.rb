@@ -22,22 +22,14 @@ module RubyRabbitmqJanus
 
       # Define options sending to rabbitmq
       def options
-        {
-          routing_key: Tools::Cluster.instance.queue_to(@instance),
-          correlation_id: @correlation,
-          content_type: 'application/json'
-        }
+        base.merge(routing_key: Tools::Cluster.instance.queue_to(@instance))
       rescue
         raise Errors::Rabbit::Propertie::Options
       end
 
       # Define option sending to rabbitmq for janus admin message
       def options_admin(type_request)
-        {
-          routing_key: determine_routing_key(type_request),
-          correlation_id: @correlation,
-          content_type: 'application/json'
-        }
+        base.merge(routing_key: determine_routing_key(type_request))
       rescue
         raise Errors::Rabbit::Propertie::Options_admin
       end
@@ -52,6 +44,10 @@ module RubyRabbitmqJanus
         else
           cluster.queue_to(@instance)
         end
+      end
+
+      def base
+        { correlation_id: @correlation, content_type: 'application/json' }
       end
     end
   end

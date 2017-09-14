@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
-  let(:levels) {
+  let(:levels) do
     {
       DEBUG: Logger::DEBUG,
       INFO: Logger::INFO,
@@ -12,7 +12,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
       FATAL: Logger::FATAL,
       UNKNOWN: Logger::UNKNOWN
     }
-  }
+  end
   let(:sensitives) { %i[admin_secret apisecret] }
   let(:log) { RubyRabbitmqJanus::Tools::Log.instance }
   let(:log_constant) { RubyRabbitmqJanus::Tools::Log }

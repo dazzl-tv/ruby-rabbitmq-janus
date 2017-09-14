@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:IrresponsibleModule
+
 # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
 module RubyRabbitmqJanus
@@ -68,7 +70,7 @@ module RubyRabbitmqJanus
 
         class Cluster < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize(parameter)
-            super '[Cluster] Cluster parameter is missing', :warn
+            super "[Cluster] Cluster parameter is missing, with parameter #{parameter}", :warn
           end
         end
       end

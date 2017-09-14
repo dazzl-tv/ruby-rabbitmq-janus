@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:IrresponsibleModule
+
 # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
 module RubyRabbitmqJanus

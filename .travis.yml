@@ -38,7 +38,7 @@ script:
   - docker-compose run gem env MONGO=false bundle exec rake spec
   - echo '## Test thread composant'
   - docker-compose run gem env MONGO=true bundle exec rake concurrency
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop -D; fi
   - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi
 
 before_deploy:

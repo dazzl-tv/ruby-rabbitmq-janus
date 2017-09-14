@@ -8,7 +8,7 @@ def load_active_record
 
   # Connect to database
   ActiveRecord::Base.establish_connection(active_record)
-  migreate unless ActiveRecord::Base.connection.table_exists? 'janus_instances'
+  migrate unless ActiveRecord::Base.connection.table_exists? 'janus_instances'
 end
 
 # :reek:UtilityFunction

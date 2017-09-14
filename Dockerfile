@@ -2,7 +2,6 @@ FROM ruby:2.4-alpine
 
 MAINTAINER Jeremy VAILLANT <jeremy.vaillant@dazzl.tv>
 
-RUN mkdir /ruby_rabbitmq_janus
 WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus
 COPY .travis/default.yml /ruby_rabbitmq_janus/lib/config/default.yml

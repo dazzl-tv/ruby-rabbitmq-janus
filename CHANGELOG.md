@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.2.0] - 2017-09-14
 ### [Changed]
 - Janus Instance use id field for identify instance
+- Optimize dockerfile
 
 ### [Added]
 - Change option for default cluster mode enabled

@@ -34,9 +34,9 @@ module RubyRabbitmqJanus
         # Restart session
         def restart_session
           Tools::Log.instance.warn 'Restart session ...'
-          @session = response_session
-          response_keepalive
-          find_model.set(session: @session)
+          janus = find_model
+          send_messages_restart
+          janus.set(session: @session)
         rescue
           raise Errors::Janus::KeepaliveThread::RestartSession
         end
@@ -75,6 +75,11 @@ module RubyRabbitmqJanus
         private
 
         attr_reader :instance
+
+        def send_messages_restart
+          @session = response_session
+          response_keepalive
+        end
 
         def prepare_kill_thread
           @session = @message = nil

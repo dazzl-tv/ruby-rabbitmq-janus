@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
         if enable && enable_changed?
           create_a_session_in_janus_instance
         elsif !enable && enable_changed?
-          disable_a_session_in_janus_instance
+          destroy_a_session_in_janus_instance
         end
       end
 
@@ -38,15 +38,11 @@ module RubyRabbitmqJanus
         set(session: janus_instance.session, thread: janus_instance.thread_id)
       end
 
-      def disable_a_session_in_janus_instance
-        info_instance('Destroy session')
-        keepalive_object_thread.kill
-        unset(%I[thread session])
-      end
-
       def destroy_a_session_in_janus_instance
         info_instance('Destroy session')
+        keepalive_object_thread.send(:response_destroy)
         keepalive_object_thread.kill
+        unset(%I[thread session])
       end
 
       def keepalive_object

@@ -57,6 +57,7 @@ module RubyRabbitmqJanus
           if @session.present? && @message.present?
             response_destroy if find_model.enable
           end
+          @rabbit.close
           super
         rescue
           raise Errors::Janus::KeepaliveThread::Kill

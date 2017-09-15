@@ -27,7 +27,7 @@ module RubyRabbitmqJanus
           end
         end
 
-        class Testcorrelation < RubyRabbitmqJanus::Errors::Rabbit::BasePublish
+        class TestCorrelation < RubyRabbitmqJanus::Errors::Rabbit::BasePublish
           def initialize(message, propertie)
             super "Response correlation ID mismatch (#{message} != #{propertie})", :fatal
           end

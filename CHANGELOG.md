@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.2.1] - 2017-09-15
 ### [Fixed]
 - Fix restart session and read message in keepalive
+- Close connection with rabbitmq when thread it's killed
+- Fix name to exception in publisher
 
 ## [2.2.0] - 2017-09-14
 ### [Changed]

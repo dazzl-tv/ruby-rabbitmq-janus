@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/GuardClause
+
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher
@@ -52,9 +54,11 @@ module RubyRabbitmqJanus
         end
 
         def test_correlation(m_cor, p_cor)
-          raise Errors::Rabbit::Publish::TestCorrelation, m_cor, p_cor \
-            unless m_cor.eql?(p_cor)
-          yield
+          if m_cor.eql?(p_cor)
+            yield
+          else
+            raise Errors::Rabbit::Publish::TestCorrelation, m_cor, p_cor
+          end
         end
 
         def synchronize(payload)
@@ -69,6 +73,7 @@ module RubyRabbitmqJanus
     end
   end
 end
+# rubocop:enable Style/GuardClause
 
 require 'rrj/rabbit/publish/admin'
 require 'rrj/rabbit/publish/exclusive'

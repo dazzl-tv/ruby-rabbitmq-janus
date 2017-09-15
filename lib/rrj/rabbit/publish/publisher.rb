@@ -37,12 +37,8 @@ module RubyRabbitmqJanus
 
         def subscribe_to_queue
           reply.subscribe do |_delivery_info, propertie, payload|
-            propertie_correlation = p_correlation(propertie)
-            if m_correlation.eql?(propertie_correlation)
+            test_correlation(m_correlation, p_correlation(propertie)) do
               synchronize(payload)
-            else
-              Tools::Log.instance.error 'Response correlation ID mismatch (' \
-                "#{m_correlation}!=#{propertie_correlation})"
             end
           end
         end
@@ -53,6 +49,12 @@ module RubyRabbitmqJanus
 
         def p_correlation(propertie)
           propertie.correlation_id
+        end
+
+        def test_correlation(m_cor, p_cor)
+          raise Errors::Rabbit::Publish::TestCorrelation, m_cor, p_cor \
+            unless m_cor.eql?(p_cor)
+          yield
         end
 
         def synchronize(payload)

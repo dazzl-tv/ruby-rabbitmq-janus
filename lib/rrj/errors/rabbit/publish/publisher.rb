@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:IrresponsibleModule
+#
 module RubyRabbitmqJanus
   module Errors
     module Rabbit
@@ -22,6 +24,12 @@ module RubyRabbitmqJanus
         class Publish < RubyRabbitmqJanus::Errors::Rabbit::BasePublish
           def initialize
             super 'Error for publish message'
+          end
+        end
+
+        class Testcorrelation < RubyRabbitmqJanus::Errors::Rabbit::BasePublish
+          def initialize(message, propertie)
+            super "Response correlation ID mismatch (#{message} != #{propertie})", :fatal
           end
         end
       end

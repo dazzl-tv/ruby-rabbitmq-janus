@@ -18,6 +18,12 @@ module RubyRabbitmqJanus
           end
         end
 
+        class ID2ref < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveInitializer
+          def initialize(thread_id)
+            super "No thread with ID : #{thread_id}"
+          end
+        end
+
         class Session < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveInitializer
           def initialize
             super 'Error return session number'

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.1] - 2017-09-15
+### [Fixed]
+- Fix restart session and read message in keepalive
+
 ## [2.2.0] - 2017-09-14
 ### [Changed]
 - Janus Instance use id field for identify instance

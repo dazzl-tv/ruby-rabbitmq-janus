@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.2] - 2017-12-21
+- Update gem (nokogiri and yard)
+
 ## [2.2.1] - 2017-09-15
 ### [Fixed]
 - Fix restart session and read message in keepalive

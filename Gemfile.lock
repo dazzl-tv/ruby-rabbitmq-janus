@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_rabbitmq_janus (2.2.0.pre.170)
+    ruby_rabbitmq_janus (2.2.1.pre.170)
       bunny (~> 2.5)
       key_path (~> 1.2)
       semaphore (~> 0.0.1)
@@ -63,7 +63,7 @@ GEM
     backports (3.8.0)
     bson (4.2.1)
     builder (3.2.3)
-    bunny (2.7.0)
+    bunny (2.8.0)
       amq-protocol (>= 2.2.0)
     byebug (9.0.6)
     childprocess (0.5.9)
@@ -288,4 +288,4 @@ DEPENDENCIES
   yard (~> 0.9.5)
 
 BUNDLED WITH
-   1.15.4
+   1.16.0

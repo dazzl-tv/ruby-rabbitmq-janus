@@ -1,5 +1,6 @@
 sudo: required
-
+dist: trusty
+group: deprecated-2017Q4
 language: ruby
 
 cache:
@@ -7,6 +8,9 @@ cache:
     - /usr/local/bundle
 
 rvm:
+  - 2.4.3
+  - 2.4.2
+  - 2.4.1
   - 2.4.0
   - 2.3.1
 

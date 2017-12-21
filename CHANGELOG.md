@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.2.2] - 2017-12-21
+### [Changed]
+- Change configuration for travis, update image trusty
+- Add test for ruby 2.4.{1,2,3}
+
+### [Fixed]
 - Update gem (nokogiri and yard)
 
 ## [2.2.1] - 2017-09-15

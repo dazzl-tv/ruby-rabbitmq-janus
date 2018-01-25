@@ -1,5 +1,7 @@
 FROM quay.io/dazzl/janus-gateway
 
+RUN mkdir -p /usr/local/lib/janus/plugins
+
 COPY janus.cfg.2 /usr/local/etc/janus/janus.cfg
 COPY janus.transport.rabbitmq.cfg.2 /usr/local/etc/janus/janus.transport.rabbitmq.cfg
 

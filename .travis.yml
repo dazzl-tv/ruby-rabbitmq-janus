@@ -33,7 +33,9 @@ install:
   - sleep 15
   - docker-compose logs rabbit
   - docker-compose up -d janus_1 janus_2
-  - docker-compose logs janus_1 janus_2
+  - docker-compose logs janus_1
+  - docker-compose logs janus_2
+  - docker-compose ps
 
 script:
   - echo '## Test with MONGODB database'

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_rabbitmq_janus (2.2.2.pre.170)
+    ruby_rabbitmq_janus (2.3.0)
       bunny (~> 2.5)
       key_path (~> 1.2)
       semaphore (~> 0.0.1)
@@ -46,7 +46,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    amq-protocol (2.2.0)
+    amq-protocol (2.3.0)
     arel (6.0.4)
     aruba (0.14.2)
       childprocess (~> 0.5.6)
@@ -63,8 +63,8 @@ GEM
     backports (3.10.3)
     bson (4.2.2)
     builder (3.2.3)
-    bunny (2.8.0)
-      amq-protocol (>= 2.2.0)
+    bunny (2.9.1)
+      amq-protocol (~> 2.3.0)
     byebug (9.1.0)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)

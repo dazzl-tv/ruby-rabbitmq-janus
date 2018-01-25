@@ -59,7 +59,7 @@ RSpec.configure do |config|
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before(:example) do |example|
-    unless example.metadata[:type].match?(/thread/) || example.metadata[:type].match?(/tools/)
+    unless example.metadata[:type].match?(/tools/)
       after_load_database
       initializer_rrj(example.metadata)
       clear

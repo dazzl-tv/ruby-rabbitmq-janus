@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-01-25
+### [Changed]
+- Disabling an instance model now just detach the thread, that will die by itself
+
 ## [2.2.2] - 2017-12-21
 ### [Changed]
 - Change configuration for travis, update image trusty

@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
         attr_reader :instance
 
         def initialize(instance)
-          @instance = instance._id
+          @instance = instance.id
         end
 
         def session

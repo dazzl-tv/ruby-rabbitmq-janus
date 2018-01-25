@@ -72,3 +72,4 @@ spec/request/videocast
 
 ## Development / Test localy
 lib/config
+docker-compose.local.yml

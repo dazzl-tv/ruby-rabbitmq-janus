@@ -27,7 +27,7 @@ module RubyRabbitmqJanus
       # Destroy a session in Janus Instance
       def callback_destroy_after
         Tools::Log.instance.debug 'Callback AFTER_DESTROY'
-        destroy_a_session_in_janus_instance if enable && session? && thread?
+        #LCO: nothing to do, thread will close session and die
       end
 
       private
@@ -35,13 +35,11 @@ module RubyRabbitmqJanus
       def create_a_session_in_janus_instance
         info_instance('Create session')
         janus_instance = keepalive_object_new
-        set(session: janus_instance.session, thread: janus_instance.thread_id)
+        set(session: janus_instance.session)
       end
 
       def destroy_a_session_in_janus_instance
-        info_instance('Destroy session')
-        keepalive_object_thread.send(:response_destroy)
-        keepalive_object_thread.kill
+        info_instance('Detaching session')
         unset(%I[thread session])
       end
 
@@ -50,7 +48,7 @@ module RubyRabbitmqJanus
       end
 
       def keepalive_object_new
-        keepalive_object.new(instance)
+        keepalive_object.new(self)
       end
 
       def keepalive_object_thread

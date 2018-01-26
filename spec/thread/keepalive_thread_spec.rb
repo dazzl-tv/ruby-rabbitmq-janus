@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveThread, type: :thread, name: :keepalive_thread do
-  let(:instance) { [1, 2].sample }
+  let(:instance) { RubyRabbitmqJanus::Models::JanusInstance.find((ENV['MONGO'].match?('true')? ['1','2']:[1,2]).sample) }
   let(:rabbit) { RubyRabbitmqJanus::Janus::Concurrencies::Concurrency.new.send(:rabbit) }
   let(:concurrency) { RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveThread.new(instance, rabbit) { nil } }
 

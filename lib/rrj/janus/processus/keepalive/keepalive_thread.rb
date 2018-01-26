@@ -17,6 +17,8 @@ module RubyRabbitmqJanus
           @rabbit = rabbit
           @timer = KeepaliveTimer.new
           @message = KeepaliveMessage.new(instance)
+          instance.set(thread: __id__)
+          Tools::Log.instance.info "Keepalive thread id is #{__id__}"
           super(&block)
         rescue
           raise Errors::Janus::KeepaliveThread::Initializer
@@ -35,8 +37,12 @@ module RubyRabbitmqJanus
         def restart_session
           Tools::Log.instance.warn 'Restart session ...'
           janus = find_model
-          send_messages_restart
-          janus.set(session: @session)
+          if janus.present?
+            send_messages_restart
+            janus.set(session: @session)
+          else
+            Tools::Log.instance.error 'Janus Instance Model is gone, giving up'
+          end
         rescue
           raise Errors::Janus::KeepaliveThread::RestartSession
         end
@@ -44,9 +50,18 @@ module RubyRabbitmqJanus
         # Start a timer for TTL
         def start
           @timer.loop_keepalive do
-            Tools::Log.instance.info 'Send keepalive to instance ' \
-              "#{@message.instance} with TTL #{@timer.time_to_live}"
-            response_keepalive
+            if detached?(find_model)
+              Tools::Log.instance.info \
+                "Thread #{__id__} no longer attached to Janus Instance, exiting..."
+              @timer.stop_timer
+              cleanup
+              exit
+            else
+              Tools::Log.instance.info "Thread #{__id__} " \
+                'sending keepalive to instance ' \
+                "#{@message.instance} with TTL #{@timer.time_to_live}"
+              response_keepalive
+            end
           end
         rescue
           raise Errors::Janus::KeepaliveThread::Start
@@ -54,10 +69,7 @@ module RubyRabbitmqJanus
 
         # Kill session and disable instance
         def kill
-          if @session.present? && @message.present?
-            response_destroy if find_model.enable
-          end
-          @rabbit.close
+          cleanup
           super
         rescue
           raise Errors::Janus::KeepaliveThread::Kill
@@ -65,10 +77,15 @@ module RubyRabbitmqJanus
 
         def instance_is_down
           janus = find_model
-          janus.set(enable: false).unset(%I[thread session])
-          Tools::Log.instance.fatal \
-            "Janus Instance [#{janus.instance}] is down, kill thread."
-          prepare_kill_thread
+          @session = @message = nil
+          if detached?(janus)
+            Tools::Log.instance.error\
+            "Thread [#{__id__}] no longer attached to Janus Instance (should be dead)."
+          else
+            janus.set(enable: false).unset(%I[thread session])
+            Tools::Log.instance.fatal \
+            "Janus Instance [#{janus.instance}] is down, thread [#{__id__}] will die."
+          end
         rescue
           raise Errors::Janus::KeepaliveThread::InstanceIsDown
         end
@@ -82,17 +99,26 @@ module RubyRabbitmqJanus
           response_keepalive
         end
 
-        def prepare_kill_thread
-          @session = @message = nil
-          KeepaliveThread.instance_method(:kill).bind(self).call
+        def cleanup
+          if @session.present? && @message.present?
+            response_destroy
+          end
+          @rabbit.close
         end
 
         def find_model
-          if @session.blank?
+          if (@message.present?)
             Models::JanusInstance.find(@message.instance)
           else
+            Tools::Log.instance.warn 'Lookup Janus Instance model by session [#{@session}]'
             Models::JanusInstance.find_by_session(@session)
           end
+        rescue
+          nil
+        end
+
+        def detached?(janus)
+          janus.blank? or janus.thread != __id__
         end
 
         def publisher

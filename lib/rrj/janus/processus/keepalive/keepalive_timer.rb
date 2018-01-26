@@ -25,7 +25,7 @@ module RubyRabbitmqJanus
         def initialize
           @time_to_live = Tools::Config.instance.ttl
           @time_to_die = test_time_to_die >= 60 ? 59 : test_time_to_die
-          @timer = Timers::Group.new
+          @timers = Timers::Group.new
         rescue
           raise Errors::Janus::KeepaliveTimer::Initializer
         end
@@ -33,8 +33,8 @@ module RubyRabbitmqJanus
         # Execute a loop with timer for sending keepalive message
         # to Janus Instance
         def loop_keepalive(&block)
-          @timer.now_and_every(@time_to_live) { prepare_loop(&block) }
-          loop { @timer.wait }
+          @timer = @timers.now_and_every(@time_to_live) { prepare_loop(&block) }
+          loop { @timers.wait }
         rescue
           raise Errors::Janus::KeepaliveTimer::LoopKeepalive
         end
@@ -43,7 +43,6 @@ module RubyRabbitmqJanus
         def session(&block)
           Timeout.timeout(@time_to_die) { yield }
         rescue Timeout::Error
-          stop_timer
           block.binding.receiver.instance_is_down
         rescue
           raise Errors::Janus::KeepaliveTimer::Session
@@ -51,16 +50,9 @@ module RubyRabbitmqJanus
 
         # Stop timer to keepalive thread
         def stop_timer
-          @timer.pause
+          @timer.cancel
         rescue
           raise Errors::Janus::KeepaliveTimer::StopTimer
-        end
-
-        # Start timer to keepalive thread
-        def start_timer
-          @timer.resume
-        rescue
-          raise Errors::Janus::KeepaliveTimer::StartTimer
         end
 
         private
@@ -70,7 +62,6 @@ module RubyRabbitmqJanus
             block.binding.receiver.restart_session if yield
           end
         rescue Timeout::Error
-          stop_timer
           block.binding.receiver.instance_is_down
         end
 

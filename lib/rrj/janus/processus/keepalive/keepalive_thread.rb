@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
 # :reek:TooManyInstanceVariables
 
 module RubyRabbitmqJanus
@@ -34,6 +36,7 @@ module RubyRabbitmqJanus
         end
 
         # Restart session
+        # :reek:TooManyStatements
         def restart_session
           Tools::Log.instance.warn 'Restart session ...'
           janus = find_model
@@ -48,11 +51,15 @@ module RubyRabbitmqJanus
         end
 
         # Start a timer for TTL
+        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/MethodLength
+        # :reek:TooManyStatements
         def start
           @timer.loop_keepalive do
             if detached?(find_model)
               Tools::Log.instance.info \
-                "Thread #{__id__} no longer attached to Janus Instance, exiting..."
+                "Thread #{__id__} no longer attached to Janus Instance, " \
+                'exiting...'
               @timer.stop_timer
               cleanup
               exit
@@ -66,6 +73,8 @@ module RubyRabbitmqJanus
         rescue
           raise Errors::Janus::KeepaliveThread::Start
         end
+        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/MethodLength
 
         # Kill session and disable instance
         def kill
@@ -75,20 +84,25 @@ module RubyRabbitmqJanus
           raise Errors::Janus::KeepaliveThread::Kill
         end
 
+        # rubocop:disable Metrics/MethodLength
+        # :reek:TooManyStatements
         def instance_is_down
           janus = find_model
           @session = @message = nil
           if detached?(janus)
             Tools::Log.instance.error\
-            "Thread [#{__id__}] no longer attached to Janus Instance (should be dead)."
+              "Thread [#{__id__}] no longer attached to Janus Instance " \
+              '(should be dead).'
           else
             janus.set(enable: false).unset(%I[thread session])
             Tools::Log.instance.fatal \
-            "Janus Instance [#{janus.instance}] is down, thread [#{__id__}] will die."
+              "Janus Instance [#{janus.instance}] is down, " \
+              "thread [#{__id__}] will die."
           end
         rescue
           raise Errors::Janus::KeepaliveThread::InstanceIsDown
         end
+        # rubocop:enable Metrics/MethodLength
 
         private
 
@@ -100,25 +114,25 @@ module RubyRabbitmqJanus
         end
 
         def cleanup
-          if @session.present? && @message.present?
-            response_destroy
-          end
+          response_destroy if @session.present? && @message.present?
           @rabbit.close
         end
 
         def find_model
-          if (@message.present?)
+          if @message.present?
             Models::JanusInstance.find(@message.instance)
           else
-            Tools::Log.instance.warn 'Lookup Janus Instance model by session [#{@session}]'
+            Tools::Log.instance.warn \
+              "Lookup Janus Instance model by session [#{@session}]"
             Models::JanusInstance.find_by_session(@session)
           end
         rescue
           nil
         end
 
+        # :reek:FeatureEnvy
         def detached?(janus)
-          janus.blank? or janus.thread != __id__
+          janus.blank? || janus.thread != __id__
         end
 
         def publisher
@@ -146,3 +160,5 @@ module RubyRabbitmqJanus
     end
   end
 end
+
+# rubocop:enable Metrics/ClassLength

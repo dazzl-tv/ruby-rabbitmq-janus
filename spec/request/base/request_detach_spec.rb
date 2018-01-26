@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # LCO: tagged broken 2018/01/26 for v2.3.0
 # see: https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus/builds/333359315
 

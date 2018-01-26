@@ -15,6 +15,9 @@ Style/Documentation:
   Exclude:
     - lib/rrj/errors/**/*
 
+Style/RescueStandardError:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 80
   Exclude:

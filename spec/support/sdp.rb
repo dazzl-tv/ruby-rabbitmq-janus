@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-SDP_OFFER = <<~EOF
+SDP_OFFER = <<~SDP
   v=0
   o=- 7041456084360858977 2 IN IP4 127.0.0.1
   s=-
@@ -88,7 +88,7 @@ SDP_OFFER = <<~EOF
   a=ssrc:258141567 msid:2jKToeOlpzKTn7anwnHOJmzFyhvEYt1kpcMY 25d58816-114a-41d2-aa08-1039e09f942f
   a=ssrc:258141567 mslabel:2jKToeOlpzKTn7anwnHOJmzFyhvEYt1kpcMY
   a=ssrc:258141567 label:25d58816-114a-41d2-aa08-1039e09f942f
-EOF
+SDP
 
 SDP_ANSWER = <<~SDP
   v=0

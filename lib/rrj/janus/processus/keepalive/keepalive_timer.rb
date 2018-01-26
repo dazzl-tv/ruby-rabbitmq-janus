@@ -26,6 +26,7 @@ module RubyRabbitmqJanus
           @time_to_live = Tools::Config.instance.ttl
           @time_to_die = test_time_to_die >= 60 ? 59 : test_time_to_die
           @timers = Timers::Group.new
+          @timer = nil
         rescue
           raise Errors::Janus::KeepaliveTimer::Initializer
         end
@@ -51,12 +52,14 @@ module RubyRabbitmqJanus
         # Stop timer to keepalive thread
         def stop_timer
           @timer.cancel
+          @timer = nil
         rescue
           raise Errors::Janus::KeepaliveTimer::StopTimer
         end
 
         private
 
+        # :reek:FeatureEnvy
         def prepare_loop(&block)
           Timeout.timeout(@time_to_die) do
             block.binding.receiver.restart_session if yield

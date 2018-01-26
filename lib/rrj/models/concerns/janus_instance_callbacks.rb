@@ -25,9 +25,10 @@ module RubyRabbitmqJanus
       end
 
       # Destroy a session in Janus Instance
+      # :reek:UtilityFunction
       def callback_destroy_after
         Tools::Log.instance.debug 'Callback AFTER_DESTROY'
-        #LCO: nothing to do, thread will close session and die
+        # LCO: nothing to do, thread will close session and die
       end
 
       private

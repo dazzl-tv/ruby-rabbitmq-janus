@@ -133,7 +133,7 @@ module RubyRabbitmqJanus
       end
 
       def test_level?(this_level)
-        this_level >= Log.instance.level ? true : false
+        this_level >= Log.instance.level
       end
 
       def write_tag

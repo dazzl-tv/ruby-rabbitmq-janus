@@ -48,7 +48,7 @@ module RubyRabbitmqJanus
                                                     janus.instance)
       transaction.connect { yield(transaction) }
     rescue
-      raise Errors::RRJTask::StartTransactionHandle, exclusive, options
+      raise Errors::RRJTask::StartTransactionHandle.new(exclusive, options)
     end
 
     private

@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
 
 # :reek:TooManyInstanceVariables
+# :reek:TooManyStatements
+# :reek:UncommunicativeVariableName
 
 module RubyRabbitmqJanus
   module Janus
@@ -164,3 +167,4 @@ module RubyRabbitmqJanus
 end
 
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength

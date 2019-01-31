@@ -10,7 +10,13 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     if ENV['MONGO'].match?('true')
       it { expect(model.attribute_names).to include('_id') }
       it do
-        parameter = { 'id' => '_id', 'session_id' => 'session', 'thread_id' => 'thread', 'instance' => '_id' }
+        parameter = {
+          'id' => '_id',
+          'session_id' => 'session',
+          'thread_id' => 'thread',
+          'thread_adm_id' => 'thread_adm',
+          'instance' => '_id'
+        }
         expect(model.aliased_fields).to eq(parameter)
       end
     else

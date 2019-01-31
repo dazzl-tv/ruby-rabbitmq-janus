@@ -11,7 +11,8 @@ describe 'RubyRabbitmqJanus::RRJ -- message type set locking debug' do
 
   describe '#start_transaction_admin', type: :request,
                                        level: :admin,
-                                       name: :set_locking_debug do
+                                       name: :set_locking_debug,
+                                       broken: true do
     include_examples 'transaction admin should match json schema'
   end
 end

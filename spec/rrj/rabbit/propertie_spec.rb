@@ -12,7 +12,7 @@ describe RubyRabbitmqJanus::Rabbit::Propertie, type: :rabbit,
   end
 
   describe '#options_admin' do
-    context 'For admin request' do
+    context 'For admin request', broken: true do
       it do
         expect(rabbit.options_admin('admin::sessions')).to \
           match_json_schema(:rabbit_options_admin2)

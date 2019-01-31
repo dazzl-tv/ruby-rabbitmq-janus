@@ -10,7 +10,8 @@ describe 'RubyRabbitmqJanus::RRJ -- message type sessions list' do
 
   describe '#start_transaction_admin', type: :request,
                                        level: :admin,
-                                       name: :sessions do
+                                       name: :sessions,
+                                       broken: true do
     include_examples 'transaction admin should match json schema'
   end
 end

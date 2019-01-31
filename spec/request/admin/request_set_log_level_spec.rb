@@ -11,7 +11,8 @@ describe 'RubyRabbitmqJanus::RRJ -- message type set log level' do
 
   describe '#start_transaction_admin', type: :request,
                                        level: :admin,
-                                       name: :set_log_level do
+                                       name: :set_log_level,
+                                       broken: true do
     include_examples 'transaction admin should match json schema'
   end
 end

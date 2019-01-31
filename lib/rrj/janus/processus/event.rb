@@ -14,6 +14,8 @@ module RubyRabbitmqJanus
       class Event < Concurrency
         include Singleton
 
+        NAME_VAR = :publish.freeze
+
         def initialize
           super
           @thread = Thread.new { initialize_thread }
@@ -32,7 +34,7 @@ module RubyRabbitmqJanus
           @thread.join
           Thread.new do
             loop do
-              @thread.thread_variable_get(:publish).listen_events(&block)
+              @thread.thread_variable_get(NAME_VAR).listen_events(&block)
             end
           end
         rescue
@@ -43,7 +45,7 @@ module RubyRabbitmqJanus
 
         def transaction_running
           publisher = Rabbit::Publisher::Listener.new(rabbit)
-          @thread.thread_variable_set(:publish, publisher)
+          @thread.thread_variable_set(NAME_VAR, publisher)
         end
       end
     end

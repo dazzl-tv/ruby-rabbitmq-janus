@@ -27,7 +27,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     if ENV['MONGO'].match?('true')
       it { expect(model.attribute_names).to include('_id') }
       it do
-        expect(model.aliased_fields).to eq(parameter_mong)
+        expect(model.aliased_fields).to eq(parameter_mongo)
       end
     else
       it { expect(model.attribute_names).to include('id') }

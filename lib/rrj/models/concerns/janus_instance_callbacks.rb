@@ -41,7 +41,7 @@ module RubyRabbitmqJanus
 
       def destroy_a_session_in_janus_instance
         info_instance('Detaching session')
-        unset(%I[thread session])
+        unset(%I[thread thread_adm session])
       end
 
       def keepalive_object

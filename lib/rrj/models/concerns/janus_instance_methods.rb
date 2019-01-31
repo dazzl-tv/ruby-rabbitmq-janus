@@ -38,6 +38,11 @@ module RubyRabbitmqJanus
         def enabled
           JanusInstance.where(enable: true)
         end
+
+        # Get all instance not active
+        def disabled
+          JanusInstance.where(enable: false)
+        end
       end
 
       private

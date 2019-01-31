@@ -14,9 +14,10 @@ module RubyRabbitmqJanus
 
       self.primary_key = :id
 
-      alias_attribute :instance,    :id
-      alias_attribute :session_id,  :session
-      alias_attribute :thread_id,   :thread
+      alias_attribute :instance,        :id
+      alias_attribute :session_id,      :session
+      alias_attribute :thread_id,       :thread
+      alias_attribute :thread_id_adm,   :thread_adm
 
       after_create      { callback_create_after }
       after_update      { callback_update_after }

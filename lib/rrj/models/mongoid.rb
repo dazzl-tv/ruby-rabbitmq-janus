@@ -11,9 +11,10 @@ module RubyRabbitmqJanus
       include RubyRabbitmqJanus::Models::JanusInstanceMethods
       include RubyRabbitmqJanus::Models::JanusInstanceValidations
 
-      field :session,   type: Integer, as: :session_id
-      field :enable,    type: Boolean
-      field :thread,    type: Integer, as: :thread_id
+      field :session,     type: Integer, as: :session_id
+      field :enable,      type: Boolean
+      field :thread,      type: Integer, as: :thread_id
+      field :thread_adm,  type: Integer, as: :thread_id_adm
 
       alias_attribute :instance, :_id
 

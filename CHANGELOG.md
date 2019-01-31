@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2019-01-31
+### [Added]
+- Add listener admin queue
+- Add Task Admin for CI/sidekiq/Console
+
 ## [2.3.0] - 2018-01-25
 ### [Changed]
 - Disabling an instance model now just detach the thread, that will die by itself

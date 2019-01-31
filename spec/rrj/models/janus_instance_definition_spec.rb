@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
           'id' => '_id',
           'session_id' => 'session',
           'thread_id' => 'thread',
-          'thread_adm_id' => 'thread_adm',
+          'thread_id_adm' => 'thread_adm',
           'instance' => '_id'
         }
         expect(model.aliased_fields).to eq(parameter)

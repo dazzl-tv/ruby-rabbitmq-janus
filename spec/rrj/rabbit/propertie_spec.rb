@@ -11,8 +11,8 @@ describe RubyRabbitmqJanus::Rabbit::Propertie, type: :rabbit,
     it { expect(rabbit.options).to match_json_schema(:rabbit_options2) }
   end
 
-  describe '#options_admin' do
-    context 'For admin request', broken: true do
+  describe '#options_admin', broken: true do
+    context 'For admin request' do
       it do
         expect(rabbit.options_admin('admin::sessions')).to \
           match_json_schema(:rabbit_options_admin2)

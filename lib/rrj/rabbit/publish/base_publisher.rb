@@ -47,3 +47,4 @@ end
 
 require 'rrj/rabbit/publish/publisher'
 require 'rrj/rabbit/publish/listener'
+require 'rrj/rabbit/publish/listener_admin'

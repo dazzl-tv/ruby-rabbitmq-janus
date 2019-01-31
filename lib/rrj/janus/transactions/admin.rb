@@ -25,7 +25,7 @@ module RubyRabbitmqJanus
 
         # Write a message in queue in RabbitMQ
         def publish_message(type, options = {})
-          msg = Janus::Messages::Admin.new(type, opts.merge(options))
+          msg = Janus::Messages::Admin.new(type, options.merge(opts2))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Admin.new(response)
         rescue
@@ -44,6 +44,10 @@ module RubyRabbitmqJanus
 
         def opts
           { 'session_id' => session, 'admin_secret' => admin_secret }
+        end
+
+        def opts2
+          session.merge('admin_secret' => admin_secret)
         end
       end
     end

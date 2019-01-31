@@ -24,8 +24,12 @@ module RubyRabbitmqJanus
         # @return [Janus::Response::Standard] response for an request reading
         #   by janus instance
         def publish(request)
-          super(request)
-          return_response
+          # super(request)
+          @message = request
+          concat = request.options.merge!(reply_to: reply.name)
+          @exchange.publish(@message.to_json, concat)
+          # p "Waiting response ...."
+          # return_response
         rescue
           raise Errors::Rabbit::PublisherAdmin::Pusblish
         end

@@ -42,3 +42,4 @@ end
 
 require 'rrj/janus/processus/keepalive/keepalive_initializer'
 require 'rrj/janus/processus/event'
+require 'rrj/janus/processus/event_admin'

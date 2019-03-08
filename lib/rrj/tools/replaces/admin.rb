@@ -25,6 +25,9 @@ module RubyRabbitmqJanus
           replace_admin
           replace_level if request.key?('level')
           replace_debug if request.key?('debug')
+          replace_folder if request.key?('folder')
+          replace_filename if request.key?('filename')
+          replace_truncate if request.key?('truncate')
         end
 
         def replace_admin
@@ -43,6 +46,24 @@ module RubyRabbitmqJanus
           request['debug'] = type.convert('debug', opts)
         rescue => message
           Tools::Log.instance.warn "Error replace debug : #{message}"
+        end
+
+        def replace_folder
+          request['folder'] = type.convert('folder', opts)
+        rescue => message
+          Tools::Log.instance.warn "Error replace folder : #{message}"
+        end
+
+        def replace_filename
+          request['filename'] = type.convert('filename', opts)
+        rescue => message
+          Tools::Log.instance.warn "Error replace filename : #{message}"
+        end
+
+        def replace_truncate
+          request['truncate'] = type.convert('truncate', opts)
+        rescue => message
+          Tools::Log.instance.warn "Error replace truncate : #{message}"
         end
 
         def admin_pass

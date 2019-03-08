@@ -1,0 +1,8 @@
+{
+  "janus": "start_pcap",
+  "folder" : "<string>",
+  "filename" : "<string>",
+  "truncate" : "<number>",
+  "transaction": "<transaction>",
+  "admin_secret": "<string>"
+}

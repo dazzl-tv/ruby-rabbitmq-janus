@@ -1,0 +1,10 @@
+{
+  "janus": "start_text2pcap",
+  "transaction": "<transaction>",
+  "session_id": "<number>",
+  "handle_id": "<number>",
+  "admin_secret": "<string>",
+  "folder" : "<string>",
+  "filename" : "<string>",
+  "truncate" : "<number>"
+}

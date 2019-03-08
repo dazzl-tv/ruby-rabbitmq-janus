@@ -1,0 +1,5 @@
+{
+  "janus": "stop_pcap",
+  "transaction": "<transaction>",
+  "admin_secret": "<string>"
+}

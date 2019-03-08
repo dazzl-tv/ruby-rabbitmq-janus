@@ -6,10 +6,20 @@ By default this gem contains many request :
 
 ```linux
 ├── admin
+│   ├── add_token.json
+│   ├── allow_token.json
+│   ├── disallow_token.json
 │   ├── handle_info.json
 │   ├── handles.json
-│   ├── log_level.json
-│   └── sessions.json
+│   ├── remove_token.json
+│   ├── sessions.json
+│   ├── set_locking_debug.json
+│   ├── set_log_level.json
+│   ├── start_pcap.json
+│   ├── start_text2pcap.json
+│   ├── stop_pcap.json
+│   ├── stop_text2pcap.json
+│   └── tokens.json
 ├── base
 │   ├── attach.json
 │   ├── create.json
@@ -20,8 +30,7 @@ By default this gem contains many request :
 ├── peer
 │   ├── answer.json
 │   ├── offer.json
-│   ├── trickle.json
-│   ├── trickles.json
+│   └── trickle.json
 ```
 
 * Folder `admin` contains admin requests for interact with Janus Admin/Monitor
@@ -43,14 +52,18 @@ Example base request with type `'base::info'` :
 
 For more explain to construct request sending to Janus [see official documentation](https://janus.conf.meetecho.com/docs/rest.html).
 
-Some fields are customizables. For this fields is a gem to apply a transformation :
+Some fields are customizable. For this fields is a gem to apply a transformation :
 
 * session_id
 * handle_id
 * transaction
 * candidate
-* admin_secret  -  *just for admin secret*
-* level -  *just for admin secret*
+* *Admin transaction*
+  * admin_secret
+  * level
+  * folder
+  * filename
+  * truncate
 
 Each fields use an type :
 

@@ -22,7 +22,7 @@ describe 'RubyRabbitmqJanus::RRJAdmin -- add_token', type: :request,
 
   context 'when configured in janus' do
     let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('2').id.to_s } }
-    let(:parameter) { { 'token' => [*('a'..'z'), *('0'..'9')].sample[0, 24].join } }
+    let(:parameter) { { 'token' => [*('a'..'z'), *('0'..'9')].sample(24).join } }
 
     it { expect(@transaction.to_json).to match_json_schema('base::error') }
   end

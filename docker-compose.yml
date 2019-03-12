@@ -8,25 +8,30 @@ services:
     links:
       - rabbit
       - mongo
+    volumes:
+      - ./spec/:/ruby_rabbitmq_janus/spec
 
   rabbit:
     image: rabbitmq
     ports:
-      - 5672:5672
+      - 5672
+      - 15672:15672
 
-  janus_1:
+  janus:
     build:
-      context: ./.travis
-      dockerfile: Dockerfile.janus_1
+      context: .travis
+      dockerfile: janus.1.dockerfile
     links:
       - rabbit
+    container_name: janus
 
-  janus_2:
+  janus_token:
     build:
-      context: ./.travis
-      dockerfile: Dockerfile.janus_2
+      context: .travis
+      dockerfile: janus.2.dockerfile
     links:
       - rabbit
+    container_name: janus_token
 
   mongo:
     image: mongo

@@ -1,5 +1,7 @@
 {
   "janus": "stop_pcap",
   "transaction": "<transaction>",
+  "session_id": "<number>",
+  "handle_id": "<number>",
   "admin_secret": "<string>"
 }

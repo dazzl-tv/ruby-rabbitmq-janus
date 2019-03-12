@@ -1,6 +1,6 @@
 {
-  "janus": "set_log_level",
+  "janus": "set_max_nack_queue",
   "transaction": "<transaction>",
   "admin_secret": "<string>",
-  "level": "<integer>"
+  "max_nack_queue": "<integer>"
 }

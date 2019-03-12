@@ -1,8 +1,10 @@
 {
   "janus": "start_pcap",
+  "transaction": "<transaction>",
+  "session_id": "<number>",
+  "handle_id": "<number>",
+  "admin_secret": "<string>",
   "folder" : "<string>",
   "filename" : "<string>",
-  "truncate" : "<number>",
-  "transaction": "<transaction>",
-  "admin_secret": "<string>"
+  "truncate" : "<number>"
 }

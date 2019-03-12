@@ -1,6 +1,6 @@
 {
-  "janus": "set_log_level",
+  "janus": "set_log_colors",
   "transaction": "<transaction>",
   "admin_secret": "<string>",
-  "level": "<integer>"
+  "colors": "<boolean>"
 }

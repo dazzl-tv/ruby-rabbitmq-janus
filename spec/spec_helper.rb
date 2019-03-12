@@ -8,6 +8,7 @@ require 'factory_girl'
 require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
+require 'timeout'
 
 require 'ruby_rabbitmq_janus'
 require 'config/initializer'
@@ -65,5 +66,10 @@ RSpec.configure do |config|
       clear
       find_instance
     end
+  end
+
+  # Use timeout for requester
+  config.around(:each, type: :request) do |example|
+    Timeout.timeout(5) { example.run }
   end
 end

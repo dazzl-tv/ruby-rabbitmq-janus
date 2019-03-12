@@ -21,7 +21,7 @@ describe 'RubyRabbitmqJanus::RRJAdmin -- set_no_media_timer', type: :request,
   end
 
   context 'when max is random' do
-    let(:max) { rand(1..546_465) }
+    let(:timer) { rand(1..546_465) }
 
     it { expect(@transaction.to_json).to match_json_schema('base::success') }
   end

@@ -8,8 +8,6 @@ describe 'RubyRabbitmqJanus::RRJAdmin -- list_tokens', type: :request,
                                                        name: :list_tokens do
   before do
     help_admin_prepare
-    help_admin_create_session
-    help_admin_create_handler
     help_admin_request_tested
   end
 

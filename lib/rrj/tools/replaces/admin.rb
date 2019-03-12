@@ -10,6 +10,18 @@ module RubyRabbitmqJanus
       class Admin < Handle
         private
 
+        KEY_ACCEPTED = %w[colors
+                          debug
+                          level
+                          filename
+                          folder
+                          max_nack_queue
+                          no_media_timer
+                          timestamps
+                          token
+                          truncate
+                          session_timeout].freeze
+
         def replace_element_classic
           super
           replace_admins if request.key?('admin_secret')
@@ -23,47 +35,21 @@ module RubyRabbitmqJanus
 
         def replace_admins
           replace_admin
-          replace_level if request.key?('level')
-          replace_debug if request.key?('debug')
-          replace_folder if request.key?('folder')
-          replace_filename if request.key?('filename')
-          replace_truncate if request.key?('truncate')
+          KEY_ACCEPTED.each do |key|
+            replace_component(key) if request.key?(key)
+          end
+        end
+
+        def replace_component(key)
+          request[key] = type.convert(key, opts)
+        rescue => message
+          Tools::Log.instance.warn "Error replace #{key} : #{message}"
         end
 
         def replace_admin
           request['admin_secret'] = admin_pass
         rescue => message
           Tools::Log.instance.warn "Error replace admin_secret : #{message}"
-        end
-
-        def replace_level
-          request['level'] = type.convert('level', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error replace level : #{message}"
-        end
-
-        def replace_debug
-          request['debug'] = type.convert('debug', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error replace debug : #{message}"
-        end
-
-        def replace_folder
-          request['folder'] = type.convert('folder', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error replace folder : #{message}"
-        end
-
-        def replace_filename
-          request['filename'] = type.convert('filename', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error replace filename : #{message}"
-        end
-
-        def replace_truncate
-          request['truncate'] = type.convert('truncate', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error replace truncate : #{message}"
         end
 
         def admin_pass

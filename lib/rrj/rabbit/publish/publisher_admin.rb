@@ -10,7 +10,8 @@ module RubyRabbitmqJanus
         #
         # @param [String] exchange Exchange used for the transaction
         def initialize(exchange)
-          @reply = exchange.queue(Tools::Config.instance.queue_admin_from)
+          @reply = exchange.queue('', exclusive: true)
+          # @reply = exchange.queue(Tools::Config.instance.queue_admin_from)
           super(exchange)
           subscribe_to_queue
         rescue
@@ -21,15 +22,13 @@ module RubyRabbitmqJanus
         #
         # @param [String] request JSON request sending to rabbitmq queue
         #
-        # @return [Janus::Response::Standard] response for an request reading
+        # @return [Janus::Response::Admin] response for an request reading
         #   by janus instance
         def publish(request)
-          # super(request)
           @message = request
-          concat = request.options.merge!(reply_to: reply.name)
-          @exchange.publish(@message.to_json, concat)
-          # p "Waiting response ...."
-          # return_response
+          @exchange.publish(@message.to_json,
+                            request.options.merge!(reply_to: reply.name))
+          return_response
         rescue
           raise Errors::Rabbit::PublisherAdmin::Pusblish
         end

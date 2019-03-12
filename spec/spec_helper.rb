@@ -16,7 +16,7 @@ require 'config/database'
 require 'config/instance'
 Dir['spec/factories/*.rb'].each { |f| require File.expand_path(f) }
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 Dir['spec/support/**/*.rb'].each do |f|
   require File.expand_path(f)

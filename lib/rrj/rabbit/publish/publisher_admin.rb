@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:InstanceVariableAssumption
+
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher

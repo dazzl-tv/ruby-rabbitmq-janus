@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UncommunicativeMethodName
+
 module RubyRabbitmqJanus
   module Janus
     module Transactions

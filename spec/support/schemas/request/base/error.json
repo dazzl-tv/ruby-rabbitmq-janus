@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "janus": { "type": "string", "pattern": "error" },
+    "session_id": { "type": "integer" },
+    "transaction": { "type":  "string" },
+    "error": {
+      "code": { "type": "integer" },
+      "reason": { "type": "String" },
+      "required": [
+        "code",
+        "reason"
+      ]
+    },
+    "handle_id": { "type": "integer" }
+  },
+  "required": [
+    "janus",
+    "transaction",
+    "error"
+  ]
+}

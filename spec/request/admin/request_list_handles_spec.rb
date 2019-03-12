@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
-# LCO: tagged broken 2018/01/26 for v2.3.0
-# see: https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus/builds/333359315
-
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type handles list' do
-  before(:example) do
-    clear
-    attach_admin
-    @type = 'admin::handles'
+describe 'RubyRabbitmqJanus::RRJAdmin -- list_handles', type: :request,
+                                                        level: :admin,
+                                                        name: :list_handles do
+  before do
+    help_admin_prepare
+    help_admin_create_session
+    help_admin_request_tested
   end
 
-  describe '#start_transaction_admin', type: :request,
-                                       level: :admin,
-                                       broken: true,
-                                       name: :handles do
-    include_examples 'transaction admin should match json schema'
-  end
+  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
+  let(:type) { 'admin::list_handles' }
+
+  it { expect(@transaction.to_json).to match_json_schema(type) }
+  it { expect(@transaction.handles).to be_a(Array) }
 end

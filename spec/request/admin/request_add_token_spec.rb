@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-# Dont configured in Janus Instance so return automatically an error
-describe 'RubyRabbitmqJanus::RRJAdmin -- list_tokens', type: :request,
-                                                       level: :admin,
-                                                       name: :list_tokens do
+# Option token has disabled do response is automatically an error
+describe 'RubyRabbitmqJanus::RRJAdmin -- add_token', type: :request,
+                                                     level: :admin,
+                                                     name: :add_token do
   before do
     help_admin_prepare
     help_admin_create_session
@@ -14,7 +14,7 @@ describe 'RubyRabbitmqJanus::RRJAdmin -- list_tokens', type: :request,
   end
 
   let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
-  let(:type) { 'admin::list_tokens' }
+  let(:type) { 'admin::add_token' }
 
   it { expect(@transaction.to_json).to match_json_schema('base::error') }
 end

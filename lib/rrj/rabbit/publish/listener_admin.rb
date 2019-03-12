@@ -3,6 +3,7 @@
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher
+      # Listener to admin queue
       class ListenerAdmin < Listener
         private
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -134,3 +135,4 @@ module RubyRabbitmqJanus
     end
   end
 end
+# rubocop:enable Naming/MemoizedInstanceVariableName

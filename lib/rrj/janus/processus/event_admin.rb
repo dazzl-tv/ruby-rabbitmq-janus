@@ -3,10 +3,12 @@
 module RubyRabbitmqJanus
   module Janus
     module Concurrencies
+      # Manage admin message in queue public
+      # Work In Progress
       class EventAdmin < Event
         include Singleton
 
-        NAME_VAR = :publish_adm.freeze
+        NAME_VAR = :publish_adm
 
         private
 

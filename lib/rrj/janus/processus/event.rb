@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
       class Event < Concurrency
         include Singleton
 
-        NAME_VAR = :publish.freeze
+        NAME_VAR = :publish
 
         def initialize
           super

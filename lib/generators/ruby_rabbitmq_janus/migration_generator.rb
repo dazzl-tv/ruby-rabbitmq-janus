@@ -14,7 +14,7 @@ module RubyRabbitmqJanus
 
         desc 'Add to rails project RubyRabbitmqJanus migration file.'
 
-        source_root File.expand_path('../templates', __FILE__)
+        source_root File.expand_path('templates', __dir__)
 
         def install
           migration_template 'migration.rb',

@@ -55,7 +55,6 @@ module RubyRabbitmqJanus
 
         # Start a timer for TTL
         # rubocop:disable Metrics/AbcSize
-        # rubocop:disable Metrics/MethodLength
         # :reek:TooManyStatements
         def start
           @timer.loop_keepalive do
@@ -77,7 +76,6 @@ module RubyRabbitmqJanus
           raise Errors::Janus::KeepaliveThread::Start
         end
         # rubocop:enable Metrics/AbcSize
-        # rubocop:enable Metrics/MethodLength
 
         # Kill session and disable instance
         def kill
@@ -87,7 +85,6 @@ module RubyRabbitmqJanus
           raise Errors::Janus::KeepaliveThread::Kill
         end
 
-        # rubocop:disable Metrics/MethodLength
         # :reek:TooManyStatements
         def instance_is_down
           janus = find_model
@@ -105,7 +102,6 @@ module RubyRabbitmqJanus
         rescue
           raise Errors::Janus::KeepaliveThread::InstanceIsDown
         end
-        # rubocop:enable Metrics/MethodLength
 
         private
 

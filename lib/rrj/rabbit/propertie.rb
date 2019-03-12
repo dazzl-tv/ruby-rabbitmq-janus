@@ -28,8 +28,8 @@ module RubyRabbitmqJanus
       end
 
       # Define option sending to rabbitmq for janus admin message
-      def options_admin(type_request)
-        base.merge(routing_key: Tools::Cluster.instance.queue_admin_to(@instance))
+      def options_admin(_type_request)
+        base.merge(routing_key: routing_key_admin)
       rescue
         raise Errors::Rabbit::Propertie::Options_admin
       end
@@ -48,6 +48,10 @@ module RubyRabbitmqJanus
 
       def base
         { correlation_id: @correlation, content_type: 'application/json' }
+      end
+
+      def routing_key_admin
+        Tools::Cluster.instance.queue_admin_to(@instance)
       end
     end
   end

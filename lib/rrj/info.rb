@@ -30,7 +30,7 @@ module RubyRabbitmqJanus
   RabbitMQ server in a queue for janus server. Janus processes a message and
   send to RabbitMQ server in a queue for gem. Once the received message is
   decoded and returned through the Rails API.
-    DESC
+  DESC
 
   # Define homepage
   HOMEPAGE = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'

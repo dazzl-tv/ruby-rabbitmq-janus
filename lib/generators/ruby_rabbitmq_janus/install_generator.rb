@@ -11,7 +11,7 @@ module RubyRabbitmqJanus
   config.autoload_paths += Dir[Rails.root.join('app', 'ruby_rabbitmq_janus')]
       AUTOLOAD
 
-      source_root File.expand_path('../templates', __FILE__)
+      source_root File.expand_path('templates', __dir__)
 
       # Generate files with default code
       def add_actions

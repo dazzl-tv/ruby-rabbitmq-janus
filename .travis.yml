@@ -4,7 +4,9 @@ group: deprecated-2017Q4
 language: ruby
 
 cache:
+  bundler: true
   directories:
+    - /home/travis/.rvm
     - /usr/local/bundle
 
 rvm:

@@ -11,12 +11,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add missing request admin [see requests](https://janus.conf.meetecho.com/docs/admin.html)
 - Add rubocop-rspec (for development)
 - Add timeout for spec request
+- Use cache for bundler and rvm
 
 ### [Changed]
 - Rename file request admin handles/session to list_handles/sessions
 - Use exclusive queue for admin request
 - Update rubocop (for development)
 - Change base image for travis execution
+
+### [Fixed]
+- Fix version used for sqlite3
 
 ## [2.4.0] - 2019-01-31
 ### [Added]

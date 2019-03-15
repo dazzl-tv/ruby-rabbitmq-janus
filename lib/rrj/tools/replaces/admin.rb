@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
                           timestamps
                           token
                           truncate
-                          session_timeout].freeze
+                          timeout].freeze
 
         def replace_element_classic
           super

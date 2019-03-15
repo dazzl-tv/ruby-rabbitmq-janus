@@ -39,12 +39,12 @@ module RubyRabbitmqJanus
 
       def convert_data
         case search_key
-        when '<string>' then convert_to_type_string
-        when '<number>', '<integer>' then convert_to_type_number
-        when '<boolean>' then convert_to_type_boolean
-        when '<array>' then convert_to_type_array
-        when '<transaction>' then convert_to_type_transaction
-        when /<plugin\[[0-9]\]>/ then convert_to_type_plugin
+        when '<string>'               then convert_to_type_string
+        when '<number>', '<integer>'  then convert_to_type_number
+        when '<boolean>'              then convert_to_type_boolean
+        when '<array>'                then convert_to_type_array
+        when '<transaction>'          then convert_to_type_transaction
+        when /<plugin\[[0-9]\]>/      then convert_to_type_plugin
         end
       end
 

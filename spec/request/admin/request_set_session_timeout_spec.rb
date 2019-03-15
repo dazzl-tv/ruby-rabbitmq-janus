@@ -15,7 +15,7 @@ describe 'RubyRabbitmqJanus::RRJAdmin --  set_session_timeout', type: :request,
   let(:parameters) do
     {
       'level' => level,
-      'session_timeout' => timeout
+      'timeout' => timeout
     }
   end
 

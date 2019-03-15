@@ -2,6 +2,6 @@
   "janus": "set_log_level",
   "transaction": "<transaction>",
   "admin_secret": "<string>",
-  "session_timeout": "<integer>",
+  "timeout": "<integer>",
   "level": "<integer>"
 }

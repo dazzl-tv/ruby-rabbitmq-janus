@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-# :reek:InstanceVariableAssumption
-
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # This publisher send and read an message in admin queues
-      class PublisherAdmin < Publisher
-        # Intialize an queue non eclusive for admin/monitor API with Janus
+      class Admin < Base
+        # Initialize an queue non eclusive for admin/monitor API with Janus
         #
         # @param [String] exchange Exchange used for the transaction
         def initialize(exchange)
@@ -17,10 +15,11 @@ module RubyRabbitmqJanus
           super(exchange)
           subscribe_to_queue
         rescue
-          raise Errors::Rabbit::PublisherAdmin::Initialize
+          raise Errors::Rabbit::Publisher::Admin::Initialize
         end
 
         # Send an message to queue and waiting a response
+        #
         #
         # @param [String] request JSON request sending to rabbitmq queue
         #
@@ -32,12 +31,8 @@ module RubyRabbitmqJanus
                             request.options.merge!(reply_to: reply.name))
           return_response
         rescue
-          raise Errors::Rabbit::PublisherAdmin::Pusblish
+          raise Errors::Rabbit::Publisher::Admin::Pusblish
         end
-
-        private
-
-        attr_reader :reply
       end
     end
   end

@@ -9,7 +9,7 @@ module RubyRabbitmqJanus
       #
       # Publish message in queue exclusive. Bunny create automaticaly a name for
       # this queue. The queue name like to 'amq.gen-1A456DGVHDVUS'.
-      class PublishExclusive < Publisher
+      class Exclusive < Base
         # Initialize an queue exclusive and generated automaticaly by bunny
         #
         # @param [String] exchange Exchange used for the transaction
@@ -19,7 +19,7 @@ module RubyRabbitmqJanus
           super(exchange)
           subscribe_to_queue
         rescue
-          raise Errors::Rabbit::PublishExclusive::Initialize
+          raise Errors::Rabbit::Publisher::Exclusive::Initialize
         end
 
         # Send an message to queue and waiting a response
@@ -32,7 +32,7 @@ module RubyRabbitmqJanus
           super(request)
           return_response
         rescue
-          raise Errors::Rabbit::PublishExclusive::Publish
+          raise Errors::Rabbit::Publisher::Exclusive::Publish
         end
 
         private

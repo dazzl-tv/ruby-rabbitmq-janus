@@ -4,17 +4,16 @@
 
 module RubyRabbitmqJanus
   module Rabbit
-    module Publisher
+    module Listener
       # Listener to admin queue
-      class ListenerAdmin < Listener
+      class JanusInstance < ListenerFrom
         private
 
         def subscribe_queue
-          reply = @rabbit.queue(Tools::Config.instance.queue_admin_from)
+          reply = @rabbit.queue(Tools::Config.instance.queue_janus_instance)
           @rabbit.prefetch(1)
           reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
-            Tools::Log.instance.info \
-              "[X] Message ADMIN reading ##{prop['correlation_id']}"
+            info_subscribe(info, prop, payload)
             synchronize_response(info, payload)
           end
         end

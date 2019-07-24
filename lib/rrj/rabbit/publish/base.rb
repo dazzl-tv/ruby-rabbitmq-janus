@@ -8,7 +8,7 @@ module RubyRabbitmqJanus
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       #
       # This publisher send and read an message in queues
-      class Publisher < BasePublisher
+      class Base < RubyRabbitmqJanus::Rabbit::BaseEvent
         # Intialize a publisher for sending and reading a message
         #
         # @param [String] exchange Determine type exchange used for all
@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
           @exchange = exchange.default_exchange
           @message = nil
         rescue
-          raise Errors::Rabbit::Publish::Initialize
+          raise Errors::Rabbit::Publisher::Base::Initialize
         end
 
         # Publish an message in queue
@@ -32,7 +32,7 @@ module RubyRabbitmqJanus
           @exchange.publish(@message.to_json,
                             request.options.merge!(reply_to: reply.name))
         rescue
-          raise Errors::Rabbit::Publish::Publish
+          raise Errors::Rabbit::Publisher::Base::Publish
         end
 
         private
@@ -57,7 +57,7 @@ module RubyRabbitmqJanus
           if m_cor.eql?(p_cor)
             yield
           else
-            raise Errors::Rabbit::Publish::TestCorrelation, m_cor, p_cor
+            raise Errors::Rabbit::Publisher::Base::TestCorrelation, m_cor, p_cor
           end
         end
 
@@ -69,13 +69,15 @@ module RubyRabbitmqJanus
         end
 
         attr_accessor :message
+        attr_reader :reply
       end
     end
   end
 end
 # rubocop:enable Style/GuardClause
 
-require 'rrj/rabbit/publish/publisher_admin'
 require 'rrj/rabbit/publish/exclusive'
+require 'rrj/rabbit/publish/admin'
 require 'rrj/rabbit/publish/keepalive'
 require 'rrj/rabbit/publish/non_exclusive'
+require 'rrj/rabbit/publish/janus_instance'

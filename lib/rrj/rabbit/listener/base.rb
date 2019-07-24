@@ -4,13 +4,9 @@
 
 module RubyRabbitmqJanus
   module Rabbit
-    module Publisher
-      # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-      #
-      # This publisher don't post message. Is listen just an standard queue to
-      # Janus. By default is "from-janus". It's a parameter in config to this
-      # gem.
-      class Listener < BasePublisher
+    module Listener
+      # Base for listeners
+      class Base < RubyRabbitmqJanus::Rabbit::BaseEvent
         # Define an publisher
         #
         # @param [String] rabbit Information connection to rabbitmq server
@@ -37,16 +33,6 @@ module RubyRabbitmqJanus
 
         private
 
-        def subscribe_queue
-          reply = @rabbit.queue(Tools::Config.instance.queue_from)
-          @rabbit.prefetch(1)
-          reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
-            Tools::Log.instance.info \
-              "[X] Message reading ##{prop['correlation_id']}"
-            synchronize_response(info, payload)
-          end
-        end
-
         def binding
           @rabbit.direct('amq.direct')
         end
@@ -69,7 +55,18 @@ module RubyRabbitmqJanus
           @rabbit.acknowledge(info.delivery_tag, false)
           semaphore.signal
         end
+
+        def info_subscribe(info, prop, payload)
+          Tools::Log.instance.debug info
+          Tools::Log.instance.info \
+            "[X] Message reading ##{prop['correlation_id']}"
+          Tools::Log.instance.debug payload
+        end
       end
     end
   end
 end
+
+require 'rrj/rabbit/listener/from'
+require 'rrj/rabbit/listener/from_admin'
+require 'rrj/rabbit/listener/janus_instance'

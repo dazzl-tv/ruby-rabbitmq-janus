@@ -37,6 +37,10 @@ Gem::Specification.new do |spec|
 
   spec.post_install_message = RubyRabbitmqJanus::POST_INSTALL
 
+  spec.bindir = 'bin'
+
+  spec.executables << 'ruby_rabbitmq_janus'
+
   spec.add_development_dependency 'activerecord', '~> 4.2'
   spec.add_development_dependency 'activesupport', '~> 4.2'
   spec.add_development_dependency 'aruba', '~> 0.14.2'
@@ -51,10 +55,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry-byebug', '~> 3.4'
   spec.add_development_dependency 'rails', '~> 4.2'
   spec.add_development_dependency 'rake', '~> 12.0'
-  spec.add_development_dependency 'reek', '~> 4.5'
+  spec.add_development_dependency 'reek', '~> 5.4.0'
   spec.add_development_dependency 'rspec', '~> 3.5'
-  spec.add_development_dependency 'rubocop', '~> 0.65.0'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.32'
+  spec.add_development_dependency 'rubocop', '~> 0.73.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.4'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.34'
   spec.add_development_dependency 'sqlite3', '= 1.3.13'
   spec.add_development_dependency 'travis', '~> 1.8'
   spec.add_development_dependency 'yard', '~> 0.9.5'

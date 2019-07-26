@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
   module Rabbit
     module Listener
       # Listener to admin queue
-      class FromAdmin < ListenerFrom
+      class FromAdmin < From
         private
 
         def subscribe_queue
@@ -16,6 +16,9 @@ module RubyRabbitmqJanus
             info_subscribe(info, prop, payload)
             synchronize_response(info, payload)
           end
+        rescue => exception
+          raise RubyRabbitmqJanus::Errors::Rabbit::Listener::From::ListenEvents,
+                exception
         end
       end
     end

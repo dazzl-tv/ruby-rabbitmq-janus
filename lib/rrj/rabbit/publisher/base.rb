@@ -76,8 +76,8 @@ module RubyRabbitmqJanus
 end
 # rubocop:enable Style/GuardClause
 
-require 'rrj/rabbit/publish/exclusive'
-require 'rrj/rabbit/publish/admin'
-require 'rrj/rabbit/publish/keepalive'
-require 'rrj/rabbit/publish/non_exclusive'
-require 'rrj/rabbit/publish/janus_instance'
+require 'rrj/rabbit/publisher/exclusive'
+require 'rrj/rabbit/publisher/admin'
+require 'rrj/rabbit/publisher/keepalive'
+require 'rrj/rabbit/publisher/non_exclusive'
+require 'rrj/rabbit/publisher/janus_instance'

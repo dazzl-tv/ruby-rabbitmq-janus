@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
       # The name to queue it's created automatically by Bunny GEM
       #
       # @see KeepaliveThread
-      class Keepalive < Publisher
+      class Keepalive < Base
         def initialize(exchange)
           @reply = exchange.queue('', exclusive: true)
           super(exchange)

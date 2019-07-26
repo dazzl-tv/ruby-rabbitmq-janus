@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
       #
       # Publish message in queue non exclusive. By default "to-janus".
       # This an option in config to this gem.
-      class NonExclusive < Publisher
+      class NonExclusive < Base
         # Define an publisher for create non exclusive queue
         def initialize(exchange)
           @reply = exchange.queue(Tools::Config.instance.queue_from)

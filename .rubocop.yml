@@ -48,5 +48,8 @@ RSpec/BeforeAfterAll:
   Exclude:
     - spec/ruby_rabbitmq_janus/tools/config_spec.rb
 
+RSpec/EmptyExampleGroup:
+  Enabled: false
+
 RSpec/InstanceVariable:
   Enabled: false

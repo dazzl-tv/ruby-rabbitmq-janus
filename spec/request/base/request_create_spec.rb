@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type create' do
+describe 'RubyRabbitmqJanus::RRJ -- message type create', broken: true do
   before do
     clear
     @type = 'base::create'

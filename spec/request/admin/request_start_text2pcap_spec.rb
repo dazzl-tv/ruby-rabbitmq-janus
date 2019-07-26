@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJAdmin -- start_text2pcap', type: :request,
                                                            level: :admin,
+                                                           broken: true,
                                                            name: :start_text2pcap do
   before do
     help_admin_prepare

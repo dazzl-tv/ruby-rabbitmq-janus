@@ -9,5 +9,5 @@ describe RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveInitializer, type: :t
   it { expect(concurrency.send(:rabbit)).to be_a(RubyRabbitmqJanus::Rabbit::Connect) }
   it { expect(concurrency.send(:lock)).to be_a(Mutex) }
   it { expect(concurrency.send(:condition)).to be_a(ConditionVariable) }
-  it { expect(concurrency.instance_variable_get(:@thread)).to be_a(described_class) }
+  it { expect(concurrency.instance_variable_get(:@thread)).to be_a(RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveThread) }
 end

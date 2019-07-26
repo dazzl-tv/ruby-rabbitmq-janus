@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJAdmin -- handle_info', type: :request,
                                                        level: :admin,
+                                                       broken: true,
                                                        name: :handle_info do
   before do
     help_admin_prepare

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type info' do
+describe 'RubyRabbitmqJanus::RRJ -- message type info', broken: true do
   before do
     clear
     @type = 'base::info'

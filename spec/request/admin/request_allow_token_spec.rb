@@ -5,6 +5,7 @@ require 'spec_helper'
 # Option token has disabled do response is automatically an error
 describe 'RubyRabbitmqJanus::RRJAdmin -- allow_token', type: :request,
                                                        level: :admin,
+                                                       broken: true,
                                                        name: :allow_token do
   before do
     help_admin_prepare

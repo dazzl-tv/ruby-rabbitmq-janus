@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type create' do
-  before(:example) do
+  before do
     clear
     @type = 'base::create'
   end

@@ -55,7 +55,7 @@ shared_examples 'test replace in request nil' do |element|
   end
 end
 
-shared_examples 'keys' do |element|
+shared_context 'keys' do |element|
   let(:keys) do
     if defined?(key)
       transform[key][element]

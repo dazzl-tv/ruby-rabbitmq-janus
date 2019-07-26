@@ -68,6 +68,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :replace_admin do
 
     context 'transform request sdp' do
       let(:key) { 'jsep' }
+
       include_examples 'test replace in request', 'sdp', String
     end
 

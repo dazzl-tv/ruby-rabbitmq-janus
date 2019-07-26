@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Tools::Cluster, type: :tools, name: :cluster do
-  let(:cluster) { RubyRabbitmqJanus::Tools::Cluster.instance }
+  let(:cluster) { described_class.instance }
   let(:model) { RubyRabbitmqJanus::Models::JanusInstance }
   let(:number_of_instance) { Random.new.rand(100) }
   let(:name_queue) { "to-janus-#{number_of_instance}" }

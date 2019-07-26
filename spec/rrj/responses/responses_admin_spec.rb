@@ -27,7 +27,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
   end
 
   describe '#info' do
-    before(:example) do
+    before do
       @gateway.start_transaction do |transaction|
         @response = transaction.publish_message('base::attach')
       end

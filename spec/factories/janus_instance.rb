@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :janus_instance, class: RubyRabbitmqJanus::Models::JanusInstance do
-    enable true
+    enable { true }
   end
 end

@@ -6,7 +6,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
-  before(:example) do
+  before do
     clear
     @type = 'base::attach'
     @options = @session_instance

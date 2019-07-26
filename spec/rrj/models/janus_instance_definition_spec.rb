@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
                                                    name: :janus_instance do
-  let(:model) { RubyRabbitmqJanus::Models::JanusInstance }
+  let(:model) { described_class }
   let(:parameter_mongo) do
     {
       'id' => '_id',

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveTimer, type: :thread, name: :keepalive_timer do
-  let(:concurrency) { RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveTimer.new }
+  let(:concurrency) { described_class.new }
 
   it { expect(concurrency.send(:time_to_live)).to be_a(Integer) }
   it { expect(concurrency.send(:time_to_die)).to be_a(Integer) }

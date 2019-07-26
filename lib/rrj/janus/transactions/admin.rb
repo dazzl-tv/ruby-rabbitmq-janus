@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
         # Begin connection with RabbitMQ
         def connect
           rabbit.transaction_short do
-            @publisher = Rabbit::Publisher::PublisherAdmin.new(rabbit.channel)
+            @publisher = Rabbit::Publisher::Admin.new(rabbit.channel)
             yield
           end
         rescue

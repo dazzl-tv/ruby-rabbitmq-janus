@@ -4,9 +4,10 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
                                                    name: :janus_instance do
-  before { RubyRabbitmqJanus::Models::JanusInstance.delete_all }
+  before { described_class.delete_all }
+
   after do
-    RubyRabbitmqJanus::Models::JanusInstance.delete_all
+    described_class.delete_all
     create_janus_instances
   end
 
@@ -19,7 +20,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
       { id: random_instance }
     end
   end
-  let(:model) { RubyRabbitmqJanus::Models::JanusInstance }
+  let(:model) { described_class }
 
   context 'Janus Instance simple transaction' do
     it { expect(model.count).to eq(0) }

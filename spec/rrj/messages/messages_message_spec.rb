@@ -5,8 +5,9 @@ require 'spec_helper'
 describe RubyRabbitmqJanus::Janus::Messages::Message, type: :messages,
                                                       name: :message do
   before { @gateway }
+
   let(:template) { 'base::info' }
-  let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Message.new(template) }
+  let(:msg_new) { described_class.new(template) }
 
   describe '#to_json' do
     let(:message) { msg_new.to_json }

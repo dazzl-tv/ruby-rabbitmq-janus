@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::Rabbit::Connect, type: :rabbit,
                                              name: :connect do
-  let(:connect) { RubyRabbitmqJanus::Rabbit::Connect.new }
+  let(:connect) { described_class.new }
 
   describe '#start' do
     it { expect(connect.start.class).to eq(Bunny::Session) }

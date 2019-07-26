@@ -6,7 +6,7 @@ describe RubyRabbitmqJanus::Janus::Messages::Admin, type: :messages,
                                                     level: :admin,
                                                     name: :admin do
   let(:template) { 'base::info' }
-  let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Admin.new(template) }
+  let(:msg_new) { described_class.new(template) }
 
   describe '#options' do
     let(:message) { msg_new.options }

@@ -13,11 +13,12 @@ describe RubyRabbitmqJanus::Janus::Responses::Event, type: :responses,
   end
 
   describe '#event' do
-    let(:type) { 'base::info' }
-    let(:response) { @response }
     subject(:thread) { @event.join }
 
-    it 'should eql {}' do
+    let(:type) { 'base::info' }
+    let(:response) { @response }
+
+    it 'eqls {}' do
       message
       expect(@response.to_hash).to eql({})
     end

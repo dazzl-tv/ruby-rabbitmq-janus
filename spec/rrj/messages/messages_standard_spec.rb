@@ -5,7 +5,7 @@ require 'spec_helper'
 describe RubyRabbitmqJanus::Janus::Messages::Standard, type: :messages,
                                                        name: :standard do
   let(:template) { 'base::info' }
-  let(:msg_new) { RubyRabbitmqJanus::Janus::Messages::Standard.new(template) }
+  let(:msg_new) { described_class.new(template) }
 
   describe '#options' do
     let(:message) { msg_new.options }

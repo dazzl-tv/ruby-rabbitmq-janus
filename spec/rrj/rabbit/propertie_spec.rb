@@ -5,7 +5,7 @@ require 'spec_helper'
 describe RubyRabbitmqJanus::Rabbit::Propertie, type: :rabbit,
                                                name: :propertie,
                                                instances: true do
-  let(:rabbit) { RubyRabbitmqJanus::Rabbit::Propertie.new(2) }
+  let(:rabbit) { described_class.new(2) }
 
   describe '#options' do
     it { expect(rabbit.options).to match_json_schema(:rabbit_options2) }

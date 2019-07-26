@@ -27,7 +27,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
   end
 
   context 'session and sender' do
-    before(:example) do
+    before do
       @gateway.start_transaction do |transaction|
         @response = transaction.publish_message('base::create')
       end

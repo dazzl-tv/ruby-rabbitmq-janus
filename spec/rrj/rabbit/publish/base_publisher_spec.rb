@@ -3,10 +3,10 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
-                                               name: :base_publisher do
-  let(:publish) { RubyRabbitmqJanus::Rabbit::Publisher::BasePublisher.new }
+                                               name: :base_event do
+  let(:publish) { RubyRabbitmqJanus::Rabbit::BaseEvent.new }
 
-  describe 'BasePublisher' do
+  describe 'BaseEvent' do
     describe '#new' do
       it { expect(publish).to have_attributes(responses: []) }
     end

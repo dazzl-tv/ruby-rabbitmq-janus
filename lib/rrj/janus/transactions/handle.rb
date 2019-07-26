@@ -88,7 +88,7 @@ module RubyRabbitmqJanus
 
         def read_response_exclusive
           chan = rabbit.channel
-          tmp_publish = Rabbit::Publisher::PublishExclusive.new(chan, '')
+          tmp_publish = Rabbit::Publisher::Exclusive.new(chan, '')
           tmp_publish.publish(yield)
         end
 

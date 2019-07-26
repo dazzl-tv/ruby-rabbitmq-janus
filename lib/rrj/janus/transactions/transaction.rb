@@ -32,11 +32,11 @@ module RubyRabbitmqJanus
           @publisher = if @exclusive
                          Tools::Log.instance.debug \
                            'Choose an queue Exclusive : ampq.gen-xxx'
-                         Rabbit::Publisher::PublishExclusive.new(chan, '')
+                         Rabbit::Publisher::Exclusive.new(chan, '')
                        else
                          Tools::Log.instance.debug \
                            'Choose an queue non Exclusive : to-janus'
-                         Rabbit::Publisher::PublishNonExclusive.new(chan)
+                         Rabbit::Publisher::NonExclusive.new(chan)
                        end
         end
 

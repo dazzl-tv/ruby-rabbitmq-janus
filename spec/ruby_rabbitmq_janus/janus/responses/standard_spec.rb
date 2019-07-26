@@ -10,7 +10,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     end
   end
 
-  context 'just session' do
+  context 'when just session' do
     describe '#session' do
       let(:type) { 'base::create' }
       let(:response) { @response.session }
@@ -26,7 +26,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     end
   end
 
-  context 'session and sender' do
+  context 'when session and sender' do
     before do
       @gateway.start_transaction do |transaction|
         @response = transaction.publish_message('base::create')

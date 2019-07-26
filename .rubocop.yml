@@ -44,5 +44,9 @@ Naming/RescuedExceptionsVariableName:
 
 # RSpec
 # ###
+RSpec/BeforeAfterAll:
+  Exclude:
+    - spec/ruby_rabbitmq_janus/tools/config_spec.rb
+
 RSpec/InstanceVariable:
   Enabled: false

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0] - 2019-07-24
+###[Added]
+- Binaries standalone RRJ threads
+- Create Publisher/Listener for JanusInstance events
+- Add variable environment for listener path in project
+
 ## [2.5.1] - 2019-03-14
 ###[Fixed]
 - Replace tiemout instead session_timeout

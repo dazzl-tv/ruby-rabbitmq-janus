@@ -48,6 +48,10 @@ RSpec/BeforeAfterAll:
   Exclude:
     - spec/ruby_rabbitmq_janus/tools/config_spec.rb
 
+RSpec/DescribeClass:
+  Exclude:
+    - spec/request/**/*
+
 RSpec/EmptyExampleGroup:
   Enabled: false
 

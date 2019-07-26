@@ -44,10 +44,10 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     let(:janus) { FactoryGirl.create(:janus_instance, janus_id) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
-    it { expect(janus.session).to be_a(Integer) }
+    it { expect(janus.session).to be_nil }
     it { expect(janus.enable).to be_a(TrueClass) }
     it { expect(janus.enable).to eq(true) }
-    it { expect(janus.thread).to be_a(Integer) }
+    it { expect(janus.thread).to be_nil }
   end
 
   context 'when Janus Instance disable' do

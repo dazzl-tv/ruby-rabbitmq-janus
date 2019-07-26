@@ -11,7 +11,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Response, type: :responses,
     end
   end
 
-  describe '#to_json' do
+  describe '#to_json', broken: true do
     let(:response) { @response.to_json }
 
     include_examples 'response is', String

@@ -54,7 +54,7 @@ module RubyRabbitmqJanus
         # Return request to json format
         #
         # @return [String] Request to JSON format
-        def to_json
+        def to_json(*_args)
           @request.to_json
         rescue
           raise Errors::Janus::Message::ToJson

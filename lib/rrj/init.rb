@@ -39,8 +39,8 @@ module RubyRabbitmqJanus
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       @option = Tools::Option.new
-    rescue => error
-      raise Errors::RRJ::InstanciateGem, error
+    rescue => exception
+      raise Errors::RRJ::InstanciateGem, exception
     end
 
     # Start a transaction with Janus. Request use session_id information.

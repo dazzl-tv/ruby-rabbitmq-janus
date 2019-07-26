@@ -125,7 +125,8 @@ module RubyRabbitmqJanus
               "Lookup Janus Instance model by session [#{@session}]"
             Models::JanusInstance.find_by_session(@session)
           end
-        rescue StandardError => e
+        rescue StandardError => exception
+          Tools::Log.debug exception
           Tools::Log.instance.warn \
             "find_model: rescuing from error #{e.message}"
           nil
@@ -137,7 +138,7 @@ module RubyRabbitmqJanus
         end
 
         def publisher
-          Rabbit::Publisher::PublishKeepalive.new(@rabbit.channel)
+          Rabbit::Publisher::Keepalive.new(@rabbit.channel)
         end
 
         def response_session

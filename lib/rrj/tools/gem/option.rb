@@ -20,9 +20,8 @@ module RubyRabbitmqJanus
         Log.instance
         Config.instance
         Requests.instance
-        cluster_mode
-      rescue => error
-        raise Errors::Tools::Option::Initialize, error
+      rescue => exception
+        raise Errors::Tools::Option::Initialize, exception
       end
 
       # Determine session_id used
@@ -53,15 +52,6 @@ module RubyRabbitmqJanus
         options.key?('handle_id') ? options['handle_id'] : 0
       rescue
         raise Errors::Tools::Option::UseCurrentHandle, options
-      end
-
-      private
-
-      def cluster_mode
-        method = Config.instance.cluster ? :restart_session : :create_session
-        Cluster.instance.send(method)
-      rescue
-        raise Errors::Tools::Option::ClusterMode
       end
     end
   end

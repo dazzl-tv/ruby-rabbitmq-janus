@@ -23,7 +23,7 @@ module RubyRabbitmqJanus
         UNKNOWN: Logger::UNKNOWN
       }.freeze
 
-      # Sensitive data
+      # Sensitive data hiding to logger
       SENSITIVES = %i[admin_secret apisecret].freeze
 
       attr_reader :level
@@ -34,11 +34,10 @@ module RubyRabbitmqJanus
       # @see http://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html
       def initialize
         logs = defined?(Rails) ? logger_rails : logger_develop
-        logs.progname = RubyRabbitmqJanus.name
+        logs.progname = 'RRJ' if ENV['PROGRAM_NAME'].eql?('ruby_rabbitmq_janus')
         logs.level = LEVELS[:DEBUG]
-        logs.info('### Start gem Rails Rabbit Janus ###')
+        logs.info('### Start gem Ruby Rabbit Janus ###')
         @level = logs.level
-        @progname = logs.progname
         @logs = ActiveSupport::TaggedLogging.new(logs)
       end
 

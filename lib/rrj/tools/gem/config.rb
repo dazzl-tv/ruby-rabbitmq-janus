@@ -76,6 +76,15 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Config::QueueAdminTo
       end
 
+      # Get to name queue JanusInstance
+      #
+      # @return [String] read configuration for queue janus instance
+      def queue_janus_instance
+        @options['queues']['instance'].to_s
+      rescue
+        raise Errors::Tools::Config::QueueJanusInstance
+      end
+
       # @return [Symbol] read configuration for log level used in this gem
       def log_level
         @options['gem']['log']['level'].upcase.to_sym || :INFO

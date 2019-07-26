@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
+describe RubyRabbitmqJanus::Tools::Log, type: :tools, name: :log do
   let(:levels) do
     {
       DEBUG: Logger::DEBUG,
@@ -14,8 +14,8 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
     }
   end
   let(:sensitives) { %i[admin_secret apisecret] }
-  let(:log) { RubyRabbitmqJanus::Tools::Log.instance }
-  let(:log_constant) { RubyRabbitmqJanus::Tools::Log }
+  let(:log) { described_class.instance }
+  let(:log_constant) { described_class }
   let(:new_level) { Random.new.rand(5) }
   let(:message) { '## test ##' }
   let(:last_line) { IO.readlines('log/ruby-rabbitmq-janus.log')[-1..-1][0] }
@@ -75,7 +75,7 @@ describe 'RubyRabbitmqJanus::Log', type: :tools, name: :log do
     it { expect(last_line).to include('D, [RubyRabbitmqJanus] ## test ##') }
   end
 
-  context 'Whane level is changed' do
+  context 'when level is changed' do
     it 'Change level' do
       expect(log.save_level(new_level)).to eql(log.level)
     end

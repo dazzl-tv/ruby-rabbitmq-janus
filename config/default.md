@@ -21,6 +21,7 @@ queues:
   admin:
     from: from-janus-admin
     to: to-janus-admin
+  instance: janus-instance-thread
 
 janus:
   session:
@@ -33,6 +34,8 @@ gem:
     enabled: true
   log:
     level: info
+  listener:
+    path: 'app/ruby_rabbitmq_janus'
 ```
 
 ## Customize

@@ -27,6 +27,8 @@ queues:
     from: from-janus-admin
     # Queue sending a message for admin API janus
     to: to-janus-admin
+  # Name to queue for managing instances
+  instance: janus-instance-thread
 
 # Janus plugin used
 janus:
@@ -54,3 +56,7 @@ gem:
     # Define level to log
     # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
     level: debug
+  # Options for listener thread
+  listener:
+    # Represent path to action_events class in project who use this gem
+    path: 'app/ruby_rabbitmq_janus'

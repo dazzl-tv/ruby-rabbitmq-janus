@@ -45,6 +45,18 @@ module RubyRabbitmqJanus
         end
       end
 
+      def create_keepalive
+        ::Log.info 'Create session'
+        janus_instance = keepalive_object_new
+        set(session: janus_instance.session, enable: true)
+      end
+
+      def stop_keepalive
+        ::Log.info 'Destroy session'
+        unset(%I[thread thread_adm session])
+        set(enable: false)
+      end
+
       private
 
       def search_initializer(options)

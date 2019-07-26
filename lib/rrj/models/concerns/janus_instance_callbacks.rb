@@ -34,14 +34,11 @@ module RubyRabbitmqJanus
       private
 
       def create_a_session_in_janus_instance
-        info_instance('Create session')
-        janus_instance = keepalive_object_new
-        set(session: janus_instance.session)
+        RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
       end
 
       def destroy_a_session_in_janus_instance
-        info_instance('Detaching session')
-        unset(%I[thread thread_adm session])
+        RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
       end
 
       def keepalive_object
@@ -58,6 +55,13 @@ module RubyRabbitmqJanus
 
       def info_instance(text)
         Tools::Log.instance.debug "#{text} in Janus Instance [##{instance}]"
+      end
+
+      def message
+        {
+          id: id.to_s,
+          enable: enable
+        }
       end
     end
   end

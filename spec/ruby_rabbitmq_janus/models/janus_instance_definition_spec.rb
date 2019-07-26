@@ -23,7 +23,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     }
   end
 
-  context 'Janus Instance model definition' do
+  context 'when Janus Instance model definition' do
     if ENV['MONGO'].match?('true')
       it { expect(model.attribute_names).to include('_id') }
       it do

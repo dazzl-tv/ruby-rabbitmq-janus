@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
-                                               name: :listener do
+describe RubyRabbitmqJanus::Rabbit::Listener::From, type: :rabbit,
+                                                    name: :listener do
   let(:publish) do
     rabbit = RubyRabbitmqJanus::Rabbit::Connect.new.rabbit
-    RubyRabbitmqJanus::Rabbit::Listener::ListenerFrom.new(rabbit)
+    described_class.new(rabbit)
   end
 
   # @todo Complete spec publisher listener

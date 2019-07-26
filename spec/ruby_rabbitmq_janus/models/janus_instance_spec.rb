@@ -22,11 +22,11 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   end
   let(:model) { described_class }
 
-  context 'Janus Instance simple transaction' do
+  context 'when Janus Instance simple transaction' do
     it { expect(model.count).to eq(0) }
   end
 
-  context 'many janus instances' do
+  context 'when many janus instances' do
     before do
       FactoryGirl.create_list(:janus_instance, 5, enable: false)
       FactoryGirl.create(:janus_instance, janus_id)
@@ -40,7 +40,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     it { expect(model.find_by_instance(one.instance).session).to eq(one.session) }
   end
 
-  context 'Janus Instance enable' do
+  context 'when Janus Instance enable' do
     let(:janus) { FactoryGirl.create(:janus_instance, janus_id) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
@@ -50,7 +50,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     it { expect(janus.thread).to be_a(Integer) }
   end
 
-  context 'Janus Instance disable' do
+  context 'when Janus Instance disable' do
     let(:janus) { FactoryGirl.create(:janus_instance, enable: false) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }

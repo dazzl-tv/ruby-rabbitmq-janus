@@ -42,37 +42,37 @@ describe RubyRabbitmqJanus::Tools::Log, type: :tools, name: :log do
   context 'when write a message unknown' do
     before { log.unknown(message) }
 
-    it { expect(last_line).to include('A, [RubyRabbitmqJanus] ## test ##') }
+    it { expect(last_line).to include('A, ## test ##') }
   end
 
   context 'when write a message fatal' do
     before { log.fatal(message) }
 
-    it { expect(last_line).to include('F, [RubyRabbitmqJanus] ## test ##') }
+    it { expect(last_line).to include('F, ## test ##') }
   end
 
   context 'when write a message error' do
     before { log.error(message) }
 
-    it { expect(last_line).to include('E, [RubyRabbitmqJanus] ## test ##') }
+    it { expect(last_line).to include('E, ## test ##') }
   end
 
   context 'when write a message warn' do
     before { log.warn(message) }
 
-    it { expect(last_line).to include('W, [RubyRabbitmqJanus] ## test ##') }
+    it { expect(last_line).to include('W, ## test ##') }
   end
 
   context 'when write a message info' do
     before { log.info(message) }
 
-    it { expect(last_line).to include('I, [RubyRabbitmqJanus] ## test ##') }
+    it { expect(last_line).to include('I, ## test ##') }
   end
 
   context 'when write a message debug' do
     before { log.debug(message) }
 
-    it { expect(last_line).to include('D, [RubyRabbitmqJanus] ## test ##') }
+    it { expect(last_line).to include('D, ## test ##') }
   end
 
   context 'when level is changed' do

@@ -41,3 +41,8 @@ Metrics/BlockLength:
 # ###
 Naming/RescuedExceptionsVariableName:
   PreferredName: exception
+
+# RSpec
+# ###
+RSpec/InstanceVariable:
+  Enabled: false

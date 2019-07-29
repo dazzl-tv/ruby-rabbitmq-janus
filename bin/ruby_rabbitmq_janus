@@ -35,6 +35,7 @@ end
 require ORM
 Mongoid.load!(File.join(Dir.pwd, 'config', 'mongoid.yml'), ENVIRONMENT) \
   if defined?(Mongoid)
+require 'rrj/info'
 require 'ruby_rabbitmq_janus'
 
 ::Log = RubyRabbitmqJanus::Tools::Log.instance

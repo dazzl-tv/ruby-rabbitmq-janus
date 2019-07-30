@@ -7,62 +7,13 @@
 # a queue in RabbitMQ and enable (or disable) JanusInstance model in database.
 #
 # @author VAILLANT Jeremy <jeremy@dazzl.tv>
+# @since 2.6.0
 #
 # Use `Log` variable in ActionEvents class
 # for writing in another logger instead rails logs.
 
-ENVIRONMENT = ENV['RAILS_ENV']
-ORM = ENV['ORM']
-LISTENER_PATH = ENV['LISTENER_PATH']
-PROGRAM = ENV['PROGRAM_NAME']
-
-begin
-  require 'config'
-
-  if defined?(Config)
-    config_conf = [
-      File.join(Dir.pwd, 'config', 'settings.yml'),
-      File.join(Dir.pwd, 'config', 'settings', "#{ENVIRONMENT}.yml")
-    ]
-    Config.load_and_set_settings(config_conf)
-  end
-rescue LoadError => exception
-  p 'Don\'t use gem config'
-  p exception
-end
-
-# Select ORM between Mongoid and ActiveRecord
-require ORM
-Mongoid.load!(File.join(Dir.pwd, 'config', 'mongoid.yml'), ENVIRONMENT) \
-  if defined?(Mongoid)
-require 'rrj/info'
-require 'ruby_rabbitmq_janus'
-
-::Log = RubyRabbitmqJanus::Tools::Log.instance
-
-Log.info "RRJ Version : #{RubyRabbitmqJanus::VERSION}"
-Log.info RubyRabbitmqJanus::BANNER
-
-require File.join(File.dirname(__FILE__), '..', 'lib', 'rrj', 'binary')
-
-begin
-  bin = RubyRabbitmqJanus::Binary.new
-  Log.info \
-    'Prepare to listen events in queue : ' + \
-    RubyRabbitmqJanus::Tools::Config.instance.queue_janus_instance
-  rabbit = RubyRabbitmqJanus::Rabbit::Connect.new
-  rabbit.start
-  listener = RubyRabbitmqJanus::Rabbit::Listener::JanusInstance.new(rabbit)
-  Log.info 'Loop events provided by Janus queues'
-  loop do
-    listener.listen_events do |event, response|
-      Log.debug "Event : #{event}"
-      Log.debug "Response : #{response.to_hash}"
-      bin.update_instance(response.to_hash)
-    end
-  end
-rescue => exception
-  Log.fatal '!! Fail to start RRJ threads !!'
-  Log.fatal exception
-  exit 1
-end
+require 'rrj/tools/bin/environment'
+require 'rrj/tools/bin/arguments'
+require 'rrj/tools/bin/config'
+require 'rrj/tools/bin/model'
+require 'rrj/tools/bin/init'

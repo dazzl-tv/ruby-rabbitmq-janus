@@ -24,6 +24,12 @@ module RubyRabbitmqJanus
               super 'Error for publishing message'
             end
           end
+
+          class TestCorrelation < RubyRabbitmqJanus::Errors::Rabbit::Publisher::BaseErrorPublisher
+            def initialize(message, propertie)
+              super "Correlation doesn't equal (msg: #{message}) != (prp: #{propertie})"
+            end
+          end
         end
       end
     end

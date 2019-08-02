@@ -27,6 +27,7 @@ end
 end
 
 RubyRabbitmqJanus::RRJ_RSPEC = false
+p "RRJ_RSPEC : #{RubyRabbitmqJanus::RRJ_RSPEC}"
 
 RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation

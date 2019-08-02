@@ -4,7 +4,7 @@ require 'bunny-mock'
 
 module RubyRabbitmqJanus
   # Specify RSpec is used when gem is instantiate
-  RRJ_RSPEC = true
+  RRJ_RSPEC = false
 
   # # RRJRSpec
   #

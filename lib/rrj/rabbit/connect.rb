@@ -75,6 +75,7 @@ module RubyRabbitmqJanus
         channel = @rabbit.channel
         queue = channel.queue 'janus-queue-test'
         queue.publish 'RSpec testing message'
+        queue.pop
       end
 
       def read_options_server

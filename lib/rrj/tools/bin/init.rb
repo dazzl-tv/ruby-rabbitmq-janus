@@ -6,12 +6,14 @@
 require 'rrj/info'
 require 'ruby_rabbitmq_janus'
 
+# rubocop:disable Naming/ConstantName
 ::Log = if @logger_default
           RubyRabbitmqJanus::Tools::Log.instance
         else
           require_relative @logger_path
           @logger_class.constantize.instance
         end
+# rubocop:enable Naming/ConstantName
 
 Log.info "RRJ Version : #{RubyRabbitmqJanus::VERSION}"
 Log.info RubyRabbitmqJanus::BANNER

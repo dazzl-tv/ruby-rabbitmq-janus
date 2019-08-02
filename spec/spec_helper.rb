@@ -26,10 +26,10 @@ end
   require_relative f
 end
 
-RubyRabbitmqJanus::RRJ_RSPEC = false
-p "RRJ_RSPEC : #{RubyRabbitmqJanus::RRJ_RSPEC}"
-
 RSpec.configure do |config|
+  RubyRabbitmqJanus::RRJ_RSPEC = false
+  p "RRJ_RSPEC : #{RubyRabbitmqJanus::RRJ_RSPEC}"
+
   DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 

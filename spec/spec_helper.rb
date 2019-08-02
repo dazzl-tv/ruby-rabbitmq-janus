@@ -27,9 +27,6 @@ end
 end
 
 RSpec.configure do |config|
-  RubyRabbitmqJanus::RRJ_RSPEC = false
-  p "RRJ_RSPEC : #{RubyRabbitmqJanus::RRJ_RSPEC}"
-
   DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 
@@ -63,6 +60,9 @@ RSpec.configure do |config|
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before do |example|
+    RubyRabbitmqJanus::RRJ_RSPEC = false
+    p "RRJ_RSPEC : #{RubyRabbitmqJanus::RRJ_RSPEC}"
+
     unless example.metadata[:type].match?(/tools/)
       after_load_database
       initializer_rrj(example.metadata)

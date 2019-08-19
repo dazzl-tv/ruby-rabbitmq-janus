@@ -10,6 +10,8 @@ require 'rrj/models/concerns/janus_instance_validations'
 require "rrj/models/#{defined?(Mongoid) ? 'mongoid' : 'active_record'}"
 
 module RubyRabbitmqJanus
+  # :reek:InstanceVariableAssumption
+
   # # RubyRabbitmqJanus Bynary
   #
   # Initialize tools for a standalone executable

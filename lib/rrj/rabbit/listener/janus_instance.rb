@@ -5,6 +5,8 @@ require 'rrj/janus/responses/janus_instance'
 module RubyRabbitmqJanus
   module Rabbit
     module Listener
+      # :reek:InstanceVariableAssumption
+
       # Listener to admin queue
       class JanusInstance < From
         private

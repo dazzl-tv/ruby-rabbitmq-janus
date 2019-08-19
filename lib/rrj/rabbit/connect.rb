@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # :reek:TooManyStatements
+# :reek:FeatureEnvy
+# :reek:RepeatedConditional
 
 module RubyRabbitmqJanus
   module Rabbit

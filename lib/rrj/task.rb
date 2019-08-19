@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # :reek:TooManyStatements
+# :reek:BooleanParameter
+# :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   # @author VAILLANT jeremy <jeremy.vaillant@dazl.tv>

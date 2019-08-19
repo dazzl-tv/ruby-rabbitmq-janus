@@ -1,5 +1,7 @@
 # frozen-string_literal: true
 
+# :reek:IrresponsibleModule
+
 module RubyRabbitmqJanus
   module Errors
     module Rabbit

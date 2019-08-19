@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # :reek:TooManyStatements
+# :reek:InstanceVariableAssumption
 
 module RubyRabbitmqJanus
   module Rabbit

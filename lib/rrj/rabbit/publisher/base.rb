@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 # rubocop:disable Style/GuardClause
 
 module RubyRabbitmqJanus
@@ -69,7 +71,7 @@ module RubyRabbitmqJanus
         end
 
         attr_accessor :message
-        attr_reader :reply
+        attr_reader :reply, :exchange
       end
     end
   end

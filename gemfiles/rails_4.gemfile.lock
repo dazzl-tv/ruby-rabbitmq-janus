@@ -288,7 +288,7 @@ DEPENDENCIES
   activesupport
   appraisal
   aruba (~> 0.14.2)
-  bundler (~> 1.12)
+  bundler (~> 1.17.3)
   database_cleaner (~> 1.6)
   factory_girl (~> 4.8)
   fuubar (~> 2.2)

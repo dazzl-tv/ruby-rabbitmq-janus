@@ -12,10 +12,8 @@ module RubyRabbitmqJanus
       def initialize
         @rabbit = if Tools::Config.instance.tester?
                     require 'bunny-mock'
-                    p 'Connect to fake rabbitmq'
                     BunnyMock.new.start
                   else
-                    p 'Connect to rabbitmq'
                     Bunny.new(read_options_server.merge!(option_log_rabbit))
                   end
       rescue => exception

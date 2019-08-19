@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.6.0] - 2019-07-24
 ###[Added]
+- Test with Travis for rails 4/5/6
+- Add global variable for loading bunny-mock
 - Binaries standalone RRJ threads
 - Create Publisher/Listener for JanusInstance events
 - Add variable environment for listener path in project

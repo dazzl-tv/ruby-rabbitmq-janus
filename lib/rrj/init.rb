@@ -14,9 +14,6 @@ require 'erb'
 
 # Primary module for this gem
 module RubyRabbitmqJanus
-  # Constant used for checked if execution it's with RSpec
-  RRJ_RSPEC = false
-
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
   # # RubyRabbitmqJanus - RRJ

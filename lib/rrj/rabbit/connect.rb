@@ -10,9 +10,12 @@ module RubyRabbitmqJanus
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
-        @rabbit = if RubyRabbitmqJanus::RRJ_RSPEC
+        @rabbit = if Tools::Config.instance.tester?
+                    require 'bunny-mock'
+                    p 'Connect to fake rabbitmq'
                     BunnyMock.new.start
                   else
+                    p 'Connect to rabbitmq'
                     Bunny.new(read_options_server.merge!(option_log_rabbit))
                   end
       rescue => exception
@@ -21,7 +24,7 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short
-        response = if RubyRabbitmqJanus::RRJ_RSPEC
+        response = if Tools::Config.instance.tester?
                      fake_transaction
                    else
                      transaction_long { yield }
@@ -35,7 +38,7 @@ module RubyRabbitmqJanus
       # Create an transaction with rabbitmq and not close
       def transaction_long
         start
-        if RubyRabbitmqJanus::RRJ_RSPEC
+        if Tools::Config.instance.tester?
           @rabbit.channel.queue.pop[:message]
         else
           yield
@@ -60,7 +63,7 @@ module RubyRabbitmqJanus
 
       # Create an channel
       def channel
-        if RubyRabbitmqJanus::RRJ_RSPEC
+        if Tools::Config.instance.tester?
           @rabbit.channel
         else
           @rabbit.create_channel

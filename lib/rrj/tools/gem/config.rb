@@ -92,10 +92,18 @@ module RubyRabbitmqJanus
         raise Errors::Tools::Config::LogLevel
       end
 
+      # @return [Symbol] read configuration for bunny log level
       def log_level_rabbit
         @options['rabbit']['level'].upcase.to_sym || :INFO
       rescue
         raise Errors::Tools::Config::LogLevelRabbit
+      end
+
+      # @return [Boolean] read configuration for bunny execution
+      def tester?
+        @options['rabbit']['test'].to_s.match?('true') ? true : false
+      rescue
+        raise Errors::Tools::Config::RabbitTester
       end
 
       # @return [Integer]

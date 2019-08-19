@@ -56,6 +56,12 @@ module RubyRabbitmqJanus
           end
         end
 
+        class RabbitTester < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[RabbitTester] Error for reading option rabbitmq tester', :warn
+          end
+        end
+
         class TimeToLive < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super '[TimeToLive] Keepalive TTL option is not reading in config file', :warn

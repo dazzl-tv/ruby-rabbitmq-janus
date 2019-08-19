@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:TooManyMethods
+
 # rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus
   module Tools
@@ -104,6 +106,13 @@ module RubyRabbitmqJanus
         @options['rabbit']['test'].to_s.match?('true') ? true : false
       rescue
         raise Errors::Tools::Config::RabbitTester
+      end
+
+      # @return [String] read configuration fir queue admin
+      def admin_pass
+        @options['rabbit']['admin_pass'].to_s
+      rescue
+        raise Errors::Tools::Config::AdminPassword
       end
 
       # @return [Integer]

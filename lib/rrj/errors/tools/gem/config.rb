@@ -62,6 +62,12 @@ module RubyRabbitmqJanus
           end
         end
 
+        class AdminPassword < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[AdminPassword] Error for reading option admin password', :warn
+          end
+        end
+
         class TimeToLive < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super '[TimeToLive] Keepalive TTL option is not reading in config file', :warn

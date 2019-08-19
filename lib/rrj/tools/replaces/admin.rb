@@ -47,13 +47,9 @@ module RubyRabbitmqJanus
         end
 
         def replace_admin
-          request['admin_secret'] = admin_pass
+          request['admin_secret'] = Tools::Config.instance.options.admin_pass
         rescue => exception
           Tools::Log.instance.warn "Error replace admin_secret : #{exception}"
-        end
-
-        def admin_pass
-          Tools::Config.instance.options['rabbit']['admin_pass']
         end
       end
     end

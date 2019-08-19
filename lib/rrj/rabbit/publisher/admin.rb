@@ -3,6 +3,8 @@
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher
+      # :reek:InstanceVariableAssumption
+
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       # This publisher send and read an message in admin queues
       class Admin < Base
@@ -26,9 +28,9 @@ module RubyRabbitmqJanus
         # @return [Janus::Response::Admin] response for an request reading
         #   by janus instance
         def publish(request)
-          message = request
-          exchange.publish(message.to_json,
-                           request.options.merge!(reply_to: reply.name))
+          @message = request
+          @exchange.publish(@message.to_json,
+                            request.options.merge!(reply_to: reply.name))
           return_response
         rescue
           raise Errors::Rabbit::Publisher::Admin::Pusblish

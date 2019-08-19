@@ -71,7 +71,7 @@ module RubyRabbitmqJanus
         end
 
         attr_accessor :message
-        attr_reader :reply, :exchange
+        attr_reader :reply
       end
     end
   end

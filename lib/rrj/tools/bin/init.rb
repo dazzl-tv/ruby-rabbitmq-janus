@@ -22,6 +22,13 @@ require File.join(File.dirname(__FILE__), '..', '..', 'binary')
 
 begin
   bin = RubyRabbitmqJanus::Binary.new
+  Log.info 'Load events public queue classes'
+  require File.join(Dir.pwd, LISTENER_PATH)
+
+  Log.info 'Listen public queue in thread'
+  actions = RubyRabbitmqJanus::ActionEvents.new.actions
+  RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
+
   Log.info \
     'Prepare to listen events in queue : ' + \
     RubyRabbitmqJanus::Tools::Config.instance.queue_janus_instance

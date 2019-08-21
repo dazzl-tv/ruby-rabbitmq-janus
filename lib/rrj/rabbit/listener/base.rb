@@ -34,6 +34,8 @@ module RubyRabbitmqJanus
 
         private
 
+        attr_accessor :rabbit
+
         def binding
           @rabbit.direct('amq.direct')
         end
@@ -46,15 +48,6 @@ module RubyRabbitmqJanus
         def log_message_id(propertie)
           message_id = propertie.message_id
           Tools::Log.instance.info "[X] Message reading with ID #{message_id}"
-        end
-
-        # Sending an signal when an response is reading in queue
-        def synchronize_response(info, payload)
-          lock.synchronize do
-            @responses.push(Janus::Responses::Event.new(JSON.parse(payload)))
-          end
-          @rabbit.acknowledge(info.delivery_tag, false)
-          semaphore.signal
         end
 
         def info_subscribe(info, prop, payload)

@@ -8,12 +8,12 @@ module RubyRabbitmqJanus
       # :reek:InstanceVariableAssumption
 
       # Listener to admin queue
-      class JanusInstance < From
+      class JanusInstance < Base
         private
 
         def subscribe_queue
-          reply = @rabbit.queue(Tools::Config.instance.queue_janus_instance)
-          @rabbit.prefetch(1)
+          reply = rabbit.queue(Tools::Config.instance.queue_janus_instance)
+          rabbit.prefetch(1)
           reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
             info_subscribe(info, prop, payload)
             synchronize_response(info, payload)
@@ -29,7 +29,7 @@ module RubyRabbitmqJanus
             response = Janus::Responses::JanusInstance.new(JSON.parse(payload))
             @responses.push(response)
           end
-          @rabbit.acknowledge(info.delivery_tag, false)
+          rabbit.acknowledge(info.delivery_tag, false)
           semaphore.signal
         end
       end

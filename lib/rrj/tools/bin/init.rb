@@ -21,14 +21,21 @@ Log.info RubyRabbitmqJanus::BANNER
 require File.join(File.dirname(__FILE__), '..', '..', 'binary')
 
 begin
-  bin = RubyRabbitmqJanus::Binary.new
   Log.info 'Load events public queue classes'
+  bin = RubyRabbitmqJanus::Binary.new
+  Log.info "Load file : #{File.join(Dir.pwd, LISTENER_PATH)}"
   require File.join(Dir.pwd, LISTENER_PATH)
 
   Log.info 'Listen public queue in thread'
   actions = RubyRabbitmqJanus::ActionEvents.new.actions
   RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
+rescue => exception
+  Log.fatal '!! Fail to start RRJ Thread listen public queue !!'
+  Log.fatal exception
+  exit 1
+end
 
+begin
   Log.info \
     'Prepare to listen events in queue : ' + \
     RubyRabbitmqJanus::Tools::Config.instance.queue_janus_instance
@@ -44,7 +51,7 @@ begin
     end
   end
 rescue => exception
-  Log.fatal '!! Fail to start RRJ threads !!'
+  Log.fatal '!! Fail to start RRJ Thread Janus Instance management !!'
   Log.fatal exception
   exit 1
 end

@@ -12,7 +12,6 @@ module RubyRabbitmqJanus
         # @param [String] rabbit Information connection to rabbitmq server
         def initialize(rabbit)
           super()
-          @responses = []
           @rabbit = rabbit.channel
           subscribe_queue
         rescue
@@ -24,7 +23,7 @@ module RubyRabbitmqJanus
           semaphore.wait
           response = nil
           lock.synchronize do
-            response = @responses.shift
+            response = responses.shift
           end
           yield response.event, response
         rescue => exception
@@ -34,7 +33,7 @@ module RubyRabbitmqJanus
 
         private
 
-        attr_accessor :rabbit
+        attr_accessor :rabbit, :responses
 
         def binding
           @rabbit.direct('amq.direct')

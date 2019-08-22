@@ -15,5 +15,4 @@ ORM = check_variable('ORM')
 LISTENER_PATH = check_variable('LISTENER_PATH')
 PROGRAM = check_variable('PROGRAM_NAME')
 
-@verbose = false
 @logger_class = true

@@ -16,7 +16,7 @@ require 'ruby_rabbitmq_janus'
 # rubocop:enable Naming/ConstantName
 
 Log.info "RRJ Version : #{RubyRabbitmqJanus::VERSION}"
-Log.info RubyRabbitmqJanus::BANNER
+Log.info "\r\n#{RubyRabbitmqJanus::BANNER}"
 
 require File.join(File.dirname(__FILE__), '..', '..', 'binary')
 

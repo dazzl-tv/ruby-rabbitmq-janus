@@ -16,6 +16,8 @@ module RubyRabbitmqJanus
     #
     # @abstract Publish message in RabbitMQ
     class BaseEvent
+      attr_reader :responses
+
       # Define a base publisher
       def initialize
         @responses = []
@@ -27,7 +29,7 @@ module RubyRabbitmqJanus
 
       private
 
-      attr_accessor :semaphore, :lock, :responses
+      attr_accessor :semaphore, :lock
 
       def return_response
         @semaphore.wait

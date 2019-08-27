@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rrj/tools/gem/log.rb'
 
-describe RubyRabbitmqJanus::Tools::Logger, type: :tools, name: :log, boken: true do
+describe RubyRabbitmqJanus::Tools::Logger, type: :tools, name: :log, broken: true do
   let(:levels) do
     {
       DEBUG: Logger::DEBUG,

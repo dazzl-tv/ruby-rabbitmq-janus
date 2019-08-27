@@ -1,21 +1,25 @@
 # frozen_string_literal: true
 
+require 'bunny-mock'
+
+# :reek:FeatureEnvy
+
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
-    # Class for manage connection with RabbitMQ
-    class Connect
+    # Override class connect with a Faker connection with rabbitmq
+    class ConnectFake
       # Initialize connection to server RabbitMQ
       def initialize
-        @rabbit = Bunny.new(conf.rabbit_settings)
+        @rabbit = BunnyMock.new.start
       rescue => exception
         raise Errors::Rabbit::Connect::Initialize, exception
       end
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short
-        response = transaction_long { yield }
+        response = fake_transaction
         close
         response
       rescue => exception
@@ -25,7 +29,7 @@ module RubyRabbitmqJanus
       # Create an transaction with rabbitmq and not close
       def transaction_long
         start
-        yield
+        @rabbit.channel.queue.pop[:message]
       rescue => exception
         raise Errors::Rabbit::Connect::TransactionLong, exception
       end
@@ -46,9 +50,18 @@ module RubyRabbitmqJanus
 
       # Create an channel
       def channel
-        @rabbit.create_channel
+        @rabbit.channel
       rescue => exception
         raise Errors::Rabbit::Connect::Channel, exception
+      end
+
+      private
+
+      def fake_transaction
+        channel = @rabbit.channel
+        queue = channel.queue 'janus-queue-test'
+        queue.publish 'RSpec testing message'
+        queue.pop
       end
     end
   end

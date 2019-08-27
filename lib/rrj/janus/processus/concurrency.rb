@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
       class Concurrency
         # Initialize class with elements for thread communication
         def initialize
-          Tools::Log.instance.info info_thread
+          ::Log.info info_thread
           @rabbit = RubyRabbitmqJanus::Rabbit::Connect.new
           @lock = Mutex.new
           @condition = ConditionVariable.new
@@ -26,7 +26,7 @@ module RubyRabbitmqJanus
         def initialize_thread
           @rabbit.transaction_long { transaction_running }
         rescue Interrupt
-          Tools::Log.instance.info "Stop transaction #{self.class.name}"
+          ::Log.info "Stop transaction #{self.class.name}"
           @rabbit.close
         end
 

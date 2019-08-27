@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# Load gem config if present
+# Load gem Config if present
+# @see https://rubygems.org/gems/config
 
 begin
   require 'config'
@@ -8,7 +9,7 @@ begin
   if defined?(Config)
     config_conf = [
       File.join(Dir.pwd, 'config', 'settings.yml'),
-      File.join(Dir.pwd, 'config', 'settings', "#{ENVIRONMENT}.yml")
+      File.join(Dir.pwd, 'config', 'settings', "#{ENV['RAILS_ENV']}.yml")
     ]
     Config.load_and_set_settings(config_conf)
   end

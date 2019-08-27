@@ -9,6 +9,11 @@ require 'logger'
 require 'key_path'
 require 'active_support'
 require 'erb'
+require 'rrj/tools/bin/config'
+require 'rrj/tools/gem/log'
+
+Log = RubyRabbitmqJanus::Tools::Logger.create unless defined?(Log)
+RubyRabbitmqJanus::Tools::Logger.start
 
 # :reek:TooManyStatements
 

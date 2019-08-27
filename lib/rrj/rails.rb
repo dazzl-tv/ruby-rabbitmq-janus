@@ -13,8 +13,8 @@ module RubyRabbitmqJanus
   class Rails < ::Rails::Engine
     config.after_initialize do
       Log.debug '[RRJ] After initializer'
-      Log.debug "Load file : #{File.join(Dir.pwd, LISTENER_PATH)}"
-      require File.join(Dir.pwd, LISTENER_PATH)
+      require File.join(Dir.pwd,
+                        RubyRabbitmqJanus::Tools::Config.instance.listener_path)
 
       Log.info 'Listen public queue in thread'
       actions = RubyRabbitmqJanus::ActionEvents.new.actions

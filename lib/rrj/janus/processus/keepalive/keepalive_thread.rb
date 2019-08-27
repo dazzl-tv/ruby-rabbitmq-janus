@@ -6,6 +6,7 @@
 # :reek:TooManyInstanceVariables
 # :reek:TooManyStatements
 # :reek:UncommunicativeVariableName
+# :reek:TooManyMethods
 
 module RubyRabbitmqJanus
   module Janus
@@ -23,7 +24,7 @@ module RubyRabbitmqJanus
           @timer = KeepaliveTimer.new
           @message = KeepaliveMessage.new(instance)
           instance.set(thread: __id__)
-          Tools::Log.instance.info "Keepalive thread id is #{__id__}"
+          ::Log.info "Keepalive thread id is #{__id__}"
           super(&block)
         rescue
           raise Errors::Janus::KeepaliveThread::Initializer
@@ -41,13 +42,13 @@ module RubyRabbitmqJanus
         # Restart session
         # :reek:TooManyStatements
         def restart_session
-          Tools::Log.instance.warn 'Restart session ...'
+          ::Log.warn 'Restart session ...'
           janus = find_model
           if janus.present?
             send_messages_restart
             janus.set(session: @session)
           else
-            Tools::Log.instance.error 'Janus Instance Model is gone, giving up'
+            ::Log.error 'Janus Instance Model is gone, giving up'
           end
         rescue
           raise Errors::Janus::KeepaliveThread::RestartSession
@@ -59,16 +60,16 @@ module RubyRabbitmqJanus
         def start
           @timer.loop_keepalive do
             if detached?(find_model)
-              Tools::Log.instance.info \
+              ::Log.info \
                 "Thread #{__id__} no longer attached to Janus Instance, " \
                 'exiting...'
               @timer.stop_timer
               cleanup
               exit
             else
-              Tools::Log.instance.info "Thread #{__id__} " \
-                'sending keepalive to instance ' \
-                "#{@message.instance} with TTL #{@timer.time_to_live}"
+              ::Log.info msg_send_ttl(__id__,
+                                      @message.instance,
+                                      @timer.time_to_live)
               response_keepalive
             end
           end
@@ -90,12 +91,12 @@ module RubyRabbitmqJanus
           janus = find_model
           @session = @message = nil
           if detached?(janus)
-            Tools::Log.instance.error\
+            ::Log.error\
               "Thread [#{__id__}] no longer attached to Janus Instance " \
               '(should be dead).'
           else
             janus.set(enable: false).unset(%I[thread session])
-            Tools::Log.instance.fatal \
+            ::Log.fatal \
               "Janus Instance [#{janus.instance}] is down, " \
               "thread [#{__id__}] will die."
           end
@@ -121,13 +122,13 @@ module RubyRabbitmqJanus
           if @message.present?
             Models::JanusInstance.find(@message.instance)
           else
-            Tools::Log.instance.warn \
+            ::Log.warn \
               "Lookup Janus Instance model by session [#{@session}]"
             Models::JanusInstance.find_by_session(@session)
           end
         rescue StandardError => exception
-          Tools::Log.debug exception
-          Tools::Log.instance.warn \
+          ::Log.debug exception
+          ::Log.warn \
             "find_model: rescuing from error #{e.message}"
           nil
         end
@@ -157,6 +158,10 @@ module RubyRabbitmqJanus
 
         def publish(message)
           @publisher.publish(message)
+        end
+
+        def msg_send_ttl(id, inst, ttl)
+          "Thread #{id} sending keepalive to instance #{inst} with TTL #{ttl}"
         end
       end
     end

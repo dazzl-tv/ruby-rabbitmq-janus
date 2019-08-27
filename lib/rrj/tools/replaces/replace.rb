@@ -53,14 +53,14 @@ module RubyRabbitmqJanus
           values = @opts['replace']
           running_hash(rewrite_key_to_string(values))
         rescue => exception
-          Tools::Log.instance.warn "Error REPLACE other field : #{exception}"
+          ::Log.warn "Error REPLACE other field : #{exception}"
         end
 
         def add_other
           values = @opts['add']
           @request['body'].merge!(values)
         rescue => exception
-          Tools::Log.instance.warn "Error ADD other field : #{exception}"
+          ::Log.warn "Error ADD other field : #{exception}"
         end
 
         def rewrite_key_to_string(node)
@@ -96,7 +96,7 @@ module RubyRabbitmqJanus
         def replace_transaction
           @request['transaction'] = @type.convert('transaction')
         rescue => exception
-          Tools::Log.instance.warn "Error transaction replace : #{exception}"
+          ::Log.warn "Error transaction replace : #{exception}"
         end
       end
     end

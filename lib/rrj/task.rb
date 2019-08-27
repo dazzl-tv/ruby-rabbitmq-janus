@@ -12,7 +12,6 @@ module RubyRabbitmqJanus
   # This class is used with rake task.
   class RRJTask < RRJ
     def initialize
-      Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
     rescue

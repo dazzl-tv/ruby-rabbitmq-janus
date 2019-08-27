@@ -3,39 +3,12 @@
 # Loads files RRJ and write first message in log,
 # then initialize binary
 
-require 'rrj/info'
-require 'ruby_rabbitmq_janus'
-
-# rubocop:disable Naming/ConstantName
-::Log = if @logger_default
-          RubyRabbitmqJanus::Tools::Log.instance
-        else
-          require_relative @logger_path
-          @logger_class.constantize.instance
-        end
-# rubocop:enable Naming/ConstantName
-
-Log.info "RRJ Version : #{RubyRabbitmqJanus::VERSION}"
-Log.info "\r\n#{RubyRabbitmqJanus::BANNER}"
-
+p "Has rails engine ?? #{defined?(Rails)} -- #{defined?(::Rails::Engine)}"
+require 'rrj/rails' # defined?(::Rails::Engine)
 require File.join(File.dirname(__FILE__), '..', '..', 'binary')
 
 begin
-  Log.info 'Load events public queue classes'
   bin = RubyRabbitmqJanus::Binary.new
-  Log.info "Load file : #{File.join(Dir.pwd, LISTENER_PATH)}"
-  require File.join(Dir.pwd, LISTENER_PATH)
-
-  Log.info 'Listen public queue in thread'
-  actions = RubyRabbitmqJanus::ActionEvents.new.actions
-  RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
-rescue => exception
-  Log.fatal '!! Fail to start RRJ Thread listen public queue !!'
-  Log.fatal exception
-  exit 1
-end
-
-begin
   Log.info \
     'Prepare to listen events in queue : ' + \
     RubyRabbitmqJanus::Tools::Config.instance.queue_janus_instance

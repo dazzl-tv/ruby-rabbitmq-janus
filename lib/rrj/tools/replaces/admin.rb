@@ -43,13 +43,13 @@ module RubyRabbitmqJanus
         def replace_component(key)
           request[key] = type.convert(key, opts)
         rescue => exception
-          Tools::Log.instance.warn "Error replace #{key} : #{exception}"
+          ::Log.warn "Error replace #{key} : #{exception}"
         end
 
         def replace_admin
           request['admin_secret'] = admin_pass
         rescue => exception
-          Tools::Log.instance.warn "Error replace admin_secret : #{exception}"
+          ::Log.warn "Error replace admin_secret : #{exception}"
         end
 
         def admin_pass

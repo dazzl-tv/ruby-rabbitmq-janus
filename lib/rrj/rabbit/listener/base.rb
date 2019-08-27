@@ -46,14 +46,14 @@ module RubyRabbitmqJanus
         # Counts transmitted messages
         def log_message_id(propertie)
           message_id = propertie.message_id
-          Tools::Log.instance.info "[X] Message reading with ID #{message_id}"
+          ::Log.info "[X] Message reading with ID #{message_id}"
         end
 
         def info_subscribe(info, prop, payload)
-          Tools::Log.instance.debug info
-          Tools::Log.instance.info \
+          ::Log.debug info
+          ::Log.info \
             "[X] Message reading ##{prop['correlation_id']}"
-          Tools::Log.instance.debug payload
+          ::Log.debug payload
         end
       end
     end

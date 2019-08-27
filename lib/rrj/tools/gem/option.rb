@@ -3,7 +3,11 @@
 require 'rrj/models/concerns/janus_instance_callbacks'
 require 'rrj/models/concerns/janus_instance_methods'
 require 'rrj/models/concerns/janus_instance_validations'
-require "rrj/models/#{defined?(Mongoid) ? 'mongoid' : 'active_record'}"
+if RubyRabbitmqJanus::Tools::Config.instance.orm.eql?('mongoid')
+  require 'rrj/models/mongoid'
+else
+  require 'rrj/models/activ_record'
+end
 
 # :reek:FeatureEnvy
 
@@ -17,7 +21,6 @@ module RubyRabbitmqJanus
     # instance. It's also used for testing session/handle used in request.
     class Option
       def initialize
-        Log.instance
         Config.instance
         Requests.instance
       rescue => exception

@@ -93,11 +93,11 @@ module RubyRabbitmqJanus
 
         def load_request_file
           @request = request_instance
-          Tools::Log.instance.debug "Opening request : #{to_json}"
+          ::Log.debug "Opening request : #{to_json}"
         end
 
         def prepare_request(_options)
-          Tools::Log.instance.debug "Prepare request for janus : #{to_json}"
+          ::Log.debug "Prepare request for janus : #{to_json}"
         end
 
         def request_instance

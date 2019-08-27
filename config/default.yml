@@ -58,7 +58,26 @@ gem:
     # Define level to log
     # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
     level: debug
+    # Precise type logger
+    # stdout    : Output standard.
+    # file      : Create log file in path 'log/ruby-rabbitmq-janus.log'.
+    # rails     : Use logger rails.
+    # remote    : Use RemoteSyslogLogger (for papertrail)
+    type: file
+    # Used with type. Complete missing data :
+    # stdout    : no option
+    # file      : filename used
+    # rails     : no option
+    # remote    : data output (logs.papertrail.com:4685@program_rrj:backend_host)
+    option: ''
   # Options for listener thread
   listener:
     # Represent path to action_events class in project who use this gem
     path: 'app/ruby_rabbitmq_janus'
+  # Environment to application
+  environment : 'development'
+  # Precise ORM used :
+  # mongoid or active_record
+  orm: 'mongoid'
+  # Define program name
+  program_name: 'ruby_rabbitmq_janus'

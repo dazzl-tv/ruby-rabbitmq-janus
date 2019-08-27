@@ -85,6 +85,36 @@ module RubyRabbitmqJanus
             super "[Cluster] Cluster parameter is missing, with parameter #{parameter}", :warn
           end
         end
+
+        class LogType < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[LogType] Error with Log Type', :fatal
+          end
+        end
+
+        class LogOption < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[LogOption] Error with Log Option', :fatal
+          end
+        end
+
+        class Environment < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[Environment] Error with environment option', :fatal
+          end
+        end
+
+        class ORM < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[ORM] Error with Object Relational Mapping option', :fatal
+          end
+        end
+
+        class ProgramName < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize
+            super '[ProgramName] Error with ProgramName option', :fatal
+          end
+        end
       end
     end
   end

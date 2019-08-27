@@ -6,7 +6,7 @@ require 'rrj/models/concerns/janus_instance_validations'
 if RubyRabbitmqJanus::Tools::Config.instance.orm.eql?('mongoid')
   require 'rrj/models/mongoid'
 else
-  require 'rrj/models/activ_record'
+  require 'rrj/models/active_record'
 end
 
 # :reek:FeatureEnvy

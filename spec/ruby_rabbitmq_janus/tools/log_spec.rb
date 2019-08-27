@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Tools::Log, type: :tools, name: :log do
+describe RubyRabbitmqJanus::Tools::Log, type: :tools, name: :log, boken: true do
   let(:levels) do
     {
       DEBUG: Logger::DEBUG,

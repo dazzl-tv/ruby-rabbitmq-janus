@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-action_event_path = "#{Dir.pwd}/#{LISTENER_PATH}"
-Log.debug "Load action events to path : #{action_event_path}"
-require action_event_path
-require 'rrj/tools/gem/config'
 require 'rrj/models/concerns/janus_instance_callbacks'
 require 'rrj/models/concerns/janus_instance_methods'
 require 'rrj/models/concerns/janus_instance_validations'
-require "rrj/models/#{defined?(Mongoid) ? 'mongoid' : 'active_record'}"
+require "rrj/models/#{RubyRabbitmqJanus::Tools::Config.instance.orm}"
 
 module RubyRabbitmqJanus
   # :reek:InstanceVariableAssumption
@@ -22,8 +18,6 @@ module RubyRabbitmqJanus
   # if enable become true a new session with janus is created
   class Binary
     def initialize
-      RubyRabbitmqJanus::Tools::Config.instance
-
       start_instances
     end
 

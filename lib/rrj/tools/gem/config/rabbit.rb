@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:FeatureEnvy
+
 module RubyRabbitmqJanus
   module Tools
     # Subclasse for Config
@@ -27,6 +29,16 @@ module RubyRabbitmqJanus
         @options['rabbit']['test'].to_s.match?('true') ? true : false
       rescue => exception
         p "[tester] #{exception}"
+      end
+
+      # @return [Hash] Format hash for bunny settings
+      def server_settings
+        Hash[%w[host port pass user vhost log_level].map do |value|
+          [
+            value.to_sym,
+            @options['rabbit'][value.eql?('log_level') ? 'level' : value]
+          ]
+        end]
       end
     end
   end

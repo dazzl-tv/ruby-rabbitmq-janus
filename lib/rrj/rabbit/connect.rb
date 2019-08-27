@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# :reek:TooManyStatements
 # :reek:FeatureEnvy
 # :reek:RepeatedConditional
 
@@ -12,11 +11,11 @@ module RubyRabbitmqJanus
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
-        @rabbit = if Tools::Config.instance.tester?
+        @rabbit = if conf.tester?
                     require 'bunny-mock'
                     BunnyMock.new.start
                   else
-                    Bunny.new(read_options_server.merge!(option_log_rabbit))
+                    Bunny.new(conf.rabbit_settings)
                   end
       rescue => exception
         raise Errors::Rabbit::Connect::Initialize, exception
@@ -24,7 +23,7 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short
-        response = if Tools::Config.instance.tester?
+        response = if conf.tester?
                      fake_transaction
                    else
                      transaction_long { yield }
@@ -38,7 +37,7 @@ module RubyRabbitmqJanus
       # Create an transaction with rabbitmq and not close
       def transaction_long
         start
-        if Tools::Config.instance.tester?
+        if conf.tester?
           @rabbit.channel.queue.pop[:message]
         else
           yield
@@ -63,7 +62,7 @@ module RubyRabbitmqJanus
 
       # Create an channel
       def channel
-        if Tools::Config.instance.tester?
+        if conf.tester?
           @rabbit.channel
         else
           @rabbit.create_channel
@@ -81,18 +80,8 @@ module RubyRabbitmqJanus
         queue.pop
       end
 
-      def read_options_server
-        conn = %w[host port pass user vhost]
-        cfg = Tools::Config.instance.options['rabbit']
-        Hash[conn.map { |value| [value.to_sym, cfg[value]] }]
-      end
-
-      def option_log_rabbit
-        lvl = Tools::Config.instance.log_level_rabbit.upcase.to_sym
-        {
-          log_level: Tools::Log::LEVELS[lvl],
-          log_file: Tools::Log.instance.logdev
-        }
+      def conf
+        Tools::Config.instance
       end
     end
   end

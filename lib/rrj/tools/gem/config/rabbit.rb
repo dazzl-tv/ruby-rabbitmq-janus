@@ -4,7 +4,7 @@
 
 module RubyRabbitmqJanus
   module Tools
-    # Subclasse for Config
+    # Subclass for Config
     #
     # Options about bunny
     #

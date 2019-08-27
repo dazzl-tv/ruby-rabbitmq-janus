@@ -10,6 +10,7 @@ ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 if ENV['MONGO'].match?('true')
   require 'mongoid'
 else
+  require_relative '../rrj/lib/tools/gem/config'
   RubyRabbitmqJanus::Tools::Config.instance.options['gem']['orm'] = 'active_record'
   require 'active_record'
 end

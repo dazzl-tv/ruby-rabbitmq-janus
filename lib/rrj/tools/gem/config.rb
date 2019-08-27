@@ -4,8 +4,10 @@ require 'singleton'
 require 'rrj/errors/error'
 require 'yaml'
 require 'erb'
-# require 'rrj/tools/gem/config/rabbit'
-require 'rrj/tools/gem/config/log'
+require 'rrj/tools/gem/config/gem'
+require 'rrj/tools/gem/config/rabbit'
+require 'rrj/tools/gem/config/queues'
+require 'rrj/tools/gem/config/janus'
 
 # rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus

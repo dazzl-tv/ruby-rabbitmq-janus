@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'rrj/tools/gem/log.rb'
 
 describe RubyRabbitmqJanus::Tools::Log, type: :tools, name: :log, boken: true do
   let(:levels) do

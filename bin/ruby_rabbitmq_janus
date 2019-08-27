@@ -12,8 +12,12 @@
 # Use `Log` variable in ActionEvents class
 # for writing in another logger instead rails logs.
 
-require 'rrj/tools/bin/environment'
-require 'rrj/tools/bin/arguments'
 require 'rrj/tools/bin/config'
+require 'rrj/tools/gem/log'
+
+Log = RubyRabbitmqJanus::Tools::Logger.create
+RubyRabbitmqJanus::Tools::Logger.start
+
 require 'rrj/tools/bin/model'
+require 'ruby_rabbitmq_janus'
 require 'rrj/tools/bin/init'

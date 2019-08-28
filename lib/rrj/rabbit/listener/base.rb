@@ -26,8 +26,7 @@ module RubyRabbitmqJanus
             response = responses.shift
           end
           yield response.event, response
-        rescue => exception
-          p exception
+        rescue
           raise Errors::Rabbit::Listener::ListenEvents
         end
 

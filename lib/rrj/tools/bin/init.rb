@@ -3,7 +3,6 @@
 # Loads files RRJ and write first message in log,
 # then initialize binary
 
-p "Has rails engine ?? #{defined?(Rails)} -- #{defined?(::Rails::Engine)}"
 require 'rrj/rails' # defined?(::Rails::Engine)
 require File.join(File.dirname(__FILE__), '..', '..', 'binary')
 

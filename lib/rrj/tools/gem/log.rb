@@ -39,8 +39,9 @@ module RubyRabbitmqJanus
         case @config.log_type
         when :stdout  then logger_stdout
         when :file    then logger_file
-        when :rails   then logger_rails
         when :remote  then logger_remote
+        else
+          logger_stdout
         end
       end
 
@@ -48,15 +49,13 @@ module RubyRabbitmqJanus
         ::Logger.new(STDOUT)
       end
 
-      def self.logger_rails
-        Rails.logger
-      end
-
       def self.logger_file
-        ::Logger.new('log/ruby-rabbitmq-janus.log')
+        ::Logger.new(@config.log_option)
       end
 
       def self.logger_remote
+        require 'remote_syslog_logger'
+
         RemoteSyslogLogger.new(remote_url,
                                remote_port,
                                program: remote_program,

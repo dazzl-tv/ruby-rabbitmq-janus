@@ -61,13 +61,11 @@ gem:
     # Precise type logger
     # stdout    : Output standard.
     # file      : Create log file in path 'log/ruby-rabbitmq-janus.log'.
-    # rails     : Use logger rails.
     # remote    : Use RemoteSyslogLogger (for papertrail)
     type: file
     # Used with type. Complete missing data :
     # stdout    : no option
     # file      : filename used
-    # rails     : no option
     # remote    : data output (logs.papertrail.com:4685@program_rrj:backend_host)
     option: ''
   # Options for listener thread

@@ -6,7 +6,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- mesage type detach' do
-  before(:example) do
+  before do
     clear
     attach_base
     @type = 'base::detach'

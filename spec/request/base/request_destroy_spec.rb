@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type destroy' do
-  before(:example) do
+  before do
     clear
     session
     @type = 'base::destroy'

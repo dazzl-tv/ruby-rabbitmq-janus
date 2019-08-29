@@ -7,7 +7,13 @@ require 'rails'
 require 'factory_girl'
 require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
-require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
+if ENV['MONGO'].match?('true')
+  require 'mongoid'
+else
+  require_relative '../lib/rrj/tools/gem/config'
+  RubyRabbitmqJanus::Tools::Config.instance.options['gem']['orm'] = 'active_record'
+  require 'active_record'
+end
 require 'timeout'
 
 require 'ruby_rabbitmq_janus'
@@ -59,7 +65,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   # Configure Initializer RRJ and create session with Janus Instance
-  config.before(:example) do |example|
+  config.before do |example|
     unless example.metadata[:type].match?(/tools/)
       after_load_database
       initializer_rrj(example.metadata)

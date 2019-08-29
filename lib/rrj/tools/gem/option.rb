@@ -3,7 +3,11 @@
 require 'rrj/models/concerns/janus_instance_callbacks'
 require 'rrj/models/concerns/janus_instance_methods'
 require 'rrj/models/concerns/janus_instance_validations'
-require "rrj/models/#{defined?(Mongoid) ? 'mongoid' : 'active_record'}"
+if RubyRabbitmqJanus::Tools::Config.instance.orm.eql?('mongoid')
+  require 'rrj/models/mongoid'
+else
+  require 'rrj/models/active_record'
+end
 
 # :reek:FeatureEnvy
 
@@ -17,12 +21,10 @@ module RubyRabbitmqJanus
     # instance. It's also used for testing session/handle used in request.
     class Option
       def initialize
-        Log.instance
         Config.instance
         Requests.instance
-        cluster_mode
-      rescue => error
-        raise Errors::Tools::Option::Initialize, error
+      rescue => exception
+        raise Errors::Tools::Option::Initialize, exception
       end
 
       # Determine session_id used
@@ -53,15 +55,6 @@ module RubyRabbitmqJanus
         options.key?('handle_id') ? options['handle_id'] : 0
       rescue
         raise Errors::Tools::Option::UseCurrentHandle, options
-      end
-
-      private
-
-      def cluster_mode
-        method = Config.instance.cluster ? :restart_session : :create_session
-        Cluster.instance.send(method)
-      rescue
-        raise Errors::Tools::Option::ClusterMode
       end
     end
   end

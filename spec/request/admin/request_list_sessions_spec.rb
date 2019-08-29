@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJAdmin -- list_sessions', type: :request,
                                                          level: :admin,
+                                                         broken: true,
                                                          name: :list_sessions do
   before do
     help_admin_prepare

@@ -20,22 +20,22 @@ module RubyRabbitmqJanus
 
         def replace_handle
           request['handle_id'] = type.convert('handle_id', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error handle replace : #{message}"
+        rescue => exception
+          ::Log.warn "Error handle replace : #{exception}"
         end
 
         def replace_candidate
           cdn = type.convert(determine_key_candidate, opts)
           request[cdn[0]] = cdn[1]
           delete_key_unless
-        rescue => message
-          Tools::Log.instance.warn "Error candidate replace : #{message}"
+        rescue => exception
+          ::Log.warn "Error candidate replace : #{exception}"
         end
 
         def replace_sdp
           request['jsep']['sdp'] = type.convert('sdp', opts)
-        rescue => message
-          Tools::Log.instance.warn "Error sdp replace : #{message}"
+        rescue => exception
+          ::Log.warn "Error sdp replace : #{exception}"
         end
 
         def determine_key_candidate

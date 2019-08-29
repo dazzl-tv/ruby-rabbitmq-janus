@@ -13,23 +13,6 @@ module RubyRabbitmqJanus
         @current_instance = nil
       end
 
-      # Create session (just one Janus Instance)
-      def create_session
-        @current_instance = 1
-        Models::JanusInstance.create(instance: @current_instance)
-      rescue
-        raise Errors::Tools::Cluster::CreateSession
-      end
-
-      # Restart a thread keepalive for an instance
-      def restart_session
-        Models::JanusInstance.enabled.each do |ji|
-          ji.send(:create_a_session_in_janus_instance)
-        end
-      rescue
-        raise Errors::Tools::Cluster::RestartInstance
-      end
-
       # Specify a name to queue
       def queue_to(instance = nil)
         Tools::Config.instance.options['queues']['standard']['to'] + \

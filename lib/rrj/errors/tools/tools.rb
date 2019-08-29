@@ -14,7 +14,6 @@ module RubyRabbitmqJanus
 end
 
 require 'rrj/errors/tools/gem/cluster'
-require 'rrj/errors/tools/gem/config'
 require 'rrj/errors/tools/gem/log'
 require 'rrj/errors/tools/gem/option'
 require 'rrj/errors/tools/gem/request'

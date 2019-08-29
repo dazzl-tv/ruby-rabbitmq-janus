@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
 
       # Initialize a message sending to rabbitmq
       def initialize(instance = 1)
-        Tools::Log.instance.debug 'initalize a propertie to message'
+        ::Log.debug 'initalize a propertie to message'
         @correlation = SecureRandom.uuid
         @instance = instance
       rescue

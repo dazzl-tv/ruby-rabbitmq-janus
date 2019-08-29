@@ -31,7 +31,7 @@ shared_examples 'test replace in request' do |element, type|
   let(:transform) { replace.transform_request }
   let(:value) { defined?(value_return) ? value_return : element }
 
-  include_examples 'keys', element
+  include_examples 'with keys', element
 
   it { expect(keys).to be_kind_of(type) }
   it { expect(keys).to eql(options[value]) }
@@ -40,7 +40,7 @@ end
 shared_examples 'test replace in request nil' do |element|
   let(:transform) { replace.transform_request }
 
-  include_examples 'keys', element
+  include_examples 'with keys', element
 
   it 'option should equal nil' do
     expect(options[element]).to be(nil)
@@ -55,7 +55,7 @@ shared_examples 'test replace in request nil' do |element|
   end
 end
 
-shared_examples 'keys' do |element|
+shared_context 'with keys' do |element|
   let(:keys) do
     if defined?(key)
       transform[key][element]

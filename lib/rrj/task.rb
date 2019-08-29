@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # :reek:TooManyStatements
+# :reek:BooleanParameter
+# :reek:UtilityFunction
 
 module RubyRabbitmqJanus
   # @author VAILLANT jeremy <jeremy.vaillant@dazl.tv>
@@ -10,7 +12,6 @@ module RubyRabbitmqJanus
   # This class is used with rake task.
   class RRJTask < RRJ
     def initialize
-      Tools::Log.instance
       Tools::Config.instance
       Tools::Requests.instance
     rescue

@@ -11,12 +11,18 @@ module RubyRabbitmqJanus
   end
 end
 
+require 'rrj/errors/rabbit/base_event'
 require 'rrj/errors/rabbit/connect'
 require 'rrj/errors/rabbit/propertie'
 
-require 'rrj/errors/rabbit/publish/base_publisher'
-require 'rrj/errors/rabbit/publish/admin'
-require 'rrj/errors/rabbit/publish/exclusive'
-require 'rrj/errors/rabbit/publish/listener'
-require 'rrj/errors/rabbit/publish/non_exclusive'
-require 'rrj/errors/rabbit/publish/publisher'
+require 'rrj/errors/rabbit/listener/base'
+require 'rrj/errors/rabbit/listener/from'
+require 'rrj/errors/rabbit/listener/from_admin'
+require 'rrj/errors/rabbit/listener/janus_instance'
+
+require 'rrj/errors/rabbit/publisher/base'
+require 'rrj/errors/rabbit/publisher/admin'
+require 'rrj/errors/rabbit/publisher/exclusive'
+require 'rrj/errors/rabbit/publisher/janus_instance'
+require 'rrj/errors/rabbit/publisher/keepalive'
+require 'rrj/errors/rabbit/publisher/non_exclusive'

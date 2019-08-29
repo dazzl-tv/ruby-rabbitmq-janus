@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+require 'singleton'
+require 'rrj/errors/error'
+require 'yaml'
+require 'erb'
+require 'rrj/tools/gem/config/gem'
+require 'rrj/tools/gem/config/rabbit'
+require 'rrj/tools/gem/config/queues'
+require 'rrj/tools/gem/config/janus'
+
 # rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus
   module Tools
@@ -14,6 +23,10 @@ module RubyRabbitmqJanus
     #   @return [String] Path to configuration file used
     class Config
       include Singleton
+      include RubyRabbitmqJanus::Tools::ConfigGem
+      include RubyRabbitmqJanus::Tools::ConfigRabbit
+      include RubyRabbitmqJanus::Tools::ConfigQueues
+      include RubyRabbitmqJanus::Tools::ConfigJanus
 
       attr_reader :options, :configuration
 
@@ -35,92 +48,12 @@ module RubyRabbitmqJanus
         @options = @configuration = nil
         loading_configuration_customize
         loading_configuration_default
-        Tools::Log.instance.save_level(log_level)
-      rescue
-        raise Errors::Tools::Config::Initialize
-      end
-
-      # Get to name queue_from (pattern)
-      #
-      # @return [String] read configuration for queue `from`
-      def queue_from
-        @options['queues']['standard']['from'].to_s
-      rescue
-        raise Errors::Tools::Config::QueueFrom
-      end
-
-      # Get to name queue_to (pattern)
-      #
-      # @return [String] read configuration for queue `to`
-      def queue_to
-        @options['queues']['standard']['to'].to_s
-      rescue
-        raise Errors::Tools::Config::QueueTo
-      end
-
-      # Get to name queue_admin_from (pattern)
-      #
-      # @return [String] read configuration for queue admin `from`
-      def queue_admin_from
-        @options['queues']['admin']['from'].to_s
-      rescue
-        raise Errors::Tools::Config::QueueAdminFrom
-      end
-
-      # Get to name queue_admin_from (pattern)
-      #
-      # @return [String] read configuration for queue admin `to`
-      def queue_admin_to
-        @options['queues']['admin']['to'].to_s
-      rescue
-        raise Errors::Tools::Config::QueueAdminTo
-      end
-
-      # @return [Symbol] read configuration for log level used in this gem
-      def log_level
-        @options['gem']['log']['level'].upcase.to_sym || :INFO
-      rescue
-        raise Errors::Tools::Config::LogLevel
-      end
-
-      def log_level_rabbit
-        @options['rabbit']['level'].upcase.to_sym || :INFO
-      rescue
-        raise Errors::Tools::Config::LogLevelRabbit
-      end
-
-      # @return [Integer]
-      #   read configuration for janus time to live for keepalive messages
-      def time_to_live
-        @options['janus']['session']['keepalive'].to_i || 50
-      rescue
-        raise Errors::Tools::Config::TimeToLive
-      end
-
-      alias ttl time_to_live
-
-      # @param [Fixnum] index determine what field is readint in array plugins
-      #   in configuration file
-      # @return [String] read configuration for plugin with index
-      def plugin_at(index = 0)
-        @options['janus']['plugins'][index].to_s
-      rescue
-        raise Errors::Tools::Config::PluginAt, index
-      end
-
-      # @return [Boolean] Read option file for a janus cluster section
-      def cluster
-        @options['gem']['cluster']['enabled'].to_s.match?('true') ? true : false
-      rescue
-        raise Errors::Tools::Config::Cluster
       end
 
       private
 
       def load_configuration
-        log_message = "Loading configuration file : #{@configuration}"
-        Tools::Log.instance.info(log_message)
-        YAML.safe_load(ERB.new(File.read(@configuration)).result)
+        ::YAML.safe_load(ERB.new(File.read(@configuration)).result)
       end
 
       def loading_configuration_customize

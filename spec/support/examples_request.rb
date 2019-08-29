@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 shared_examples 'empty response' do
-  it 'should match JSON empty' do
+  it 'matches JSON empty' do
     message
     expect(@response.to_json).to eq('{}')
   end

@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+# Start a threads for each instance to Janus with
+# RubyRabbitMQJanus gem.
+#
+# Use this binaries for start a standalone process RRJ for listen
+# a queue in RabbitMQ and enable (or disable) JanusInstance model in database.
+#
+# @author VAILLANT Jeremy <jeremy@dazzl.tv>
+# @since 2.6.0
+#
+# Use `Log` variable in ActionEvents class
+# for writing in another logger instead rails logs.
+
+require 'rrj/tools/bin/config'
+require 'rrj/tools/gem/log'
+
+Log = RubyRabbitmqJanus::Tools::Logger.create
+RubyRabbitmqJanus::Tools::Logger.start
+
+require 'rrj/tools/bin/model'
+require 'ruby_rabbitmq_janus'
+require 'rrj/tools/bin/init'

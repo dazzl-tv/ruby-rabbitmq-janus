@@ -23,7 +23,7 @@ module RubyRabbitmqJanus
       # Load all requests in folder
       def initialize
         @requests = {}
-        Tools::Log.instance.info "Loading all requests in : #{PATH_REQUEST}"
+        ::Log.info "Loading all requests in : #{PATH_REQUEST}"
         Dir[File.join(PATH_REQUEST, '*')].count { |file| each_files(file) }
       rescue
         raise Errors::Tools::Request::Initializer

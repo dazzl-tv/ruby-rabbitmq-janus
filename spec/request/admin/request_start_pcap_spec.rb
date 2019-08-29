@@ -5,6 +5,7 @@ require 'spec_helper'
 # Dont configured in Janus Instance so return automatically an error
 describe 'RubyRabbitmqJanus::RRJAdmin -- start_pcap', type: :request,
                                                       level: :admin,
+                                                      broken: true,
                                                       name: :start_pcap do
   before do
     help_admin_prepare

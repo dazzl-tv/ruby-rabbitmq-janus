@@ -18,16 +18,12 @@ module RubyRabbitmqJanus
 
       private
 
-      def log
-        RubyRabbitmqJanus::Tools::Log
-      end
-
-      def logger
-        log.instance
-      end
-
       def write_error(message, level)
-        log.instance_method(level).bind(logger).call(message)
+        if defined?(::Log)
+          ::Log.add(level, message)
+        else
+          p "#{level}, #{message}"
+        end
       end
     end
   end

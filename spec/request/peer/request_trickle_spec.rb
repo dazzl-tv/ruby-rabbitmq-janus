@@ -6,7 +6,7 @@
 require 'spec_helper'
 
 describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
-  before(:example) do
+  before do
     clear
     attach_base
 

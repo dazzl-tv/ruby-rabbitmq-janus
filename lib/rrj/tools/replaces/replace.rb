@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 module RubyRabbitmqJanus
   module Tools
     # Tools for replace elements in request
@@ -50,15 +52,15 @@ module RubyRabbitmqJanus
         def replace_other
           values = @opts['replace']
           running_hash(rewrite_key_to_string(values))
-        rescue => message
-          Tools::Log.instance.warn "Error REPLACE other field : #{message}"
+        rescue => exception
+          ::Log.warn "Error REPLACE other field : #{exception}"
         end
 
         def add_other
           values = @opts['add']
           @request['body'].merge!(values)
-        rescue => message
-          Tools::Log.instance.warn "Error ADD other field : #{message}"
+        rescue => exception
+          ::Log.warn "Error ADD other field : #{exception}"
         end
 
         def rewrite_key_to_string(node)
@@ -93,8 +95,8 @@ module RubyRabbitmqJanus
 
         def replace_transaction
           @request['transaction'] = @type.convert('transaction')
-        rescue => message
-          Tools::Log.instance.warn "Error transaction replace : #{message}"
+        rescue => exception
+          ::Log.warn "Error transaction replace : #{exception}"
         end
       end
     end

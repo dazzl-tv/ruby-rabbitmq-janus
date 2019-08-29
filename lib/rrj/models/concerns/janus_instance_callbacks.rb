@@ -9,14 +9,14 @@ module RubyRabbitmqJanus
 
       # Create a session in Janus Instance
       def callback_create_after
-        Tools::Log.instance.debug 'Callback AFTER_VALIDATION'
+        ::Log.debug 'Callback AFTER_VALIDATION'
         create_a_session_in_janus_instance if enable
       end
 
       # Update a keepalive transaction in Janus Instance
       # Enable or Disable transaction
       def callback_update_after
-        Tools::Log.instance.debug 'Callback AFTER_UPDATE'
+        ::Log.debug 'Callback AFTER_UPDATE'
         if enable && enable_changed?
           create_a_session_in_janus_instance
         elsif !enable && enable_changed?
@@ -27,21 +27,18 @@ module RubyRabbitmqJanus
       # Destroy a session in Janus Instance
       # :reek:UtilityFunction
       def callback_destroy_after
-        Tools::Log.instance.debug 'Callback AFTER_DESTROY'
+        ::Log.debug 'Callback AFTER_DESTROY'
         # LCO: nothing to do, thread will close session and die
       end
 
       private
 
       def create_a_session_in_janus_instance
-        info_instance('Create session')
-        janus_instance = keepalive_object_new
-        set(session: janus_instance.session)
+        RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
       end
 
       def destroy_a_session_in_janus_instance
-        info_instance('Detaching session')
-        unset(%I[thread thread_adm session])
+        RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
       end
 
       def keepalive_object
@@ -57,7 +54,14 @@ module RubyRabbitmqJanus
       end
 
       def info_instance(text)
-        Tools::Log.instance.debug "#{text} in Janus Instance [##{instance}]"
+        ::Log.debug "#{text} in Janus Instance [##{instance}]"
+      end
+
+      def message
+        {
+          id: id.to_s,
+          enable: enable
+        }
       end
     end
   end

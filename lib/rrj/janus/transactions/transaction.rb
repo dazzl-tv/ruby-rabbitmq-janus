@@ -30,18 +30,18 @@ module RubyRabbitmqJanus
         def choose_queue
           chan = @rabbit.channel
           @publisher = if @exclusive
-                         Tools::Log.instance.debug \
+                         ::Log.debug \
                            'Choose an queue Exclusive : ampq.gen-xxx'
-                         Rabbit::Publisher::PublishExclusive.new(chan, '')
+                         Rabbit::Publisher::Exclusive.new(chan, '')
                        else
-                         Tools::Log.instance.debug \
+                         ::Log.debug \
                            'Choose an queue non Exclusive : to-janus'
-                         Rabbit::Publisher::PublishNonExclusive.new(chan)
+                         Rabbit::Publisher::NonExclusive.new(chan)
                        end
         end
 
         def send_a_message
-          Tools::Log.instance.info 'Publish a message ...'
+          ::Log.info 'Publish a message ...'
           response = read_response(@publisher.publish(yield))
           Janus::Responses::Standard.new(response)
         end

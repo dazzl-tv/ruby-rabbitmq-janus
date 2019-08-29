@@ -5,6 +5,7 @@ require 'rrj/init'
 require 'rrj/admin'
 require 'rrj/task'
 require 'rrj/task_admin'
+require 'rrj/rspec'
 
 # Define tools for this gems
 require 'rrj/tools/tools'

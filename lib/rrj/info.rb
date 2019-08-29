@@ -6,7 +6,7 @@
 # Define constant to gem.
 module RubyRabbitmqJanus
   # Define version to gem
-  VERSION = '2.5.1'
+  VERSION = '2.6.0'
 
   # Name to gem
   GEM_NAME = 'ruby_rabbitmq_janus'
@@ -35,11 +35,9 @@ module RubyRabbitmqJanus
   # Define homepage
   HOMEPAGE = 'https://github.com/dazzl-tv/ruby-rabbitmq-janus'
 
-  # Define a post install message
-  POST_INSTALL = \
+  # Banner dazzl
+  BANNER = \
     "# ====================================================== #\n" \
-    "# Thanks for installing RRJ !                            #\n" \
-    "# #{HOMEPAGE}.       #\n" \
     "# ;;;;;;;;;;;:.                                          #\n" \
     "# ;;;;;;;;;;;;;;;;;;                                     #\n" \
     "# ;;;;;;;;;;;:;;;;;;;;                                   #\n" \
@@ -54,4 +52,7 @@ module RubyRabbitmqJanus
     "# ;;;;;;;;;;;;;;;;;      AAAAA   ZZ      ZZ     LL       #\n" \
     "# ;;;;;;;;;;;;;,        A     A ZZZZZZZ ZZZZZZZ LLLLLLL  #\n" \
     '# ====================================================== #'
+
+  # Define a post install message
+  POST_INSTALL = "#{HOMEPAGE}\n#{BANNER}"
 end

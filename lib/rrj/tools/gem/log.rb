@@ -1,156 +1,82 @@
 # frozen_string_literal: true
 
+require 'logger'
+require 'rrj/info'
+require 'rrj/tools/gem/config'
+
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+    # @since 2.6.0
+    #
     # # Manage log in this gem
     #
-    # Singleton object for manipulate logs in this gem
+    # Create module for managing logger in many level.
+    # In Thread process.
+    # In rails apps (final app use this gem).
     #
-    # @!attribute [r] level
-    #   @return [Fixnum] Return a number to log level.
-    class Log
-      include Singleton
-
-      # Levels to log
-      LEVELS = {
-        DEBUG: Logger::DEBUG,
-        INFO: Logger::INFO,
-        WARN: Logger::WARN,
-        ERROR: Logger::ERROR,
-        FATAL: Logger::FATAL,
-        UNKNOWN: Logger::UNKNOWN
-      }.freeze
-
-      # Sensitive data
-      SENSITIVES = %i[admin_secret apisecret].freeze
-
-      attr_reader :level
-
-      # Returns a new instance to Log and use `Tag` element for each line
-      # writing in log with name to gem.
-      #
-      # @see http://api.rubyonrails.org/classes/ActiveSupport/TaggedLogging.html
-      def initialize
-        logs = defined?(Rails) ? logger_rails : logger_develop
-        logs.progname = RubyRabbitmqJanus.name
-        logs.level = LEVELS[:DEBUG]
-        logs.info('### Start gem Rails Rabbit Janus ###')
-        @level = logs.level
-        @progname = logs.progname
-        @logs = ActiveSupport::TaggedLogging.new(logs)
+    # Prepare different output :
+    # STDOUT
+    # RemoteSyslogger (for papertrail)
+    # File
+    module Logger
+      def self.start
+        Log.info '### Start bin Ruby Rabbit Janus ###'
+        Log.info "RRJ Version : #{RubyRabbitmqJanus::VERSION}"
+        Log.info "\r\n#{RubyRabbitmqJanus::BANNER}"
       end
 
-      # Write a message in log with a `UNKNOWN` level
-      #
-      # @param message [String] Message writing in warning level in log
-      def unknown(message)
-        write_tag { @logs.unknown(filter(message)) }
-      rescue
-        raise Errors::Tools::Log::Unknown
+      def self.create
+        @config = RubyRabbitmqJanus::Tools::Config.instance
+
+        @log = initialize_logger
+        @log.level = @config.log_level
+
+        @log
       end
 
-      # Write a message in log with a `FATAL` level
-      #
-      # @param message [String] Message writing in warning level in log
-      def fatal(message)
-        write_tag { @logs.fatal(filter(message)) } if test_level?(Logger::FATAL)
-      rescue
-        raise Errors::Tools::Log::Fatal
-      end
-
-      # Write a message in log with a `ERROR` level
-      #
-      # @param message [String] Message writing in warning level in log
-      def error(message)
-        write_tag { @logs.error(filter(message)) } if test_level?(Logger::ERROR)
-      rescue
-        raise Errors::Tools::Log::Error
-      end
-
-      # Write a message in log with a `WARN` level
-      # @param message [String] Message writing in warning level in log
-      def warn(message)
-        write_tag { @logs.warn(filter(message)) } if test_level?(Logger::WARN)
-      rescue
-        raise Errors::Tools::Log::Warn
-      end
-
-      # Write a message in log with a `INFO` level
-      #
-      # @param message [String] Message writing in info level in log
-      def info(message)
-        write_tag { @logs.info(filter(message)) } if test_level?(Logger::INFO)
-      rescue
-        raise Errors::Tools::Log::Info
-      end
-
-      # Write a message in log with a `DEBUG` level
-      #
-      # @param message [String] Message writing in debug level in log
-      def debug(message)
-        write_tag { @logs.debug(filter(message)) } if test_level?(Logger::DEBUG)
-      rescue
-        raise Errors::Tools::Log::Debug
-      end
-
-      # @return [RubyRabbitmqJanus::Tools::Log] the instance to logger
-      def logger
-        @logs
-      rescue
-        raise Errors::Tools::Log::Logger
-      end
-
-      # @return [String] name of file to logger used
-      def logdev
-        @logs.instance_variable_get(:'@logdev').filename
-      rescue
-        raise Errors::Tools::Log::Logdev
-      end
-
-      # Save log level used in this gem
-      #
-      # @param [Symbol] gem_level Level used for log in this gem
-      def save_level(gem_level)
-        @level = LEVELS[gem_level]
-      rescue
-        raise Errors::Tools::Log::SaveLevel
-      end
-
-      private
-
-      def logger_rails
-        defined?(RSpec) ? logger_develop : Rails.logger
-      end
-
-      def logger_develop
-        log = Logger.new('log/ruby-rabbitmq-janus.log')
-        log.formatter = proc do |severity, _datetime, _progname, msg|
-          "#{severity[0, 1].upcase}, #{msg}\n"
+      def self.initialize_logger
+        case @config.log_type
+        when :stdout  then logger_stdout
+        when :file    then logger_file
+        when :remote  then logger_remote
+        else
+          logger_stdout
         end
-        log
       end
 
-      def test_level?(this_level)
-        this_level >= Log.instance.level
+      def self.logger_stdout
+        ::Logger.new(STDOUT)
       end
 
-      def write_tag
-        @logs.tagged(@logs.progname) { yield }
+      def self.logger_file
+        ::Logger.new(@config.log_option || 'log/ruby-rabbitmq-janus.log')
       end
 
-      # @todo fix replace
-      def filter_sensitive_data(log)
-        msg = log
-        SENSITIVES.each do |word|
-          msg = log.gsub(/\"#{word}\".*\".*\"/, "\"#{word}\":\"[FILTERED]\"") \
-            if log.include?(word.to_s)
-        end
-        msg
+      def self.logger_remote
+        require 'remote_syslog_logger'
+
+        RemoteSyslogLogger.new(remote_url,
+                               remote_port,
+                               program: remote_program,
+                               local_hostname: remote_hostname)
       end
 
-      alias filter filter_sensitive_data
+      def self.remote_url
+        @config.log_option.split(':').first
+      end
+
+      def self.remote_port
+        @config.log_option.split('@').first.split(':').last
+      end
+
+      def self.remote_program
+        @config.log_option.split('@').last.split(':').first
+      end
+
+      def self.remote_hostname
+        @config.log_option.split(':').last
+      end
     end
   end
 end

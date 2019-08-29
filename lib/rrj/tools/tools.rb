@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'rrj/tools/gem/log'
 require 'rrj/tools/gem/config'
 require 'rrj/tools/gem/requests'
 require 'rrj/tools/gem/cluster'

@@ -9,6 +9,11 @@ require 'logger'
 require 'key_path'
 require 'active_support'
 require 'erb'
+require 'rrj/tools/bin/config'
+require 'rrj/tools/gem/log'
+
+Log = RubyRabbitmqJanus::Tools::Logger.create unless defined?(Log)
+RubyRabbitmqJanus::Tools::Logger.start
 
 # :reek:TooManyStatements
 
@@ -39,8 +44,8 @@ module RubyRabbitmqJanus
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       @option = Tools::Option.new
-    rescue => error
-      raise Errors::RRJ::InstanciateGem, error
+    rescue => exception
+      raise Errors::RRJ::InstanciateGem, exception
     end
 
     # Start a transaction with Janus. Request use session_id information.

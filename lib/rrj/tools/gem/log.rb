@@ -50,7 +50,7 @@ module RubyRabbitmqJanus
       end
 
       def self.logger_file
-        ::Logger.new(@config.log_option)
+        ::Logger.new(@config.log_option || 'log/ruby-rabbitmq-janus.log')
       end
 
       def self.logger_remote

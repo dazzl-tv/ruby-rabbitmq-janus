@@ -65,7 +65,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.9.5'
 
   spec.add_runtime_dependency 'bunny', '~> 2.5'
-  spec.add_runtime_dependency 'bunny-mock', '~> 1.7'
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'semaphore', '~> 0.0.1'
   spec.add_runtime_dependency 'thread', '~> 0.2.2'

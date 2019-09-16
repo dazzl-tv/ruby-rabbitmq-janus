@@ -57,3 +57,4 @@ end
 require 'rrj/janus/transactions/session'
 require 'rrj/janus/transactions/handle'
 require 'rrj/janus/transactions/admin'
+require 'rrj/janus/transactions/rspec'

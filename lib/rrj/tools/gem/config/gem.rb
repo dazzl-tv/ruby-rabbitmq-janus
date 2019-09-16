@@ -50,6 +50,11 @@ module RubyRabbitmqJanus
         @options['gem']['program_name'].to_s || RubyRabbitmqJanus::GEM_NAME
       end
 
+      # @return [String] Get path for json files contains a Janus response
+      def rspec_response
+        @options['gem']['response_path'] || 'spec/responses'
+      end
+
       alias env environment
       alias orm object_relational_mapping
       alias pg program_name

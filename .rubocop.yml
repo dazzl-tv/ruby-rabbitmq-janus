@@ -9,6 +9,8 @@ AllCops:
     - 'bin/**/*'
     - 'Rakefile'
     - 'lib/tasks/*'
+    - 'lib/generators/**/*'
+    - 'gemfiles/*'
   TargetRubyVersion: 2.3
 
 # Styles rules

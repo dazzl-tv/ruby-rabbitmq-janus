@@ -13,7 +13,6 @@ rabbit:
     pass: guest
     admin_pass: janusoverlord
     level: :info
-    test: false
 
 queues:
   standard:
@@ -42,6 +41,7 @@ gem:
   environment: 'development'
   orm: 'mongoid'
   program_name: 'ruby_rabbitmq_janus'
+  response_path: 'spec/supports/rrj/responses'
 ```
 
 ## Customize

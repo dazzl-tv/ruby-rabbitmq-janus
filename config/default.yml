@@ -14,8 +14,6 @@ rabbit:
   admin_pass: janusoverlord
   # Logger level for rabbitmq message
   level: info
-  # Test execution (with rspec ...)
-  test: false
 
 # RabbitMQ Queue information
 queues:
@@ -79,3 +77,5 @@ gem:
   orm: 'mongoid'
   # Define program name
   program_name: 'ruby_rabbitmq_janus'
+  # Read response json for RSpec
+  response_path: 'spec/supports/rrj/responses'

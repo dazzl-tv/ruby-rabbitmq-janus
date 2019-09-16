@@ -25,7 +25,34 @@ module RubyRabbitmqJanus
     #   end
     #
     # @since 2.0.0
+    # @deprecated Use {#admin_endpoint} instead.
     def start_transaction_admin(options = {})
+      transaction = Janus::Transactions::Admin.new(options)
+      transaction.connect { yield(transaction) }
+    rescue
+      raise Errors::RRJAdmin::StartTransactionAdmin, options
+    end
+
+    # Create a transaction between Apps and Janus
+    #
+    # @param [Hash] options
+    #   Give a session number for use another session in Janus
+    #
+    # @example List all sessions in Janus Instance
+    #   instance = { 'instance' => 42 }
+    #   @rrj.admin_endpoint(instance) do |transaction|
+    #     response = transaction.publish_message('admin:sessions').sessions
+    #   end
+    #
+    # @example Change log level to Janus Instance
+    #   instance = { 'instance' => 42 }
+    #   options = instance.merge({ 'level' => 5 })
+    #   @rrj.admin_endpoint(options) do |transaction|
+    #     response = transaction.publish_message('admin:set_log_level', options)
+    #   end
+    #
+    # @since 2.7.0
+    def admin_endpoint(options = {})
       transaction = Janus::Transactions::Admin.new(options)
       transaction.connect { yield(transaction) }
     rescue

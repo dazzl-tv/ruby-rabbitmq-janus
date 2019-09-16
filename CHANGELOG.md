@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.7.0] - 2019-09-02
+### [Changed]
+- Update generator RRJ
+
+### [Deleted]
+- Remove gem bunny_mock
+
+### [Added]
+- Change method start_transaction with session_endpoint_public and session_endpoint_ private
+- Change method start_transaction_handle with handle_endpoint_public and handle_endpoint_private
+- Create initialize executed with RSpec
+- Add option for rspec response template
+- Add basic responses for RSpec
+
+### [Fixed]
+- Fix initializer with rspec
+
 ## [2.6.0] - 2019-07-24
 ### [Changed]
 - Logger has changed (It's configuration in yml configuration)

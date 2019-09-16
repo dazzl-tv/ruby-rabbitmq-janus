@@ -42,6 +42,7 @@ gem:
   environment: 'development'
   orm: 'mongoid'
   program_name: 'ruby_rabbitmq_janus'
+  response_path: 'spec/supports/rrj/responses'
 ```
 
 ## Customize

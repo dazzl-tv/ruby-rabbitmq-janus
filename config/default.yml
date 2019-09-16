@@ -14,8 +14,6 @@ rabbit:
   admin_pass: janusoverlord
   # Logger level for rabbitmq message
   level: info
-  # Test execution (with rspec ...)
-  test: false
 
 # RabbitMQ Queue information
 queues:

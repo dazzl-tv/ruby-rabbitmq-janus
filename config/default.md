@@ -13,7 +13,6 @@ rabbit:
     pass: guest
     admin_pass: janusoverlord
     level: :info
-    test: false
 
 queues:
   standard:

@@ -20,11 +20,6 @@ module RubyRabbitmqJanus
         @options['rabbit']['level'].upcase.to_sym || :INFO
       end
 
-      # @return [Boolean] read configuration for bunny execution
-      def tester?
-        @options['rabbit']['test'].to_s.match?('true') ? true : false
-      end
-
       # @return [Hash] Format hash for bunny settings
       def server_settings
         Hash[%w[host port pass user vhost log_level].map do |value|

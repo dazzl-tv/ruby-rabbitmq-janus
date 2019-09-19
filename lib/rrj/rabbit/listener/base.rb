@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
           @rabbit = rabbit.channel
           subscribe_queue
         rescue
-          raise Errors::Rabbit::Listener::Initialize
+          raise Errors::Rabbit::Listener::Base::Initialize
         end
 
         # Listen a queue and return a body response
@@ -27,7 +27,7 @@ module RubyRabbitmqJanus
           end
           yield response.event, response
         rescue
-          raise Errors::Rabbit::Listener::ListenEvents
+          raise Errors::Rabbit::Listener::Base::ListenEvents
         end
 
         private

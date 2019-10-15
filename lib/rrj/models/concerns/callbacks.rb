@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   # Contains all model for this gem
   module Models
     # Configure callback for Janus Instance models
-    module JanusInstanceCallbacks
+    module Callbacks
       extend ActiveSupport::Concern
 
       # Create a session in Janus Instance
@@ -38,13 +38,16 @@ module RubyRabbitmqJanus
         RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
       end
 
-      # :reek:NilCheck
       def destroy_a_session_in_janus_instance
         ::Log.debug '[JanusInstance] Destroy session'
         RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
 
         ::Log.debug '[JanusInstance] Kill thread'
-        ObjectSpace._id2ref(thread).kill unless thread.nil?
+        thread_object.kill if thread_object.alive?
+      end
+
+      def thread_object
+        ObjectSpace._id2ref(thread)
       end
 
       def keepalive_object

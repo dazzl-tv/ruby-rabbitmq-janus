@@ -4,11 +4,11 @@
 
 module RubyRabbitmqJanus
   module Models
-    # Add method for JanusInstance model
-    module JanusInstanceMethods
+    # Add class methods for JanusInstance model
+    module Instances
       extend ActiveSupport::Concern
 
-      # Class methods for JanusInstance model
+      # Class methods for Janus Instance model
       module ClassMethods
         # Disable an instance
         def disable(session_id)
@@ -42,32 +42,6 @@ module RubyRabbitmqJanus
         # Get all instance not active
         def disabled
           JanusInstance.where(enable: false)
-        end
-      end
-
-      def create_keepalive
-        ::Log.info 'Create session'
-        janus_instance = keepalive_object_new
-        set(session: janus_instance.session, enable: true)
-      end
-
-      def stop_keepalive
-        ::Log.info 'Destroy session'
-        unset(%I[thread thread_adm session])
-        set(enable: false)
-      end
-
-      private
-
-      def search_initializer(options)
-        if File.basename($PROGRAM_NAME) == 'rake'
-          ::RRJ.start_transaction(options) do |transaction|
-            yield(transaction)
-          end
-        else
-          ::RRJ.start_transaction(true, options) do |transaction|
-            yield(transaction)
-          end
         end
       end
     end

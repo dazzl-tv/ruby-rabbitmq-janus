@@ -7,10 +7,12 @@ module RubyRabbitmqJanus
     # Store instance information for MongoID database
     class JanusInstance
       include Mongoid::Document
-      include RubyRabbitmqJanus::Models::JanusInstanceCallbacks
-      include RubyRabbitmqJanus::Models::JanusInstanceMethods
-      include RubyRabbitmqJanus::Models::JanusInstanceValidations
+      include RubyRabbitmqJanus::Models::Instances
+      include RubyRabbitmqJanus::Models::Methods
+      include RubyRabbitmqJanus::Models::Callbacks
+      include RubyRabbitmqJanus::Models::Validations
 
+      field :name,        type: String,  as: :title
       field :session,     type: Integer, as: :session_id
       field :enable,      type: Boolean
       field :thread,      type: Integer, as: :thread_id

@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require 'rrj/models/concerns/janus_instance_callbacks'
-require 'rrj/models/concerns/janus_instance_methods'
-require 'rrj/models/concerns/janus_instance_validations'
+require 'rrj/models/concerns/instances'
+require 'rrj/models/concerns/methods'
+require 'rrj/models/concerns/callbacks'
+require 'rrj/models/concerns/validations'
+
 if RubyRabbitmqJanus::Tools::Config.instance.orm.eql?('mongoid')
   require 'rrj/models/mongoid'
 else

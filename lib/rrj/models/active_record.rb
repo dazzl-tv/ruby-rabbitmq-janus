@@ -8,13 +8,15 @@ module RubyRabbitmqJanus
     #
     # Store instance information for MongoID database
     class JanusInstance < ::ActiveRecord::Base
-      include RubyRabbitmqJanus::Models::JanusInstanceCallbacks
-      include RubyRabbitmqJanus::Models::JanusInstanceMethods
-      include RubyRabbitmqJanus::Models::JanusInstanceValidations
+      include RubyRabbitmqJanus::Models::Instances
+      include RubyRabbitmqJanus::Models::Methods
+      include RubyRabbitmqJanus::Models::Callbacks
+      include RubyRabbitmqJanus::Models::Validations
 
       self.primary_key = :id
 
       alias_attribute :instance,        :id
+      alias_attribute :name,            :title
       alias_attribute :session_id,      :session
       alias_attribute :thread_id,       :thread
       alias_attribute :thread_id_adm,   :thread_adm

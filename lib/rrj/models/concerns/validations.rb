@@ -2,8 +2,8 @@
 
 module RubyRabbitmqJanus
   module Models
-    # Configure validation for JanusInstance model
-    module JanusInstanceValidations
+    # Configure validation for Janus Instance model
+    module Validations
       extend ActiveSupport::Concern
 
       included do

@@ -40,7 +40,6 @@ gem:
     path: 'app/ruby_rabbitmq_janus'
   environment: 'development'
   orm: 'mongoid'
-  program_name: 'ruby_rabbitmq_janus'
   response_path: 'spec/supports/rrj/responses'
 ```
 

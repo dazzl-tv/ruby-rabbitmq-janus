@@ -1,3 +1,5 @@
+---
+
 rabbit:
   host: rabbit
   port: 5672
@@ -33,5 +35,5 @@ gem:
     type: stdout
     option: ''
   environment : 'development'
-  orm: 'mongoid'
+  orm: <%= ENV['MONGO'].eql?('true') ? 'mongoid' : 'active_record' %>
   program_name: 'ruby_rabbitmq_janus'

@@ -7,13 +7,7 @@ require 'rails'
 require 'factory_bot'
 require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
-if ENV['MONGO'].match?('true')
-  require 'mongoid'
-else
-  require_relative '../lib/rrj/tools/gem/config'
-  RubyRabbitmqJanus::Tools::Config.instance.options['gem']['orm'] = 'active_record'
-  require 'active_record'
-end
+require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
 
 require 'ruby_rabbitmq_janus'

@@ -4,7 +4,7 @@ require 'bundler/setup'
 require 'pry'
 require 'json-schema-rspec'
 require 'rails'
-require 'factory_girl'
+require 'factory_bot'
 require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 if ENV['MONGO'].match?('true')
@@ -62,7 +62,12 @@ RSpec.configure do |config|
   config.filter_run_excluding broken: true
 
   # Configure Factory Girl
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
+
+  # Load factory bot definition
+  config.before(:suite) do
+    FactoryBot.find_definitions
+  end
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before do |example|

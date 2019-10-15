@@ -9,7 +9,7 @@
 # :reek:TooManyMethods
 
 module RubyRabbitmqJanus
-  module Janus
+  module Process
     module Concurrencies
       # Object thread for manage keep a live with Janus Instance
       #

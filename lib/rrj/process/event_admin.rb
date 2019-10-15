@@ -3,7 +3,7 @@
 # :reek:InstanceVariableAssumption
 
 module RubyRabbitmqJanus
-  module Janus
+  module Process
     module Concurrencies
       # Manage admin message in queue public
       # Work In Progress

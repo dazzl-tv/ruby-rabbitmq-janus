@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'rrj/janus/processus/keepalive/keepalive_timer'
-require 'rrj/janus/processus/keepalive/keepalive_message'
-require 'rrj/janus/processus/keepalive/keepalive_thread'
+require 'rrj/process/keepalive/keepalive_timer'
+require 'rrj/process/keepalive/keepalive_message'
+require 'rrj/process/keepalive/keepalive_thread'
 
 module RubyRabbitmqJanus
-  module Janus
+  module Process
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       #

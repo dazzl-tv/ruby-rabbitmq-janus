@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  module Janus
+  module Process
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 

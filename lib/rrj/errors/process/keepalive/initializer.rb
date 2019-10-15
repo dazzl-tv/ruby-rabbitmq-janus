@@ -4,7 +4,7 @@
 
 module RubyRabbitmqJanus
   module Errors
-    module Janus
+    module Process
       class BaseKeepaliveInitializer < BaseKeepalive
         def initialize(message)
           super "[Initializer] #{message}"

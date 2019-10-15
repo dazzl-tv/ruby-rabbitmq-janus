@@ -3,7 +3,7 @@
 # :reek:UtilityFunction
 
 module RubyRabbitmqJanus
-  module Janus
+  module Process
     module Concurrencies
       # Manage message used for keepalive thread
       #

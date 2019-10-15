@@ -16,6 +16,9 @@ require 'rrj/rabbit/rabbit'
 # Define actions with janus
 require 'rrj/janus/janus'
 
+# Define process create on fly for manage keepalive and public queu
+require 'rrj/process/concurrency'
+
 # Define errors in gems
 require 'rrj/errors/error'
 

@@ -6,7 +6,7 @@ require 'timers'
 # :reek:DuplicateMethodCall
 
 module RubyRabbitmqJanus
-  module Janus
+  module Process
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       #

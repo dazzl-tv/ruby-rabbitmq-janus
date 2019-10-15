@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'mongoid'
-
 module RubyRabbitmqJanus
   module Models
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>

@@ -10,12 +10,13 @@ module RubyRabbitmqJanus
 
       # Create thread keepalive
       def create_keepalive
+        ::Log.info "Janus Instance #{name} ..."
         if !enable && session_id.nil? && thread_id.nil?
-          ::Log.info 'Create session'
+          ::Log.info 'has a new keepalive session'
           janus_instance = keepalive_object_new
           set(session: janus_instance.session, enable: true)
         else
-          ::Log.info "Janus Instance #{name} has already keepalive session"
+          ::Log.info 'has already keepalive session'
         end
       end
 

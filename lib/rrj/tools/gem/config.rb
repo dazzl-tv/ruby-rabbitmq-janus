@@ -4,7 +4,7 @@ require 'singleton'
 require 'rrj/errors/error'
 require 'yaml'
 require 'erb'
-require %w[gem rabbit queues janus].each do |file|
+%w[gem rabbit queues janus].each do |file|
   require File.join('rrj', 'tools', 'gem', 'config', file)
 end
 %w[callbacks methods instances validations].each do |file|

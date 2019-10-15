@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:NilCheck
+
 module RubyRabbitmqJanus
   module Models
     # Add method for Janus Instance model
@@ -8,9 +10,13 @@ module RubyRabbitmqJanus
 
       # Create thread keepalive
       def create_keepalive
-        ::Log.info 'Create session'
-        janus_instance = keepalive_object_new
-        set(session: janus_instance.session, enable: true)
+        if !enable && session_id.nil? && thread_id.nil?
+          ::Log.info 'Create session'
+          janus_instance = keepalive_object_new
+          set(session: janus_instance.session, enable: true)
+        else
+          ::Log.info "Janus Instance #{name} has already keepalive session"
+        end
       end
 
       # Stop thread keepalive

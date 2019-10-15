@@ -34,11 +34,17 @@ module RubyRabbitmqJanus
       private
 
       def create_a_session_in_janus_instance
+        ::Log.debug '[JanusInstance] Create session'
         RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
       end
 
+      # :reek:NilCheck
       def destroy_a_session_in_janus_instance
+        ::Log.debug '[JanusInstance] Destroy session'
         RubyRabbitmqJanus::Rabbit::Publisher::JanusInstance.new.publish(message)
+
+        ::Log.debug '[JanusInstance] Kill thread'
+        ObjectSpace._id2ref(thread).kill unless thread.nil?
       end
 
       def keepalive_object

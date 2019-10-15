@@ -20,7 +20,6 @@ require 'ruby_rabbitmq_janus'
 require 'config/initializer'
 require 'config/database'
 require 'config/instance'
-Dir['spec/factories/*.rb'].each { |f| require File.expand_path(f) }
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 

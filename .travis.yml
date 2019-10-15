@@ -41,29 +41,31 @@ install:
   - docker-compose logs janus_token
   - docker-compose ps
 
-script:
-  - echo '## Test with MONGODB database'
-  - docker-compose run gem env MONGO=true bundle exec rake spec
-  - echo '## Test with SQLITE database'
-  - docker-compose run gem env MONGO=false bundle exec rake spec
-  - echo '## Test thread composant'
-  - docker-compose run gem env MONGO=true bundle exec rake concurrency
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop -D; fi
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo '## Test with MONGODB database'
+        - docker-compose run gem env MONGO=true bundle exec rake spec
+        - echo '## Test with SQLITE database'
+        - docker-compose run gem env MONGO=false bundle exec rake spec
+        - echo '## Test thread composant'
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+        - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop -D; fi
+        - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi
+    - stage: deploy
+      script:
+        provider: rubygems
+        api_key:
+          secure: OWuVCekC/FzcZtxbvItOiJmbje9Xo29TdBcb8+HXVtxSJYTpRYlX+/QS6VbvznOX8WHkQ+0n8EkKJlzFnqBncat2JXyOa/VS+S1cL4E7OT1cieNXMPWpCB+5O49nS+OSX90ls5nyFl6iCLLVmzunLUCElfHjySWxHXtu/91kVE7YGCDuU+nsnRdU4N9rMBNzn04r1ygKcl7WjuZ7uytt4bX+fbdAPfP1EFa1iuRWzqnqZqleNDsdYMLWVsKtBRY+eXw65u2+xGVTBs9HGC5cHZ65zjV+XiL4fJIfxXqA4qdCaEH/CkQVVdF8IUyJu5xEi6GkCQaEgC7LaNY90ca2Qh3WBnsC0QD2xgYQLxs/gnAyBOXtlZis6RnQdHeCN60lUdSX0M4lTX+7M++Iva6VVepZ2NxIWUvEbD/FGO9XuWX2TSncTk3tfmf+i173CS5XT6ahW6QJ4Bt/VDc2NAV/Y7SI3JOuthWt1rwornN8Qm3BqrrZ+xibSwMKxxnitbSREUvQG/YBCRuWuBJK+XahZc/lcXWrTXVRzGk9gOZHRJjaMamXvv9g860ansxLCXQ5OOW/HFt4PBxNhRUOuMNaVTTp8plbRsmfUtxPPntrfXUnB/P/pD7FyfkJPfQaizZCUrS4ecA7YNqtsBIOsQGrkYqakf4tWe5JxMKOsBB7d9Y=
+        gem: ruby_rabbitmq_janus
+        on:
+          repo: dazzl-tv/ruby-rabbitmq-janus
+          all_branches: true
+        skip_cleanup: true
 
 before_deploy:
   - gem install dpl
-
-deploy:
-  provider: rubygems
-  api_key:
-    secure: OWuVCekC/FzcZtxbvItOiJmbje9Xo29TdBcb8+HXVtxSJYTpRYlX+/QS6VbvznOX8WHkQ+0n8EkKJlzFnqBncat2JXyOa/VS+S1cL4E7OT1cieNXMPWpCB+5O49nS+OSX90ls5nyFl6iCLLVmzunLUCElfHjySWxHXtu/91kVE7YGCDuU+nsnRdU4N9rMBNzn04r1ygKcl7WjuZ7uytt4bX+fbdAPfP1EFa1iuRWzqnqZqleNDsdYMLWVsKtBRY+eXw65u2+xGVTBs9HGC5cHZ65zjV+XiL4fJIfxXqA4qdCaEH/CkQVVdF8IUyJu5xEi6GkCQaEgC7LaNY90ca2Qh3WBnsC0QD2xgYQLxs/gnAyBOXtlZis6RnQdHeCN60lUdSX0M4lTX+7M++Iva6VVepZ2NxIWUvEbD/FGO9XuWX2TSncTk3tfmf+i173CS5XT6ahW6QJ4Bt/VDc2NAV/Y7SI3JOuthWt1rwornN8Qm3BqrrZ+xibSwMKxxnitbSREUvQG/YBCRuWuBJK+XahZc/lcXWrTXVRzGk9gOZHRJjaMamXvv9g860ansxLCXQ5OOW/HFt4PBxNhRUOuMNaVTTp8plbRsmfUtxPPntrfXUnB/P/pD7FyfkJPfQaizZCUrS4ecA7YNqtsBIOsQGrkYqakf4tWe5JxMKOsBB7d9Y=
-  gem: ruby_rabbitmq_janus
-  on:
-    repo: dazzl-tv/ruby-rabbitmq-janus
-    all_branches: true
-    condition: $TRAVIS_BUILD_NUMBER == 1
-  skip_cleanup: true
 
 notifications:
   email: false

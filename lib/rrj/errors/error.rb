@@ -31,5 +31,6 @@ end
 
 require 'rrj/errors/base/base'
 require 'rrj/errors/janus/janus'
+require 'rrj/errors/process/concurency'
 require 'rrj/errors/tools/tools'
 require 'rrj/errors/rabbit/rabbit'

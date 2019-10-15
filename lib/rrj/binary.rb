@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'rrj/models/concerns/janus_instance_callbacks'
-require 'rrj/models/concerns/janus_instance_methods'
-require 'rrj/models/concerns/janus_instance_validations'
-require "rrj/models/#{RubyRabbitmqJanus::Tools::Config.instance.orm}"
-
 module RubyRabbitmqJanus
   # :reek:InstanceVariableAssumption
 

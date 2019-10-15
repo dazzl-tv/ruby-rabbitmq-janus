@@ -1,16 +1,5 @@
 # frozen_string_literal: true
 
-require 'rrj/models/concerns/instances'
-require 'rrj/models/concerns/methods'
-require 'rrj/models/concerns/callbacks'
-require 'rrj/models/concerns/validations'
-
-if RubyRabbitmqJanus::Tools::Config.instance.orm.eql?('mongoid')
-  require 'rrj/models/mongoid'
-else
-  require 'rrj/models/active_record'
-end
-
 # :reek:FeatureEnvy
 
 module RubyRabbitmqJanus

@@ -4,10 +4,15 @@ require 'singleton'
 require 'rrj/errors/error'
 require 'yaml'
 require 'erb'
-require 'rrj/tools/gem/config/gem'
-require 'rrj/tools/gem/config/rabbit'
-require 'rrj/tools/gem/config/queues'
-require 'rrj/tools/gem/config/janus'
+require %w[gem rabbit queues janus].each do |file|
+  require File.join('rrj', 'tools', 'gem', 'config', file)
+end
+%w[callbacks methods instances validations].each do |file|
+  require File.join('rrj', 'models', 'concerns', file)
+end
+require File.join('rrj',
+                  'models',
+                  RubyRabbitmqJanus::Tools::Config.instance.orm)
 
 # rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus

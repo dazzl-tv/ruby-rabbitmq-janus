@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
 
       Log.info 'Listen public queue in thread'
       actions = RubyRabbitmqJanus::ActionEvents.new.actions
-      RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
+      RubyRabbitmqJanus::Process::Concurrencies::Event.instance.run(&actions)
     end
   end
 end

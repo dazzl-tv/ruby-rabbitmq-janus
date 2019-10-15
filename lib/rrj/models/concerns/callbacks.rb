@@ -51,7 +51,7 @@ module RubyRabbitmqJanus
       end
 
       def keepalive_object
-        RubyRabbitmqJanus::Janus::Concurrencies::KeepaliveInitializer
+        RubyRabbitmqJanus::Process::Concurrencies::KeepaliveInitializer
       end
 
       def keepalive_object_new

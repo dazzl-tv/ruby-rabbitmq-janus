@@ -306,7 +306,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   activesupport
-  appraisal
+  appraisal (~> 2.2)
   aruba (~> 0.14.2)
   database_cleaner (~> 1.6)
   factory_bot (~> 5.1, >= 5.1.1)

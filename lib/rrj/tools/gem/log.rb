@@ -22,8 +22,9 @@ module RubyRabbitmqJanus
     module Logger
       def self.start
         Log.info '### Start bin Ruby Rabbit Janus ###'
+        Log.info "Program : #{RubyRabbitmqJanus::Tools::Config.instance.pg}"
         Log.info "RRJ Version : #{RubyRabbitmqJanus::VERSION}"
-        Log.info "\r\n#{RubyRabbitmqJanus::BANNER}"
+        Log.debug "\r\n#{RubyRabbitmqJanus::BANNER}"
       end
 
       def self.create

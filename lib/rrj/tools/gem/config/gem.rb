@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 module RubyRabbitmqJanus
   module Tools
     # Subclass for Config
@@ -47,7 +49,7 @@ module RubyRabbitmqJanus
 
       # @return [String] Get program name or GEM_NAME
       def program_name
-        @options['gem']['program_name'].to_s || RubyRabbitmqJanus::GEM_NAME
+        ENV['PROGRAM_NAME'] || RubyRabbitmqJanus::GEM_NAME
       end
 
       # @return [String] Get path for json files contains a Janus response

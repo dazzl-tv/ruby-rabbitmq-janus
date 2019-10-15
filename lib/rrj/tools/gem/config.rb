@@ -10,9 +10,6 @@ end
 %w[callbacks methods instances validations].each do |file|
   require File.join('rrj', 'models', 'concerns', file)
 end
-require File.join('rrj',
-                  'models',
-                  RubyRabbitmqJanus::Tools::Config.instance.orm)
 
 # rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus
@@ -74,3 +71,7 @@ module RubyRabbitmqJanus
   end
 end
 # rubocop:enable Naming/MemoizedInstanceVariableName
+#
+require File.join('rrj',
+                  'models',
+                  RubyRabbitmqJanus::Tools::Config.instance.orm)

@@ -62,6 +62,7 @@ deploy:
   on:
     repo: dazzl-tv/ruby-rabbitmq-janus
     all_branches: true
+    condition: $TRAVIS_BUILD_NUMBER == 1
   skip_cleanup: true
 
 notifications:

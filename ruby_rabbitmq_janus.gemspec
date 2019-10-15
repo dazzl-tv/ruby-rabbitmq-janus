@@ -41,6 +41,8 @@ Gem::Specification.new do |spec|
 
   spec.executables << 'ruby_rabbitmq_janus'
 
+  spec.required_ruby_version = '>= 2.5.0'
+
   spec.add_development_dependency 'activerecord'
   spec.add_development_dependency 'activesupport'
   spec.add_development_dependency 'appraisal'

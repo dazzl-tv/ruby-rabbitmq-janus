@@ -11,7 +11,7 @@ AllCops:
     - 'lib/tasks/*'
     - 'lib/generators/**/*'
     - 'gemfiles/*'
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.5
 
 # Styles rules
 # ###

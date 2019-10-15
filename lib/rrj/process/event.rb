@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
           super
           @thread = Thread.new { initialize_thread }
         rescue
-          raise Errors::Janus::Event::Initializer
+          raise Errors::Process::Event::Initializer
         end
 
         # Create a thread for execute a block code in a thread
@@ -38,7 +38,7 @@ module RubyRabbitmqJanus
             end
           end
         rescue
-          raise Errors::Janus::Event::Run
+          raise Errors::Process::Event::Run
         end
 
         private

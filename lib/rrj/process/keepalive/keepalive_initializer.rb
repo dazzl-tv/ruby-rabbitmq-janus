@@ -19,14 +19,14 @@ module RubyRabbitmqJanus
           super()
           @thread = KeepaliveThread.new(instance, rabbit) { initialize_thread }
         rescue
-          raise Errors::Janus::KeepaliveInitializer::Initializer
+          raise Errors::Process::KeepaliveInitializer::Initializer
         end
 
         # Get thread with Ruby ID
         def self.thread(thread)
           ObjectSpace._id2ref(thread)
         rescue RangeError
-          raise Errors::Janus::KeepaliveInitializer::ID2Ref, thread
+          raise Errors::Process::KeepaliveInitializer::ID2Ref, thread
         end
 
         # Give a session Integer  his gem is instantiate.
@@ -45,7 +45,7 @@ module RubyRabbitmqJanus
             end
           end
         rescue
-          raise Errors::Janus::KeepaliveInitializer::Session
+          raise Errors::Process::KeepaliveInitializer::Session
         end
 
         # Ask Object ID to thread managing keepalive message
@@ -58,7 +58,7 @@ module RubyRabbitmqJanus
         def thread_id
           @thread.__id__
         rescue
-          raise Errors::Janus::KeepaliveInitializer::Thread
+          raise Errors::Process::KeepaliveInitializer::Thread
         end
 
         private

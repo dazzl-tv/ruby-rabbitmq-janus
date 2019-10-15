@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
           @lock = Mutex.new
           @condition = ConditionVariable.new
         rescue
-          raise Errors::Janus::Concurencies::Initializer
+          raise Errors::Process::Concurencies::Initializer
         end
 
         private

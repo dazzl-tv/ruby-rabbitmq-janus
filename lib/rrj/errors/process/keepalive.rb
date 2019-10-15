@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
   module Errors
     module Process
       # Define a super class for all error in Process::Concurency::Keepalive
-      class BaseKeepalive < RubyRabbitmqJanus::Errors::Janus::BaseConcurency
+      class BaseKeepalive < RubyRabbitmqJanus::Errors::Process::BaseConcurency
         def initialize(message)
           super "[Keepalive]#{message}"
         end

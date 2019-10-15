@@ -27,7 +27,7 @@ module RubyRabbitmqJanus
           ::Log.info "Keepalive thread id is #{__id__}"
           super(&block)
         rescue
-          raise Errors::Janus::KeepaliveThread::Initializer
+          raise Errors::Process::KeepaliveThread::Initializer
         end
 
         # Initialize a transaction with Janus Instance.
@@ -36,7 +36,7 @@ module RubyRabbitmqJanus
           @publisher = publisher
           @session = response_session
         rescue
-          raise Errors::Janus::KeepaliveThread::InitializeJanusSession
+          raise Errors::Process::KeepaliveThread::InitializeJanusSession
         end
 
         # Restart session
@@ -51,7 +51,7 @@ module RubyRabbitmqJanus
             ::Log.error 'Janus Instance Model is gone, giving up'
           end
         rescue
-          raise Errors::Janus::KeepaliveThread::RestartSession
+          raise Errors::Process::KeepaliveThread::RestartSession
         end
 
         # Start a timer for TTL
@@ -74,7 +74,7 @@ module RubyRabbitmqJanus
             end
           end
         rescue
-          raise Errors::Janus::KeepaliveThread::Start
+          raise Errors::Process::KeepaliveThread::Start
         end
         # rubocop:enable Metrics/AbcSize
 
@@ -83,7 +83,7 @@ module RubyRabbitmqJanus
           cleanup
           super
         rescue
-          raise Errors::Janus::KeepaliveThread::Kill
+          raise Errors::Process::KeepaliveThread::Kill
         end
 
         # :reek:TooManyStatements
@@ -101,7 +101,7 @@ module RubyRabbitmqJanus
               "thread [#{__id__}] will die."
           end
         rescue
-          raise Errors::Janus::KeepaliveThread::InstanceIsDown
+          raise Errors::Process::KeepaliveThread::InstanceIsDown
         end
 
         private

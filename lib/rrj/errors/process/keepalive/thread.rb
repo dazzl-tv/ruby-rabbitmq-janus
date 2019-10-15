@@ -13,37 +13,37 @@ module RubyRabbitmqJanus
       end
 
       module KeepaliveThread
-        class Initializer < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveThread
+        class Initializer < RubyRabbitmqJanus::Errors::Process::BaseKeepaliveThread
           def initialize
             super 'Error for initialize Keepalive Thread'
           end
         end
 
-        class InitializeJanusSession < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveThread
+        class InitializeJanusSession < RubyRabbitmqJanus::Errors::Process::BaseKeepaliveThread
           def initialize
             super 'Error when initialize message in keepalive thread'
           end
         end
 
-        class RestartSession < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveThread
+        class RestartSession < RubyRabbitmqJanus::Errors::Process::BaseKeepaliveThread
           def initialize
             super 'Error when restart session'
           end
         end
 
-        class Start < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveThread
+        class Start < RubyRabbitmqJanus::Errors::Process::BaseKeepaliveThread
           def initialize
             super 'Error when start a loop for sending keepalive message'
           end
         end
 
-        class Kill < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveThread
+        class Kill < RubyRabbitmqJanus::Errors::Process::BaseKeepaliveThread
           def initialize
             super 'Error when killing thread'
           end
         end
 
-        class InstanceIsDown < RubyRabbitmqJanus::Errors::Janus::BaseKeepaliveThread
+        class InstanceIsDown < RubyRabbitmqJanus::Errors::Process::BaseKeepaliveThread
           def initialize
             super 'Error when instance is down'
           end

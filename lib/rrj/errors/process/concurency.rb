@@ -12,7 +12,7 @@ module RubyRabbitmqJanus
 
       module Concurency
         # Error for Process::Concurency#initialize
-        class Initializer < RubyRabbitmqJanus::Errors::Janus::BaseConcurency
+        class Initializer < RubyRabbitmqJanus::Errors::Process::BaseConcurency
           def initialize
             super 'Error initialize concurency class'
           end

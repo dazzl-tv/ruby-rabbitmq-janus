@@ -11,7 +11,8 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
       'session_id' => 'session',
       'thread_id' => 'thread',
       'thread_id_adm' => 'thread_adm',
-      'instance' => '_id'
+      'instance' => '_id',
+      'title' => 'name'
     }
   end
   let(:parameter_sqlite) do
@@ -19,7 +20,8 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
       'instance' => 'id',
       'session_id' => 'session',
       'thread_id_adm' => 'thread_adm',
-      'thread_id' => 'thread'
+      'thread_id' => 'thread',
+      'title' => 'name'
     }
   end
 

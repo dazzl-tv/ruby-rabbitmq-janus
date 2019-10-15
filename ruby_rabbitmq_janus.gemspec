@@ -47,7 +47,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'aruba', '~> 0.14.2'
   spec.add_development_dependency 'database_cleaner', '~> 1.6'
   spec.add_development_dependency 'factory_bot', '~> 5.1', '>= 5.1.1'
-  spec.add_development_dependency 'fuubar', '~> 2.2'
   spec.add_development_dependency 'json-schema', '~> 2.6'
   spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'
   spec.add_development_dependency 'mongoid'

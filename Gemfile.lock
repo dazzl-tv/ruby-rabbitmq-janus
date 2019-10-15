@@ -111,9 +111,6 @@ GEM
     faraday_middleware (0.13.1)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
-    fuubar (2.4.1)
-      rspec-core (~> 3.0)
-      ruby-progressbar (~> 1.4)
     gh (0.15.1)
       addressable (~> 2.4.0)
       backports
@@ -286,7 +283,6 @@ DEPENDENCIES
   aruba (~> 0.14.2)
   database_cleaner (~> 1.6)
   factory_bot (~> 5.1, >= 5.1.1)
-  fuubar (~> 2.2)
   json-schema (~> 2.6)
   json-schema-rspec (~> 0.0.4)
   mongoid

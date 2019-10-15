@@ -28,8 +28,8 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
 
   context 'when many janus instances' do
     before do
-      FactoryGirl.create_list(:janus_instance, 5, enable: false)
-      FactoryGirl.create(:janus_instance, janus_id)
+      FactoryBot.create_list(:janus_instance, 5, enable: false)
+      FactoryBot.create(:janus_instance, janus_id)
     end
 
     let(:one) { model.enabled.first }
@@ -41,7 +41,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   end
 
   context 'when Janus Instance enable' do
-    let(:janus) { FactoryGirl.create(:janus_instance, janus_id) }
+    let(:janus) { FactoryBot.create(:janus_instance, janus_id) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
     it { expect(janus.session).to be_nil }
@@ -51,7 +51,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   end
 
   context 'when Janus Instance disable' do
-    let(:janus) { FactoryGirl.create(:janus_instance, enable: false) }
+    let(:janus) { FactoryBot.create(:janus_instance, enable: false) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
     it { expect(janus.session).to be_nil }

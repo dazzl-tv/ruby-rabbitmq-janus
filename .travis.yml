@@ -12,7 +12,6 @@ cache:
 rvm:
   - 2.6
   - 2.5
-  - 2.4
 
 gemfile:
   - gemfiles/rails_4.gemfile

@@ -10,31 +10,7 @@ RabbitMQ server in a queue for janus server. janus processes a message and send
 
 This gem is product by [Dazzl.tv](http://dazzl.tv)
 
-```linux
-------------                        ----------                      -------
-|Rails Apps|                        |RabbitMQ|                      |Janus|
-------------                        ----------                      -------
-  |                                   |                                |
-  | Request : { "janus": "info" }     |                                |
-  | --------------------------------> |                                |
-  | Create request json.              |                                |
-  | Sending in queue.                 |                                |
-  |                                   | -----------------------------> |
-  |                                   | Read a message in queue        | ----- |
-  |                                   |                                |       | Return a response
-  |                                   |                                |       | to treatment executed.
-  |                                   |                                | <---- |
-  |                                   |                                |
-  |                                   |                                |
-  |                                   | <----------------------------  |
-  | <-------------------------------- |                                |
-  |                                   |                                |
-  |                                   |                                | # If asynchron message
-  |                                   |                                | # send a response after execution
-  |                                   | <----------------------------  | # but a acknoledge message is
-  | <-------------------------------- |                                | # sending when request is received
-  |                                   |                                |
-```
+![Simple diagram](.diagrams.svg)
 
 ## Menu
 

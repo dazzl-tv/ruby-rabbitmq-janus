@@ -117,7 +117,6 @@ jobs:
         - docker-compose run gem env MONGO=false bundle exec rake classic
         - docker-compose run gem env MONGO=false bundle exec rake concurrency
     - stage: test
-      if: branch = master
       name: 'Linter execution'
       script:
         - docker-compose run gem rubocop -D --color --parallel

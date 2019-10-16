@@ -19,7 +19,7 @@ gemfile:
   - gemfiles/rails_6.gemfile
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.18.0
+  DOCKER_COMPOSE_VERSION: 1.24.1
 
 services:
   - docker
@@ -39,12 +39,11 @@ install:
 
 jobs:
   include:
-    - stage: 'Test Mongo'
-      script: docker-compose run gem env MONGO=true bundle exec rake spec
-    - stage: 'Test SQlite'
-      script: docker-compose run gem env MONGO=false bundle exec rake spec
-    - stage: 'Test Thread'
-      script: docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage:
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake spec
+        - docker-compose run gem env MONGO=false bundle exec rake spec
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
     - stage: 'Linter'
       if: branch = master
       script:

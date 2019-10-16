@@ -37,14 +37,32 @@ install:
   - sleep 15
   - docker-compose up -d janus janus_token
 
-script:
-  - docker-compose run gem env MONGO=true bundle exec rake spec
-  - docker-compose run gem env MONGO=false bundle exec rake spec
-  - docker-compose run gem env MONGO=true bundle exec rake concurrency
-  - docker-compose run gem env MONGO=false bundle exec rake concurrency
-
 jobs:
   include:
+    - stage: test
+      name: 'RSpec Classic Mongo'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake spec
+    - stage: test
+      name: 'RSpec Classic SQlite'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake spec
+    - stage: test
+      name: 'RSpec Thread Mongo'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: 'RSpec Thread SQlite'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
     - stage: test
       if: branch = master
       name: 'Linter execution'

@@ -47,7 +47,9 @@ jobs:
   include:
     - stage: test
       name: 'RSpec THREAD'
-      rvm: 2.5
+      rvm:
+        - 2.5
+        - 2.6
       gemfile:
         - gemfiles/rails_4.gemfile
         - gemfiles/rails_5.gemfile

@@ -120,8 +120,8 @@ jobs:
       if: branch = master
       name: 'Linter execution'
       script:
-        - docker-compose run gem rubocop -D
-        - docker-compose run gem reek -D
+        - docker-compose run gem rubocop -D --color --parallel
+        - docker-compose run gem reek --color
     - stage: deploy
       script: skip
       deploy: &rubygems

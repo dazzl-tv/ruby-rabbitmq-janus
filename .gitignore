@@ -40,6 +40,8 @@ build-iPhoneSimulator/
 /rdoc/
 
 ## Environment normalization:
+/gemfiles/.bundle/
+/.bundle/
 /.bundle/
 /vendor/bundle
 /lib/bundler/man/
@@ -75,3 +77,4 @@ lib/config
 docker-compose.local.yml
 
 .pry_history
+

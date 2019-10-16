@@ -35,27 +35,23 @@ install:
   - docker-compose build
   - docker-compose up -d rabbit
   - sleep 15
-  - docker-compose logs rabbit
   - docker-compose up -d janus janus_token
-  - docker-compose logs janus
-  - docker-compose logs janus_token
-  - docker-compose ps
 
 jobs:
   include:
-    - stage:
+    - stage: test
       name: 'Test Mongo'
       script:
         - docker-compose run gem env MONGO=true bundle exec rake spec
-    - stage:
+    - stage: test
       name: 'Test SQlite'
       script:
         - docker-compose run gem env MONGO=false bundle exec rake spec
-    - stage:
+    - stage: test
       name: 'Test Thread'
       script:
         - docker-compose run gem env MONGO=true bundle exec rake concurrency
-    - stage:
+    - stage: test
       name: 'Linter'
       if: branch = master
       script:

@@ -41,14 +41,10 @@ script:
   - docker-compose run gem env MONGO=true bundle exec rake spec
   - docker-compose run gem env MONGO=false bundle exec rake spec
   - docker-compose run gem env MONGO=true bundle exec rake concurrency
+  - docker-compose run gem env MONGO=false bundle exec rake concurrency
 
 jobs:
   include:
-    - stage: test
-      name: 'RSpec thread test'
-      script: skip
-      after_script:
-        - docker-compose run gem env MONGO=true bundle exec rake concurrency
     - stage: test
       if: branch = master
       name: 'Linter execution'

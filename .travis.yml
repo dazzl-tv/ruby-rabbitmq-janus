@@ -47,13 +47,15 @@ jobs:
   include:
     - stage: test
       name: 'RSpec THREAD'
-      rvm:
-        - 2.5
-        - 2.6
-      gemfile:
-        - gemfiles/rails_4.gemfile
-        - gemfiles/rails_5.gemfile
-        - gemfiles/rails_6.gemfile
+      rvm: 2.5
+      gemfile: gemfiles/rails_4.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: 'RSpec THREAD'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4.gemfile
       script:
         - docker-compose run gem env MONGO=true bundle exec rake concurrency
         - docker-compose run gem env MONGO=false bundle exec rake concurrency

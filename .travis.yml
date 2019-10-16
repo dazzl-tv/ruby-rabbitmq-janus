@@ -39,25 +39,18 @@ install:
 
 jobs:
   include:
-    - stage: test
-      name: 'Test Mongo'
-      script:
-        - docker-compose run gem env MONGO=true bundle exec rake spec
-    - stage: test
-      name: 'Test SQlite'
-      script:
-        - docker-compose run gem env MONGO=false bundle exec rake spec
-    - stage: test
-      name: 'Test Thread'
-      script:
-        - docker-compose run gem env MONGO=true bundle exec rake concurrency
-    - stage: test
-      name: 'Linter'
+    - stage: 'Test Mongo'
+      script: docker-compose run gem env MONGO=true bundle exec rake spec
+    - stage: 'Test SQlite'
+      script: docker-compose run gem env MONGO=false bundle exec rake spec
+    - stage: 'Test Thread'
+      script: docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: 'Linter'
       if: branch = master
       script:
         - docker-compose run gem rubocop -D
         - docker-compose run gem reek -D
-    - stage: deploy
+    - stage: 'Deploy'
       script:
         provider: rubygems
         api_key:

@@ -2,8 +2,6 @@
 
 # :reek:UtilityFunction
 
-# rubocop:disable Style/GuardClause
-
 module RubyRabbitmqJanus
   module Rabbit
     module Publisher
@@ -56,11 +54,10 @@ module RubyRabbitmqJanus
         end
 
         def test_correlation(m_cor, p_cor)
-          if m_cor.eql?(p_cor)
-            yield
-          else
-            raise Errors::Rabbit::Publisher::Base::TestCorrelation, m_cor, p_cor
-          end
+          raise Errors::Rabbit::Publisher::Base::TestCorrelation, m_cor, p_cor \
+            unless m_cor.eql?(p_cor)
+
+          yield
         end
 
         def synchronize(payload)
@@ -76,7 +73,6 @@ module RubyRabbitmqJanus
     end
   end
 end
-# rubocop:enable Style/GuardClause
 
 require 'rrj/rabbit/publisher/exclusive'
 require 'rrj/rabbit/publisher/admin'

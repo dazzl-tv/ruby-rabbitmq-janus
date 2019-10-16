@@ -12,7 +12,6 @@ end
   require File.join('rrj', 'models', 'concerns', file)
 end
 
-# rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -50,7 +49,7 @@ module RubyRabbitmqJanus
       def initialize
         @options = @configuration = nil
         loading_configuration_customize
-        loading_configuration_default
+        @options ||= loading_configuration_default
       end
 
       private
@@ -66,13 +65,13 @@ module RubyRabbitmqJanus
 
       def loading_configuration_default
         @configuration = PATH_DEFAULT
-        @options ||= load_configuration
+        load_configuration
       end
     end
   end
 end
-# rubocop:enable Naming/MemoizedInstanceVariableName
-#
+
+require RubyRabbitmqJanus::Tools::Config.instance.orm
 require File.join('rrj',
                   'models',
                   RubyRabbitmqJanus::Tools::Config.instance.orm)

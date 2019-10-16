@@ -35,16 +35,20 @@ Style/RescueStandardError:
 
 # Metrics Rules
 # ###
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - ruby_rabbitmq_janus.gemspec
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - lib/rrj/tools/replaces/type.rb
+
 Metrics/LineLength:
   Max: 80
   Exclude:
     - spec/**/*
     - lib/rrj/errors/**/*
-
-Metrics/BlockLength:
-  Exclude:
-    - spec/**/*
-    - ruby_rabbitmq_janus.gemspec
 
 # Naming rules
 # ###

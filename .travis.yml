@@ -37,6 +37,9 @@ install:
   - sleep 15
   - docker-compose up -d janus janus_token
 
+script:
+  - echo 'nop ..'
+
 jobs:
   include:
     - stage:

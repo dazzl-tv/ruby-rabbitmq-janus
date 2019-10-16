@@ -37,11 +37,12 @@ install:
   - sleep 15
   - docker-compose up -d janus janus_token
 
+script: skip
+
 jobs:
   include:
     - stage: test
       name: 'RSpec Classic Mongo'
-      rvm: 2.5
       gemfile: gemfiles/rails_4.gemfile
       script:
         - docker-compose run gem env MONGO=true bundle exec rake spec

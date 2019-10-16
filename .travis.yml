@@ -43,16 +43,24 @@ install:
 
 jobs:
   include:
-    - stage: test
+    - stage:
+      name: 'Test Mongo'
       script:
-        - echo '## Test with MONGODB database'
         - docker-compose run gem env MONGO=true bundle exec rake spec
-        - echo '## Test with SQLITE database'
+    - stage:
+      name: 'Test SQlite'
+      script:
         - docker-compose run gem env MONGO=false bundle exec rake spec
-        - echo '## Test thread composant'
+    - stage:
+      name: 'Test Thread'
+      script:
         - docker-compose run gem env MONGO=true bundle exec rake concurrency
-        - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem rubocop -D; fi
-        - if [ "$TRAVIS_BRANCH" == "master" ]; then docker-compose run gem reek; fi
+    - stage:
+      name: 'Linter'
+      if: branch = master
+      script:
+        - docker-compose run gem rubocop -D
+        - docker-compose run gem reek -D
     - stage: deploy
       script:
         provider: rubygems

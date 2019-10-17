@@ -54,4 +54,3 @@ end
 
 require 'rrj/rabbit/listener/from'
 require 'rrj/rabbit/listener/from_admin'
-require 'rrj/rabbit/listener/janus_instance'

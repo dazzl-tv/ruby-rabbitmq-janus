@@ -23,7 +23,8 @@ module RubyRabbitmqJanus
 
         def synchronize_response(info, payload)
           lock.synchronize do
-            @responses.push(Janus::Responses::Admin.new(JSON.parse(payload)))
+            response = Janus::Responses::Admin.new(JSON.parse(payload))
+            responses.push(response)
           end
           rabbit.acknowledge(info.delivery_tag, false)
           semaphore.signal

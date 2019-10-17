@@ -36,7 +36,6 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
 
     it { expect(model.count).to eq(6) }
     it { expect(model.enabled.count).to eq(1) }
-    it { expect(model.find_by_session(one.session).thread).to eq(one.thread) }
     it { expect(model.find_by_instance(one.instance).session).to eq(one.session) }
   end
 
@@ -47,7 +46,6 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     it { expect(janus.session).to be_nil }
     it { expect(janus.enable).to be_a(TrueClass) }
     it { expect(janus.enable).to eq(true) }
-    it { expect(janus.thread).to be_nil }
   end
 
   context 'when Janus Instance disable' do
@@ -57,6 +55,5 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     it { expect(janus.session).to be_nil }
     it { expect(janus.enable).to be_a(FalseClass) }
     it { expect(janus.enable).to eq(false) }
-    it { expect(janus.thread).to be_nil }
   end
 end

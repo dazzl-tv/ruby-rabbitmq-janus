@@ -69,5 +69,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'semaphore', '~> 0.0.1'
   spec.add_runtime_dependency 'thread', '~> 0.2.2'
-  spec.add_runtime_dependency 'timers', '~> 4.1'
 end

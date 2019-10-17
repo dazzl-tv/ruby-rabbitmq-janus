@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove useless private method
 - Remove keepalive thread
 - Simplify model JanusInstance (remove callbacks and methods)
+- Remove gem timers
 
 ### [Fixed]
 - Fix stop thread. Cleanup connection with RabbitMQ.

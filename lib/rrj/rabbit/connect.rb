@@ -50,6 +50,13 @@ module RubyRabbitmqJanus
       rescue => exception
         raise Errors::Rabbit::Connect::Channel, exception
       end
+
+      # Create an channel
+      def channel_pool
+        @rabbit.create_channel(nil, 8)
+      rescue => exception
+        raise Errors::Rabbit::Connect::Channel, exception
+      end
     end
   end
 end

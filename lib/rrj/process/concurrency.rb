@@ -8,8 +8,9 @@ module RubyRabbitmqJanus
       #
       # # Class for manage threads
       #
-      # @abstract Manage thread in this gem for keepalive message and listen
-      #   standard queue.
+      # @abstract Manage thread for listener to queue :
+      #   from-janus
+      #   from-janus-admin
       class Concurrency
         # Initialize class with elements for thread communication
         def initialize
@@ -40,6 +41,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/process/keepalive/keepalive_initializer'
 require 'rrj/process/event'
 require 'rrj/process/event_admin'

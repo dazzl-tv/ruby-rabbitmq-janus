@@ -9,8 +9,6 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     {
       'id' => '_id',
       'session_id' => 'session',
-      'thread_id' => 'thread',
-      'thread_id_adm' => 'thread_adm',
       'instance' => '_id',
       'title' => 'name'
     }
@@ -19,8 +17,6 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     {
       'instance' => 'id',
       'session_id' => 'session',
-      'thread_id_adm' => 'thread_adm',
-      'thread_id' => 'thread',
       'title' => 'name'
     }
   end

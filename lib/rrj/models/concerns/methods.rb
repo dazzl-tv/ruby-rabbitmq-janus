@@ -28,15 +28,21 @@ module RubyRabbitmqJanus
       end
 
       # Start Janus instance
-      # @since 2.7.1
-      def start!
-        update(enable: true)
+      # @since 2.7.2
+      def start
+        reload.update(enable: true)
+      rescue => exception
+        ::Log.error '[JanusInstance] Error when start'
+        ::Log.error "[JanusInstance] #{exception}"
       end
 
       # Stop Janus instance
-      # @since 2.7.1
-      def stop!
-        update(enable: false)
+      # @since 2.7.2
+      def stop
+        reload.update(enable: false)
+      rescue => exception
+        ::Log.error '[JanusInstance] Error when stop'
+        ::Log.error "[JanusInstance] #{exception}"
       end
     end
   end

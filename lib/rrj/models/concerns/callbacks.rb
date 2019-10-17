@@ -47,7 +47,9 @@ module RubyRabbitmqJanus
       end
 
       def thread_object
-        ObjectSpace._id2ref(thread)
+        id_thread_ji = reload.thread
+        ::Log.debug "[JanusInstance] Get thread with id : #{id_thread_ji}"
+        ObjectSpace._id2ref(id_thread_ji)
       end
 
       def keepalive_object

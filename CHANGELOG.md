@@ -5,12 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.7.2] - 2019-10-15
-### [Add]
-- Add method `start!` and `stop!` to model
-
+## [2.7.2] - 2019-10-17
 ### [Deleted]
 - Remove useless private method
+- Remove keepalive thread
+- Simplify model JanusInstance (remove callbacks and methods)
 
 ### [Fixed]
 - Fix stop thread. Cleanup connection with RabbitMQ.

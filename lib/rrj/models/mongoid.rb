@@ -8,8 +8,8 @@ module RubyRabbitmqJanus
     class JanusInstance
       include Mongoid::Document
       include RubyRabbitmqJanus::Models::Instances
-      include RubyRabbitmqJanus::Models::Methods
-      include RubyRabbitmqJanus::Models::Callbacks
+      # include RubyRabbitmqJanus::Models::Methods
+      # include RubyRabbitmqJanus::Models::Callbacks
       include RubyRabbitmqJanus::Models::Validations
 
       field :name,        type: String,  as: :title
@@ -20,9 +20,9 @@ module RubyRabbitmqJanus
 
       alias_attribute :instance, :_id
 
-      set_callback(:create,     :after)   { callback_create_after }
-      set_callback(:update,     :after)   { callback_update_after }
-      set_callback(:destroy,    :after)   { callback_destroy_after }
+      # set_callback(:create,     :after)   { callback_create_after }
+      # set_callback(:update,     :after)   { callback_update_after }
+      # set_callback(:destroy,    :after)   { callback_destroy_after }
     end
   end
 end

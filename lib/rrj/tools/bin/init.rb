@@ -4,9 +4,10 @@
 # then initialize binary
 
 require 'rrj/rails' # defined?(::Rails::Engine)
-require File.join(File.dirname(__FILE__), '..', '..', 'binary')
+# require File.join(File.dirname(__FILE__), '..', '..', 'binary')
 
 begin
+=begin
   bin = RubyRabbitmqJanus::Binary.new
   Log.info \
     'Prepare to listen events in queue : ' + \
@@ -22,6 +23,9 @@ begin
       bin.update_instance(response.to_hash)
     end
   end
+=end
+  Log.info 'Listen Public queue to Janus'
+  loop {}
 rescue => exception
   Log.fatal '!! Fail to start RRJ Thread Janus Instance management !!'
   Log.fatal exception

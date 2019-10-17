@@ -33,8 +33,14 @@ module RubyRabbitmqJanus
 
       # @return [String] Get path to classes in project calling this gem.
       def listener_path
-        @options['gem']['listener']['path'].to_s ||
+        @options['gem']['listener']['public'].to_s ||
           'app/ruby_rabbitmq_janus/action_events'
+      end
+
+      # @return [String] Get path to classes in project calling this gem.
+      def listener_admin_path
+        @options['gem']['listener']['admin'].to_s ||
+          'app/ruby_rabbitmq_janus/action_admin_events'
       end
 
       # @return [String] Environment gem executed.

@@ -8,17 +8,25 @@ module RubyRabbitmqJanus
 
   # # Rails
   #
-  # Use option to rails for prepapre application with RRJ.
-  # Initialize public queue to janus instance.
+  # Use option to rails for prepare application with RRJ.
+  # Initialize public queue to Janus instance.
   class Rails < ::Rails::Engine
     config.after_initialize do
       Log.debug '[RRJ] After initializer'
       require File.join(Dir.pwd,
                         RubyRabbitmqJanus::Tools::Config.instance.listener_path)
+      require File.join(Dir.pwd,
+                        RubyRabbitmqJanus::Tools::Config.instance.listener_admin_path)
 
-      Log.info 'Listen public queue in thread'
+      process = RubyRabbitmqJanus::Process::Concurrencies
+
+      Log.info '[RRJ] Listen public queue in thread'
       actions = RubyRabbitmqJanus::ActionEvents.new.actions
-      RubyRabbitmqJanus::Process::Concurrencies::Event.instance.run(&actions)
+      process::Event.instance.run(&actions)
+
+      Log.info '[RRJ] Listen admin queue in thread'
+      admin_actions = RubyRabbitmqJanus::ActionAdminEvents.new.actions
+      process::EventAdmin.instance.run(&admin_actions)
     end
   end
 end

@@ -49,6 +49,7 @@ Metrics/LineLength:
   Exclude:
     - spec/**/*
     - lib/rrj/errors/**/*
+    - lib/rrj/rails.rb
 
 # Naming rules
 # ###

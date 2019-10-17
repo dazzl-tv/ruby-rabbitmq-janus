@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### [Fixed]
 - Fix stop thread. Cleanup connection with RabbitMQ.
 
+### [Added]
+- Listen queue admin
+
 ## [2.7.1] - 2019-10-15
 ### [Fixed]
 - Fix namespace raise exception rabbit listener

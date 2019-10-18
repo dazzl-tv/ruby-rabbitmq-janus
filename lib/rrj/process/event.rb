@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Process
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
-
+      #
       # # Listen public queue to all Janus instance
       #
       # Listen standard queue and sending a block code to thread listen.

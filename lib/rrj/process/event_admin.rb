@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
         private
 
         def transaction_running
-          publisher = Rabbit::Listener::FromAdmin.n(rabbit)
+          publisher = Rabbit::Listener::FromAdmin.new(rabbit)
           @thread.thread_variable_set(NAME_VAR, publisher)
         end
       end

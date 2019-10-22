@@ -20,6 +20,7 @@ module RubyRabbitmqJanus
     # RemoteSyslogger (for papertrail)
     # File
     module Logger
+      # Write basic information about this gem
       def self.start
         Log.info '### Start bin Ruby Rabbit Janus ###'
         Log.info "Program : #{RubyRabbitmqJanus::Tools::Config.instance.pg}"
@@ -27,6 +28,7 @@ module RubyRabbitmqJanus
         Log.debug "\r\n#{RubyRabbitmqJanus::BANNER}"
       end
 
+      # Configure logger used by RRJ
       def self.create
         @config = RubyRabbitmqJanus::Tools::Config.instance
 
@@ -36,6 +38,7 @@ module RubyRabbitmqJanus
         @log
       end
 
+      # Choose type logger used in application instance
       def self.initialize_logger
         case @config.log_type
         when :stdout  then logger_stdout
@@ -46,14 +49,18 @@ module RubyRabbitmqJanus
         end
       end
 
+      # Configure logger with output SDTOUT
       def self.logger_stdout
         ::Logger.new(STDOUT)
       end
 
+      # Configure logger with output file
+      # default : `log/ruby-rabbitmq-janus.log`
       def self.logger_file
         ::Logger.new(@config.log_option || 'log/ruby-rabbitmq-janus.log')
       end
 
+      # Configure logger with output PaperTrail service
       def self.logger_remote
         require 'remote_syslog_logger'
 
@@ -63,18 +70,22 @@ module RubyRabbitmqJanus
                                local_hostname: remote_hostname)
       end
 
+      # Read url for PaperTail and split for endpoint
       def self.remote_url
         @config.log_option.split(':').first
       end
 
+      # Read url for PaperTrail and split for port
       def self.remote_port
         @config.log_option.split('@').first.split(':').last
       end
 
+      # Read url for PaperTrail and split for name app
       def self.remote_program
         @config.log_option.split('@').last.split(':').first
       end
 
+      # Read url for PaperTrail and split for host
       def self.remote_hostname
         @config.log_option.split(':').last
       end

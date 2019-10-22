@@ -19,14 +19,18 @@ module RubyRabbitmqJanus
 
       # Update attributes to document
       #
-      # @param [Hash] List of attribute to update with this value
+      # @param attributes [Hash] List of attribute to update with this value
+      #
+      # @return [Hash] Current model
       def set(attributes)
         update_columns(attributes)
       end
 
       # Destroy data to column
       #
-      # @param [Array] List to attribute to delete in document
+      # @param attributes [Array] List to attribute to delete in document
+      #
+      # @return [Hash] Current model
       def unset(attributes)
         Hash[attributes.map { |key, _value| [key, nil] }]
       end

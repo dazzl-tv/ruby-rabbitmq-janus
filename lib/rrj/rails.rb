@@ -13,10 +13,10 @@ module RubyRabbitmqJanus
   class Rails < ::Rails::Engine
     config.after_initialize do
       Log.debug '[RRJ] After initializer'
-      require File.join(Dir.pwd,
-                        RubyRabbitmqJanus::Tools::Config.instance.listener_path)
-      require File.join(Dir.pwd,
-                        RubyRabbitmqJanus::Tools::Config.instance.listener_admin_path)
+      cfg = RubyRabbitmqJanus::Tools::Config.instance
+
+      require File.join(Dir.pwd, cfg.listener_path)
+      require File.join(Dir.pwd, cfg.listener_admin_path)
 
       process = RubyRabbitmqJanus::Process::Concurrencies
 

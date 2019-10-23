@@ -12,8 +12,6 @@ module RubyRabbitmqJanus
       #
       # @see file:/config/default.md For more information to config file used.
       class EventAdmin < Concurrency
-        include Singleton
-
         NAME_VAR = :publish_adm
 
         def initialize

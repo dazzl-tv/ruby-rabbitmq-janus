@@ -2,6 +2,7 @@
 
 require 'rails'
 require 'action_view'
+require 'parallel'
 
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -14,19 +15,22 @@ module RubyRabbitmqJanus
     config.after_initialize do
       Log.debug '[RRJ] After initializer'
       cfg = RubyRabbitmqJanus::Tools::Config.instance
+      number = cfg.public_queue_process
 
       require File.join(Dir.pwd, cfg.listener_path)
       require File.join(Dir.pwd, cfg.listener_admin_path)
 
+      Log.debug "[RRJ] Create process : #{number}"
       process = RubyRabbitmqJanus::Process::Concurrencies
-
-      Log.info '[RRJ] Listen public queue in thread'
       actions = RubyRabbitmqJanus::ActionEvents.new.actions
-      process::Event.instance.run(&actions)
-
-      Log.info '[RRJ] Listen admin queue in thread'
       admin_actions = RubyRabbitmqJanus::ActionAdminEvents.new.actions
-      process::EventAdmin.instance.run(&admin_actions)
+
+      Parallel.map([
+                     process::Event.new.run(&actions),
+                     process::EventAdmin.new.run(&admin_actions)
+                   ], in_processes: number) do |listener|
+        "Item: #{listener}, Worker: #{Parallel.worker_number}"
+      end
     end
   end
 end

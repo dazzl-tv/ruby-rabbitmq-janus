@@ -1,12 +1,13 @@
 PATH
   remote: .
   specs:
-    ruby_rabbitmq_janus (2.7.2.pre.170)
+    ruby_rabbitmq_janus (2.7.3.pre.170)
+      activesupport
       bunny (~> 2.5)
       key_path (~> 1.2)
+      parallel (~> 1.18)
       semaphore (~> 0.0.1)
       thread (~> 0.2.2)
-      timers (~> 4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -138,7 +139,7 @@ GEM
     kwalify (0.7.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    loofah (2.3.0)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -250,7 +251,6 @@ GEM
     thor (0.20.3)
     thread (0.2.2)
     thread_safe (0.3.6)
-    timers (4.3.0)
     travis (1.8.10)
       backports
       faraday (~> 0.9)
@@ -278,7 +278,6 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  activesupport
   appraisal (~> 2.2)
   aruba (~> 0.14.2)
   database_cleaner (~> 1.6)

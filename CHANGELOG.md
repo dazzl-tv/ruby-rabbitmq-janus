@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.7.2] - 2019-10-17
+## [2.7.2] - 2019-10-23
 ### [Deleted]
 - Remove useless private method
 - Remove keepalive thread
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [Added]
 - Listen queue admin
+- Create multi process for listen public queue
 
 ## [2.7.1] - 2019-10-15
 ### [Fixed]

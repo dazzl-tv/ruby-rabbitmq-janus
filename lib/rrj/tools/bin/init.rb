@@ -2,4 +2,4 @@
 
 require 'rrj/rails'
 
-loop {}
+loop { sleep 1 }

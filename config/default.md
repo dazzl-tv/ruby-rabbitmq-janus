@@ -42,6 +42,7 @@ gem:
   environment: 'development'
   orm: 'mongoid'
   response_path: 'spec/supports/rrj/responses'
+  process: 1
 ```
 
 ## Customize

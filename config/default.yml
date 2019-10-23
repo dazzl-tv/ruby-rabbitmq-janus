@@ -78,3 +78,5 @@ gem:
   orm: 'mongoid'
   # Read response json for RSpec
   response_path: 'spec/supports/rrj/responses'
+  # Number ofprocess read public queue
+  process: 1

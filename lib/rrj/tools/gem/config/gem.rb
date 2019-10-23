@@ -63,6 +63,11 @@ module RubyRabbitmqJanus
         @options['gem']['response_path'] || 'spec/responses'
       end
 
+      # @return [Integer] get number of thread created for listen public queues
+      def public_queue_process
+        @options['gem']['process'] || 1
+      end
+
       alias env environment
       alias orm object_relational_mapping
       alias pg program_name

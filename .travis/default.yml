@@ -41,3 +41,4 @@ gem:
   orm: <%= ENV['MONGO'].eql?('true') ? 'mongoid' : 'active_record' %>
   program_name: 'ruby_rabbitmq_janus'
   response_path: 'spec/supports/rrj/responses'
+  process: 1

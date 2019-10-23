@@ -150,7 +150,7 @@ require 'ruby_rabbitmq_janus'
 actions = RubyRabbitmqJanus::ActionEvents.new.action
 
 # Initialize a thread for listen public queue and send class to thread
-RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(@actions)
+RubyRabbitmqJanus::Janus::Concurrencies::Event.new.run(@actions)
 ```
 
 ## Upgrade

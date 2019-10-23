@@ -72,6 +72,6 @@ Settings.reload!
             # If you don't want listen a standard queue, comment this block and
             # "require 'actions'" also
             act = RubyRabbitmqJanus::ActionEvents.new.actions
-            RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&act)
+            RubyRabbitmqJanus::Janus::Concurrencies::Event.new.run(&act)
           end
         end

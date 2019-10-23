@@ -12,5 +12,5 @@ end
 
 # Initialize listener
 actions = EventTest.new.actions
-@event = RubyRabbitmqJanus::Process::Concurrencies::Event.instance
+@event = RubyRabbitmqJanus::Process::Concurrencies::Event.new
 @event.run(&actions)

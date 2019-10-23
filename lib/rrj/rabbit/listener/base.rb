@@ -12,7 +12,7 @@ module RubyRabbitmqJanus
         # @param [String] rabbit Information connection to RabbitMQ server
         def initialize(rabbit)
           super()
-          @rabbit = rabbit.channel_pool
+          @rabbit = rabbit.channel
           subscribe_queue
         rescue
           raise Errors::Rabbit::Listener::Base::Initialize

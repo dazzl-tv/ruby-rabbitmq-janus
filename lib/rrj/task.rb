@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# :reek:TooManyStatements
-# :reek:BooleanParameter
 # :reek:UtilityFunction
 
 module RubyRabbitmqJanus
@@ -16,26 +14,6 @@ module RubyRabbitmqJanus
       Tools::Requests.instance
     rescue
       raise Errors::RRJTask::Initialize
-    end
-
-    # Start a transaction with Janus. Request use session_id information.
-    #
-    # @param [Hash] options
-    #   Give a session number for use another session in Janus
-    #
-    # @example Get Janus information
-    #   @rrj.start_transaction do |transaction|
-    #     response = transaction.publish_message('base::info').to_hash
-    #   end
-    #
-    # @since 2.1.0
-    # @deprecated Use {#session_endpoint_private} instead
-    def start_transaction(options = {})
-      transaction = Janus::Transactions::Session.new(true,
-                                                     options['session_id'])
-      transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJ::StartTransaction.new(true, options)
     end
 
     # Create a transaction between Apps and Janus in queue private
@@ -61,7 +39,7 @@ module RubyRabbitmqJanus
       transaction.connect { yield(transaction) }
     end
 
-    # For task is impossible to calling this method.
+    # For task is possible to calling this method, but no action is executed
     def session_endpoint_public(_options)
       nil
     end

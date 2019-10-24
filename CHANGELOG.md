@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [3.0.0] - 2019-10-24
+### [Deleted]
+- Remove deprecated methods
+
+### [Fixed]
+- Fix all spec
+
 ## [2.7.2] - 2019-10-23
 ### [Deleted]
 - Remove useless private method

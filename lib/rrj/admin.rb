@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 module RubyRabbitmqJanus
   # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
 
@@ -14,25 +16,6 @@ module RubyRabbitmqJanus
   #
   # @see https://janus.conf.meetecho.com/docs/admin.html
   class RRJAdmin < RRJ
-    # Create a transaction between apps and Janus for request without handle
-    #
-    # @param [Hash] options
-    #   Give a session number for use another session in Janus
-    #
-    # @example Get Janus session
-    #   @rrj.start_transaction_admin do |transaction|
-    #     response = transaction.publish_message('admin:sessions').sessions
-    #   end
-    #
-    # @since 2.0.0
-    # @deprecated Use {#admin_endpoint} instead.
-    def start_transaction_admin(options = {})
-      transaction = Janus::Transactions::Admin.new(options)
-      transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJAdmin::StartTransactionAdmin, options
-    end
-
     # Create a transaction between Apps and Janus
     #
     # @param [Hash] options

@@ -11,10 +11,10 @@ require 'erb'
 require 'rrj/tools/bin/config'
 require 'rrj/tools/gem/log'
 
+# :reek:UtilityFunction
+
 Log = RubyRabbitmqJanus::Tools::Logger.create unless defined?(Log)
 RubyRabbitmqJanus::Tools::Logger.start
-
-# :reek:TooManyStatements
 
 # Primary module for this gem
 module RubyRabbitmqJanus
@@ -45,28 +45,6 @@ module RubyRabbitmqJanus
       @option = Tools::Option.new
     rescue => exception
       raise Errors::RRJ::InstanciateGem, exception
-    end
-
-    # Start a transaction with Janus. Request use session_id information.
-    #
-    # @param [Boolean] exclusive Choose if message is storage in exclusive queue
-    # @param [Hash] options
-    #   Give a session number for use another session in Janus
-    #
-    # @example Get Janus information
-    #   @rrj.start_transaction do |transaction|
-    #     response = transaction.publish_message('base::info').to_hash
-    #   end
-    #
-    # @since 2.0.0
-    # @deprecated Use {#session_endpoint_public} or
-    #   {#session_endpoint_private} instead.
-    def start_transaction(exclusive = true, options = {})
-      session = @option.use_current_session?(options)
-      transaction = Janus::Transactions::Session.new(exclusive, session)
-      transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJ::StartTransaction.new(exclusive, options)
     end
 
     # Create a transaction between Apps and Janus in queue public
@@ -121,45 +99,6 @@ module RubyRabbitmqJanus
       session = @option.use_current_session?(options)
       transaction = Janus::Transactions::Session.new(true, session)
       transaction.connect { yield(transaction) }
-    end
-
-    # Start a transaction with Janus. Request used session_id/handle_id
-    # information.
-    #
-    # @param [Boolean] exclusive Choose if message is storage in exclusive queue
-    # @param [Hash] options
-    #   Give a session number for use another session in Janus
-    #
-    # @note Use transaction.detach for closing handle in Janus
-    #
-    # @example Send request trickles for exclusive queue
-    #   @cde = { 'sdpMid' => '...', sdpMLineIndex => 0, 'candidate' => '...' }
-    #   @rrj.start_transaction_handle do |transaction|
-    #     transaction.publish_message('base::trickle', @cde)
-    #   end
-    #
-    # @example Send request trickles for non exclusive queue
-    #   @cde = { 'sdpMid' => '...', sdpMLineIndex => 0, 'candidate' => '...' }
-    #   @rrj.start_transaction_handle(false) do |transaction|
-    #     transaction.publish_message('base::trickle', @cde)
-    #   end
-    #
-    # @return [Fixnum] Handle used for transaction
-    #
-    # @since 2.0.0
-    # @deprecated Use {#handle_endpoint_public}
-    #   or {#handle_endpoint_private} instead.
-    def start_transaction_handle(exclusive = true, options = {})
-      session = @option.use_current_session?(options)
-      handle = @option.use_current_handle?(options)
-      instance = options['instance'] || 1
-      transaction = Janus::Transactions::Handle.new(exclusive,
-                                                    session,
-                                                    handle,
-                                                    instance)
-      transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJ::StartTransactionHandle, exclusive, options
     end
 
     # Create a transaction between Apps and Janus in private queue

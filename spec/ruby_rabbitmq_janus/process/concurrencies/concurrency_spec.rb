@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Janus::Concurrencies::Concurrency, type: :thread, name: :concurrency do
+describe RubyRabbitmqJanus::Process::Concurrencies::Concurrency, type: :thread, name: :concurrency do
   let(:concurrency) { described_class.new }
 
   it { expect(concurrency.send(:rabbit)).to be_a(RubyRabbitmqJanus::Rabbit::Connect) }

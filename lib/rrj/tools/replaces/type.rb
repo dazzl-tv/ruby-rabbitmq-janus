@@ -4,14 +4,13 @@ require 'active_support/core_ext/string'
 
 # :reek:UtilityFunction
 # :reek:TooManyStatements
-# rubocop:disable Metrics/CyclomaticComplexity
 
 module RubyRabbitmqJanus
   module Tools
-    # Class for converting elemnts given by apps to this gem an type conform
+    # Class for converting elements given by apps to this gem an type conform
     # to request sending
     class Type
-      # Initalize an object for cast a type to data given by app
+      # Initialize an object for cast a type to data given by app
       #
       # @param [Hash] request Request parsing before sending to RabbitMQ/Janus
       def initialize(request)
@@ -106,4 +105,3 @@ module RubyRabbitmqJanus
     end
   end
 end
-# rubocop:enable Metrics/CyclomaticComplexity

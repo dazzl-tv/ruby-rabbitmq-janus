@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
+require 'active_support'
 require 'singleton'
 require 'rrj/errors/error'
 require 'yaml'
 require 'erb'
-require 'rrj/tools/gem/config/gem'
-require 'rrj/tools/gem/config/rabbit'
-require 'rrj/tools/gem/config/queues'
-require 'rrj/tools/gem/config/janus'
+%w[gem rabbit queues janus].each do |file|
+  require File.join('rrj', 'tools', 'gem', 'config', file)
+end
+%w[instances validations].each do |file|
+  require File.join('rrj', 'models', 'concerns', file)
+end
 
-# rubocop:disable Naming/MemoizedInstanceVariableName
 module RubyRabbitmqJanus
   module Tools
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -47,7 +49,7 @@ module RubyRabbitmqJanus
       def initialize
         @options = @configuration = nil
         loading_configuration_customize
-        loading_configuration_default
+        @options ||= loading_configuration_default
       end
 
       private
@@ -63,9 +65,13 @@ module RubyRabbitmqJanus
 
       def loading_configuration_default
         @configuration = PATH_DEFAULT
-        @options ||= load_configuration
+        load_configuration
       end
     end
   end
 end
-# rubocop:enable Naming/MemoizedInstanceVariableName
+
+require RubyRabbitmqJanus::Tools::Config.instance.orm
+require File.join('rrj',
+                  'models',
+                  RubyRabbitmqJanus::Tools::Config.instance.orm)

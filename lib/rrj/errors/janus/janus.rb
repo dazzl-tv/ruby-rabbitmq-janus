@@ -16,8 +16,6 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/errors/janus/processus/concurency'
-
 require 'rrj/errors/janus/messages/message'
 require 'rrj/errors/janus/messages/admin'
 require 'rrj/errors/janus/messages/standard'

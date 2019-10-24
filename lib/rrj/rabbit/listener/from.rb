@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# :reek:TooManyStatements
-# :reek:InstanceVariableAssumption
-
 module RubyRabbitmqJanus
   module Rabbit
     module Listener
@@ -14,8 +11,11 @@ module RubyRabbitmqJanus
       class From < Base
         private
 
+        def reply
+          rabbit.queue(Tools::Config.instance.queue_from)
+        end
+
         def subscribe_queue
-          reply = rabbit.queue(Tools::Config.instance.queue_from)
           rabbit.prefetch(1)
           reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
             info_subscribe(info, prop, payload)

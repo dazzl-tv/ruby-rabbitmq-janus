@@ -8,31 +8,29 @@ module RubyRabbitmqJanus
     #
     # Store instance information for MongoID database
     class JanusInstance < ::ActiveRecord::Base
-      include RubyRabbitmqJanus::Models::JanusInstanceCallbacks
-      include RubyRabbitmqJanus::Models::JanusInstanceMethods
-      include RubyRabbitmqJanus::Models::JanusInstanceValidations
+      include RubyRabbitmqJanus::Models::Instances
+      include RubyRabbitmqJanus::Models::Validations
 
       self.primary_key = :id
 
       alias_attribute :instance,        :id
+      alias_attribute :title,           :name
       alias_attribute :session_id,      :session
-      alias_attribute :thread_id,       :thread
-      alias_attribute :thread_id_adm,   :thread_adm
-
-      after_create      { callback_create_after }
-      after_update      { callback_update_after }
-      after_destroy     { callback_destroy_after }
 
       # Update attributes to document
       #
-      # @param [Hash] List of attribute to update with this value
+      # @param attributes [Hash] List of attribute to update with this value
+      #
+      # @return [Hash] Current model
       def set(attributes)
         update_columns(attributes)
       end
 
       # Destroy data to column
       #
-      # @param [Array] List to attribute to delete in document
+      # @param attributes [Array] List to attribute to delete in document
+      #
+      # @return [Hash] Current model
       def unset(attributes)
         Hash[attributes.map { |key, _value| [key, nil] }]
       end

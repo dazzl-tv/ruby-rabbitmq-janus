@@ -4,23 +4,16 @@ require 'bundler/setup'
 require 'pry'
 require 'json-schema-rspec'
 require 'rails'
-require 'factory_girl'
+require 'factory_bot'
 require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
-if ENV['MONGO'].match?('true')
-  require 'mongoid'
-else
-  require_relative '../lib/rrj/tools/gem/config'
-  RubyRabbitmqJanus::Tools::Config.instance.options['gem']['orm'] = 'active_record'
-  require 'active_record'
-end
+require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
 
 require 'ruby_rabbitmq_janus'
 require 'config/initializer'
 require 'config/database'
 require 'config/instance'
-Dir['spec/factories/*.rb'].each { |f| require File.expand_path(f) }
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
@@ -62,7 +55,12 @@ RSpec.configure do |config|
   config.filter_run_excluding broken: true
 
   # Configure Factory Girl
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
+
+  # Load factory bot definition
+  config.before(:suite) do
+    FactoryBot.find_definitions
+  end
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before do |example|

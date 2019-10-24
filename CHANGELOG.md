@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.7.2] - 2019-10-23
+### [Deleted]
+- Remove useless private method
+- Remove keepalive thread
+- Simplify model JanusInstance (remove callbacks and methods)
+- Remove gem timers
+- Remove Publisher/Listener for JanusInstance events. use sidekiq instead
+
+### [Fixed]
+- Fix stop thread. Cleanup connection with RabbitMQ.
+
+### [Added]
+- Listen queue admin
+- Create multi process for listen public queue
+
+## [2.7.1] - 2019-10-15
+### [Fixed]
+- Fix namespace raise exception rabbit listener
+
 ## [2.7.0] - 2019-09-02
 ### [Changed]
 - Update generator RRJ

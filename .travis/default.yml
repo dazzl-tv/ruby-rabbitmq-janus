@@ -1,3 +1,5 @@
+---
+
 rabbit:
   host: rabbit
   port: 5672
@@ -32,6 +34,11 @@ gem:
     level: debug
     type: stdout
     option: ''
+  listener:
+    public: 'app/ruby_rabbitmq_janus/action_events'
+    admin: 'app/ruby_rabbitmq_janus/action_admin_events'
   environment : 'development'
-  orm: 'mongoid'
+  orm: <%= ENV['MONGO'].eql?('true') ? 'mongoid' : 'active_record' %>
   program_name: 'ruby_rabbitmq_janus'
+  response_path: 'spec/supports/rrj/responses'
+  process: 1

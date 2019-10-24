@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# :reek:UtilityFunction
+
 module RubyRabbitmqJanus
   module Tools
     # Subclass for Config
@@ -31,8 +33,14 @@ module RubyRabbitmqJanus
 
       # @return [String] Get path to classes in project calling this gem.
       def listener_path
-        @options['gem']['listener']['path'].to_s ||
+        @options['gem']['listener']['public'].to_s ||
           'app/ruby_rabbitmq_janus/action_events'
+      end
+
+      # @return [String] Get path to classes in project calling this gem.
+      def listener_admin_path
+        @options['gem']['listener']['admin'].to_s ||
+          'app/ruby_rabbitmq_janus/action_admin_events'
       end
 
       # @return [String] Environment gem executed.
@@ -47,12 +55,17 @@ module RubyRabbitmqJanus
 
       # @return [String] Get program name or GEM_NAME
       def program_name
-        @options['gem']['program_name'].to_s || RubyRabbitmqJanus::GEM_NAME
+        ENV['PROGRAM_NAME'] || RubyRabbitmqJanus::GEM_NAME
       end
 
       # @return [String] Get path for json files contains a Janus response
       def rspec_response
         @options['gem']['response_path'] || 'spec/responses'
+      end
+
+      # @return [Integer] get number of thread created for listen public queues
+      def public_queue_process
+        @options['gem']['process'] || 1
       end
 
       alias env environment

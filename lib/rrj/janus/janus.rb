@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'rrj/janus/processus/concurrency'
 require 'rrj/janus/messages/message'
 require 'rrj/janus/responses/response'
 require 'rrj/janus/transactions/transaction'

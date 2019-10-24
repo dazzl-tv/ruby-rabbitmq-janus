@@ -37,11 +37,12 @@ gem:
     type: file
     option: ''
   listener:
-    path: 'app/ruby_rabbitmq_janus'
+    public: 'app/ruby_rabbitmq_janus/action_events'
+    admin: 'app/ruby_rabbitmq_janus/action_admin_events'
   environment: 'development'
   orm: 'mongoid'
-  program_name: 'ruby_rabbitmq_janus'
   response_path: 'spec/supports/rrj/responses'
+  process: 1
 ```
 
 ## Customize

@@ -5,39 +5,51 @@ require:
   - rubocop-performance
 
 AllCops:
-  Exclude:
-    - 'bin/**/*'
-    - 'Rakefile'
-    - 'lib/tasks/*'
-    - 'lib/generators/**/*'
-    - 'gemfiles/*'
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.5
+  RubyInterpreters:
+    - ruby
 
 # Styles rules
 # ###
-Style/Encoding:
-  Enabled: true
-
 Style/Documentation:
   Enabled: true
   Exclude:
     - lib/rrj/errors/**/*
+
+Style/Encoding:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  Exclude:
+    - bin/ruby_rabbitmq_janus
+    - gemfiles/*
+
+Style/StringLiterals:
+  Enabled: true
+  Exclude:
+    - gemfiles/*
 
 Style/RescueStandardError:
   Enabled: false
 
 # Metrics Rules
 # ###
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - ruby_rabbitmq_janus.gemspec
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - lib/rrj/tools/replaces/type.rb
+
 Metrics/LineLength:
   Max: 80
   Exclude:
     - spec/**/*
     - lib/rrj/errors/**/*
-
-Metrics/BlockLength:
-  Exclude:
-    - spec/**/*
-    - ruby_rabbitmq_janus.gemspec
+    - lib/rrj/rails.rb
 
 # Naming rules
 # ###

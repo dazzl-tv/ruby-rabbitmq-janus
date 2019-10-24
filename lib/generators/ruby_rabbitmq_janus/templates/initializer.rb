@@ -37,7 +37,6 @@ module Rails
   PROGRAM = console? ? 'console' : pg_name
 end
 
-
 # If you used gem config for manage your ENV variables uncomment this line
 # @see https://rubygems.org/gems/config
 Settings.reload!
@@ -57,7 +56,8 @@ Settings.reload!
           # Reload env variable before start thread RRJ for
           # listen events in RabbitMQ public queue.
           # Load class manually.
-          # It's loaded after initializer so add manually here the listener block.
+          # It's loaded after initializer so add
+          # manually here the listener block.
           RubyRabbitmqJanus::RRJAdmin.new
 
           # Comment/Remove this line if RRJ listener public queue is executed
@@ -66,11 +66,12 @@ Settings.reload!
           # Loading classes Actions to rails application
           require 'actions'
 
-          # Send a block code to thread for manage event given by Janus in public queue
+          # Send a block code to thread for manage
+          # event given by Janus in public queue
           Rails.configuration.after_initialize do
             # If you don't want listen a standard queue, comment this block and
             # "require 'actions'" also
-            actions = RubyRabbitmqJanus::ActionEvents.new.actions
-            RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(&actions)
+            act = RubyRabbitmqJanus::ActionEvents.new.actions
+            RubyRabbitmqJanus::Janus::Concurrencies::Event.new.run(&act)
           end
         end

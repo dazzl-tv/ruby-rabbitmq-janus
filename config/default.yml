@@ -69,13 +69,14 @@ gem:
   # Options for listener thread
   listener:
     # Represent path to action_events class in project who use this gem
-    path: 'app/ruby_rabbitmq_janus'
+    public: 'app/ruby_rabbitmq_janus/action_events'
+    admin: 'app/ruby_rabbitmq_janus/action_admin_events'
   # Environment to application
   environment : 'development'
   # Precise ORM used :
   # mongoid or active_record
   orm: 'mongoid'
-  # Define program name
-  program_name: 'ruby_rabbitmq_janus'
   # Read response json for RSpec
   response_path: 'spec/supports/rrj/responses'
+  # Number ofprocess read public queue
+  process: 1

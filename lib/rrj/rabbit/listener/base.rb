@@ -9,7 +9,7 @@ module RubyRabbitmqJanus
       class Base < RubyRabbitmqJanus::Rabbit::BaseEvent
         # Define an publisher
         #
-        # @param [String] rabbit Information connection to rabbitmq server
+        # @param [String] rabbit Information connection to RabbitMQ server
         def initialize(rabbit)
           super()
           @rabbit = rabbit.channel
@@ -42,17 +42,10 @@ module RubyRabbitmqJanus
           { block: false, manual_ack: true, arguments: { 'x-priority': 2 } }
         end
 
-        # Counts transmitted messages
-        def log_message_id(propertie)
-          message_id = propertie.message_id
-          ::Log.info "[X] Message reading with ID #{message_id}"
-        end
-
-        def info_subscribe(info, prop, payload)
+        def info_subscribe(info, _prop, payload)
           ::Log.debug info
-          ::Log.info \
-            "[X] Message reading ##{prop['correlation_id']}"
-          ::Log.debug payload
+          ::Log.info '[X] Message reading'
+          ::Log.info payload
         end
       end
     end
@@ -61,4 +54,3 @@ end
 
 require 'rrj/rabbit/listener/from'
 require 'rrj/rabbit/listener/from_admin'
-require 'rrj/rabbit/listener/janus_instance'

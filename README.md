@@ -1,4 +1,4 @@
-# Ruby RabbitMQ Janus | [![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus) [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus) [![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus) [![Known Vulnerabilities](https://dev.snyk.io/test/github/dev-crea/dazzl-tv/ruby-rabbitmq-janus/badge.svg)](https://dev.snyk.io/test/github/dev-crea/dazzl-tv/ruby-rabbitmq-janus)
+# Ruby RabbitMQ Janus | [![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus) [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus) [![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus) [![Known Vulnerabilities](https://snyk.io/test/github/dazzl-tv/ruby-rabbitmq-janus/badge.svg)](https://snyk.io/test/github/dazzl-tv/ruby-rabbitmq-janus)
 
 Ruby Gem for Janus WebRTC Gateway integration using RabbitMQ message queue
 
@@ -10,31 +10,7 @@ RabbitMQ server in a queue for janus server. janus processes a message and send
 
 This gem is product by [Dazzl.tv](http://dazzl.tv)
 
-```linux
-------------                        ----------                      -------
-|Rails Apps|                        |RabbitMQ|                      |Janus|
-------------                        ----------                      -------
-  |                                   |                                |
-  | Request : { "janus": "info" }     |                                |
-  | --------------------------------> |                                |
-  | Create request json.              |                                |
-  | Sending in queue.                 |                                |
-  |                                   | -----------------------------> |
-  |                                   | Read a message in queue        | ----- |
-  |                                   |                                |       | Return a response
-  |                                   |                                |       | to treatment executed.
-  |                                   |                                | <---- |
-  |                                   |                                |
-  |                                   |                                |
-  |                                   | <----------------------------  |
-  | <-------------------------------- |                                |
-  |                                   |                                |
-  |                                   |                                | # If asynchron message
-  |                                   |                                | # send a response after execution
-  |                                   | <----------------------------  | # but a acknoledge message is
-  | <-------------------------------- |                                | # sending when request is received
-  |                                   |                                |
-```
+![Simple diagram](.diagrams.svg)
 
 ## Menu
 
@@ -174,7 +150,7 @@ require 'ruby_rabbitmq_janus'
 actions = RubyRabbitmqJanus::ActionEvents.new.action
 
 # Initialize a thread for listen public queue and send class to thread
-RubyRabbitmqJanus::Janus::Concurrencies::Event.instance.run(@actions)
+RubyRabbitmqJanus::Janus::Concurrencies::Event.new.run(@actions)
 ```
 
 ## Upgrade

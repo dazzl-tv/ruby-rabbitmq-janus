@@ -28,35 +28,32 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
 
   context 'when many janus instances' do
     before do
-      FactoryGirl.create_list(:janus_instance, 5, enable: false)
-      FactoryGirl.create(:janus_instance, janus_id)
+      FactoryBot.create_list(:janus_instance, 5, enable: false)
+      FactoryBot.create(:janus_instance, janus_id)
     end
 
     let(:one) { model.enabled.first }
 
     it { expect(model.count).to eq(6) }
     it { expect(model.enabled.count).to eq(1) }
-    it { expect(model.find_by_session(one.session).thread).to eq(one.thread) }
     it { expect(model.find_by_instance(one.instance).session).to eq(one.session) }
   end
 
   context 'when Janus Instance enable' do
-    let(:janus) { FactoryGirl.create(:janus_instance, janus_id) }
+    let(:janus) { FactoryBot.create(:janus_instance, janus_id) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
     it { expect(janus.session).to be_nil }
     it { expect(janus.enable).to be_a(TrueClass) }
     it { expect(janus.enable).to eq(true) }
-    it { expect(janus.thread).to be_nil }
   end
 
   context 'when Janus Instance disable' do
-    let(:janus) { FactoryGirl.create(:janus_instance, enable: false) }
+    let(:janus) { FactoryBot.create(:janus_instance, enable: false) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
     it { expect(janus.session).to be_nil }
     it { expect(janus.enable).to be_a(FalseClass) }
     it { expect(janus.enable).to eq(false) }
-    it { expect(janus.thread).to be_nil }
   end
 end

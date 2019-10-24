@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 module RubyRabbitmqJanus
-  module Janus
-    # Modules for create autonomous processus
+  module Process
+    # Modules for create autonomous process
     module Concurrencies
       # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
       #
       # # Class for manage threads
       #
-      # @abstract Manage thread in this gem for keepalive message and listen
-      #   standard queue.
+      # @abstract Manage thread for listener to queue :
+      #   from-janus
+      #   from-janus-admin
       class Concurrency
         # Initialize class with elements for thread communication
         def initialize
@@ -18,7 +19,7 @@ module RubyRabbitmqJanus
           @lock = Mutex.new
           @condition = ConditionVariable.new
         rescue
-          raise Errors::Janus::Concurencies::Initializer
+          raise Errors::Process::Concurencies::Initializer
         end
 
         private
@@ -40,6 +41,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/janus/processus/keepalive/keepalive_initializer'
-require 'rrj/janus/processus/event'
-require 'rrj/janus/processus/event_admin'
+require 'rrj/process/event'
+require 'rrj/process/event_admin'

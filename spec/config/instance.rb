@@ -15,7 +15,7 @@ end
 
 def attach_base
   res = nil
-  @gateway.session_endpoint_private(true, @session_instance) do |tr|
+  @gateway.session_endpoint_private(@session_instance) do |tr|
     res = tr.publish_message('base::attach', @session_instance)
   end
   @options.merge!('handle_id' => res.sender).merge!(@session_instance)
@@ -31,7 +31,7 @@ end
 
 def session
   res = nil
-  @gateway.session_endpoint_private(true, @instance) do |tr|
+  @gateway.session_endpoint_private(@instance) do |tr|
     res = tr.publish_message('base::create', @instance)
   end
   @options.merge!('session_id' => res.session).merge!(@instance)

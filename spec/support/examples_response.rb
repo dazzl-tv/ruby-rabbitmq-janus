@@ -9,7 +9,7 @@ end
 
 shared_examples 'response with sender is' do |klass|
   let(:message) do
-    @gateway.start_transaction do |transaction|
+    @gateway.session_endpoint_public do |transaction|
       opts = { 'handle_id' => @response.sender }
       @response = transaction.publish_message(type, opts)
     end
@@ -20,8 +20,8 @@ end
 
 shared_examples 'admin response with sender is' do |klass|
   let(:message) do
-    @gateway.start_transaction_admin do |transaction|
-      opts = { 'handle_id' => @response.sender }
+    opts = { 'handle_id' => @response.sender }
+    @gateway.admin_endpoint(opts) do |transaction|
       @response = transaction.publish_message(type, opts)
     end
   end

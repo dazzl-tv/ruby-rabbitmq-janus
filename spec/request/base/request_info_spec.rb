@@ -8,9 +8,9 @@ describe 'RubyRabbitmqJanus::RRJ -- message type info', broken: true do
     @type = 'base::info'
   end
 
-  describe '#start_transaction', type: :request,
-                                 level: :base,
-                                 name: :info do
+  describe '#session_endpoint_public', type: :request,
+                                       level: :base,
+                                       name: :info do
     context 'when queue is exclusive' do
       include_examples 'transaction should match json schema'
     end

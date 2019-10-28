@@ -12,10 +12,10 @@ describe 'RubyRabbitmqJanus::RRJ -- message type attach' do
     @options = @session_instance
   end
 
-  describe '#start_transaction', type: :request,
-                                 level: :base,
-                                 broken: true,
-                                 name: :attach do
+  describe '#session_endpoint_public', type: :request,
+                                       level: :base,
+                                       broken: true,
+                                       name: :attach do
     context 'when queue is exclusive' do
       include_examples 'transaction should match json schema'
     end

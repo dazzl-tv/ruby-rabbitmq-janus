@@ -15,10 +15,10 @@ describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
     @options.merge!('candidate' => candidate)
   end
 
-  describe '#start_transaction_handle', type: :request,
-                                        level: :base,
-                                        broken: true,
-                                        name: :trickle do
+  describe '#handle_endpoint_public', type: :request,
+                                      level: :base,
+                                      broken: true,
+                                      name: :trickle do
     context 'when queue is exclusive' do
       include_examples 'transaction handle should match json schema'
     end

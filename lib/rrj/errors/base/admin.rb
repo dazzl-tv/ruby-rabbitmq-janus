@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
     end
 
     module RRJAdmin
-      # Error for RRJAdmin#start_transaction_admin
+      # Error for RRJAdmin#admin_endpoint
       class StartTransactionAdmin < RubyRabbitmqJanus::Errors::BaseRRJAdmin
         def initialize(opts)
           super "Transaction admin failed with -- #{opts}", :fatal

@@ -7,7 +7,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
                                                      broken: true,
                                                      name: :admin do
   let(:message) do
-    @gateway.start_transaction_admin do |transaction|
+    @gateway.admin_endpoint do |transaction|
       @response = transaction.publish_message(type)
     end
   end
@@ -28,7 +28,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
 
   describe '#info' do
     before do
-      @gateway.start_transaction do |transaction|
+      @gateway.session_endpoint_private do |transaction|
         @response = transaction.publish_message('base::attach')
       end
     end

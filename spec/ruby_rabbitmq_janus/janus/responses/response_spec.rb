@@ -6,7 +6,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Response, type: :responses,
                                                         name: :response do
   let(:type) { 'base::info' }
   let(:message) do
-    @gateway.start_transaction do |transaction|
+    @gateway.session_endpoint_public do |transaction|
       @response = transaction.publish_message(type)
     end
   end

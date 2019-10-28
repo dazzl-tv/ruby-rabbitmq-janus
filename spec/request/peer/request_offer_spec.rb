@@ -12,10 +12,10 @@ describe 'RubyRabbitmqJanus::RRJ -- message type offer' do
     @options.merge!('sdp' => SDP_OFFER).merge!(@session_instance)
   end
 
-  describe '#start_transaction_handle', type: :request,
-                                        level: :peer,
-                                        broken: true,
-                                        name: :offer do
+  describe '#handle_endpoint_public', type: :request,
+                                      level: :peer,
+                                      broken: true,
+                                      name: :offer do
     context 'when queue is exclusive' do
       it_behaves_like 'transaction handle should match json schema'
     end

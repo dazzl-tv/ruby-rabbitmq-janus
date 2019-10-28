@@ -15,7 +15,7 @@ end
 
 def attach_base
   res = nil
-  @gateway.start_transaction(true, @session_instance) do |tr|
+  @gateway.session_endpoint_private(true, @session_instance) do |tr|
     res = tr.publish_message('base::attach', @session_instance)
   end
   @options.merge!('handle_id' => res.sender).merge!(@session_instance)
@@ -23,7 +23,7 @@ end
 
 def attach_admin
   res = nil
-  @gateway.start_transaction_admin(@session_instance) do |tr|
+  @gateway.admin_endpoint(@session_instance) do |tr|
     res = tr.publish_message('base::attach', @session_instance)
   end
   @options.merge!('handle_id' => res.sender).merge!(@session_instance)
@@ -31,7 +31,7 @@ end
 
 def session
   res = nil
-  @gateway.start_transaction(true, @instance) do |tr|
+  @gateway.session_endpoint_private(true, @instance) do |tr|
     res = tr.publish_message('base::create', @instance)
   end
   @options.merge!('session_id' => res.session).merge!(@instance)

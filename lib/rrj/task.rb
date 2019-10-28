@@ -44,21 +44,6 @@ module RubyRabbitmqJanus
       nil
     end
 
-    # Create a transaction between apps and janus with a handle
-    #
-    # @since 2.1.0
-    def start_transaction_handle(exclusive = true, options = {})
-      janus = session_instance(options)
-      handle = 0 # Create always a new handle
-      transaction = Janus::Transactions::Handle.new(exclusive,
-                                                    janus.session,
-                                                    handle,
-                                                    janus.instance)
-      transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJTask::StartTransactionHandle.new(exclusive, options)
-    end
-
     # For task is impossible to calling this method
     def handle_endpoint_public(_options)
       nil

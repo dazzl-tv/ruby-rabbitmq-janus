@@ -7,7 +7,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Event, type: :responses,
                                                      broken: true do
   let(:message) do
     # Transaction not exclusive, response is public queue
-    @gateway.start_transaction(false) do |transaction|
+    @gateway.session_endpoint_public do |transaction|
       @response = transaction.publish_message(type)
     end
   end

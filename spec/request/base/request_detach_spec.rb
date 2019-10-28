@@ -12,10 +12,10 @@ describe 'RubyRabbitmqJanus::RRJ -- mesage type detach' do
     @type = 'base::detach'
   end
 
-  describe '#start_transaction_handle', type: :request,
-                                        level: :base,
-                                        broken: true,
-                                        name: :detach do
+  describe '#handle_endpoint_public', type: :request,
+                                      level: :base,
+                                      broken: true,
+                                      name: :detach do
     context 'when queue is exclusive' do
       include_examples 'transaction handle should match json schema'
     end

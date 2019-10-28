@@ -9,9 +9,9 @@ describe 'RubyRabbitmqJanus::RRJ -- message type destroy' do
     @type = 'base::destroy'
   end
 
-  describe '#start_transaction', type: :request,
-                                 level: :base,
-                                 name: :destroy do
+  describe '#session_endpoint_public', type: :request,
+                                       level: :base,
+                                       name: :destroy do
     context 'when queue is exclusive' do
       include_examples 'transaction should match json schema'
     end

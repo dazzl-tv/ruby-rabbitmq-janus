@@ -6,7 +6,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
                                                         broken: true,
                                                         name: :standard do
   let(:message) do
-    @gateway.start_transaction do |transaction|
+    @gateway.session_endpoint_public do |transaction|
       @response = transaction.publish_message(type)
     end
   end
@@ -29,7 +29,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
 
   context 'when session and sender' do
     before do
-      @gateway.start_transaction do |transaction|
+      @gateway.session_endpoint_public do |transaction|
         @response = transaction.publish_message('base::create')
       end
     end

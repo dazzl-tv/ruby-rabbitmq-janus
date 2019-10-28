@@ -118,7 +118,7 @@ require 'ruby_rabbitmq_janus'
 t = RubyRabbitmqJanus::RRJ.new
 
 # Ask info Janus Instance
-t.start_transaction do |transaction|
+t.session_endpoint_public do |transaction|
   transaction.publish_message('base::info')
 end
 
@@ -134,8 +134,9 @@ require 'ruby_rabbitmq_janus'
 t = RubyRabbitmqJanus::RRJAdmin.new
 
 # Ask info sessions in Janus Instance
-t.start_transaction_admin do |transaction|
-  transaction.publish_message('admin::sessions')
+options = { instance: 42 }
+t.admin_endpoint(options) do |transaction|
+  transaction.publish_message('admin::sessions', options)
 end
 
 => @request={"janus"=>"success" ... "sessions"=>[123, 456, 789]}

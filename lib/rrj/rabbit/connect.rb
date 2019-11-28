@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'timeout'
+
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -24,8 +26,10 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and not close
       def transaction_long
-        start
-        yield
+        Timeout.timeout(10) do
+          start
+          yield
+        end
       rescue => exception
         raise Errors::Rabbit::Connect::TransactionLong, exception
       end

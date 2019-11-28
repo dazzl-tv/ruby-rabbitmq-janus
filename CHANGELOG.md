@@ -6,12 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [3.0.0] - 2019-10-24
+## [3.0.0] - 2019-11--28
 ### [Deleted]
 - Remove deprecated methods
 
 ### [Fixed]
 - Fix all spec
+
+### [Add]
+- Add timeout for transaction
 
 ## [2.7.2] - 2019-10-23
 ### [Deleted]

@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
-        @rabbit = Bunny.new(Tools::Config.instance.server_settings)
+        @rabbit = Bunny.new
       rescue => exception
         raise Errors::Rabbit::Connect::Initialize, exception
       end
@@ -53,6 +53,12 @@ module RubyRabbitmqJanus
         @rabbit.create_channel
       rescue => exception
         raise Errors::Rabbit::Connect::Channel, exception
+      end
+
+      private
+
+      def bunny_conf
+        Tools::Config.instance.server_settings.merge(connection_timeout: 5)
       end
     end
   end

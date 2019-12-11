@@ -17,9 +17,11 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short
-        response = transaction_long { yield }
-        close
-        response
+        Timeout.timeout(10) do
+          response = transaction_long { yield }
+          close
+          response
+        end
       rescue => exception
         raise Errors::Rabbit::Connect::TransactionShort, exception
       end

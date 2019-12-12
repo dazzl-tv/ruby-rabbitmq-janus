@@ -18,7 +18,7 @@ module RubyRabbitmqJanus
 
       private
 
-      def write_error(message, level)
+      def write_error(message, level = :unknown)
         if defined?(::Log)
           ::Log.add(level, message)
         else

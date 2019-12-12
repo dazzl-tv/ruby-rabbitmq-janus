@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Errors when rabbitmq config is not complete
 - Add timeout for transaction
 - Add timeout connection to RabbitMQ
+- Add default level to error message
 
 ## [2.7.2] - 2019-10-23
 ### [Deleted]

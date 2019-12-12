@@ -20,6 +20,7 @@ require 'rrj/errors/janus/messages/message'
 require 'rrj/errors/janus/messages/admin'
 require 'rrj/errors/janus/messages/standard'
 
+require 'rrj/errors/janus/responses/code'
 require 'rrj/errors/janus/responses/response'
 require 'rrj/errors/janus/responses/admin'
 require 'rrj/errors/janus/responses/event'

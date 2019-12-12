@@ -19,5 +19,6 @@ detectors:
     public_methods_only: true
 
 exclude_paths:
+  - lib/rrj/janus/responses/error.rb
   - lib/rrj/errors/janus/responses/code.rb
   - lib/rrj/janus/responses/response.rb

@@ -10,31 +10,31 @@ module RubyRabbitmqJanus
           end
         end
 
-        class ResponseUnknown < Nok; end
-        class ResponseNotAcceptingSession < Nok; end
-        class ResponseWebRTCState < Nok; end
-        class ResponseTokenNotFound < Nok; end
-        class ResponseUnexpectedAnswer < Nok; end
-        class ResponseSessionConflit < Nok; end
-        class ResponseInvalidElementType < Nok; end
-        class ResponseTrickleInvalidStream < Nok; end
-        class ResponseJSEPInvalidSDP < Nok; end
-        class ResponseJSEPUnknownType < Nok; end
-        class ResponsePluginDetach < Nok; end
-        class ResponsePluginMessage < Nok; end
-        class ResponsePluginAttach < Nok; end
-        class ResponsePluginNotFound < Nok; end
-        class ResponseHandleNotFound < Nok; end
-        class ResponseSessionNotFound < Nok; end
-        class ResponseInvalidRequestPath < Nok; end
-        class ResponseMissingMandatoryElement < Nok; end
-        class ResponseInvalidJSONObject < Nok; end
-        class ResponseInvalidJSON < Nok; end
-        class ResponseUnknownRequest < Nok; end
-        class ResponseMissingRequest < Nok; end
-        class ResponseTransportSpecific < Nok; end
-        class ResponseUnauthorizedPlugin < Nok; end
-        class ResponseUnauthorized < Nok; end
+        class Unknown < Nok; end
+        class NotAcceptingSession < Nok; end
+        class WebRTCState < Nok; end
+        class TokenNotFound < Nok; end
+        class UnexpectedAnswer < Nok; end
+        class SessionConflit < Nok; end
+        class InvalidElementType < Nok; end
+        class TrickleInvalidStream < Nok; end
+        class JSEPInvalidSDP < Nok; end
+        class JSEPUnknownType < Nok; end
+        class PluginDetach < Nok; end
+        class PluginMessage < Nok; end
+        class PluginAttach < Nok; end
+        class PluginNotFound < Nok; end
+        class HandleNotFound < Nok; end
+        class SessionNotFound < Nok; end
+        class InvalidRequestPath < Nok; end
+        class MissingMandatoryElement < Nok; end
+        class InvalidJSONObject < Nok; end
+        class InvalidJSON < Nok; end
+        class UnknownRequest < Nok; end
+        class MissingRequest < Nok; end
+        class TransportSpecific < Nok; end
+        class UnauthorizedPlugin < Nok; end
+        class Unauthorized < Nok; end
       end
     end
   end

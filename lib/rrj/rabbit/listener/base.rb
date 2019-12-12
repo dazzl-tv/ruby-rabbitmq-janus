@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# :reek:TooManyStatements
+# :reek:NilCheck
 
 module RubyRabbitmqJanus
   module Rabbit
@@ -24,8 +24,7 @@ module RubyRabbitmqJanus
           response = nil
           lock.synchronize do
             response = responses.shift
-            raise Errors::Rabbit::Listener::ResponseEmpty, response \
-              if response.size.zero?
+            check(response)
           end
           yield response.event, response
         rescue
@@ -46,8 +45,15 @@ module RubyRabbitmqJanus
 
         def info_subscribe(info, _prop, payload)
           ::Log.debug info
-          ::Log.info '[X] Message reading'
+          ::Log.debug '[X] Message reading'
           ::Log.info payload
+        end
+
+        def check(response)
+          raise Errors::Rabbit::Listener::ResponseNil, response \
+            if response.nil?
+          raise Errors::Rabbit::Listener::ResponseEmpty, response \
+            if response.to_hash.size.zero?
         end
       end
     end

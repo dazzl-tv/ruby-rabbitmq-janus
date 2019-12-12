@@ -26,10 +26,17 @@ module RubyRabbitmqJanus
             end
           end
 
-          # Error when response is read by a listener
+          # Error when response is empty
           class ResponseEmpty < RubyRabbitmqJanus::Errors::Rabbit::Listener::BaseError
             def initialize(response)
               super "Response is empty ! (#{response})"
+            end
+          end
+
+          # Error when response is nil
+          class ResponseNil < RubyRabbitmqJanus::Errors::Rabbit::Listener::BaseError
+            def initialize(response)
+              super "Response is nil ! (#{response})"
             end
           end
         end

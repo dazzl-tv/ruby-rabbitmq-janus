@@ -33,89 +33,203 @@ script: skip
 jobs:
   include:
     - stage: test
-      name: '[2.5] RSpec Classic Mongo, rails 4'
+      name: '[2.5] RSpec Classic Mongo, rails 4.0'
       rvm: 2.5
-      gemfile: gemfiles/rails_4.gemfile
+      gemfile: gemfiles/rails_4_0.gemfile
       script:
         - docker-compose run gem env MONGO=true bundle exec rake classic
         - docker-compose run gem env MONGO=true bundle exec rake concurrency
     - stage: test
-      name: '[2.6] RSpec Classic Mongo, rails 4'
-      rvm: 2.6
-      gemfile: gemfiles/rails_4.gemfile
-      script:
-        - docker-compose run gem env MONGO=true bundle exec rake classic
-        - docker-compose run gem env MONGO=true bundle exec rake concurrency
-    - stage: test
-      name: '[2.5] RSpec Classic Mongo, rails 5'
+      name: '[2.5] RSpec Classic Mongo, rails 4.1'
       rvm: 2.5
-      gemfile: gemfiles/rails_5.gemfile
+      gemfile: gemfiles/rails_4_1.gemfile
       script:
         - docker-compose run gem env MONGO=true bundle exec rake classic
         - docker-compose run gem env MONGO=true bundle exec rake concurrency
     - stage: test
-      name: '[2.6] RSpec Classic Mongo, rails 5'
+      name: '[2.5] RSpec Classic Mongo, rails 4.2'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic Mongo, rails 4.0'
       rvm: 2.6
-      gemfile: gemfiles/rails_5.gemfile
+      gemfile: gemfiles/rails_4_0.gemfile
       script:
         - docker-compose run gem env MONGO=true bundle exec rake classic
         - docker-compose run gem env MONGO=true bundle exec rake concurrency
     - stage: test
-      name: '[2.5] RSpec Classic Mongo, rails 6'
+      name: '[2.6] RSpec Classic Mongo, rails 4.1'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic Mongo, rails 4.2'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic Mongo, rails 5.0'
+      rvm: 2.5
+      gemfile: gemfiles/rails_5_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic Mongo, rails 5.1'
+      rvm: 2.5
+      gemfile: gemfiles/rails_5_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic Mongo, rails 5.2'
+      rvm: 2.5
+      gemfile: gemfiles/rails_5_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic Mongo, rails 5.0'
+      rvm: 2.6
+      gemfile: gemfiles/rails_5_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic Mongo, rails 5.1'
+      rvm: 2.6
+      gemfile: gemfiles/rails_5_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic Mongo, rails 5.2'
+      rvm: 2.6
+      gemfile: gemfiles/rails_5_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic Mongo, rails 6.0'
+      rvm: 2.5
+      gemfile: gemfiles/rails_6_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic Mongo, rails 6.0'
+      rvm: 2.6
+      gemfile: gemfiles/rails_6_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=true bundle exec rake classic
+        - docker-compose run gem env MONGO=true bundle exec rake concurrency
+
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 4.0'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 4.1'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 4.2'
+      rvm: 2.5
+      gemfile: gemfiles/rails_4_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic SQlite, rails 4.0'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic SQlite, rails 4.1'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic SQlite, rails 4.2'
+      rvm: 2.6
+      gemfile: gemfiles/rails_4_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 5.0'
+      rvm: 2.5
+      gemfile: gemfiles/rails_5_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 5.1'
+      rvm: 2.5
+      gemfile: gemfiles/rails_5_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 5.2'
+      rvm: 2.5
+      gemfile: gemfiles/rails_5_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic SQlite, rails 5.0'
+      rvm: 2.6
+      gemfile: gemfiles/rails_5_0.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic SQlite, rails 5.1'
+      rvm: 2.6
+      gemfile: gemfiles/rails_5_1.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.6] RSpec Classic SQlite, rails 5.2'
+      rvm: 2.6
+      gemfile: gemfiles/rails_5_2.gemfile
+      script:
+        - docker-compose run gem env MONGO=false bundle exec rake classic
+        - docker-compose run gem env MONGO=false bundle exec rake concurrency
+    - stage: test
+      name: '[2.5] RSpec Classic SQlite, rails 6.0'
       rvm: 2.5
       gemfile: gemfiles/rails_6.gemfile
       script:
-        - docker-compose run gem env MONGO=true bundle exec rake classic
-        - docker-compose run gem env MONGO=true bundle exec rake concurrency
-    - stage: test
-      name: '[2.6] RSpec Classic Mongo, rails 6'
-      rvm: 2.6
-      gemfile: gemfiles/rails_6.gemfile
-      script:
-        - docker-compose run gem env MONGO=true bundle exec rake classic
-        - docker-compose run gem env MONGO=true bundle exec rake concurrency
-    - stage: test
-      name: '[2.5] RSpec Classic SQlite, rails 4'
-      rvm: 2.5
-      gemfile: gemfiles/rails_4.gemfile
-      script:
         - docker-compose run gem env MONGO=false bundle exec rake classic
         - docker-compose run gem env MONGO=false bundle exec rake concurrency
     - stage: test
-      name: '[2.6] RSpec Classic SQlite, rails 4'
-      rvm: 2.6
-      gemfile: gemfiles/rails_4.gemfile
-      script:
-        - docker-compose run gem env MONGO=false bundle exec rake classic
-        - docker-compose run gem env MONGO=false bundle exec rake concurrency
-    - stage: test
-      name: '[2.5] RSpec Classic SQlite, rails 5'
-      rvm: 2.5
-      gemfile: gemfiles/rails_5.gemfile
-      script:
-        - docker-compose run gem env MONGO=false bundle exec rake classic
-        - docker-compose run gem env MONGO=false bundle exec rake concurrency
-    - stage: test
-      name: '[2.6] RSpec Classic SQlite, rails 5'
-      rvm: 2.6
-      gemfile: gemfiles/rails_5.gemfile
-      script:
-        - docker-compose run gem env MONGO=false bundle exec rake classic
-        - docker-compose run gem env MONGO=false bundle exec rake concurrency
-    - stage: test
-      name: '[2.5] RSpec Classic SQlite, rails 6'
-      rvm: 2.5
-      gemfile: gemfiles/rails_6.gemfile
-      script:
-        - docker-compose run gem env MONGO=false bundle exec rake classic
-        - docker-compose run gem env MONGO=false bundle exec rake concurrency
-    - stage: test
-      name: '[2.6] RSpec Classic SQlite, rails 6'
+      name: '[2.6] RSpec Classic SQlite, rails 6.0'
       rvm: 2.6
       gemfile: gemfiles/rails_6.gemfile
       script:
         - docker-compose run gem env MONGO=false bundle exec rake classic
         - docker-compose run gem env MONGO=false bundle exec rake concurrency
+
     - stage: linter
       name: 'Linter execution RuboCop'
       script:

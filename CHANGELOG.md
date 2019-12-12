@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [Add]
 - Errors when no block given in transaction
+- Errors when rabbitmq config is not complete
 - Add timeout for transaction
 - Add timeout connection to RabbitMQ
 

@@ -115,6 +115,12 @@ module RubyRabbitmqJanus
             super '[ProgramName] Error with ProgramName option', :fatal
           end
         end
+
+        class Rabbitmq < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize(value)
+            super "[RabbitMQConfig] Missing RabbitMQ configuration for key : #{value}", :fatal
+          end
+        end
       end
     end
   end

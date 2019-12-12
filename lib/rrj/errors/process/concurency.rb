@@ -10,6 +10,13 @@ module RubyRabbitmqJanus
         end
       end
 
+      # Define a super class for all error in Process::Concurency::Event class
+      class BaseEvent < RubyRabbitmqJanus::Errors::Process::BaseConcurency
+        def initialize(class_name, message)
+          super "[#{class_name}] #{message}"
+        end
+      end
+
       module Concurency
         # Error for Process::Concurency#initialize
         class Initializer < RubyRabbitmqJanus::Errors::Process::BaseConcurency
@@ -22,5 +29,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/errors/process/keepalive'
 require 'rrj/errors/process/event'
+require 'rrj/errors/process/event_admin'

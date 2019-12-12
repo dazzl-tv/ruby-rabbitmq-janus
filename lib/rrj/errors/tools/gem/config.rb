@@ -56,12 +56,6 @@ module RubyRabbitmqJanus
           end
         end
 
-        class RabbitTester < RubyRabbitmqJanus::Errors::Tools::BaseConfig
-          def initialize
-            super '[RabbitTester] Error for reading option rabbitmq tester', :warn
-          end
-        end
-
         class AdminPassword < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super '[AdminPassword] Error for reading option admin password', :warn

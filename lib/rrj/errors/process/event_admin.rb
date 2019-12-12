@@ -3,18 +3,18 @@
 module RubyRabbitmqJanus
   module Errors
     module Process
-      module Event
-        # Error for Process::Concurrencies::Event#initialize
+      module EventAdmin
+        # Error for Process::Concurrencies::EventAdmin#initialize
         class Initializer < RubyRabbitmqJanus::Errors::Process::BaseEvent
           def initializer
-            super 'Event', 'Error Event initializer'
+            super 'EventAdmin', 'Error EventAdmin initializer'
           end
         end
 
-        # Error for Process::Concurrencies::Event#run
+        # Error for Process::Concurrencies::EventAdmin#run
         class Run < RubyRabbitmqJanus::Errors::Process::BaseEvent
           def initializer
-            super 'Event', 'Error Event runner block code'
+            super 'EventAdmin', 'Error EventAdmin runner block code'
           end
         end
       end

@@ -6,14 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [3.0.0] - 2019-11--28
+## [3.0.0] - 2019-12-12
 ### [Deleted]
 - Remove deprecated methods
+- Remove useless error classes
 
 ### [Fixed]
 - Fix all spec
 
 ### [Add]
+- Add error class for event/event_admin process
 - Errors when no block given in transaction
 - Errors when rabbitmq config is not complete
 - Add timeout for transaction

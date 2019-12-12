@@ -10,7 +10,7 @@ module RubyRabbitmqJanus
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
-        @rabbit = Bunny.new
+        @rabbit = Bunny.new(bunny_conf)
       rescue => exception
         raise Errors::Rabbit::Connect::Initialize, exception
       end

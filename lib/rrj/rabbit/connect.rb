@@ -17,11 +17,10 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short
-        response = nil
-        Timeout.timeout(10) do
-          response = transaction_long { yield }
-          close
-        end
+        raise Errors::Rabbit::Connect::MissingAction unless block_given?
+
+        response = transaction_long { yield }
+        close
         response
       rescue => exception
         raise Errors::Rabbit::Connect::TransactionShort, exception
@@ -29,6 +28,8 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and not close
       def transaction_long
+        raise Errors::Rabbit::Connect::MissingAction unless block_given?
+
         Timeout.timeout(10) do
           start
           yield

@@ -116,10 +116,13 @@ jobs:
       script:
         - docker-compose run gem env MONGO=false bundle exec rake classic
         - docker-compose run gem env MONGO=false bundle exec rake concurrency
-    - stage: test
-      name: 'Linter execution'
+    - stage: linter
+      name: 'Linter execution RuboCop'
       script:
         - docker-compose run gem rubocop -D --color --parallel
+    - stage: linter
+      name: 'Linter execution Reek'
+      script:
         - docker-compose run gem reek --color
     - stage: deploy
       script: skip

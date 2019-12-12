@@ -82,7 +82,7 @@ module RubyRabbitmqJanus
 
         def errors
           klass = RubyRabbitmqJanus::Janus::Responses::Errors.new
-          klass.send("_#{@request['error']['code']}", @request)
+          klass.send("_#{@request['error']['code']}", self)
         end
 
         attr_accessor :request

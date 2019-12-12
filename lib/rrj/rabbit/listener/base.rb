@@ -24,10 +24,12 @@ module RubyRabbitmqJanus
           response = nil
           lock.synchronize do
             response = responses.shift
+            raise Errors::Rabbit::Listener::ResponseEmpty, response \
+              if response.size.zero?
           end
           yield response.event, response
         rescue
-          raise Errors::Rabbit::Listener::Base::ListenEvents
+          raise Errors::Rabbit::Listener::Base::ListenEvents, reply
         end
 
         private

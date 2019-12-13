@@ -142,7 +142,7 @@ module RubyRabbitmqJanus
 
         # A JSON element is of the wrong type
         # (e.g., an integer instead of a string)
-        def _476(request)
+        def _467(request)
           raise RubyRabbitmqJanus::Errors::Janus::Response::InvalidElementType,
                 request.error_code,
                 request.error_reason

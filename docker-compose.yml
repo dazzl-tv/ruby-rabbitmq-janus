@@ -12,7 +12,7 @@ services:
       - ./spec/:/ruby_rabbitmq_janus/spec
 
   rabbit:
-    image: rabbitmq
+    image: rabbitmq:alpine
     ports:
       - 5672
       - 15672:15672

@@ -18,7 +18,9 @@ module RubyRabbitmqJanus
         #   sending by user
         def initialize(response_janus)
           @request = response_janus
-          error?
+
+          errors      if error?
+          bad_request if bad_request?
         rescue
           raise Errors::Janus::Response::Initializer
         end
@@ -71,14 +73,20 @@ module RubyRabbitmqJanus
           error['reason']
         end
 
-        # Test if response it's an error
-        #
-        # @return [Boolean]
+        private
+
         def error?
-          errors if @request['janus'].match?('error')
+          @request.key?('janus') && @request['janus'].match?('error')
         end
 
-        private
+        def bad_request
+          klass = RubyRabbitmqJanus::Janus::Responses::Errors.new
+          klass.default_error(999, @request.to_s)
+        end
+
+        def bad_requesti?
+          @request.nil?
+        end
 
         def errors
           klass = RubyRabbitmqJanus::Janus::Responses::Errors.new

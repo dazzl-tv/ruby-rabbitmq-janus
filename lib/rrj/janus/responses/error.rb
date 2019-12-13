@@ -195,11 +195,15 @@ module RubyRabbitmqJanus
 
         # rubocop:disable Style/MethodMissingSuper
         def method_missing(_method, request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::Nok,
-                request.error_code,
-                request.error_reason
+          default_error(request.error_code, request.error_reason)
         end
         # rubocop:enable Style/MethodMissingSuper
+
+        def default_error(code, reason)
+          raise RubyRabbitmqJanus::Errors::Janus::Response::Nok,
+                code,
+                reason
+        end
       end
     end
   end

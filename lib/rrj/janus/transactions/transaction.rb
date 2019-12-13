@@ -18,8 +18,6 @@ module RubyRabbitmqJanus
           @rabbit = RubyRabbitmqJanus::Rabbit::Connect.new
           @session = session
           @publisher = @exclusive = nil
-        rescue
-          raise Errors::Janus::Transaction::Initialize
         end
 
         private

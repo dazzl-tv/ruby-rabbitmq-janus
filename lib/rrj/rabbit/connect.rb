@@ -11,8 +11,6 @@ module RubyRabbitmqJanus
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(bunny_conf)
-      rescue => exception
-        raise Errors::Rabbit::Connect::Initialize, exception
       end
 
       # Create an transaction with rabbitmq and close after response is received
@@ -22,8 +20,6 @@ module RubyRabbitmqJanus
         response = transaction_long { yield }
         close
         response
-      rescue => exception
-        raise Errors::Rabbit::Connect::TransactionShort, exception
       end
 
       # Create an transaction with rabbitmq and not close
@@ -34,29 +30,21 @@ module RubyRabbitmqJanus
           start
           yield
         end
-      rescue => exception
-        raise Errors::Rabbit::Connect::TransactionLong, exception
       end
 
       # Opening a connection with RabbitMQ
       def start
         @rabbit.start
-      rescue => exception
-        raise Errors::Rabbit::Connect::Start, exception
       end
 
       # Close connection to server RabbitMQ
       def close
         @rabbit.close
-      rescue => exception
-        raise Errors::Rabbit::Connect::Close, exception
       end
 
       # Create an channel
       def channel
         @rabbit.create_channel
-      rescue => exception
-        raise Errors::Rabbit::Connect::Channel, exception
       end
 
       private

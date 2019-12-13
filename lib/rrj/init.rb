@@ -43,8 +43,6 @@ module RubyRabbitmqJanus
     #   => #<RubyRabbitmqJanus::RRJ:0x007 @session=123>
     def initialize
       @option = Tools::Option.new
-    rescue => exception
-      raise Errors::RRJ::InstanciateGem, exception
     end
 
     # Create a transaction between Apps and Janus in queue public
@@ -173,10 +171,8 @@ module RubyRabbitmqJanus
     # Warning: All data in database and Janus Instance is delete
     #
     # @since 2.1.0
-    def cleanup_connection
+    def cleanup_connection!
       Models::JanusInstance.destroys
-    rescue
-      raise Errors::RRJ::CleanupConnection
     end
 
     private

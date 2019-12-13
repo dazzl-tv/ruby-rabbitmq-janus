@@ -12,8 +12,6 @@ module RubyRabbitmqJanus
     def initialize
       Tools::Config.instance
       Tools::Requests.instance
-    rescue
-      raise Errors::RRJTask::Initialize
     end
 
     # Create a transaction between Apps and Janus in queue private

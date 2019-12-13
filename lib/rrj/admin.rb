@@ -38,8 +38,6 @@ module RubyRabbitmqJanus
     def admin_endpoint(options = {})
       transaction = Janus::Transactions::Admin.new(options)
       transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJAdmin::StartTransactionAdmin, options
     end
   end
 end

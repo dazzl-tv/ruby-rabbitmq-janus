@@ -162,8 +162,34 @@ For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
 
 ### RSpec test
 
+__Use docker for running SPEC__
+
 ```linux
-bundle exec rspec
+# Prepare images
+docker-compose build
+
+# Launch tiers service RabbitMQ
+docker-compose up -d rabbit
+
+# Launch tiers service Janus (ensure rabbit is started before and READY)
+docker-compose up -d janus janus_token
+
+## Excute ##
+
+# Start for MongoID database
+docker-compose run gem env MONGO=true bundle exec rake classic
+docker-compose run gem env MONGO=true bundle exec rake concurrency
+
+# Start for SQlite3 database
+docker-compose run gem env MONGO=false bundle exec rake classic
+docker-compose run gem env MONGO=false bundle exec rake concurrency
+
+## OR ##
+
+# Navigate in container an
+docker-compose run gem ash
+export MONGO=true
+bundle exec rake classic
 ```
 
 TIPS: for rspec install janus and rabbitmq server configured by default for user

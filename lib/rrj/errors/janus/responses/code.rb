@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
       module Response
         class Nok < RubyRabbitmqJanus::Errors::BaseJanus
           def initialize(code, message)
-            super "[#{code}] Error response : #{message}", :unknown
+            super "[#{code}] Reason : #{message}", :error
           end
         end
 

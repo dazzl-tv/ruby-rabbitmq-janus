@@ -81,7 +81,7 @@ module RubyRabbitmqJanus
 
         def bad_request
           klass = RubyRabbitmqJanus::Janus::Responses::Errors.new
-          klass.default_error(999, @request.to_s)
+          klass.default_error(999, "NOK : #{@request.to_s}")
         end
 
         def bad_request?

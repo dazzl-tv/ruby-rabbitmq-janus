@@ -1,6 +1,7 @@
-FROM ruby:2.5-alpine
+FROM ruby:2-alpine
 
-MAINTAINER Jeremy VAILLANT <jeremy.vaillant@dazzl.tv>
+LABEL author="jeremy.vaillant@dazzl.tv"
+LABEL description="Container for execute RSpec in travis CI."
 
 WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus

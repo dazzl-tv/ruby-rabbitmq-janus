@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
       class Errors
         # Unauthorized (can only happen when using apisecret/auth token)
         def _403(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::Unauthorized,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Unauthorized,
                 request.error_code,
                 request.error_reason
         end
@@ -21,77 +21,77 @@ module RubyRabbitmqJanus
         # Unauthorized access to a plugin (can only
         # happen when using auth token)
         def _405(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::UnauthorizedPlugin,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::UnauthorizedPlugin,
                 request.error_code,
                 request.error_reason
         end
 
         # Transport related error
         def _450(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::TransportSpecific,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::TransportSpecific,
                 request.error_code,
                 request.error_reason
         end
 
         # The request is missing in the message
         def _452(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::MissingRequest,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::MissingRequest,
                 request.error_code,
                 request.error_reason
         end
 
         # The Janus core does not suppurt this request
         def _453(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::UnknownRequest,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::UnknownRequest,
                 request.error_code,
                 request.error_reason
         end
 
         # The payload is not a valid JSON message
         def _454(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::InvalidJSON,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::InvalidJSON,
                 request.error_code,
                 request.error_reason
         end
 
         # The object is not a valid JSON object as expected
         def _455(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::InvalidJSONObject,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::InvalidJSONObject,
                 request.error_code,
                 request.error_reason
         end
 
         # A mandatory element is missing in the message
         def _456(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::MissingMandatoryElement,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::MissingMandatoryElement,
                 request.error_code,
                 request.error_reason
         end
 
         # The request cannot be handled for this webserver path
         def _457(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::InvalidRequestPath,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath,
                 request.error_code,
                 request.error_reason
         end
 
         # The session the request refers to doesn't exist
         def _458(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::SessionNotFound,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::SessionNotFound,
                 request.error_code,
                 request.error_reason
         end
 
         # The handle the request refers to doesn't exist
         def _459(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::HandleNotFound,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::HandleNotFound,
                 request.error_code,
                 request.error_reason
         end
 
         # The plugin the request wants to talk to doesn't exist
         def _460(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::PluginNotFound,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::PluginNotFound,
                 request.error_code,
                 request.error_reason
         end
@@ -99,14 +99,14 @@ module RubyRabbitmqJanus
         # An error occurring when trying to attach to
         # a plugin and create a handle
         def _461(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::PluginAttach,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::PluginAttach,
                 request.error_code,
                 request.error_reason
         end
 
         # An error occurring when trying to send a message/request to the plugin
         def _462(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::PluginMessage,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::PluginMessage,
                 request.error_code,
                 request.error_reason
         end
@@ -114,28 +114,28 @@ module RubyRabbitmqJanus
         # brief An error occurring when trying to detach from
         # a plugin and destroy the related handle
         def _463(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::PluginDetach,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::PluginDetach,
                 request.error_code,
                 request.error_reason
         end
 
         # The Janus core doesn't support this SDP type
         def _464(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::JSEPUnknownType,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::JSEPUnknownType,
                 request.error_code,
                 request.error_reason
         end
 
         # The Session Description provided by the peer is invalid
         def _465(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::JSEPInvalidSDP,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::JSEPInvalidSDP,
                 request.error_code,
                 request.error_reason
         end
 
         # The stream a trickle candidate for does not exist or is invalid
         def _466(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::TrickleInvalidStream,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::TrickleInvalidStream,
                 request.error_code,
                 request.error_reason
         end
@@ -143,28 +143,28 @@ module RubyRabbitmqJanus
         # A JSON element is of the wrong type
         # (e.g., an integer instead of a string)
         def _467(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::InvalidElementType,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::InvalidElementType,
                 request.error_code,
                 request.error_reason
         end
 
         # The ID provided to create a new session is already in use
         def _468(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::SessionConflit,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::SessionConflit,
                 request.error_code,
                 request.error_reason
         end
 
         # We got an ANSWER to an OFFER we never made
         def _469(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::UnexpectedAnswer,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::UnexpectedAnswer,
                 request.error_code,
                 request.error_reason
         end
 
         # The auth token the request refers to doesn't exist
         def _470(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::TokenNotFound,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::TokenNotFound,
                 request.error_code,
                 request.error_reason
         end
@@ -172,21 +172,21 @@ module RubyRabbitmqJanus
         # The current request cannot be handled because
         # of not compatible WebRTC state
         def _471(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::WebRTCState,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::WebRTCState,
                 request.error_code,
                 request.error_reason
         end
 
         # The server is currently configured not to accept new sessions
         def _472(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::NotAcceptingSession,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::NotAcceptingSession,
                 request.error_code,
                 request.error_reason
         end
 
         # Unknown/undocumented error
         def _490(request)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::Unknown,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Unknown,
                 request.error_code,
                 request.error_reason
         end
@@ -200,7 +200,7 @@ module RubyRabbitmqJanus
         # rubocop:enable Style/MethodMissingSuper
 
         def default_error(code, reason)
-          raise RubyRabbitmqJanus::Errors::Janus::Response::Nok,
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Nok,
                 code,
                 reason
         end

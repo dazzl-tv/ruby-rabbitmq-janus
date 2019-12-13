@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Errors
     module Process
       # Define a super class for all error in Process::Concurency class
-      class BaseConcurency < RubyRabbitmqJanus::Errors::BaseJanus
+      class BaseConcurency < RubyRabbitmqJanus::Errors::RRJError
         def initialize(message)
           super "[Concurency]#{message}", :fatal
         end

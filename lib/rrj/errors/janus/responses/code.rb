@@ -3,8 +3,8 @@
 module RubyRabbitmqJanus
   module Errors
     module Janus
-      module Response
-        class Nok < RubyRabbitmqJanus::Errors::BaseJanus
+      module Responses
+        class Nok < RubyRabbitmqJanus::Errors::RRJError
           def initialize(code, message)
             super "[#{code}] Reason : #{message}", :error
           end

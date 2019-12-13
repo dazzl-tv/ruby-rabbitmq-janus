@@ -27,8 +27,8 @@ module RubyRabbitmqJanus
         end
       end
 
-      def int_to_lovel(int_level)
-        %w[DEBUG INFO WARN ERROR FATAL UNKNOWN][int_level].to_sym
+      def int_to_level(sym_level)
+        %I[debug info warn error fatal unknown].index(sym_level)
       end
     end
   end

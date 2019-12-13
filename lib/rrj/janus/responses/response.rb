@@ -22,7 +22,7 @@ module RubyRabbitmqJanus
           errors      if error?
           bad_request if bad_request?
         rescue
-          raise Errors::Janus::Response::Initializer
+          @request
         end
 
         # Return request to json format
@@ -30,8 +30,6 @@ module RubyRabbitmqJanus
         # @return [String] Response to JSON format
         def to_json(*_args)
           @request.to_json
-        rescue
-          raise Errors::Janus::Response::ToJson
         end
 
         # Return request to json format with nice format
@@ -39,8 +37,6 @@ module RubyRabbitmqJanus
         # @return [String] Response to JSON format with indent
         def to_nice_json
           JSON.pretty_generate to_hash
-        rescue
-          raise Errors::Janus::Response::ToNiceJson
         end
 
         # Return request to hash format
@@ -48,32 +44,27 @@ module RubyRabbitmqJanus
         # @return [Hash] Response to Hash format
         def to_hash
           @request
-        rescue
-          raise Errors::Janus::Response::ToHash
-        end
-
-        # Return request object error
-        #
-        #  @return [Hash] Part of response content in error
-        def error
-          @request['error']
         end
 
         # Return request error code
         #
         #  @return [Integer] Code error
         def error_code
-          error['code'].to_i
+          @request['error']['code'].to_i
         end
 
         # Return request error reason
         #
         #  @return [String] Reason error
         def error_reason
-          error['reason']
+          @request['error']['reason']
         end
 
         private
+
+        def key?(value)
+          @request.key?(value)
+        end
 
         def error?
           @request.key?('janus') && @request['janus'].match?('error')
@@ -81,7 +72,7 @@ module RubyRabbitmqJanus
 
         def bad_request
           klass = RubyRabbitmqJanus::Janus::Responses::Errors.new
-          klass.default_error(999, "NOK : #{@request.to_s}")
+          klass.default_error(999, self)
         end
 
         def bad_request?
@@ -90,7 +81,7 @@ module RubyRabbitmqJanus
 
         def errors
           klass = RubyRabbitmqJanus::Janus::Responses::Errors.new
-          klass.send("_#{@request['error']['code']}", self)
+          klass.send("_#{error_code}", self)
         end
 
         attr_accessor :request

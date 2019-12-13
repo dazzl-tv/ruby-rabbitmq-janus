@@ -84,7 +84,7 @@ module RubyRabbitmqJanus
           klass.default_error(999, @request.to_s)
         end
 
-        def bad_requesti?
+        def bad_request?
           @request.nil?
         end
 

@@ -20,10 +20,15 @@ module RubyRabbitmqJanus
 
       def write_error(message, level = :unknown)
         if defined?(::Log)
-          ::Log.add(level, message)
+          ::Log.add(level.class.eql?(Symbol) ? level : int_to_level(level),
+                    message)
         else
           p "#{level}, #{message}"
         end
+      end
+
+      def int_to_lovel(int_level)
+        %w[DEBUG INFO WARN ERROR FATAL UNKNOWN][int_level].to_sym
       end
     end
   end

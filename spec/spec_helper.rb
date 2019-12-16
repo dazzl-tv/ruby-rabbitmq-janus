@@ -15,6 +15,8 @@ require 'config/initializer'
 require 'config/database'
 require 'config/instance'
 
+require 'aruba/rspec'
+
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 Dir['spec/support/**/*.rb'].each do |f|
@@ -26,6 +28,7 @@ end
 end
 
 RSpec.configure do |config|
+  config.fail_fast = ENV['SPEC_DEBUG'].match?('true') ? true : false
   DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 

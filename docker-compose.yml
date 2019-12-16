@@ -9,6 +9,7 @@ services:
       - rabbit
       - mongo
     volumes:
+      - ./lib/rrj/:/ruby_rabbitmq_janus/lib/rrj
       - ./spec/:/ruby_rabbitmq_janus/spec
 
   rabbit:

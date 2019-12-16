@@ -192,6 +192,8 @@ export MONGO=true
 bundle exec rake classic
 ```
 
+NOTE : Use `SPEC_DEBUG=true bundle exec rake classic` for stopping rspec execution when first test fail.
+
 TIPS: for rspec install janus and rabbitmq server configured by default for user
 rabbitmq and use plugin echotest for janus server.
 

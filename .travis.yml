@@ -218,14 +218,14 @@ jobs:
     - stage: test
       name: '[2.5] RSpec Classic SQlite, rails 6.0'
       rvm: 2.5
-      gemfile: gemfiles/rails_6.gemfile
+      gemfile: gemfiles/rails_6_0.gemfile
       script:
         - docker-compose run gem env MONGO=false bundle exec rake classic
         - docker-compose run gem env MONGO=false bundle exec rake concurrency
     - stage: test
       name: '[2.6] RSpec Classic SQlite, rails 6.0'
       rvm: 2.6
-      gemfile: gemfiles/rails_6.gemfile
+      gemfile: gemfiles/rails_6_0.gemfile
       script:
         - docker-compose run gem env MONGO=false bundle exec rake classic
         - docker-compose run gem env MONGO=false bundle exec rake concurrency

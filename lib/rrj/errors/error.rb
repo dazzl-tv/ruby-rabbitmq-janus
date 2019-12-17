@@ -12,16 +12,16 @@ module RubyRabbitmqJanus
       # @param [String] message Text returning in raise
       # @param [Symbol] level Important to error
       def initialize(message, level)
-        super(message)
         write_error(message, level)
+        super(message)
       end
 
       private
 
       def write_error(message, level = :unknown)
         if defined?(::Log)
-          ::Log.add(level.class.eql?(Symbol) ? level : int_to_level(level),
-                    message)
+          ::Log.send(level.class.eql?(Symbol) ? level : int_to_level(level),
+                     message)
         else
           p "#{level}, #{message}"
         end

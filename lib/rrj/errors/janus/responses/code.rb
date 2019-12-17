@@ -5,36 +5,36 @@ module RubyRabbitmqJanus
     module Janus
       module Responses
         class Nok < RubyRabbitmqJanus::Errors::RRJError
-          def initialize(code, message)
-            super "[#{code}] Reason : #{message}", :error
+          def initialize(request)
+            super "[#{request.error_code}] Reason : #{request.error_reason}", :error
           end
         end
 
-        class Unknown < Nok; end
-        class NotAcceptingSession < Nok; end
-        class WebRTCState < Nok; end
-        class TokenNotFound < Nok; end
-        class UnexpectedAnswer < Nok; end
-        class SessionConflit < Nok; end
-        class InvalidElementType < Nok; end
-        class TrickleInvalidStream < Nok; end
-        class JSEPInvalidSDP < Nok; end
-        class JSEPUnknownType < Nok; end
-        class PluginDetach < Nok; end
-        class PluginMessage < Nok; end
-        class PluginAttach < Nok; end
-        class PluginNotFound < Nok; end
-        class HandleNotFound < Nok; end
-        class SessionNotFound < Nok; end
-        class InvalidRequestPath < Nok; end
-        class MissingMandatoryElement < Nok; end
-        class InvalidJSONObject < Nok; end
-        class InvalidJSON < Nok; end
-        class UnknownRequest < Nok; end
-        class MissingRequest < Nok; end
-        class TransportSpecific < Nok; end
-        class UnauthorizedPlugin < Nok; end
-        class Unauthorized < Nok; end
+        Unknown = Nok
+        NotAcceptingSession = Nok
+        WebRTCState = Nok
+        TokenNotFound = Nok
+        UnexpectedAnswer = Nok
+        SessionConflit = Nok
+        InvalidElementType = Nok
+        TrickleInvalidStream = Nok
+        JSEPInvalidSDP = Nok
+        JSEPUnknownType = Nok
+        PluginDetach = Nok
+        PluginMessage = Nok
+        PluginAttach = Nok
+        PluginNotFound = Nok
+        HandleNotFound = Nok
+        SessionNotFound = Nok
+        InvalidRequestPath = Nok
+        MissingMandatoryElement = Nok
+        InvalidJSONObject = Nok
+        InvalidJSON = Nok
+        UnknownRequest = Nok
+        MissingRequest = Nok
+        TransportSpecific = Nok
+        UnauthorizedPlugin = Nok
+        Unauthorized = Nok
       end
     end
   end

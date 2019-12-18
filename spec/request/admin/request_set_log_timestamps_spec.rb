@@ -2,27 +2,19 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- set_log_timestamps', type: :request,
-                                                              level: :admin,
-                                                              name: :set_log_timestamps do
-  before do
-    help_admin_prepare
-    help_admin_request_tested(parameters)
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :set_log_timestamps do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::set_log_timestamps' }
-  let(:parameters) { { 'timestamps' => debug } }
+  let(:schema_success) { type }
+  let(:parameter) { { 'timestamps' => [true, false].sample } }
+  let(:number) { '1' }
 
-  context 'when debug is true' do
-    let(:debug) { true }
+  describe 'request #set_log_timestamps' do
+    let(:info) { :log_timestamps }
 
-    it { expect(@transaction.to_json).to match_json_schema('base::success') }
-  end
-
-  context 'when debug is false' do
-    let(:debug) { false }
-
-    it { expect(@transaction.to_json).to match_json_schema('base::success') }
+    include_examples 'transaction admin success boolean'
   end
 end

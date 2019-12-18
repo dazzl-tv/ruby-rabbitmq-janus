@@ -1,30 +1,41 @@
 # frozen_string_literal: true
 
-# LCO: tagged broken 2018/01/26 for v2.3.0
-# see: https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus/builds/333359315
-
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type trickle' do
+describe RubyRabbitmqJanus::RRJ, type: :request,
+                                 level: :peer,
+                                 name: :tricke do
   before do
-    clear
-    attach_base
-
-    @type = 'peer::trickle'
-    candidate = { 'sdpMid' => '..', 'sdpMLineIndex' => 1, 'candidate' => '..' }
-    @options.merge!('candidate' => candidate)
+    helper_janus_instance_without_token
+    helper_janus_instance_create_handle
   end
 
-  describe '#handle_endpoint_public', type: :request,
-                                      level: :base,
-                                      broken: true,
-                                      name: :trickle do
+  let(:type) { 'peer::trickle' }
+  let(:number) { '1' }
+
+  shared_context 'when success' do
+    let(:parameter) { { 'candidate' => { 'sdpMid' => '..', 'sdpMLineIndex' => 2, 'candidate' => '..' } } }
+  end
+
+  context 'request #trickle' do
     context 'when queue is exclusive' do
-      include_examples 'transaction handle should match json schema'
+      context 'with parameter is correct' do
+        let(:schema_success) { type }
+
+        include_context 'when success'
+
+        include_examples 'transaction exclusive success'
+      end
     end
 
     context 'when queue is not exclusive' do
-      include_examples 'transaction handle should match json empty'
+      context 'with parameter is correct' do
+        let(:schema_success) { type }
+
+        include_context 'when success'
+
+        include_examples 'transaction not exclusive success'
+      end
     end
   end
 end

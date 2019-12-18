@@ -2,17 +2,42 @@
 
 require 'spec_helper'
 
-# Dont configured in Janus Instance so return automatically an error
-describe 'RubyRabbitmqJanus::RRJAdmin -- remove_tokens', type: :request,
-                                                         level: :admin,
-                                                         name: :remove_token do
-  before do
-    help_admin_prepare
-    help_admin_request_tested
-  end
-
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :remove_token do
   let(:type) { 'admin::remove_token' }
+  let(:token) { [*('a'..'z'), *('0'..'9')].sample(24).join }
+  let(:parameter) { { 'token' => token, 'plugins' => ['janus.plugin.echotest'] } }
 
-  it { expect(@transaction.to_json).to match_json_schema('base::error') }
+  describe 'request #remove_token' do
+    context 'when option token is disabled' do
+      before { helper_janus_instance_without_token }
+
+      let(:number) { '1' }
+      let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::Unknown }
+      let(:exception_message) { '[490] Reason : Stored-Token based authentication disabled' }
+
+      include_examples 'transaction admin exception'
+    end
+
+    context 'when option token is enabled' do
+      before { helper_janus_instance_with_token }
+
+      let(:number) { '2' }
+      let(:schema_success) { 'base::success' }
+
+      context "with token doesn't exist" do
+        let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::Unknown }
+        let(:exception_message) { '[490] Reason : Error removing token' }
+
+        include_examples 'transaction admin exception'
+      end
+
+      context 'with token exist' do
+        before { helper_janus_allow_token }
+
+        it_behaves_like 'transaction admin success'
+      end
+    end
+  end
 end

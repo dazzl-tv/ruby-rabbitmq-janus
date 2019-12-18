@@ -2,27 +2,42 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- stop_text2pcap', type: :request,
-                                                          level: :admin,
-                                                          broken: true,
-                                                          name: :stop_text2pcap do
-  before do
-    help_admin_prepare
-    help_admin_create_session
-    help_admin_create_handler
-    help_admin_request_before('admin::start_text2pcap', param_before)
-    help_admin_request_tested
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :pcap do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::stop_text2pcap' }
-  let(:param_before) do
-    {
-      'folder' => '/data',
-      'filename' => 'my-super-file.pcap',
-      'truncate' => 0
-    }
-  end
+  let(:number) { '1' }
+  let(:schema_success) { 'base::success' }
+  let(:parameter) { {} }
 
-  it { expect(@transaction.to_json).to match_json_schema('base::success') }
+  context 'request #stop_text2pcap' do
+    context 'when no session/handle' do
+      let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath }
+      let(:exception_message) { "[457] Reason : Unhandled request 'stop_text2pcap' at this path" }
+
+      include_examples 'transaction admin exception'
+    end
+
+    context 'when session/handle exist' do
+      before { helper_janus_instance_create_handle }
+
+      context "with pcap don't started" do
+        let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::Unknown }
+        let(:exception_message) { "[490] Reason : Capture not started" }
+
+        include_examples 'transaction admin exception'
+      end
+
+      context 'with pcap started' do
+        before { helper_janus_start_pcap }
+
+        let(:info) { :success }
+        let(:info_type) { String }
+
+        include_examples 'transaction admin success info'
+      end
+    end
+  end
 end

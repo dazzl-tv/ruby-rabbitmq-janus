@@ -2,21 +2,35 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type info', broken: true do
-  before do
-    clear
-    @type = 'base::info'
+describe RubyRabbitmqJanus::RRJ, type: :request,
+                                 level: :base,
+                                 name: :info do
+  before { helper_janus_instance_without_token }
+
+  let(:type) { 'base::info' }
+  let(:number) { '1' }
+  let(:parameter) { {} }
+
+  shared_context 'when failed' do
+    let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath }
+    let(:exception_message) { "[457] Reason : Unhandled request 'info' at this path" }
   end
 
-  describe '#session_endpoint_public', type: :request,
-                                       level: :base,
-                                       name: :info do
+  context 'request #info' do
     context 'when queue is exclusive' do
-      include_examples 'transaction should match json schema'
+      context 'with session' do
+        let(:schema_success) { type }
+
+        include_examples 'transaction exclusive success'
+      end
     end
 
     context 'when queue is not exclusive' do
-      include_examples 'transaction should match json empty'
+      context 'with session' do
+        let(:schema_success) { type }
+
+        include_examples 'transaction not exclusive success'
+      end
     end
   end
 end

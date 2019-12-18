@@ -2,26 +2,56 @@
 
 require 'spec_helper'
 
-# @todo Create a message reading by janus
-describe 'RubyRabbitmqJanus::RRJ -- message type offer' do
+describe RubyRabbitmqJanus::RRJ, type: :request,
+                                 level: :peer,
+                                 name: :offer do
   before do
-    clear
-    attach_base
-
-    @type = 'peer::offer'
-    @options.merge!('sdp' => SDP_OFFER).merge!(@session_instance)
+    helper_janus_instance_without_token
+    helper_janus_instance_create_handle
   end
 
-  describe '#handle_endpoint_public', type: :request,
-                                      level: :peer,
-                                      broken: true,
-                                      name: :offer do
+  let(:type) { 'peer::offer' }
+  let(:number) { '1' }
+
+  shared_context 'when success' do
+    let(:parameter) { { 'sdp' => SDP_OFFER } }
+  end
+
+  shared_context 'when failed' do
+    let(:parameter) { {} }
+    let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::JSEPInvalidSDP }
+    let(:exception_message) { "[465] Reason : Invalid SDP (doesn't start with v=)" }
+  end
+
+  describe 'request #offer' do
     context 'when queue is exclusive' do
-      it_behaves_like 'transaction handle should match json schema'
+      context 'with parameter is correct' do
+        let(:schema_success) { type }
+
+        include_context 'when success'
+
+        include_examples 'transaction exclusive success'
+      end
+
+      context 'with parameter is empty' do
+        include_context 'when failed'
+
+        include_examples 'transaction exclusive exception'
+      end
     end
 
     context 'when queue is not exclusive' do
-      it_behaves_like 'transaction handle should match json empty'
+      context 'with parameter is correct' do
+        include_context 'when success'
+
+        include_examples 'transaction not exclusive success'
+      end
+
+      context 'with parameter is empty' do
+        include_context 'when failed'
+
+        include_examples 'transaction not exclusive exception'
+      end
     end
   end
 end

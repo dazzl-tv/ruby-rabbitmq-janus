@@ -2,26 +2,37 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- start_text2pcap', type: :request,
-                                                           level: :admin,
-                                                           broken: true,
-                                                           name: :start_text2pcap do
-  before do
-    help_admin_prepare
-    help_admin_create_session
-    help_admin_create_handler
-    help_admin_request_tested(parameters)
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :start_text2pcap do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::start_text2pcap' }
-  let(:parameters) do
+  let(:number) { '1' }
+  let(:schema_success) { 'base::success' }
+  let(:parameter) do
     {
-      'folder' => '/data',
+      'folder' => '/tmp',
       'filename' => 'my-super-file.pcap',
       'truncate' => 0
     }
   end
 
-  it { expect(@transaction.to_json).to match_json_schema('base::success') }
+  context 'request #start_text2pcap' do
+    context 'when no session/handle' do
+      let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath }
+      let(:exception_message) { "[457] Reason : Unhandled request 'start_text2pcap' at this path" }
+
+      include_examples 'transaction admin exception'
+    end
+
+    context 'when session/handle exist' do
+      before { helper_janus_instance_create_handle }
+
+      let(:info) { :success }
+      let(:info_type) { String }
+
+      include_examples 'transaction admin success info'
+    end
+  end
 end

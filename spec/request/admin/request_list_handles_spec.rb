@@ -2,19 +2,31 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- list_handles', type: :request,
-                                                        level: :admin,
-                                                        broken: true,
-                                                        name: :list_handles do
-  before do
-    help_admin_prepare
-    help_admin_create_session
-    help_admin_request_tested
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :list_handles do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::list_handles' }
+  let(:number) { '1' }
+  let(:schema_success) { type }
+  let(:parameter) { {} }
 
-  it { expect(@transaction.to_json).to match_json_schema(type) }
-  it { expect(@transaction.handles).to be_a(Array) }
+  context 'request #list_handles' do
+    context 'when no session/handle' do
+      let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath }
+      let(:exception_message) { "[457] Reason : Unhandled request 'list_handles' at this path" }
+
+      include_examples 'transaction admin exception'
+    end
+
+    context 'when session/handle exist' do
+      before { helper_janus_instance_create_handle }
+
+      let(:info) { :handles }
+      let(:info_type) { Array }
+
+      include_examples 'transaction admin success info'
+    end
+  end
 end

@@ -2,21 +2,24 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJ -- message type create', broken: true do
-  before do
-    clear
-    @type = 'base::create'
-  end
+describe RubyRabbitmqJanus::RRJ, type: :request,
+                                 level: :base,
+                                 name: :create do
+  before { helper_janus_instance_without_token }
 
-  describe '#session_endpoint_public', type: :request,
-                                       level: :base,
-                                       name: :create do
+  let(:type) { 'base::create' }
+  let(:number) { '1' }
+  let(:parameter) { {} }
+
+  context 'request #list_handles' do
     context 'when queue is exclusive' do
-      include_examples 'transaction should match json schema'
+      let(:schema_success) { type }
+
+      include_examples 'transaction exclusive success'
     end
 
     context 'when queue is not exclusive' do
-      include_examples 'transaction should match json empty'
+      include_examples 'transaction not exclusive success'
     end
   end
 end

@@ -2,20 +2,31 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- handle_info', type: :request,
-                                                       level: :admin,
-                                                       broken: true,
-                                                       name: :handle_info do
-  before do
-    help_admin_prepare
-    help_admin_create_session
-    help_admin_create_handler
-    help_admin_request_tested
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :handle_info do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::handle_info' }
+  let(:schema_success) { type }
+  let(:parameter) { {} }
+  let(:number) { '1' }
 
-  it { expect(@transaction.to_json).to match_json_schema(type) }
-  it { expect(@transaction.info).to be_a(Hash) }
+  describe 'request #handle_info' do
+    context 'when no session/handle' do
+      let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath }
+      let(:exception_message) { "[457] Reason : Unhandled request 'handle_info' at this path" }
+
+      include_examples 'transaction admin exception'
+    end
+
+    context 'when session/handle exist' do
+      before { helper_janus_instance_create_handle }
+
+      let(:info) { :info }
+      let(:info_type) { Hash }
+
+      include_examples 'transaction admin success info'
+    end
+  end
 end

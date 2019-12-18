@@ -2,27 +2,19 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- set_locking_debug', type: :request,
-                                                             level: :admin,
-                                                             name: :set_locking_debug do
-  before do
-    help_admin_prepare
-    help_admin_request_tested(parameters)
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :set_locking_debug do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::set_locking_debug' }
-  let(:parameters) { { 'debug' => debug } }
+  let(:schema_success) { type }
+  let(:parameter) { { 'debug' => [true, false].sample } }
+  let(:number) { '1' }
 
-  context 'when debug is true' do
-    let(:debug) { true }
+  describe 'request #set_locking_debug' do
+    let(:info) { :locking_debug }
 
-    it { expect(@transaction.to_json).to match_json_schema(type) }
-  end
-
-  context 'when debug is false' do
-    let(:debug) { false }
-
-    it { expect(@transaction.to_json).to match_json_schema(type) }
+    include_examples 'transaction admin success boolean'
   end
 end

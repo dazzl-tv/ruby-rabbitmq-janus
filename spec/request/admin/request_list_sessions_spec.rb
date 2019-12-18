@@ -2,20 +2,24 @@
 
 require 'spec_helper'
 
-describe 'RubyRabbitmqJanus::RRJAdmin -- list_sessions', type: :request,
-                                                         level: :admin,
-                                                         broken: true,
-                                                         name: :list_sessions do
-  before do
-    help_admin_prepare
-    help_admin_create_session
-    help_admin_create_handler
-    help_admin_request_tested
-  end
+describe RubyRabbitmqJanus::RRJAdmin, type: :request,
+                                      level: :admin,
+                                      name: :list_sessions do
+  before { helper_janus_instance_without_token }
 
-  let(:instance) { { 'instance' => RubyRabbitmqJanus::Models::JanusInstance.find('1').id.to_s } }
   let(:type) { 'admin::list_sessions' }
+  let(:number) { '1' }
+  let(:schema_success) { type }
+  let(:parameter) { {} }
 
-  it { expect(@transaction.to_json).to match_json_schema(type) }
-  it { expect(@transaction.sessions).to be_a(Array) }
+  context 'request #list_session' do
+    context 'when session/handle exist' do
+      before { helper_janus_instance_create_handle }
+
+      let(:info) { :sessions }
+      let(:info_type) { Array }
+
+      include_examples 'transaction admin success info'
+    end
+  end
 end

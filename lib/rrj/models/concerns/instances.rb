@@ -23,15 +23,11 @@ module RubyRabbitmqJanus
         # Search a record by instance number
         def find_by_instance(instance_search)
           JanusInstance.find_by(instance: instance_search)
-        rescue
-          false
         end
 
         # Search a record by session number
         def find_by_session(session_search)
           JanusInstance.find_by(session: session_search)
-        rescue
-          nil
         end
 
         # Get all instance active

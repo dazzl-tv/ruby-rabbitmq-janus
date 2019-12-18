@@ -21,8 +21,6 @@ module RubyRabbitmqJanus
           @request = request
           @opts = options
           @type = Tools::Type.new(@request)
-        rescue
-          raise Errors::Tools::Replace::Initializer
         end
 
         # Replace element in hash request with information used for this
@@ -36,8 +34,6 @@ module RubyRabbitmqJanus
             add_other if test_presence?('add')
           end
           @request
-        rescue
-          raise Errors::Tools::Replace::TransformRequest
         end
 
         private
@@ -52,15 +48,11 @@ module RubyRabbitmqJanus
         def replace_other
           values = @opts['replace']
           running_hash(rewrite_key_to_string(values))
-        rescue => exception
-          ::Log.warn "Error REPLACE other field : #{exception}"
         end
 
         def add_other
           values = @opts['add']
           @request['body'].merge!(values)
-        rescue => exception
-          ::Log.warn "Error ADD other field : #{exception}"
         end
 
         def rewrite_key_to_string(node)
@@ -95,8 +87,6 @@ module RubyRabbitmqJanus
 
         def replace_transaction
           @request['transaction'] = @type.convert('transaction')
-        rescue => exception
-          ::Log.warn "Error transaction replace : #{exception}"
         end
       end
     end

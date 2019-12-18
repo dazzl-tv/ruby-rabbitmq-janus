@@ -16,22 +16,16 @@ module RubyRabbitmqJanus
         ::Log.debug 'initalize a propertie to message'
         @correlation = SecureRandom.uuid
         @instance = instance
-      rescue
-        raise Errors::Rabbit::Propertie::Initialize
       end
 
       # Define options sending to rabbitmq
       def options
         base.merge(routing_key: Tools::Cluster.instance.queue_to(@instance))
-      rescue
-        raise Errors::Rabbit::Propertie::Options
       end
 
       # Define option sending to rabbitmq for janus admin message
       def options_admin(_type_request)
         base.merge(routing_key: routing_key_admin)
-      rescue
-        raise Errors::Rabbit::Propertie::Options_admin
       end
 
       private

@@ -18,8 +18,6 @@ module RubyRabbitmqJanus
           @reply = exchange.queue(name_queue, exclusive: true)
           super(exchange)
           subscribe_to_queue
-        rescue
-          raise Errors::Rabbit::Publisher::Exclusive::Initialize
         end
 
         # Send an message to queue and waiting a response
@@ -31,8 +29,6 @@ module RubyRabbitmqJanus
         def publish(request)
           super(request)
           return_response
-        rescue
-          raise Errors::Rabbit::Publisher::Exclusive::Publish
         end
 
         private

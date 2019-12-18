@@ -17,16 +17,12 @@ module RubyRabbitmqJanus
       def queue_to(instance = nil)
         Tools::Config.instance.options['queues']['standard']['to'] + \
           "-#{instance.blank? ? @current_instance : instance}"
-      rescue
-        raise Errors::Tools::Cluster::QueueTo
       end
 
       # Specify a name to admin queue
       def queue_admin_to(instance = nil)
         Tools::Config.instance.options['queues']['admin']['to'] + \
           "-#{instance.blank? ? @current_instance : instance}"
-      rescue
-        raise Errors::Tools::Cluster::QueueAdminTo
       end
     end
   end

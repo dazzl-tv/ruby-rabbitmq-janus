@@ -27,8 +27,6 @@ queues:
     from: from-janus-admin
     # Queue sending a message for admin API janus
     to: to-janus-admin
-  # Name to queue for managing instances
-  instance: janus-instance-thread
 
 # Janus plugin used
 janus:
@@ -78,5 +76,5 @@ gem:
   orm: 'mongoid'
   # Read response json for RSpec
   response_path: 'spec/supports/rrj/responses'
-  # Number ofprocess read public queue
+  # Number of process read public queue
   process: 1

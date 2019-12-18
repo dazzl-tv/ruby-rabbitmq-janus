@@ -9,15 +9,11 @@ module RubyRabbitmqJanus
       class Standard < Message
         def initialize(template_request, options = {})
           super(template_request, options)
-        rescue
-          raise Errors::Janus::MessageStandard::Initializer
         end
 
         # Return options to message for rabbitmq
         def options
           properties.options
-        rescue
-          raise Errors::Janus::MessageStandard::Options
         end
 
         private

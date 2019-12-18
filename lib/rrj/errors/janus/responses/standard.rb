@@ -11,6 +11,18 @@ module RubyRabbitmqJanus
             end
           end
 
+          class Session < Base
+            def initialize
+              super 'Error reading response session'
+            end
+          end
+
+          class Sender < Base
+            def initialize
+              super 'Error reading response sender'
+            end
+          end
+
           class SessionId < Base
             def initialize
               super 'Error reading response session_id'
@@ -32,6 +44,12 @@ module RubyRabbitmqJanus
           class Data < Base
             def initialize
               super 'Error reading response data'
+            end
+          end
+
+          class JSEP < Base
+            def initialize
+              super 'Error reading response JSEP'
             end
           end
 

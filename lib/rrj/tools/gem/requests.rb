@@ -25,8 +25,6 @@ module RubyRabbitmqJanus
         @requests = {}
         ::Log.info "Loading all requests in : #{PATH_REQUEST}"
         Dir[File.join(PATH_REQUEST, '*')].count { |file| each_files(file) }
-      rescue
-        raise Errors::Tools::Request::Initializer
       end
 
       private

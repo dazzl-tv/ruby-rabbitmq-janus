@@ -12,8 +12,6 @@ module RubyRabbitmqJanus
         def initialize(exchange)
           @reply = exchange.queue(Tools::Config.instance.queue_from)
           super(exchange)
-        rescue
-          raise Errors::Rabbit::Publisher::NonExclusive::Initialize
         end
 
         # Send an message to queue
@@ -21,8 +19,6 @@ module RubyRabbitmqJanus
         # @param [String] request JSON request sending to rabbitmq queue
         def publish(request)
           super(request)
-        rescue
-          raise Errors::Rabbit::Publisher::NonExclusive::Publish
         end
       end
     end

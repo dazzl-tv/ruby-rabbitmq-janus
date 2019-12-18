@@ -9,7 +9,7 @@ require 'logger'
 require 'key_path'
 require 'erb'
 require 'rrj/tools/bin/config'
-require 'rrj/tools/gem/log'
+require 'rrj/tools/gem/logger'
 
 # :reek:UtilityFunction
 

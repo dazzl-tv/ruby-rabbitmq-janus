@@ -14,8 +14,6 @@ module RubyRabbitmqJanus
       def initialize
         Config.instance
         Requests.instance
-      rescue => exception
-        raise Errors::Tools::Option::Initialize, exception
       end
 
       # Determine session_id used
@@ -31,8 +29,6 @@ module RubyRabbitmqJanus
         else
           Models::JanusInstance.first.session
         end
-      rescue
-        raise Errors::Tools::Option::UseCurrentSession, options
       end
 
       # Determine handle_id used
@@ -44,8 +40,6 @@ module RubyRabbitmqJanus
       # @since 2.0.0
       def use_current_handle?(options)
         options.key?('handle_id') ? options['handle_id'] : 0
-      rescue
-        raise Errors::Tools::Option::UseCurrentHandle, options
       end
     end
   end

@@ -15,15 +15,11 @@ module RubyRabbitmqJanus
           @reply = exchange.queue('', exclusive: true)
           super(exchange)
           subscribe_to_queue
-        rescue
-          raise Errors::Rabbit::Publisher::Keepalive::Initialize
         end
 
         def publish(request)
           super(request)
           return_response
-        rescue
-          raise Errors::Rabbit::Publisher::Keepalive::Publish
         end
 
         private

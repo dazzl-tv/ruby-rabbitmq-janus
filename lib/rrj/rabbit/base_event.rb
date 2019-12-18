@@ -23,8 +23,6 @@ module RubyRabbitmqJanus
         @responses = []
         @semaphore = Semaphore.new
         @lock = Mutex.new
-      rescue
-        raise Errors::Rabbit::BaseEvent::Initialize
       end
 
       private

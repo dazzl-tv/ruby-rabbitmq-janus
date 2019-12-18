@@ -21,8 +21,6 @@ module RubyRabbitmqJanus
 
           errors      if error?
           bad_request if bad_request?
-        rescue
-          @request
         end
 
         # Return request to json format
@@ -58,6 +56,11 @@ module RubyRabbitmqJanus
         #  @return [String] Reason error
         def error_reason
           @request['error']['reason']
+        end
+
+        # Read field Janus in response message
+        def janus
+          request['janus']
         end
 
         private

@@ -8,14 +8,28 @@ module RubyRabbitmqJanus
       class Standard < Response
         # Return a integer to session
         def session
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Data \
+            unless key?('data')
+
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Session \
+            unless request['data'].key?('id')
+
           data_id
         end
 
-        alias sender session
+        def sender
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Data \
+            unless key?('data')
+
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Sender \
+            unless request['data'].key?('id')
+
+          data_id
+        end
 
         # Return session used in request
         def session_id
-          raise RubyRabbitmqJanusErrors::Janus::Responses::Standard::SessionId \
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::SessionId \
             unless key?('session_id')
 
           request['session_id']
@@ -31,6 +45,9 @@ module RubyRabbitmqJanus
 
         # Read data response for plugin request
         def plugin_data
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Plugin \
+            unless key?('plugindata')
+
           raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::PluginData \
             unless request['plugindata'].key?('data')
 
@@ -47,6 +64,9 @@ module RubyRabbitmqJanus
 
         # Read SDP response
         def sdp
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::JSEP \
+            unless key?('jsep')
+
           raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::SDP \
             unless request['jsep'].key?('sdp')
 

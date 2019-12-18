@@ -5,8 +5,8 @@ module RubyRabbitmqJanus
     module Janus
       module Responses
         class Base < RubyRabbitmqJanus::Errors::RRJError
-          def initialize(klass, message, level = :warning)
-            super level, "[Response][#{klass}] Error sessions information reading"
+          def initialize(klass, message, level = :warn)
+            super "[Response][#{klass}] Error sessions information reading", level
           end
         end
       end

@@ -21,9 +21,6 @@ module RubyRabbitmqJanus
             info_subscribe(info, prop, payload)
             synchronize_response(info, payload)
           end
-        rescue => exception
-          raise RubyRabbitmqJanus::Errors::Rabbit::Listener::From::ListenEvents,
-                exception
         end
 
         def synchronize_response(info, payload)

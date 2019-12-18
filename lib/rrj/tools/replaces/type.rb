@@ -16,8 +16,6 @@ module RubyRabbitmqJanus
       def initialize(request)
         @request = request
         @key = @data = nil
-      rescue
-        raise Errors::Tools::Type::Initializer
       end
 
       # Return an data with a type corresponding to string in request
@@ -30,8 +28,6 @@ module RubyRabbitmqJanus
         @key = key
         @data = option[@key] if option.key?(@key)
         convert_data
-      rescue
-        raise Errors::Tools::Type::Convert
       end
 
       private
@@ -42,6 +38,7 @@ module RubyRabbitmqJanus
         when '<number>', '<integer>'  then convert_to_type_number
         when '<boolean>'              then convert_to_type_boolean
         when '<array>'                then convert_to_type_array
+        when '<plugins>'              then convert_to_type_plugins
         when '<transaction>'          then convert_to_type_transaction
         when /<plugin\[[0-9]\]>/      then convert_to_type_plugin
         end
@@ -88,6 +85,10 @@ module RubyRabbitmqJanus
         data = array_alone
         key = data.is_a?(Hash) ? @key : @key.pluralize
         [key, data]
+      end
+
+      def convert_to_type_plugins
+        @data.is_a?(String) ? [@data] : @data
       end
 
       def test_boolean(boolean_string, boolean_class)

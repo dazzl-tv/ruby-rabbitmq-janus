@@ -16,6 +16,7 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
 
 * [How to use](#how-to-use)
   * [Installation](#installation)
+  * [Requirements](#requirements)
   * [Configuration](#configuration)
     * [Janus](#janus)
     * [Generators](#generators)
@@ -61,6 +62,11 @@ Install basic configuration :
 ```linux
 rails g ruby_rabbitmq_janus:install
 ```
+
+### Requirements
+
+* Janus Gateway : minimum version `0.7.4` [Source Code](https://github.com/meetecho/janus-gateway) - [Documentation](https://janus.conf.meetecho.com/docs/)
+* RabbitMQ server
 
 ### Configuration
 
@@ -127,6 +133,8 @@ end
 
 #### Admin Request
 
+__NOTE: The request authentication `HMAC-Signed token authentication` is not available.__
+
 ```ruby
 require 'ruby_rabbitmq_janus'
 
@@ -152,6 +160,18 @@ actions = RubyRabbitmqJanus::ActionEvents.new.action
 
 # Initialize a thread for listen public queue and send class to thread
 RubyRabbitmqJanus::Janus::Concurrencies::Event.new.run(@actions)
+```
+
+#### Listen Janus Admin Event
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Create a class in your Rails application
+actions = RubyRabbitmqJanus::ActionAdminEvents.new.action
+
+# Initialize a thread for listen public admin queue and send class to thread
+RubyRabbitmqJanus::Janus::Concurrencies::EventAdmin.new.run(@actions)
 ```
 
 ## Upgrade
@@ -199,34 +219,37 @@ rabbitmq and use plugin echotest for janus server.
 
 Use tags for rspec :
 
-| Describe                                                          | Type            | Name              |
-| -------------------------------------------------------------     | --------------- | ---------------   |
-| **Internaly function**                                            | config          |                   |
-| Use bunny gem                                                     |                 | rabbit            |
-| Test log functions                                                |                 | log               |
-| Test configuration function                                       |                 | config            |
-| Test Gem contains CONSTANTS                                       |                 | describe          |
-| **Level request sending to janus (admin monitor API or classic)** | level           |                   |
-| Request with no admin right.                                      |                 | base              |
-| Request with admin right in Janus application.                    |                 | admin             |
-| Request candidate/jsep                                            |                 | peer              |
-| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                   |
-| Test request attach type                                          |                 | attach            |
-| Test request type create                                          |                 | create            |
-| Test request type detach                                          |                 | detach            |
-| Test request type janus info                                      |                 | info              |
-| Test request type test                                            |                 | test              |
-| Test request type handle list                                     |                 | handles           |
-| Test request type sesssion list                                   |                 | sessions          |
-| Test request type handle information                              |                 | handle_info       |
-| Test request type (un)locking debug                               |                 | set_locking_debug |
-| Test request type change log level                                |                 | set_log_level     |
-| ~~Test request type tokens list~~                                 |                 | tokens            |
-| Test request type destroy session                                 |                 | destroy           |
-| Test request keepalive                                            |                 | keepalive         |
-| ~~Test request type sdp offer~~                                   |                 | offer             |
-| Test request type trickle, send on candidate                      |                 | trickle           |
-| Test request type trickles, send array candidate                  |                 | trickles          |
+| Describe                                                      | Type            | Name              |
+| ------------------------------------------------------------- | --------------- | ---------------   |
+| Internaly function                                            | config          |                   |
+| Use bunny gem                                                 |                 | rabbit            |
+| Test log functions                                            |                 | log               |
+| Test configuration function                                   |                 | config            |
+| Test Gem contains CONSTANTS                                   |                 | describe          |
+| Level request sending to janus (admin monitor API or classic) | level           |                   |
+| Request basic.                                                |                 | base              |
+| Request with admin right in Janus application.                |                 | admin             |
+| Request candidate/jsep                                        |                 | peer              |
+| Request JSON sending to Rabbitmq -> Janus                     | request         |                   |
+| Test request attach type                                      |                 | attach            |
+| Test request type create                                      |                 | create            |
+| Test request type detach                                      |                 | detach            |
+| Test request type janus info                                  |                 | info              |
+| Test request type test                                        |                 | test              |
+| Test request type handle list                                 |                 | handles           |
+| Test request type sesssion list                               |                 | sessions          |
+| Test request type handle information                          |                 | handle_info       |
+| Test request type (un)locking debug                           |                 | set_locking_debug |
+| Test request type change log level                            |                 | set_log_level     |
+| Test request type tokens list                                 |                 | tokens            |
+| Test request type destroy session                             |                 | destroy           |
+| Test request keepalive                                        |                 | keepalive         |
+| Test request type sdp offer                                   |                 | offer             |
+| Test request type trickle, send on candidate                  |                 | trickle           |
+| Test request type trickles, send array candidate              |                 | trickles          |
+| Event(s) thread                                               | event           |                   |
+| Test thread public queue                                      |                 | event             |
+| Test thread admin queue                                       |                 | event_admin       |
 
 Example usage rspec with tags :
 ```ruby

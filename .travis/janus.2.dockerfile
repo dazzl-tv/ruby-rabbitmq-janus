@@ -1,7 +1,5 @@
-FROM quay.io/dazzl/janus-gateway:rrj-spec
+# FROM quay.io/dazzl/janus-gateway:rrj-spec
+FROM janus:rrj
 
-COPY janus.2.cfg /usr/local/etc/janus/janus.cfg
-COPY janus.2.transport.rabbitmq.cfg /usr/local/etc/janus/janus.transport.rabbitmq.cfg
-
-ENTRYPOINT ["/usr/local/bin/janus"]
-CMD ["-d5"]
+COPY janus.2.jcfg /usr/local/etc/janus/janus.jcfg
+COPY janus.2.transport.rabbitmq.jcfg /usr/local/etc/janus/janus.transport.rabbitmq.jcfg

@@ -71,3 +71,6 @@ RSpec/EmptyExampleGroup:
 
 RSpec/InstanceVariable:
   Enabled: false
+
+RSpec/nestedGroups:
+  Max: 4

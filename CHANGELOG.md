@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [Fixed]
 - Fix all spec
+- Admin request set_session_timeout
 
 ### [Add]
 - Add error class for event/event_admin process
@@ -22,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add timeout connection to RabbitMQ
 - Add default level to error message
 - Exception for Janus errors
+- Read admin queue and interpret response
 
 ## [2.7.2] - 2019-10-23
 ### [Deleted]

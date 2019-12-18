@@ -66,7 +66,7 @@ GEM
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     backports (3.15.0)
-    bson (4.6.0)
+    bson (4.7.0)
     builder (3.2.4)
     bunny (2.14.3)
       amq-protocol (~> 2.3, >= 2.3.0)
@@ -106,6 +106,8 @@ GEM
       ffi (>= 1.3.0)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
+    faker (1.9.6)
+      i18n (>= 0.7)
     faraday (0.17.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.13.1)
@@ -162,12 +164,13 @@ GEM
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     origin (2.3.1)
-    overcommit (0.51.0)
+    overcommit (0.52.0)
       childprocess (>= 0.6.3, < 4)
       iniparse (~> 1.4)
     parallel (1.19.1)
     parser (2.6.5.0)
       ast (~> 2.4.0)
+    parslet (1.8.2)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -238,6 +241,8 @@ GEM
     rubocop-rspec (1.37.0)
       rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
+    sdp (0.2.9)
+      parslet (>= 1.1.0)
     semaphore (0.0.1)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
@@ -281,6 +286,7 @@ DEPENDENCIES
   aruba
   database_cleaner
   factory_bot
+  faker (~> 1.9, >= 1.9.6)
   json-schema
   json-schema-rspec
   mongoid
@@ -294,6 +300,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rspec
   ruby_rabbitmq_janus!
+  sdp (~> 0.2.9)
   sqlite3 (= 1.3.13)
   travis
   yard

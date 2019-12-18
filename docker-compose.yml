@@ -36,3 +36,5 @@ services:
 
   mongo:
     image: mongo
+    ports:
+      - 5555:27017

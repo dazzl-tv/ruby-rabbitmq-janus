@@ -33,7 +33,7 @@ describe RubyRabbitmqJanus::RRJAdmin, type: :request,
       context 'with pcap started' do
         before { helper_janus_start_pcap }
 
-        let(:info) { :success }
+        let(:info) { :janus }
         let(:info_type) { String }
 
         include_examples 'transaction admin success info'

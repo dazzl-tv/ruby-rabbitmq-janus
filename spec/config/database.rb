@@ -27,5 +27,5 @@ end
 
 def after_load_database
   DatabaseCleaner.clean
-  create_janus_instances
+  # create_janus_instances
 end

@@ -1,8 +1,5 @@
 # frozen_string_literal: true
-
-# :reek:TooManyStatements
-# :reek:UtilityFunction
-
+=begin
 def create_janus_instances
   instance = RubyRabbitmqJanus::Models::JanusInstance
 
@@ -13,36 +10,6 @@ def create_janus_instances
   end
 end
 
-def attach_base
-  res = nil
-  @gateway.session_endpoint_private(@session_instance) do |tr|
-    res = tr.publish_message('base::attach', @session_instance)
-  end
-  @options.merge!('handle_id' => res.sender).merge!(@session_instance)
-end
-
-def attach_admin
-  res = nil
-  @gateway.admin_endpoint(@session_instance) do |tr|
-    res = tr.publish_message('base::attach', @session_instance)
-  end
-  @options.merge!('handle_id' => res.sender).merge!(@session_instance)
-end
-
-def session
-  res = nil
-  @gateway.session_endpoint_private(@instance) do |tr|
-    res = tr.publish_message('base::create', @instance)
-  end
-  @options.merge!('session_id' => res.session).merge!(@instance)
-end
-
-def clear
-  @response = nil
-  @options = {}
-end
-
-# :reek:NilCheck
 def find_instance
   janus_instance = RubyRabbitmqJanus::Models::JanusInstance.all.sample
   define_variables(janus_instance) unless janus_instance.nil?
@@ -61,3 +28,4 @@ def initializer_rrj(metadata)
                RubyRabbitmqJanus::RRJ.new
              end
 end
+=end

@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Tools::Type, type: :tools, name: :type do
+describe RubyRabbitmqJanus::Tools::Type, type: :tools,
+                                         name: :replace do
   subject(:converter) do
     # Get request JSON file
     rqe = RubyRabbitmqJanus::Tools::Requests.instance.requests['test::type']
@@ -146,5 +147,23 @@ describe RubyRabbitmqJanus::Tools::Type, type: :tools, name: :type do
     let(:value) { Random.rand(1..7) }
 
     include_examples 'test convert type', Integer
+  end
+
+  context 'when convert plugins' do
+    let(:key) { 'plugins' }
+
+    context 'one plugin value' do
+      let(:value) { ['just one'] }
+      let(:size) { 1 }
+
+      include_examples 'test convert type array', Array
+    end
+
+    context 'many plugin values' do
+      let(:value) { ['many', 'plugin', '(s)'] }
+      let(:size) { 3 }
+
+      include_examples 'test convert type array', Array
+    end
   end
 end

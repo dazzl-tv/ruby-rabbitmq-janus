@@ -8,7 +8,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
 
   after do
     described_class.delete_all
-    create_janus_instances
+    helper_janus_instance_without_token
   end
 
   let(:janus_id) do

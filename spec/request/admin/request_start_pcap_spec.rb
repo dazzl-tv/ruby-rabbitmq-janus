@@ -29,7 +29,7 @@ describe RubyRabbitmqJanus::RRJAdmin, type: :request,
     context 'when session/handle exist' do
       before { helper_janus_instance_create_handle }
 
-      let(:info) { :success }
+      let(:info) { :janus }
       let(:info_type) { String }
 
       include_examples 'transaction admin success info'

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Load gems dependencies
 require 'bundler/setup'
 require 'pry'
 require 'json-schema-rspec'
@@ -10,10 +11,17 @@ ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
 
+# Load gem RubyRabbitmqJanus
 require 'ruby_rabbitmq_janus'
+
+# Configure application for testing
 require 'config/initializer'
 require 'config/database'
 require 'config/instance'
+
+# Load helpers method
+require 'support/helper/base'
+require 'support/helper/admin'
 
 require 'aruba/rspec'
 
@@ -28,14 +36,19 @@ end
 end
 
 RSpec.configure do |config|
-  config.fail_fast = ENV['SPEC_DEBUG'].match?('true') ? true : false
+  config.fail_fast = ENV.key?('SPEC_DEBUG') ? (ENV['SPEC_DEBUG'].match?('true') ? true : false) : false
   DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+    c.include_chain_clauses_in_custom_matcher_descriptions = true
   end
-  config.include Aruba::Api
+
+  # https://relishapp.com/rspec/rspec-core/docs/example-groups/shared-contexty
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  # config.include Aruba::Api
   config.include JSON::SchemaMatchers
 
   # Add JSONs for gem configuration test
@@ -69,9 +82,9 @@ RSpec.configure do |config|
   config.before do |example|
     unless example.metadata[:type].match?(/tools/)
       after_load_database
-      initializer_rrj(example.metadata)
-      clear
-      find_instance
+      # initializer_rrj(example.metadata)
+      # help_clear
+      # find_instance
     end
   end
 

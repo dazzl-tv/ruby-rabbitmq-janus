@@ -29,7 +29,12 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   context 'when many janus instances' do
     before do
       FactoryBot.create_list(:janus_instance, 5, enable: false)
-      FactoryBot.create(:janus_instance, janus_id)
+
+      if ENV['MONGO'].match?('true')
+        FactoryBot.create(:janus_instance, janus_id)
+      else
+        FactoryBot.create(:janus_instance)
+      end
     end
 
     let(:one) { model.enabled.first }

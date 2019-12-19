@@ -4,17 +4,15 @@ module RubyRabbitmqJanus
   module Errors
     module Process
       module EventAdmin
-        # Error for Process::Concurrencies::EventAdmin#initialize
-        class Initializer < RubyRabbitmqJanus::Errors::Process::BaseEvent
-          def initializer
-            super 'EventAdmin', 'Error EventAdmin initializer'
+        class Base < RubyRabbitmqJanus::Errors::RRJError
+          def initialize(klass, message, level = :warn)
+            super "[Concurrency][#{klass}] #{message}", level
           end
         end
 
-        # Error for Process::Concurrencies::EventAdmin#run
-        class Run < RubyRabbitmqJanus::Errors::Process::BaseEvent
-          def initializer
-            super 'EventAdmin', 'Error EventAdmin runner block code'
+        class Run < Base
+          def initialize
+            super 'EventAdmin', 'Failed start thread listener public queue !'
           end
         end
       end

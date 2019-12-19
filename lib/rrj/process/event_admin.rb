@@ -27,6 +27,9 @@ module RubyRabbitmqJanus
         #
         # @return [Thread] It's a thread who listen queue and execute action
         def run(&block)
+          raise RubyRabbitmqJanus::Errors::Process::EventAdmin::Run \
+            unless block_given?
+
           @thread.join
           Thread.new do
             loop do
@@ -37,8 +40,11 @@ module RubyRabbitmqJanus
 
         private
 
+        def publisher
+          Rabbit::Listener::FromAdmin.new(rabbit)
+        end
+
         def transaction_running
-          publisher = Rabbit::Listener::FromAdmin.new(rabbit)
           @thread.thread_variable_set(NAME_VAR, publisher)
         end
       end

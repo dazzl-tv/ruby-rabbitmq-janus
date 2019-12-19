@@ -60,6 +60,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency 'simplecov', '~> 0.17.1'
   spec.add_development_dependency 'sqlite3', '= 1.3.13'
   spec.add_development_dependency 'travis'
   spec.add_development_dependency 'yard'

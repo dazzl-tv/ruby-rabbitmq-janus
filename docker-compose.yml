@@ -11,6 +11,7 @@ services:
     volumes:
       - ./lib/rrj/:/ruby_rabbitmq_janus/lib/rrj
       - ./spec/:/ruby_rabbitmq_janus/spec
+      - ./coverage/:/ruby_rabbitmq_janus/coverage
 
   rabbit:
     image: rabbitmq:alpine

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add default level to error message
 - Exception for Janus errors
 - Read admin queue and interpret response
+- SimpleCov (Code coverage for Ruby)
 
 ## [2.7.2] - 2019-10-23
 ### [Deleted]

@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+unless ENV['TRAVIS'].eql?('true')
+  require 'simplecov'
+  SimpleCov.start
+end
+
 # Load gems dependencies
 require 'bundler/setup'
 require 'pry'

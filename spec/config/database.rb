@@ -16,7 +16,6 @@ def migrate
   ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
     table.integer :session, limit: 8
     table.boolean :enable
-    table.integer :thread, limit: 8
   end
 end
 
@@ -28,5 +27,4 @@ end
 # :reek:UtilityFunction
 def after_load_database
   DatabaseCleaner.clean
-  # create_janus_instances
 end

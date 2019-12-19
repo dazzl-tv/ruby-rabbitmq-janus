@@ -18,13 +18,13 @@ module RubyRabbitmqJanus
         @instance = instance
       end
 
-      # Define options sending to rabbitmq
+      # Define options sending to RabbitMQ
       def options
-        base.merge(routing_key: Tools::Cluster.instance.queue_to(@instance))
+        base.merge(routing_key: routing_key)
       end
 
       # Define option sending to rabbitmq for janus admin message
-      def options_admin(_type_request)
+      def options_admin
         base.merge(routing_key: routing_key_admin)
       end
 
@@ -42,6 +42,10 @@ module RubyRabbitmqJanus
 
       def base
         { correlation_id: @correlation, content_type: 'application/json' }
+      end
+
+      def routing_key
+        Tools::Cluster.instance.queue_to(@instance)
       end
 
       def routing_key_admin

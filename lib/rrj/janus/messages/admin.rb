@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
 
         # Return options to message for rabbitmq
         def options
-          properties.options_admin(type)
+          properties.options_admin
         end
 
         private

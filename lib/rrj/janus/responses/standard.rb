@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Layout/LineLength
+
 module RubyRabbitmqJanus
   module Janus
     # Modules for manipulate responses sending by Janus
@@ -82,3 +84,4 @@ module RubyRabbitmqJanus
     end
   end
 end
+# rubocop:enable Layout/LineLength

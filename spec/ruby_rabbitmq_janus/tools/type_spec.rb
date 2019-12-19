@@ -152,14 +152,14 @@ describe RubyRabbitmqJanus::Tools::Type, type: :tools,
   context 'when convert plugins' do
     let(:key) { 'plugins' }
 
-    context 'one plugin value' do
+    context 'when one plugin value' do
       let(:value) { ['just one'] }
       let(:size) { 1 }
 
       include_examples 'test convert type array', Array
     end
 
-    context 'many plugin values' do
+    context 'when many plugin values' do
       let(:value) { ['many', 'plugin', '(s)'] }
       let(:size) { 3 }
 

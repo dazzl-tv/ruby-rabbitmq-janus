@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # NOTE: DELETE !!
 # Helpers method for admin requester
 # Use this methods before execute block 'it'

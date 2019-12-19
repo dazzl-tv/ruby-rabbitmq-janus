@@ -36,7 +36,11 @@ end
 end
 
 RSpec.configure do |config|
-  config.fail_fast = ENV.key?('SPEC_DEBUG') ? (ENV['SPEC_DEBUG'].match?('true') ? true : false) : false
+  config.fail_fast = if ENV.key?('SPEC_DEBUG')
+                       (ENV['SPEC_DEBUG'].match?('true') ? true : false)
+                     else
+                       false
+                     end
   DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 

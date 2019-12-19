@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
     end
 
     context 'with timeout' do
-      let(:message) { { 'timeout' => (rand() * 10_000).to_i } }
+      let(:message) { { 'timeout' => (rand * 10_000).to_i } }
 
       it { expect(response.timeout).to be_kind_of(Integer) }
     end

@@ -16,11 +16,11 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     context 'with no id' do
       let(:message) { { 'data' => {} } }
 
-      it { expect{ response.sender }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Sender) }
+      it { expect { response.sender }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Sender) }
     end
 
     context 'with a sender' do
-      let(:message) { { 'data' => { 'id' => (rand() * 10_000).to_i } } }
+      let(:message) { { 'data' => { 'id' => (rand * 10_000).to_i } } }
 
       it { expect(response.sender).to be_kind_of(Integer) }
     end

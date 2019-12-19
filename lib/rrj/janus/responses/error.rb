@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength, Metrics/LineLength
+# rubocop:disable Metrics/LineLength
 
 module RubyRabbitmqJanus
   module Janus
@@ -156,4 +156,4 @@ module RubyRabbitmqJanus
     end
   end
 end
-# rubocop:enable Metrics/ClassLength, Metrics/LineLength
+# rubocop:enable Metrics/LineLength

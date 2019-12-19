@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # NOTE: DELETE !!
 # Helpers for base requester
 # Use this methods before execute block 'it'
@@ -11,13 +12,13 @@ def help_attach_base
   @options.merge!('handle_id' => res.sender).merge!(@session_instance)
 end
 
-#def help_attach_admin
+# def help_attach_admin
 #  res = nil
 #  @gateway.admin_endpoint(@session_instance) do |tr|
 #    res = tr.publish_message('base::attach', @session_instance)
 #  end
 #  @options.merge!('handle_id' => res.sender).merge!(@session_instance)
-#end
+# end
 
 def help_create_session
   res = nil

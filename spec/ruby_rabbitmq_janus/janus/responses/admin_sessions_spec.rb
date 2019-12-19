@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
     end
 
     context 'with sessions' do
-      let(:message) { { 'sessions' => [(rand() * 10_000).to_i] * 5 } }
+      let(:message) { { 'sessions' => [(rand * 10_000).to_i] * 5 } }
 
       it { expect(response.sessions).to be_kind_of(Array) }
     end

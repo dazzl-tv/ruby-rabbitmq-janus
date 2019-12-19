@@ -16,7 +16,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     context 'with no data' do
       let(:message) { { 'plugindata' => {} } }
 
-      it { expect{ response.plugin_data }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::PluginData) }
+      it { expect { response.plugin_data }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::PluginData) }
     end
 
     context 'with a session' do

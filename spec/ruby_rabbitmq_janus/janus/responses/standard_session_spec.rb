@@ -16,11 +16,11 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     context 'with no id' do
       let(:message) { { 'data' => {} } }
 
-      it { expect{ response.session }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Session) }
+      it { expect { response.session }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Session) }
     end
 
     context 'with a session' do
-      let(:message) { { 'data' => { 'id' => (rand() * 10_000).to_i } } }
+      let(:message) { { 'data' => { 'id' => (rand * 10_000).to_i } } }
 
       it { expect(response.session).to be_kind_of(Integer) }
     end

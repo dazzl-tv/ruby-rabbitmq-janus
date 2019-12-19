@@ -36,8 +36,6 @@ end
 def helper_janus_instance_create_handle
   helper_janus_instance_create_session
 
-  response = nil
-
   response = RubyRabbitmqJanus::RRJ.new.handle_endpoint_private(opt_instance) do |tr|
     tr.publish_message('base::attach', opt_message)
   end
@@ -66,11 +64,11 @@ def helper_janus_allow_token
 end
 
 def helper_janus_start_pcap
-  opt_message.merge!({
-      'folder' => '/tmp',
-      'filename' => 'my-super-file.pcap',
-      'truncate' => 0
-    })
+  opt_message.merge!(
+    'folder' => '/tmp',
+    'filename' => 'my-super-file.pcap',
+    'truncate' => 0
+  )
 
   RubyRabbitmqJanus::RRJAdmin.new.admin_endpoint(opt_instance) do |tr|
     tr.publish_message('admin::start_pcap', opt_message)

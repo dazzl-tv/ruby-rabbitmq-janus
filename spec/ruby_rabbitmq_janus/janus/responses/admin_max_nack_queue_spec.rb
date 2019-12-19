@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
     end
 
     context 'with max_nack_queue' do
-      let(:message) { { 'max_nack_queue' => (rand() * 10_000).to_i } }
+      let(:message) { { 'max_nack_queue' => (rand * 10_000).to_i } }
 
       it { expect(response.max_nack_queue).to be_kind_of(Integer) }
     end

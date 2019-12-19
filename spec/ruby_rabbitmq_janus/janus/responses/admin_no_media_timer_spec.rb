@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
     end
 
     context 'with no_media_timer' do
-      let(:message) { { 'no_media_timer' => (rand() * 10_000).to_i } }
+      let(:message) { { 'no_media_timer' => (rand * 10_000).to_i } }
 
       it { expect(response.no_media_timer).to be_kind_of(Integer) }
     end

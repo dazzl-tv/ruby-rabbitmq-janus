@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
     end
 
     context 'with handles' do
-      let(:message) { { 'handles' => [(rand() * 10_000).to_i] * 5 } }
+      let(:message) { { 'handles' => [(rand * 10_000).to_i] * 5 } }
 
       it { expect(response.handles).to be_kind_of(Array) }
     end

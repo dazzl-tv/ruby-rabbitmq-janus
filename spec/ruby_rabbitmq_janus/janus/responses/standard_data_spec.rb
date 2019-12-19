@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     end
 
     context 'with a data' do
-      let(:message) { { 'data' => { 'id' => (rand() * 10_000).to_i } } }
+      let(:message) { { 'data' => { 'id' => (rand * 10_000).to_i } } }
 
       it { expect(response.data).to be_kind_of(Hash) }
     end

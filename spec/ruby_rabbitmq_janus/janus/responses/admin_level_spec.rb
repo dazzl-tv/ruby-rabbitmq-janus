@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Admin, type: :responses,
     end
 
     context 'with level' do
-      let(:message) { { 'level' => (rand() * 10_000).to_i } }
+      let(:message) { { 'level' => (rand * 10_000).to_i } }
 
       it { expect(response.level).to be_kind_of(Integer) }
     end

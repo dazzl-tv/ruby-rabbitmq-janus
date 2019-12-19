@@ -16,7 +16,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Standard, type: :responses,
     context 'with no sdp' do
       let(:message) { { 'jsep' => {} } }
 
-      it { expect{ response.sdp }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::SDP) }
+      it { expect { response.sdp }.to raise_error(RubyRabbitmqJanus::Errors::Janus::Responses::Standard::SDP) }
     end
 
     context 'with a sdp' do

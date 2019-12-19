@@ -22,11 +22,6 @@ require 'ruby_rabbitmq_janus'
 # Configure application for testing
 require 'config/initializer'
 require 'config/database'
-require 'config/instance'
-
-# Load helpers method
-require 'support/helper/base'
-require 'support/helper/admin'
 
 require 'aruba/rspec'
 
@@ -89,12 +84,7 @@ RSpec.configure do |config|
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before do |example|
-    unless example.metadata[:type].match?(/tools/)
-      after_load_database
-      # initializer_rrj(example.metadata)
-      # help_clear
-      # find_instance
-    end
+    after_load_database unless example.metadata[:type].match?(/tools/)
   end
 
   # Use timeout for requester

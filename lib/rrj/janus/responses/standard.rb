@@ -10,8 +10,7 @@ module RubyRabbitmqJanus
       class Standard < Response
         # Return a integer to session
         def session
-          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Data \
-            unless key?('data')
+          raise_data
 
           raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Session \
             unless request['data'].key?('id')
@@ -20,8 +19,7 @@ module RubyRabbitmqJanus
         end
 
         def sender
-          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Data \
-            unless key?('data')
+          raise_data
 
           raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Sender \
             unless request['data'].key?('id')
@@ -58,8 +56,7 @@ module RubyRabbitmqJanus
 
         # Read data response for normal request
         def data
-          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Data \
-            unless key?('data')
+          raise_data
 
           request['data']
         end
@@ -70,12 +67,21 @@ module RubyRabbitmqJanus
             unless key?('jsep')
 
           raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::SDP \
-            unless request['jsep'].key?('sdp')
+            unless jsep.key?('sdp')
 
-          request['jsep']['sdp']
+          jsep['sdp']
         end
 
         private
+
+        def raise_data
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Standard::Data \
+            unless key?('data')
+        end
+
+        def jsep
+          request['jsep']
+        end
 
         def data_id
           data['id'].to_i

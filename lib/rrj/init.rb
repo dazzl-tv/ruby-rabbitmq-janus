@@ -11,10 +11,11 @@ require 'erb'
 require 'rrj/tools/bin/config'
 require 'rrj/tools/gem/logger'
 
-# :reek:UtilityFunction
-
 Log = RubyRabbitmqJanus::Tools::Logger.create unless defined?(Log)
 RubyRabbitmqJanus::Tools::Logger.start
+#
+# :reek:UtilityFunction
+# :reek:MissingSafeMethod { exclude: [ cleanup_connection! ] }
 
 # Primary module for this gem
 module RubyRabbitmqJanus

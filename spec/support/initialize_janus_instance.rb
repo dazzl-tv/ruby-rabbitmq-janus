@@ -3,6 +3,7 @@
 # Instance '1' : settings
 #   - Token disabled
 
+# :reek:UtilityFunction
 def helper_janus_instance_without_token
   number = 1
   id_instance = ENV['MONGO'].match?('true') ? { _id: number.to_s } : { id: number }
@@ -13,6 +14,7 @@ end
 # Instance '2' : settings
 #   - Token enabled
 
+# :reek:UtilityFunction
 def helper_janus_instance_with_token
   number = 2
   id_instance = ENV['MONGO'].match?('true') ? { _id: number.to_s } : { id: number }
@@ -29,8 +31,10 @@ def helper_janus_instance_create_session
     response = tr.publish_message('base::create', opt_message)
   end
 
-  instance.update(session: response.session)
-  opt_instance.merge!('session_id' => response.session)
+  session = response.session
+
+  instance.update(session: session)
+  opt_instance.merge!('session_id' => session)
 end
 
 def helper_janus_instance_create_handle

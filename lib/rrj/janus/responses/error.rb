@@ -156,4 +156,4 @@ module RubyRabbitmqJanus
     end
   end
 end
-# rubocop:enable Metrics/LineLength
+# rubocop:enable Layout/LineLength

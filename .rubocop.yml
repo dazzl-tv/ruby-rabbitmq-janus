@@ -44,7 +44,9 @@ Metrics/CyclomaticComplexity:
   Exclude:
     - lib/rrj/tools/replaces/type.rb
 
-Metrics/LineLength:
+# Layout rules
+# ###
+Layout/LineLength:
   Max: 80
   Exclude:
     - spec/**/*
@@ -72,5 +74,5 @@ RSpec/EmptyExampleGroup:
 RSpec/InstanceVariable:
   Enabled: false
 
-RSpec/nestedGroups:
+RSpec/NestedGroups:
   Max: 4

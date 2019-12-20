@@ -22,22 +22,24 @@ module RubyRabbitmqJanus
 
         private
 
+        attr_reader :lock, :condition, :rabbit
+
         def initialize_thread
           @rabbit.transaction_long { transaction_running }
         rescue Interrupt
-          ::Log.info "Stop transaction #{self.class.name}"
+          ::Log.warn \
+            "Close a connection with RabbitMQ instance for #{self.class.name}"
           @rabbit.close
         end
 
         def info_thread
           "Create an thread -- #{self.class.name}"
         end
-
-        attr_reader :lock, :condition, :rabbit
       end
     end
   end
 end
 
+require 'rrj/process/thread_runner_concern'
 require 'rrj/process/event'
 require 'rrj/process/event_admin'

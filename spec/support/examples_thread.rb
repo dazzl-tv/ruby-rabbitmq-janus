@@ -6,8 +6,8 @@ shared_examples 'when thread' do
   let(:action) { EventTest.new.actions }
   let(:size) { (rand * 10).to_i }
 
-  it { expect(concurrency::NAME_VAR).to be_a(Symbol) }
-  it { expect(concurrency::NAME_VAR).to eql(publish_name) }
+  it { expect(event.send(:name_publisher)).to be_a(Symbol) }
+  it { expect(event.send(:name_publisher)).to eql(publish_name) }
   it { expect(action).not_to be(nil) }
   it { expect { event.run(&action) }.not_to raise_error(exception_runner) }
   it { expect { event.run }.to raise_error(exception_runner) }

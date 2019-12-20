@@ -40,6 +40,5 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/process/thread_runner_concern'
 require 'rrj/process/event'
 require 'rrj/process/event_admin'

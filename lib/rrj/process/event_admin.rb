@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rrj/process/thread_runner_concern'
+
 module RubyRabbitmqJanus
   module Process
     module Concurrencies
@@ -16,16 +18,16 @@ module RubyRabbitmqJanus
 
         private
 
-        def raise_nil_block
-          raise RubyRabbitmqJanus::Errors::Process::EventAdmin::Run
-        end
-
         def name_publisher
-          :publish_adm
+          :pub_admin
         end
 
         def publisher
           Rabbit::Listener::FromAdmin.new(rabbit)
+        end
+
+        def raise_nil_block
+          raise RubyRabbitmqJanus::Errors::Process::EventAdmin::Run
         end
       end
     end

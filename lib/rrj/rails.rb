@@ -25,11 +25,15 @@ module RubyRabbitmqJanus
       actions = RubyRabbitmqJanus::ActionEvents.new.actions
       admin_actions = RubyRabbitmqJanus::ActionAdminEvents.new.actions
 
-      Parallel.map([
-                     process::Event.new.run(&actions),
-                     process::EventAdmin.new.run(&admin_actions)
-                   ], in_processes: number) do |listener|
-        "Item: #{listener}, Worker: #{Parallel.worker_number}"
+      listeners = []
+      (1..number).each do |ind|
+        listeners.push process::Event.new.run(&actions)
+        listeners.push process::EventAdmin.new.run(&admin_actions)
+      end
+
+      Parallel.each(listeners, in_processes: number) do |listener|
+        item = "[Item##{listener}]"
+        Log.warn "#{item}, Worker : #{Parallel.worker_number + 1} / #{number}"
       end
     end
   end

@@ -15,9 +15,6 @@ services:
 
   rabbit:
     image: rabbitmq:alpine
-    ports:
-      - 5672
-      - 15672:15672
 
   janus:
     build:

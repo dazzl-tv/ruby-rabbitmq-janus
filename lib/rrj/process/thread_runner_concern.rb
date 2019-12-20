@@ -8,6 +8,8 @@ module RubyRabbitmqJanus
       # Module injected in Concurrencies classes.
       #
       # Manage threads for public/admin queue to rabbitmq.
+      #
+      # :reek:ModuleInitialize
       module ThreadRunnerConcern
         extend ActiveSupport::Concern
 

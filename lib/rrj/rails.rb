@@ -26,7 +26,7 @@ module RubyRabbitmqJanus
       admin_actions = RubyRabbitmqJanus::ActionAdminEvents.new.actions
 
       listeners = []
-      (1..number).each do |ind|
+      (1..number).each do
         listeners.push process::Event.new.run(&actions)
         listeners.push process::EventAdmin.new.run(&admin_actions)
       end

@@ -48,8 +48,12 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     let(:janus) { FactoryBot.create(:janus_instance, janus_id) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
-    it { expect(janus.session).to be_nil }
+    it { expect(janus.session).to be_a(Integer) }
+    it { expect(janus.session).to eq(janus.session_id) }
     it { expect(janus.enable).to be_a(TrueClass) }
+    it { expect(janus.name).to be_a(String) }
+    it { expect(janus.name).to eq(janus.title) }
+    it { expect(janus.id).to eq(janus.instance) }
     it { expect(janus.enable).to eq(true) }
   end
 
@@ -57,8 +61,12 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     let(:janus) { FactoryBot.create(:janus_instance, enable: false) }
 
     it { expect(janus.valid?).to be_a(TrueClass) }
-    it { expect(janus.session).to be_nil }
+    it { expect(janus.session).to be_a(Integer) }
+    it { expect(janus.session).to eq(janus.session_id) }
     it { expect(janus.enable).to be_a(FalseClass) }
+    it { expect(janus.name).to be_a(String) }
+    it { expect(janus.name).to eq(janus.title) }
+    it { expect(janus.id).to eq(janus.instance) }
     it { expect(janus.enable).to eq(false) }
   end
 end

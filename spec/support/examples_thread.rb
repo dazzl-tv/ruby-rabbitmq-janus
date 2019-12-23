@@ -14,8 +14,8 @@ shared_examples 'when thread listen queue' do
 
   it { expect(concurrency.send(:name_publisher)).to be_a(Symbol) }
   it { expect(concurrency.send(:name_publisher)).to eql(publish_name) }
-it { expect(action).not_to be(nil) }
-it { expect { concurrency.run(&action) }.not_to raise_error(exception_runner) }
+  it { expect(action).not_to be(nil) }
+  it { expect { concurrency.run(&action) }.not_to raise_error(exception_runner) }
   it { expect { concurrency.run }.to raise_error(exception_runner) }
 
   it do

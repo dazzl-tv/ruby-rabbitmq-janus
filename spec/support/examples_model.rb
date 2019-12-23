@@ -3,25 +3,25 @@
 RSpec.shared_examples 'when disable an instance' do
   before { session_id }
 
-  it { expect { model.disable(session_id) }.to change{ model.find_by_session(session_id).reload.enable }.from(true).to(false) }
+  it { expect { model.disable(session_id) }.to change { model.find_by_session(session_id).reload.enable }.from(true).to(false) }
 end
 
 RSpec.shared_examples 'when disable an instance not change' do
   before { session_id }
 
-  it { expect { model.disable(session_id) }.to_not change{ model.find_by_session(session_id).reload.enable }.from(false) }
+  it { expect { model.disable(session_id) }.not_to change { model.find_by_session(session_id).reload.enable }.from(false) }
 end
 
 RSpec.shared_examples 'when enable an instance not change' do
   before { session_id }
 
-  it { expect { model.enable(session_id) }.to_not change{ model.find_by_session(session_id).reload.enable }.from(true) }
+  it { expect { model.enable(session_id) }.not_to change { model.find_by_session(session_id).reload.enable }.from(true) }
 end
 
 RSpec.shared_examples 'when enable an instance' do
   before { session_id }
 
-  it { expect { model.enable(session_id) }.to change{ model.find_by_session(session_id).reload.enable }.from(false).to(true) }
+  it { expect { model.enable(session_id) }.to change { model.find_by_session(session_id).reload.enable }.from(false).to(true) }
 end
 
 RSpec.shared_examples 'when destroys all disable instance' do

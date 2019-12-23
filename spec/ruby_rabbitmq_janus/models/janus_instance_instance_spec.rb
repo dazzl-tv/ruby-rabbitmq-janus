@@ -15,7 +15,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   let(:session_id) { first.session_id }
   let(:id) { first.id }
 
-  context 'When Janus instances are activated.' do
+  context 'when Janus instances are activated.' do
     let(:instances) { FactoryBot.create_list(:janus_instance, size) }
     let(:count_enabled) { size }
     let(:count_destroyed) { 0 }
@@ -30,7 +30,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
     include_examples 'when search instance disabled'
   end
 
-  context 'When Janus instances are disabled.' do
+  context 'when Janus instances are disabled.' do
     let(:instances) { FactoryBot.create_list(:janus_instance, size, enable: false) }
     let(:count_enabled) { 0 }
     let(:count_destroyed) { size }

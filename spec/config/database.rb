@@ -16,6 +16,7 @@ def migrate
   ActiveRecord::Base.connection.create_table(:janus_instances) do |table|
     table.integer :session, limit: 8
     table.boolean :enable
+    table.string :name
   end
 end
 

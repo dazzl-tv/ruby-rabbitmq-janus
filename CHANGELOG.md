@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove useless error classes
 
 ### [Fixed]
+- Mark all message :ack in queue public & admin
 - Fix all spec
 - Admin request set_session_timeout
 

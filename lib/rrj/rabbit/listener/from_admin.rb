@@ -15,21 +15,8 @@ module RubyRabbitmqJanus
           rabbit.queue(Tools::Config.instance.queue_admin_from)
         end
 
-        def subscribe_queue
-          rabbit.prefetch(1)
-          reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
-            info_subscribe(info, prop, payload)
-            synchronize_response(info, payload)
-          end
-        end
-
-        def synchronize_response(info, payload)
-          lock.synchronize do
-            response = Janus::Responses::Admin.new(JSON.parse(payload))
-            rabbit.acknowledge(info.delivery_tag, false)
-            responses.push(response)
-          end
-          semaphore.signal
+        def response_class(payload)
+          Janus::Responses::Admin.new(JSON.parse(payload))
         end
       end
     end

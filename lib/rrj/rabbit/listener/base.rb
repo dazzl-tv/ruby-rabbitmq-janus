@@ -51,6 +51,23 @@ module RubyRabbitmqJanus
           raise Errors::Rabbit::Listener::ResponseEmpty, response \
             if response.to_hash.size.zero?
         end
+
+        def subscribe_queue
+          rabbit.prefetch(1)
+          reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
+            info_subscribe(info, prop, payload)
+            synchronize_response(info, payload)
+          end
+        end
+
+        def synchronize_response(info, payload)
+          lock.synchronize do
+            response = response_class(payload)
+            rabbit.acknowledge(info.delivery_tag, false)
+            responses.push(response)
+          end
+          semaphore.signal
+        end
       end
     end
   end

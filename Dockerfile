@@ -1,7 +1,4 @@
-ARG ALPINE=3.9
-ARG RUBY=2.6.5
-
-FROM ruby:${RUBY}-alpine${ALPINE}
+FROM ruby:2.6.4-alpine3.9
 
 LABEL author="jeremy.vaillant@dazzl.tv"
 LABEL description="Container for execute RSpec in travis CI."

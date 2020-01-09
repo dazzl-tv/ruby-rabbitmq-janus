@@ -36,7 +36,7 @@ module RubyRabbitmqJanus
         end
 
         def opts_subs
-          { block: false, manual_ack: true, arguments: { 'x-priority': 2 } }
+          { block: false, manual_ack: false, arguments: { 'x-priority': 2 } }
         end
 
         def info_subscribe(info, _prop, payload)
@@ -63,7 +63,7 @@ module RubyRabbitmqJanus
         def synchronize_response(info, payload)
           lock.synchronize do
             response = response_class(payload)
-            rabbit.acknowledge(info.delivery_tag, false)
+            # rabbit.acknowledge(info.delivery_tag, false)
             responses.push(response)
           end
           semaphore.signal

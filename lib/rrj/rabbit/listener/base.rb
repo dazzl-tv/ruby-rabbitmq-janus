@@ -56,14 +56,13 @@ module RubyRabbitmqJanus
           rabbit.prefetch(1)
           reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
             info_subscribe(info, prop, payload)
-            synchronize_response(info, payload)
+            synchronize_response(payload)
           end
         end
 
-        def synchronize_response(info, payload)
+        def synchronize_response(payload)
           lock.synchronize do
             response = response_class(payload)
-            # rabbit.acknowledge(info.delivery_tag, false)
             responses.push(response)
           end
           semaphore.signal

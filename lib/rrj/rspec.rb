@@ -13,16 +13,19 @@ module RubyRabbitmqJanus
       RubyRabbitmqJanus::Tools::Config.instance
     end
 
+    # @see RubyRabbitmqJanus::RRJ::session_endpoint_public
     def session_endpoint_public(_options)
       yield(RubyRabbitmqJanus::Janus::Transactions::RSpec.new)
     end
 
+    # @see RubyRabbitmqJanus::RRJ::session_endpoint_private
     def handle_endpoint_public(_options)
       transaction = RubyRabbitmqJanus::Janus::Transactions::RSpec.new
       yield(transaction)
       transaction.response
     end
 
+    # @see RubyRabbitmqJanus::RRJAdmin::admin_endpoint
     def admin_endpoint(_options)
       yield(RubyRabbitmqJanus::Janus::Transactions::RSpec.new)
     end

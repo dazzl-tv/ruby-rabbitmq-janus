@@ -27,6 +27,8 @@ module RubyRabbitmqJanus
         def initialize_thread
           @rabbit.transaction_long { transaction_running }
         rescue Interrupt
+          ::Log.warn "This process has been interupted #{self.class.name}"
+        ensure
           ::Log.warn \
             "Close a connection with RabbitMQ instance for #{self.class.name}"
           @rabbit.close

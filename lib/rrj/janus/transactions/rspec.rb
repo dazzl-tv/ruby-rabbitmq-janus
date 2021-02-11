@@ -4,6 +4,8 @@ module RubyRabbitmqJanus
   module Janus
     module Transactions
       # Transaction for RSpec initializer
+      # @!attribute [r] response
+      #     Given a Janus response
       class RSpec
         attr_reader :response
 

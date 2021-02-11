@@ -28,6 +28,7 @@ module RubyRabbitmqJanus
           end
         end
 
+        # Publish a message to "standard" RabbitMQ queue.
         def publish_message(type, options = {})
           msg = Janus::Messages::Standard.new(type, opts.merge!(options))
           response = read_response(publisher.publish(msg))

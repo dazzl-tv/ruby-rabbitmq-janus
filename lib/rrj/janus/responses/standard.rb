@@ -18,6 +18,7 @@ module RubyRabbitmqJanus
           data_id
         end
 
+          # Read value created by janus for session/handle message
         def sender
           raise_data
 

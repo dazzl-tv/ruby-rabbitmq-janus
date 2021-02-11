@@ -16,11 +16,13 @@ module RubyRabbitmqJanus
 
         source_root File.expand_path('templates', __dir__)
 
+        # Prepare files for migration.
         def install
           migration_template 'migration.rb',
                              'db/migrate/create_ruby_rabbitmq_janus_tables.rb'
         end
 
+        # Determines the version number of the next migration.
         def self.next_migration_number(dirname)
           ActiveRecord::Generators::Base.next_migration_number(dirname)
         end

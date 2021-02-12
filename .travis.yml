@@ -21,17 +21,19 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
+install:
+  - docker-compose build
+  - docker-compose up -d rabbit
+  - sleep 15
+  - docker-compose up -d janus janus_token
+
 script: skip
 
 jobs:
   include:
-    - stage: prepare
+    - stage: docker login
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker-compose build
-        - docker-compose up -d rabbit
-        - sleep 15
-        - docker-compose up -d janus janus_token
     ## Check with MongoDB
     #  ## RAILS 4
     - stage: test

@@ -18,7 +18,7 @@ shared_examples 'when thread listen queue' do
   it { expect { concurrency.run(&action) }.not_to raise_error(exception_runner) }
   it { expect { concurrency.run }.to raise_error(exception_runner) }
 
-  it do
+  it broken: true do
     ee = concurrency
 
     ee.run(&action)

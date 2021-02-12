@@ -56,7 +56,8 @@ module RubyRabbitmqJanus
       def bunny_conf_static
         {
           connection_timeout: 5,
-          connection_name: "[#{rand(999)}] backend"
+          connection_name: "[#{rand(999)}] backend",
+          recover_from_connection_close: false
         }
       end
     end

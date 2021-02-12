@@ -50,7 +50,14 @@ module RubyRabbitmqJanus
       private
 
       def bunny_conf
-        Tools::Config.instance.server_settings.merge(connection_timeout: 5)
+        Tools::Config.instance.server_settings.merge(bunny_conf_static)
+      end
+
+      def bunny_conf_static
+        {
+          connection_timeout: 5,
+          connection_name: "[#{rand(999)}] backend"
+        }
       end
     end
   end

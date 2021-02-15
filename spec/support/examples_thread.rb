@@ -10,7 +10,7 @@ end
 
 shared_examples 'when thread listen queue' do
   let(:action) { EventTest.new.actions }
-  let(:size) { (rand * 10).to_i }
+  let(:size) { rand(1..9) }
 
   it { expect(concurrency.send(:name_publisher)).to be_a(Symbol) }
   it { expect(concurrency.send(:name_publisher)).to eql(publish_name) }

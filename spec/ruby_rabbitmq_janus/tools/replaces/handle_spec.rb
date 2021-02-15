@@ -17,7 +17,7 @@ describe RubyRabbitmqJanus::Tools::Replaces::Handle, type: :tools,
     let(:opt_plugin) { 'janus.plugin.echotest' }
     let(:opt_candidates) do
       array = []
-      Random.rand(2..35).times { array.push('hdg': 'kjhdgf') }
+      Random.rand(2..35).times { array.push(hdg: 'kjhdgf') }
       array
     end
     let(:opt_sdp) { 'v=0\r\no=[..more sdp stuff..]' }

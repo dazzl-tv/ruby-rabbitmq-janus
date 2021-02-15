@@ -41,7 +41,6 @@ module RubyRabbitmqJanus
       # Choose type logger used in application instance
       def self.initialize_logger
         case @config.log_type
-        when :stdout  then logger_stdout
         when :file    then logger_file
         when :remote  then logger_remote
         else
@@ -51,7 +50,7 @@ module RubyRabbitmqJanus
 
       # Configure logger with output SDTOUT
       def self.logger_stdout
-        ::Logger.new(STDOUT)
+        ::Logger.new($stdout)
       end
 
       # Configure logger with output file

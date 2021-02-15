@@ -126,7 +126,7 @@ describe RubyRabbitmqJanus::Tools::Type, type: :tools,
     include_examples 'test convert type array', Array
   end
 
-  context 'when convert array with one data' do
+  context 'when convert array with one data type Hash' do
     let(:key) { 'candidates' }
     let(:value) { [{ one: 'data', and: 'smiley', cool: ':-)' }] }
     let(:value_hash) { value[0] }

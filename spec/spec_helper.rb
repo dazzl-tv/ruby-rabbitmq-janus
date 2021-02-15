@@ -53,13 +53,13 @@ Dir['spec/support/**/*.rb'].each do |f|
   require File.expand_path(f)
 end
 
-::Dir.glob(::File.expand_path('../support/**/*.rb', __FILE__)).each do |f|
+::Dir.glob(::File.expand_path('../support/**/*.rb', __dir__)).each do |f|
   require_relative f
 end
 
 RSpec.configure do |config|
   config.fail_fast = if ENV.key?('SPEC_DEBUG')
-                       (ENV['SPEC_DEBUG'].match?('true') ? true : false)
+                       ENV['SPEC_DEBUG'].match?('true')
                      else
                        false
                      end
@@ -106,7 +106,9 @@ RSpec.configure do |config|
 
   # Configure Initializer RRJ and create session with Janus Instance
   config.before do |example|
+    # rubocop:disable Performance/StringInclude
     after_load_database unless example.metadata[:type].match?(/tools/)
+    # rubocop:enable Performance/StringInclude
   end
 
   # Use timeout for requester

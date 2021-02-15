@@ -14,10 +14,10 @@ module RubyRabbitmqJanus
       end
 
       # Create an transaction with rabbitmq and close after response is received
-      def transaction_short
-        raise Errors::Rabbit::Connect::MissingAction unless block_given?
+      def transaction_short(&block)
+        raise Errors::Rabbit::Connect::MissingAction unless block
 
-        response = transaction_long { yield }
+        response = transaction_long(&block)
         close
         response
       end

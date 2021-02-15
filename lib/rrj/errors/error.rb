@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
 
       def write_error(message, level = :unknown)
         if defined?(::Log)
-          ::Log.send(level.class.eql?(Symbol) ? level : int_to_level(level),
+          ::Log.send(level.instance_of?(Symbol) ? level : int_to_level(level),
                      message)
         else
           p "#{level}, #{message}"

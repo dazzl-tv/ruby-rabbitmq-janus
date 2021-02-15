@@ -31,9 +31,12 @@ module RubyRabbitmqJanus
       # @param attributes [Array] List to attribute to delete in document
       #
       # @return [Hash] Current model
+      #
+      # rubocop:disable Style/HashTransformValues
       def unset(attributes)
         Hash[attributes.map { |key, _value| [key, nil] }]
       end
+      # rubocop:enable Style/HashTransformValues
     end
   end
 end

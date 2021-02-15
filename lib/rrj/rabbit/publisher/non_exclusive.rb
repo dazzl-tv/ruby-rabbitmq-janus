@@ -17,9 +17,12 @@ module RubyRabbitmqJanus
         # Send an message to queue
         #
         # @param [String] request JSON request sending to rabbitmq queue
+        #
+        # rubocop:disable Lint/UselessMethodDefinition
         def publish(request)
           super(request)
         end
+        # rubocop:enable Lint/UselessMethodDefinition
       end
     end
   end

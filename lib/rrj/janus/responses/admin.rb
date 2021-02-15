@@ -12,7 +12,8 @@ module RubyRabbitmqJanus
           read_data(__method__.to_s)
         end
 
-        # @return [Array] List of handles running in one session in Janus Instance.
+        # @return [Array] List of handles running
+        #   in one session in Janus Instance.
         def handles
           read_data(__method__.to_s)
         end
@@ -27,7 +28,8 @@ module RubyRabbitmqJanus
           read_data(__method__.to_s)
         end
 
-        # @return [Boolean] Information status to debug mode in Janus Intance on the fly.
+        # @return [Boolean] Information status to debug mode
+        #   in Janus Intance on the fly.
         def locking_debug
           read_data(__method__.to_s)
         end

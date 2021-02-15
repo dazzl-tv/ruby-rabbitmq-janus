@@ -14,7 +14,7 @@ describe RubyRabbitmqJanus::Janus::Responses::Response, type: :responses,
   context 'when ask nice json response' do
     let(:message) { { 'data' => { 'id' => (rand * 10_000).to_i } } }
 
-    it { expect(response.to_json).to be_kind_of(String) }
+    it { expect(response.to_nice_json).to be_kind_of(String) }
   end
 
   context 'when ask hash response' do

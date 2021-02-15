@@ -19,7 +19,7 @@ describe RubyRabbitmqJanus::Tools::Replaces::Admin, type: :tools,
     let(:opt_debug) { true }
     let(:opt_candidates) do
       array = []
-      Random.rand(2..35).times { array.push('hdg': 'kjhdgf') }
+      Random.rand(2..35).times { array.push(hdg: 'kjhdgf') }
       array
     end
     let(:opt_sdp) { 'v=0\r\no=[..more sdp stuff..]' }
@@ -80,7 +80,7 @@ describe RubyRabbitmqJanus::Tools::Replaces::Admin, type: :tools,
       include_examples 'test replace in request', 'level', Integer
     end
 
-    context 'with transform request transaction' do
+    context 'with transform request admin secret' do
       include_examples 'test replace in request nil', 'admin_secret'
     end
   end

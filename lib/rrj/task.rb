@@ -9,10 +9,12 @@ module RubyRabbitmqJanus
   #
   # This class is used with rake task.
   class RRJTask < RRJ
+    # rubocop:disable Lint/MissingSuper
     def initialize
       Tools::Config.instance
       Tools::Requests.instance
     end
+    # rubocop:enable Lint/MissingSuper
 
     # Create a transaction between Apps and Janus in queue private
     #

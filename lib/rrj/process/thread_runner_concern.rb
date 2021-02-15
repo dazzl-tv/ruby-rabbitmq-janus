@@ -31,7 +31,7 @@ module RubyRabbitmqJanus
           #
           # @return [Thread] It's a thread who listen queue and execute action
           def run(&block)
-            raise_nil_block unless block_given?
+            raise_nil_block unless block
 
             @thread.join
             Thread.new do

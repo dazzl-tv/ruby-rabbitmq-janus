@@ -32,9 +32,9 @@ module RubyRabbitmqJanus
       def each_folder(subfolder)
         Dir[File.join(PATH_REQUEST + subfolder, '*')].count do |file|
           if File.file?(file)
-            read_folder(subfolder.gsub('/', '::') + '::', file)
+            read_folder("#{subfolder.gsub('/', '::')}::", file)
           elsif File.directory?(file)
-            each_folder(subfolder + '/' + File.basename(file))
+            each_folder("#{subfolder}/#{File.basename(file)}")
           end
         end
       end

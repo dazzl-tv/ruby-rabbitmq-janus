@@ -70,11 +70,13 @@ module RubyRabbitmqJanus
           @handle = send_a_message_exclusive { msg }
         end
 
+        # rubocop:disable Style/ExplicitBlockArgument
         def send_a_message_exclusive
           Janus::Responses::Standard.new(read_response_exclusive do
             yield
           end).sender
         end
+        # rubocop:enable Style/ExplicitBlockArgument
 
         def read_response_exclusive
           chan = rabbit.channel

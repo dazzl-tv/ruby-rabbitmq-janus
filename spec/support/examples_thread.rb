@@ -18,12 +18,12 @@ shared_examples 'when thread listen queue' do
   it { expect { concurrency.run(&action) }.not_to raise_error(exception_runner) }
   it { expect { concurrency.run }.to raise_error(exception_runner) }
 
-  # it 'check name listener' do
-  #   ee = concurrency
+  it 'check name listener' do
+    ee = concurrency
 
-  #   ee.run(&action)
-  #   expect(ee.send(:publisher)).to be_a(listener)
-  # end
+    ee.run(&action)
+    expect(ee.send(:publisher)).to be_a(listener)
+  end
 
   it 'Numbers of thread' do
     (1..size).each { concurrency.run(&action) }

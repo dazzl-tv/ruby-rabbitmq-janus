@@ -28,9 +28,9 @@ module RubyRabbitmqJanus
           @rabbit.transaction_long { transaction_running }
         rescue Interrupt
           ::Log.warn "This process has been interupted #{class_name}"
-          close
-        else
-          close
+          ::Log.warn \
+            "Close a connection with RabbitMQ instance for #{class_name}"
+          @rabbit.close
         end
 
         def info_thread
@@ -39,12 +39,6 @@ module RubyRabbitmqJanus
 
         def class_name
           self.class.name
-        end
-
-        def close
-          ::Log.warn \
-            "Close a connection with RabbitMQ instance for #{class_name}"
-          @rabbit.close
         end
       end
     end

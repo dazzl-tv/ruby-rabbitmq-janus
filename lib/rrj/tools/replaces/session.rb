@@ -19,14 +19,10 @@ module RubyRabbitmqJanus
 
         def replace_session
           request['session_id'] = type.convert('session_id', opts)
-        rescue => exception
-          ::Log.warn "Error session replace : #{exception}"
         end
 
         def replace_plugin
           request['plugin'] = type.convert('plugin')
-        rescue => exception
-          ::Log.warn "Error plugin replace : #{exception}"
         end
       end
     end

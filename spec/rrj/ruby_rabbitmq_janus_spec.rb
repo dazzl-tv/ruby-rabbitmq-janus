@@ -27,7 +27,7 @@ describe RubyRabbitmqJanus, type: :config, name: :describe do
     it_behaves_like 'constant is', Array
   end
 
-  context 'with a license' do
+  context 'with a license', type: :aruba do
     let(:data) { RubyRabbitmqJanus::LICENSE }
     let(:licence) { '../../LICENSE' }
 

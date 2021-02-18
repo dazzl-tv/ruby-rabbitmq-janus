@@ -9,16 +9,6 @@ module RubyRabbitmqJanus
   #
   # Used wit sidekiq/console/CI execution for admin queue in Janus gateway
   class RRJTaskAdmin < RRJTask
-    # Create a transaction between apps and Janus
-    #
-    # @deprecated Use {#admin_endpoint} instead.
-    def start_transaction_admin(options = {})
-      transaction = Janus::Transactions::Admin.new(options)
-      transaction.connect { yield(transaction) }
-    rescue
-      raise Errors::RRJAdmin::StartTransactionAdmin, options
-    end
-
     # Create a transaction between Apps and Janus
     #
     # This transaction is sending to admin/monitor API.

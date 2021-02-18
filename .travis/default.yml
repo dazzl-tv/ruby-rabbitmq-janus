@@ -7,8 +7,7 @@ rabbit:
   user: guest
   pass: guest
   admin_pass: janusoverlord
-  level: info
-  test: false
+  level: error
 
 queues:
   standard:
@@ -17,7 +16,6 @@ queues:
   admin:
     from: from-janus-admin
     to: to-janus-admin
-  instance: janus-instance-thread
 
 janus:
   session:
@@ -29,9 +27,9 @@ janus:
 
 gem:
   cluster:
-    enabled: false
+    enabled: true
   log:
-    level: debug
+    level: info
     type: stdout
     option: ''
   listener:

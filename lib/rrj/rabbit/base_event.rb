@@ -10,9 +10,9 @@ module RubyRabbitmqJanus
     # # Parent class for all publisher
     # This element send and read a message in rabbitmq Queue
     #
-    # @!attribute [r] response
+    # @!attribute [r] responses
     #   @return [RubyRabbitmqJanus::Janus::Responses::Response]
-    #     Given a Janus response
+    #     Given an array of Janus response
     #
     # @abstract Publish message in RabbitMQ
     class BaseEvent
@@ -23,8 +23,6 @@ module RubyRabbitmqJanus
         @responses = []
         @semaphore = Semaphore.new
         @lock = Mutex.new
-      rescue
-        raise Errors::Rabbit::BaseEvent::Initialize
       end
 
       private

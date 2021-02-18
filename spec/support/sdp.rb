@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Fake example SDP Offer/Answer
+
 SDP_OFFER = <<~SDP
   v=0
   o=- 7041456084360858977 2 IN IP4 127.0.0.1

@@ -4,32 +4,77 @@ module RubyRabbitmqJanus
   module Janus
     module Responses
       # Response for admin request
+      #
+      # @see Example request response https://janus.conf.meetecho.com/docs/admin.html
       class Admin < Standard
-        # List of sessions running in Janus Instance.
-        #
-        # @return [Array] List of sessions
+        # @return [Array] List of sessions running in Janus Instance.
         def sessions
-          request['sessions']
-        rescue
-          raise Errors::Janus::ResponseAdmin::Sessions
+          read_data(__method__.to_s)
         end
 
-        # List of handles running in one session in Janus Instance.
-        #
-        # @return [Array] List of handles
+        # @return [Array] List of handles running
+        #   in one session in Janus Instance.
         def handles
-          request['handles']
-        rescue
-          raise Errors::Janus::ResponseAdmin::Handles
+          read_data(__method__.to_s)
         end
 
-        # Info to session or handle in Janus Instance
-        #
-        # @return [Hash] Information to session/handle
+        # @return [Hash] Information to session/handle in Janus Instance.
         def info
-          request['info']
-        rescue
-          raise Errors::Janus::ResponseAdmin::Info
+          read_data(__method__.to_s)
+        end
+
+        # @return [Boolean] Information status to debug  mode for libnice.
+        def libnice_debug
+          read_data(__method__.to_s)
+        end
+
+        # @return [Boolean] Information status to debug mode
+        #   in Janus Intance on the fly.
+        def locking_debug
+          read_data(__method__.to_s)
+        end
+
+        # @return [Boolean] Information about color in log messages.
+        def log_colors
+          read_data(__method__.to_s)
+        end
+
+        # @return [Integer] Level to debug mode to Janus Instance.
+        def level
+          read_data(__method__.to_s)
+        end
+
+        # @return [Boolean] Status to timestampping for log messages.
+        def log_timestamps
+          read_data(__method__.to_s)
+        end
+
+        # @return [Integer] Level to max nack queue configured.
+        def max_nack_queue
+          read_data(__method__.to_s)
+        end
+
+        # @return [Integer] No-media timer property.
+        def no_media_timer
+          read_data(__method__.to_s)
+        end
+
+        # @return [Integer] Timeout for session.
+        def timeout
+          read_data(__method__.to_s)
+        end
+
+        private
+
+        def read_data(key)
+          raise build_exception(key) unless key?(key)
+
+          request[key]
+        end
+
+        def build_exception(key)
+          "RubyRabbitmqJanus::Errors::Janus::Responses::Admin::#{key.camelize}"
+            .constantize
         end
       end
     end

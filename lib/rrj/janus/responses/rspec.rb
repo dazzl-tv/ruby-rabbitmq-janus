@@ -7,6 +7,8 @@ module RubyRabbitmqJanus
     module Responses
       # Response for RSpec initializer
       class RSpec
+        # Constructor to RSpec response.
+        # Create a fake response for testing library.
         def initialize(type)
           path = RubyRabbitmqJanus::Tools::Config.instance.rspec_response
           @json = File.join(Dir.pwd,

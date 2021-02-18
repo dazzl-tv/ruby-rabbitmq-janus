@@ -2,5 +2,6 @@
   "janus": "allow_token",
   "token": "<string>",
   "transaction": "<transaction>",
-  "admin_secret": "<string>"
+  "admin_secret": "<string>",
+  "plugins": "<plugins>"
 }

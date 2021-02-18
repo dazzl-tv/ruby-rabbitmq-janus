@@ -9,15 +9,11 @@ module RubyRabbitmqJanus
       class Admin < Message
         def initialize(template_request, options = {})
           super(template_request, options)
-        rescue
-          raise Errors::Janus::MessageAdmin::Initializer
         end
 
         # Return options to message for rabbitmq
         def options
-          properties.options_admin(type)
-        rescue
-          raise Errors::Janus::MessageAdmin::Options
+          properties.options_admin
         end
 
         private

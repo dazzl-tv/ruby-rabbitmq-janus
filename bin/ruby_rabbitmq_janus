@@ -13,7 +13,7 @@
 # for writing in another logger instead rails logs.
 
 require 'rrj/tools/bin/config'
-require 'rrj/tools/gem/log'
+require 'rrj/tools/gem/logger'
 
 Log = RubyRabbitmqJanus::Tools::Logger.create
 RubyRabbitmqJanus::Tools::Logger.start

@@ -12,18 +12,23 @@ module RubyRabbitmqJanus
       # @param [String] message Text returning in raise
       # @param [Symbol] level Important to error
       def initialize(message, level)
-        super(message)
         write_error(message, level)
+        super(message)
       end
 
       private
 
-      def write_error(message, level)
+      def write_error(message, level = :unknown)
         if defined?(::Log)
-          ::Log.add(level, message)
+          ::Log.send(level.instance_of?(Symbol) ? level : int_to_level(level),
+                     message)
         else
           p "#{level}, #{message}"
         end
+      end
+
+      def int_to_level(sym_level)
+        %I[debug info warn error fatal unknown].index(sym_level)
       end
     end
   end
@@ -31,6 +36,7 @@ end
 
 require 'rrj/errors/base/base'
 require 'rrj/errors/janus/janus'
-require 'rrj/errors/process/concurency'
+require 'rrj/errors/process/event'
+require 'rrj/errors/process/event_admin'
 require 'rrj/errors/tools/tools'
 require 'rrj/errors/rabbit/rabbit'

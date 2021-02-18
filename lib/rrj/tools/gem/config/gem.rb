@@ -12,7 +12,7 @@ module RubyRabbitmqJanus
     module ConfigGem
       # @return [Boolean] Read option file for a janus cluster section
       def cluster
-        @options['gem']['cluster']['enabled'].to_s.match?('true') ? true : false
+        @options['gem']['cluster']['enabled'].to_s.match?('true')
       end
 
       # @return [Symbol] read configuration for log level used in this gem

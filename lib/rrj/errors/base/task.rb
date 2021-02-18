@@ -20,7 +20,7 @@ module RubyRabbitmqJanus
         end
       end
 
-      # Error for RRJTask#start_transaction_handle
+      # Error for RRJTask#handle_endpoint_public
       class StartTransactionHandle < BaseRRJTask
         def initialize(exclu, opts)
           super '[Task] Transaction admin failed with -- ' \

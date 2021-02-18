@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Tools::Replaces::Session, type: :tools, name: :replace_session do
+describe RubyRabbitmqJanus::Tools::Replaces::Session, type: :tools,
+                                                      name: :replace do
   subject(:replace) do
     # Get request JSON file
     rqe = RubyRabbitmqJanus::Tools::Requests.instance.requests['test::replace']
@@ -21,45 +22,45 @@ describe RubyRabbitmqJanus::Tools::Replaces::Session, type: :tools, name: :repla
       }
     end
 
-    context 'with ransform request' do
+    context 'with transform request' do
       it { expect(replace.transform_request).to be_kind_of(Hash) }
     end
 
-    context 'with ransform request session_id' do
+    context 'with transform request session_id' do
       include_examples 'test replace in request', 'session_id', Integer
     end
 
-    context 'with ransform request transaction' do
+    context 'with transform request transaction' do
       include_examples 'test replace in request nil', 'transaction'
     end
 
-    context 'with ransform request handle_id' do
+    context 'with transform request handle_id' do
       include_examples 'test replace in request nil', 'handle_id'
     end
 
-    context 'with ransform request plugin' do
+    context 'with transform request plugin' do
       include_examples 'test replace in request', 'plugin', String
     end
 
-    context 'with ransform request candidates' do
+    context 'with transform request candidates' do
       include_examples 'test replace in request nil', 'candidates'
     end
 
-    context 'with ransform request audio' do
+    context 'with transform request audio' do
       include_examples 'test replace in request nil', 'audio'
     end
 
-    context 'with ransform request sdp' do
+    context 'with transform request sdp' do
       let(:key) { 'jsep' }
 
       include_examples 'test replace in request nil', 'sdp'
     end
 
-    context 'with ransform request debug' do
+    context 'with transform request debug' do
       include_examples 'test replace in request nil', 'debug'
     end
 
-    context 'with ransform request level' do
+    context 'with transform request level' do
       include_examples 'test replace in request nil', 'level'
     end
   end

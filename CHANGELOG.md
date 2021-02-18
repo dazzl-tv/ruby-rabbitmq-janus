@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [3.0.0] - 2019-12-12
+### [Deleted]
+- Remove deprecated methods
+- Remove useless error classes
+
+### [Fixed]
+- Mark all message :ack in queue public & admin
+- Fix all spec
+- Admin request set_session_timeout
+
+### [Add]
+- Add error class for event/event_admin process
+- Errors when no block given in transaction
+- Errors when rabbitmq config is not complete
+- Add timeout for transaction
+- Add timeout connection to RabbitMQ
+- Add default level to error message
+- Exception for Janus errors
+- Read admin queue and interpret response
+- SimpleCov (Code coverage for Ruby)
+
 ## [2.7.2] - 2019-10-23
 ### [Deleted]
 - Remove useless private method

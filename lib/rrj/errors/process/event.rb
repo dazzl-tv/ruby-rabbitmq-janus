@@ -3,25 +3,16 @@
 module RubyRabbitmqJanus
   module Errors
     module Process
-      # Define a super class for all error in Process::Concurency::Event class
-      class BaseEvent < RubyRabbitmqJanus::Errors::Process::BaseConcurency
-        def initialize(message)
-          super "[Event] #{message}"
-        end
-      end
-
       module Event
-        # Error for Process::Concurency::Event#initialize
-        class Initializer < RubyRabbitmqJanus::Errors::Process::BaseEvent
-          def initializer
-            super 'Error Event initializer'
+        class Base < RubyRabbitmqJanus::Errors::RRJError
+          def initialize(klass, message, level = :warn)
+            super "[Concurrency][#{klass}] #{message}", level
           end
         end
 
-        # Error for Process::Concurency::Event#run
-        class Run < RubyRabbitmqJanus::Errors::Process::BaseEvent
-          def initializer
-            super 'Error running block code'
+        class Run < Base
+          def initialize
+            super 'Event', 'Failed start thread listener public queue !'
           end
         end
       end

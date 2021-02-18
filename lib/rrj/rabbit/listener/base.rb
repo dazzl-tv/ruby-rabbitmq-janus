@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# :reek:TooManyStatements
+# :reek:NilCheck
 
 module RubyRabbitmqJanus
   module Rabbit
@@ -14,8 +14,6 @@ module RubyRabbitmqJanus
           super()
           @rabbit = rabbit.channel
           subscribe_queue
-        rescue
-          raise Errors::Rabbit::Listener::Base::Initialize
         end
 
         # Listen a queue and return a body response
@@ -24,10 +22,9 @@ module RubyRabbitmqJanus
           response = nil
           lock.synchronize do
             response = responses.shift
+            check(response)
           end
           yield response.event, response
-        rescue
-          raise Errors::Rabbit::Listener::Base::ListenEvents
         end
 
         private
@@ -39,13 +36,36 @@ module RubyRabbitmqJanus
         end
 
         def opts_subs
-          { block: false, manual_ack: true, arguments: { 'x-priority': 2 } }
+          { block: false, manual_ack: false, arguments: { 'x-priority': 2 } }
         end
 
         def info_subscribe(info, _prop, payload)
           ::Log.debug info
-          ::Log.info '[X] Message reading'
+          ::Log.debug '[X] Message reading'
           ::Log.info payload
+        end
+
+        def check(response)
+          raise Errors::Rabbit::Listener::ResponseNil, response \
+            if response.nil?
+          raise Errors::Rabbit::Listener::ResponseEmpty, response \
+            if response.to_hash.size.zero?
+        end
+
+        def subscribe_queue
+          rabbit.prefetch(1)
+          reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
+            info_subscribe(info, prop, payload)
+            synchronize_response(payload)
+          end
+        end
+
+        def synchronize_response(payload)
+          lock.synchronize do
+            response = response_class(payload)
+            responses.push(response)
+          end
+          semaphore.signal
         end
       end
     end

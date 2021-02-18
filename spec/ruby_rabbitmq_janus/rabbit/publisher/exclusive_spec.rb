@@ -2,9 +2,10 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
-                                               name: :exclusive do
-  let(:publish) { RubyRabbitmqJanus::Rabbit::Publisher::Exclusive.new }
+describe RubyRabbitmqJanus::Rabbit::Publisher::Exclusive, type: :rabbit,
+                                                          broken: true,
+                                                          name: :exclusive do
+  let(:publish) { described_class.new }
 
   # @todo Complete Publisher exclusive test
   describe 'Exclusive' do

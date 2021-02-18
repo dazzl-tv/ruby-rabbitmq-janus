@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'timeout'
+
 module RubyRabbitmqJanus
   module Rabbit
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
@@ -8,47 +10,64 @@ module RubyRabbitmqJanus
     class Connect
       # Initialize connection to server RabbitMQ
       def initialize
-        @rabbit = Bunny.new(Tools::Config.instance.server_settings)
-      rescue => exception
-        raise Errors::Rabbit::Connect::Initialize, exception
+        @rabbit = Bunny.new(bunny_conf)
       end
 
       # Create an transaction with rabbitmq and close after response is received
-      def transaction_short
-        response = transaction_long { yield }
+      def transaction_short(&block)
+        raise Errors::Rabbit::Connect::MissingAction unless block
+
+        response = nil
+
+        Timeout.timeout(5) do
+          response = transaction_long(&block)
+        end
+      rescue Timeout::Error
+        ::Log.error 'The "Short transaction" have raised Timeout exception.'
+      ensure
         close
         response
-      rescue => exception
-        raise Errors::Rabbit::Connect::TransactionShort, exception
       end
 
       # Create an transaction with rabbitmq and not close
       def transaction_long
-        start
-        yield
-      rescue => exception
-        raise Errors::Rabbit::Connect::TransactionLong, exception
+        raise Errors::Rabbit::Connect::MissingAction unless block_given?
+
+        Timeout.timeout(10) do
+          start
+          yield
+        end
+      rescue Timeout::Error
+        ::Log.error 'The "Long transaction" have raised Timeout exception.'
       end
 
       # Opening a connection with RabbitMQ
       def start
         @rabbit.start
-      rescue => exception
-        raise Errors::Rabbit::Connect::Start, exception
       end
 
       # Close connection to server RabbitMQ
       def close
         @rabbit.close
-      rescue => exception
-        raise Errors::Rabbit::Connect::Close, exception
       end
 
       # Create an channel
       def channel
         @rabbit.create_channel
-      rescue => exception
-        raise Errors::Rabbit::Connect::Channel, exception
+      end
+
+      private
+
+      def bunny_conf
+        Tools::Config.instance.server_settings.merge(bunny_conf_static)
+      end
+
+      def bunny_conf_static
+        {
+          connection_timeout: 5,
+          connection_name: "[#{rand(999)}] backend",
+          recover_from_connection_close: false
+        }
       end
     end
   end

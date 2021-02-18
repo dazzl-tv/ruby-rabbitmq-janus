@@ -4,13 +4,13 @@
 class EventTest
   def actions
     lambda do |reason, payload|
-      RubyRabbitmqJanus::Tools::Log.instance.info "Reason : #{reason}"
-      RubyRabbitmqJanus::Tools::Log.instance.info "Payload : #{payload}"
+      ::Log.info "Reason : #{reason}"
+      ::Log.info "Payload : #{payload}"
     end
   end
 end
 
 # Initialize listener
-actions = EventTest.new.actions
-@event = RubyRabbitmqJanus::Process::Concurrencies::Event.new
-@event.run(&actions)
+# actions = EventTest.new.actions
+# @event = RubyRabbitmqJanus::Process::Concurrencies::Event.new
+# @event.run(&actions)

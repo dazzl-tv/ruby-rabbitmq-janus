@@ -11,5 +11,6 @@
   "sdp": "<string>",
   "debug": "<boolean>",
   "level": "<integer>",
-  "admin_secret": "<string>"
+  "admin_secret": "<string>",
+  "plugins": "<plugins>"
 }

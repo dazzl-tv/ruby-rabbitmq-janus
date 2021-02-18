@@ -9,13 +9,12 @@ services:
       - rabbit
       - mongo
     volumes:
+      - ./lib/rrj/:/ruby_rabbitmq_janus/lib/rrj
       - ./spec/:/ruby_rabbitmq_janus/spec
+      - ./tmp/:/ruby_rabbitmq_janus/tmp
 
   rabbit:
-    image: rabbitmq
-    ports:
-      - 5672
-      - 15672:15672
+    image: rabbitmq:alpine
 
   janus:
     build:
@@ -35,3 +34,5 @@ services:
 
   mongo:
     image: mongo
+    ports:
+      - 5555:27017

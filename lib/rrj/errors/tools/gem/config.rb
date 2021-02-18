@@ -56,12 +56,6 @@ module RubyRabbitmqJanus
           end
         end
 
-        class RabbitTester < RubyRabbitmqJanus::Errors::Tools::BaseConfig
-          def initialize
-            super '[RabbitTester] Error for reading option rabbitmq tester', :warn
-          end
-        end
-
         class AdminPassword < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super '[AdminPassword] Error for reading option admin password', :warn
@@ -113,6 +107,12 @@ module RubyRabbitmqJanus
         class ProgramName < RubyRabbitmqJanus::Errors::Tools::BaseConfig
           def initialize
             super '[ProgramName] Error with ProgramName option', :fatal
+          end
+        end
+
+        class Rabbitmq < RubyRabbitmqJanus::Errors::Tools::BaseConfig
+          def initialize(value)
+            super "[RabbitMQConfig] Missing RabbitMQ configuration for key : #{value}", :fatal
           end
         end
       end

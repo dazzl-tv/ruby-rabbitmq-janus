@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Rabbit::Listener::From, type: :rabbit,
+                                                    broken: true,
                                                     name: :listener do
   let(:publish) do
     rabbit = RubyRabbitmqJanus::Rabbit::Connect.new.rabbit

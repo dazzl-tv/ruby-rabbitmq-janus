@@ -13,9 +13,10 @@ module RubyRabbitmqJanus
         #
         # @return [String] result to request
         def event
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Event::Event \
+            unless key?('janus')
+
           request['janus']
-        rescue
-          raise Errors::Janus::ResponseEvent::Event
         end
 
         # Read plugindata data
@@ -25,9 +26,10 @@ module RubyRabbitmqJanus
         #
         # @return [Hash] body data
         def data
-          request['plugindata']['data'] if plugin_response?
-        rescue
-          raise Errors::Janus::ResponseEvent::Data
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Event::Data \
+            unless plugin_response?
+
+          request['plugindata']['data']
         end
 
         # Read jsep data
@@ -37,9 +39,10 @@ module RubyRabbitmqJanus
         #
         # @return [Hash] jsep data
         def jsep
-          request['jsep'] if contains_jsep?
-        rescue
-          raise Errors::Janus::ResponseEvent::Jsep
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Event::Jsep \
+            unless key?('jsep')
+
+          request['jsep']
         end
 
         # session_id and handle_id
@@ -49,16 +52,13 @@ module RubyRabbitmqJanus
         #
         # @return [Array] Contains session_id and handle_id
         def keys
+          raise RubyRabbitmqJanus::Errors::Janus::Responses::Event::Keys \
+            unless key?('session_id') && key?('sender')
+
           [request['session_id'], request['sender']]
-        rescue
-          raise Errors::Janus::ResponseEvent::Keys
         end
 
         private
-
-        def contains_jsep?
-          request.key?('jsep')
-        end
 
         def plugin_response?
           request.key?('plugindata') && request['plugindata'].key?('data')

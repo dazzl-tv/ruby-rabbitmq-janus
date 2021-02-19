@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "janus": { "type": "string", "pattern": "success" },
+    "transaction": { "type":  "string" },
+    "no_media_timer": { "type": "Integer" }
+  },
+  "required": [
+    "janus",
+    "transaction",
+    "no_media_timer"
+  ]
+}

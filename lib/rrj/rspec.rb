@@ -9,31 +9,30 @@ module RubyRabbitmqJanus
   #
   # Initializer to use with RSpec execution
   class RRJRSpec < RRJTaskAdmin
+    # rubocop:disable Lint/MissingSuper
     def initialize
       RubyRabbitmqJanus::Tools::Config.instance
     end
+    # rubocop:enable Lint/MissingSuper
 
-    # @deprecated
-    def start_transaction(_exclusive, _options)
+    # @see RubyRabbitmqJanus::RRJ::session_endpoint_public
+    def session_endpoint_public(_options)
       yield(RubyRabbitmqJanus::Janus::Transactions::RSpec.new)
     end
 
-    # @deprecated
-    def start_transaction_handle(_exclusive, _options)
+    # @see RubyRabbitmqJanus::RRJ::session_endpoint_private
+    def handle_endpoint_public(_options)
       transaction = RubyRabbitmqJanus::Janus::Transactions::RSpec.new
       yield(transaction)
       transaction.response
     end
 
-    # @deprecated
-    def start_transaction_admin(_options)
+    # @see RubyRabbitmqJanus::RRJAdmin::admin_endpoint
+    def admin_endpoint(_options)
       yield(RubyRabbitmqJanus::Janus::Transactions::RSpec.new)
     end
 
-    alias session_endpoint_public    start_transaction
-    alias session_endpoint_private   start_transaction
-    alias handle_endpoint_public     start_transaction_handle
-    alias handle_endpoint_private    start_transaction_handle
-    alias admin_endpoint             start_transaction_admin
+    alias session_endpoint_private   session_endpoint_public
+    alias handle_endpoint_private    handle_endpoint_public
   end
 end

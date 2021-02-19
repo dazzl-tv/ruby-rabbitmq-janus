@@ -16,6 +16,7 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
 
 * [How to use](#how-to-use)
   * [Installation](#installation)
+  * [Requirements](#requirements)
   * [Configuration](#configuration)
     * [Janus](#janus)
     * [Generators](#generators)
@@ -61,6 +62,11 @@ Install basic configuration :
 ```linux
 rails g ruby_rabbitmq_janus:install
 ```
+
+### Requirements
+
+* Janus Gateway : minimum version `0.7.4` [Source Code](https://github.com/meetecho/janus-gateway) - [Documentation](https://janus.conf.meetecho.com/docs/)
+* RabbitMQ server
 
 ### Configuration
 
@@ -118,7 +124,7 @@ require 'ruby_rabbitmq_janus'
 t = RubyRabbitmqJanus::RRJ.new
 
 # Ask info Janus Instance
-t.start_transaction do |transaction|
+t.session_endpoint_public do |transaction|
   transaction.publish_message('base::info')
 end
 
@@ -127,6 +133,8 @@ end
 
 #### Admin Request
 
+__NOTE: The request authentication `HMAC-Signed token authentication` is not available.__
+
 ```ruby
 require 'ruby_rabbitmq_janus'
 
@@ -134,8 +142,9 @@ require 'ruby_rabbitmq_janus'
 t = RubyRabbitmqJanus::RRJAdmin.new
 
 # Ask info sessions in Janus Instance
-t.start_transaction_admin do |transaction|
-  transaction.publish_message('admin::sessions')
+options = { instance: 42 }
+t.admin_endpoint(options) do |transaction|
+  transaction.publish_message('admin::sessions', options)
 end
 
 => @request={"janus"=>"success" ... "sessions"=>[123, 456, 789]}
@@ -153,6 +162,18 @@ actions = RubyRabbitmqJanus::ActionEvents.new.action
 RubyRabbitmqJanus::Janus::Concurrencies::Event.new.run(@actions)
 ```
 
+#### Listen Janus Admin Event
+
+```ruby
+require 'ruby_rabbitmq_janus'
+
+# Create a class in your Rails application
+actions = RubyRabbitmqJanus::ActionAdminEvents.new.action
+
+# Initialize a thread for listen public admin queue and send class to thread
+RubyRabbitmqJanus::Janus::Concurrencies::EventAdmin.new.run(@actions)
+```
+
 ## Upgrade
 
 For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
@@ -161,43 +182,74 @@ For upgrade your application read [CHANGELOG.md](CHANGELOG.md)
 
 ### RSpec test
 
+__Use docker for running SPEC__
+
 ```linux
-bundle exec rspec
+# Prepare images
+docker-compose build
+
+# Launch tiers service RabbitMQ
+docker-compose up -d rabbit
+
+# Launch tiers service Janus (ensure rabbit is started before and READY)
+docker-compose up -d janus janus_token
+
+## Excute ##
+
+# Start for MongoID database
+docker-compose run gem env MONGO=true bundle exec rake classic
+docker-compose run gem env MONGO=true bundle exec rake concurrency
+
+# Start for SQlite3 database
+docker-compose run gem env MONGO=false bundle exec rake classic
+docker-compose run gem env MONGO=false bundle exec rake concurrency
+
+## OR ##
+
+# Navigate in container an
+docker-compose run gem ash
+export MONGO=true
+bundle exec rake classic
 ```
+
+NOTE : Use `SPEC_DEBUG=true bundle exec rake classic` for stopping rspec execution when first test fail.
 
 TIPS: for rspec install janus and rabbitmq server configured by default for user
 rabbitmq and use plugin echotest for janus server.
 
 Use tags for rspec :
 
-| Describe                                                          | Type            | Name              |
-| -------------------------------------------------------------     | --------------- | ---------------   |
-| **Internaly function**                                            | config          |                   |
-| Use bunny gem                                                     |                 | rabbit            |
-| Test log functions                                                |                 | log               |
-| Test configuration function                                       |                 | config            |
-| Test Gem contains CONSTANTS                                       |                 | describe          |
-| **Level request sending to janus (admin monitor API or classic)** | level           |                   |
-| Request with no admin right.                                      |                 | base              |
-| Request with admin right in Janus application.                    |                 | admin             |
-| Request candidate/jsep                                            |                 | peer              |
-| **Request JSON sending to Rabbitmq -> Janus**                     | request         |                   |
-| Test request attach type                                          |                 | attach            |
-| Test request type create                                          |                 | create            |
-| Test request type detach                                          |                 | detach            |
-| Test request type janus info                                      |                 | info              |
-| Test request type test                                            |                 | test              |
-| Test request type handle list                                     |                 | handles           |
-| Test request type sesssion list                                   |                 | sessions          |
-| Test request type handle information                              |                 | handle_info       |
-| Test request type (un)locking debug                               |                 | set_locking_debug |
-| Test request type change log level                                |                 | set_log_level     |
-| ~~Test request type tokens list~~                                 |                 | tokens            |
-| Test request type destroy session                                 |                 | destroy           |
-| Test request keepalive                                            |                 | keepalive         |
-| ~~Test request type sdp offer~~                                   |                 | offer             |
-| Test request type trickle, send on candidate                      |                 | trickle           |
-| Test request type trickles, send array candidate                  |                 | trickles          |
+| Describe                                                      | Type            | Name              |
+| ------------------------------------------------------------- | --------------- | ---------------   |
+| Internaly function                                            | config          |                   |
+| Use bunny gem                                                 |                 | rabbit            |
+| Test log functions                                            |                 | log               |
+| Test configuration function                                   |                 | config            |
+| Test Gem contains CONSTANTS                                   |                 | describe          |
+| Level request sending to janus (admin monitor API or classic) | level           |                   |
+| Request basic.                                                |                 | base              |
+| Request with admin right in Janus application.                |                 | admin             |
+| Request candidate/jsep                                        |                 | peer              |
+| Request JSON sending to Rabbitmq -> Janus                     | request         |                   |
+| Test request attach type                                      |                 | attach            |
+| Test request type create                                      |                 | create            |
+| Test request type detach                                      |                 | detach            |
+| Test request type janus info                                  |                 | info              |
+| Test request type test                                        |                 | test              |
+| Test request type handle list                                 |                 | handles           |
+| Test request type sesssion list                               |                 | sessions          |
+| Test request type handle information                          |                 | handle_info       |
+| Test request type (un)locking debug                           |                 | set_locking_debug |
+| Test request type change log level                            |                 | set_log_level     |
+| Test request type tokens list                                 |                 | tokens            |
+| Test request type destroy session                             |                 | destroy           |
+| Test request keepalive                                        |                 | keepalive         |
+| Test request type sdp offer                                   |                 | offer             |
+| Test request type trickle, send on candidate                  |                 | trickle           |
+| Test request type trickles, send array candidate              |                 | trickles          |
+| Event(s) thread                                               | event           |                   |
+| Test thread public queue                                      |                 | event             |
+| Test thread admin queue                                       |                 | event_admin       |
 
 Example usage rspec with tags :
 ```ruby

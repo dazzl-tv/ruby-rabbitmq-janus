@@ -27,11 +27,6 @@ module RubyRabbitmqJanus
       def queue_admin_to
         @options['queues']['admin']['to'].to_s
       end
-
-      # @return [String] Get to name queue JanusInstance
-      def queue_janus_instance
-        @options['queues']['instance'].to_s
-      end
     end
   end
 end

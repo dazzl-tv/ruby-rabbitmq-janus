@@ -4,8 +4,7 @@ require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
 # Exclude all spec with type :thread
-RSpec::Core::RakeTask.new(:spec) do |_t|
-end
+RSpec::Core::RakeTask.new(:spec)
 
 # Exclude all spec with type :thread
 RSpec::Core::RakeTask.new(:classic) do |t|

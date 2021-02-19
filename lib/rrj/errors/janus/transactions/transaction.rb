@@ -4,7 +4,7 @@ module RubyRabbitmqJanus
   module Errors
     module Janus
       # Define a super class for all errors in Janus::Transactions::Transaction
-      class BaseTransaction < BaseJanus
+      class BaseTransaction < RubyRabbitmqJanus::Errors::RRJError
         def initialize(message, level = :fatal)
           super "[Transaction]#{message}", level
         end

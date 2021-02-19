@@ -18,6 +18,13 @@ module RubyRabbitmqJanus
           end
         end
 
+        # Error when transaction hs no block
+        class MissingAction < RubyRabbitmqJanus::Errors::Rabbit::BaseConnect
+          def initialize
+            super 'Transaction failed, missing block'
+          end
+        end
+
         # Error for Rabbit::Connect#transaction_short
         class TransactionShort < RubyRabbitmqJanus::Errors::Rabbit::BaseConnect
           def initialize(error)

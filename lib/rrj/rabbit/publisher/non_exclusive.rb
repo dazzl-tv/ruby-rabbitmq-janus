@@ -12,18 +12,17 @@ module RubyRabbitmqJanus
         def initialize(exchange)
           @reply = exchange.queue(Tools::Config.instance.queue_from)
           super(exchange)
-        rescue
-          raise Errors::Rabbit::Publisher::NonExclusive::Initialize
         end
 
         # Send an message to queue
         #
         # @param [String] request JSON request sending to rabbitmq queue
+        #
+        # rubocop:disable Lint/UselessMethodDefinition
         def publish(request)
           super(request)
-        rescue
-          raise Errors::Rabbit::Publisher::NonExclusive::Publish
         end
+        # rubocop:enable Lint/UselessMethodDefinition
       end
     end
   end

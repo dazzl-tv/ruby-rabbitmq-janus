@@ -18,24 +18,28 @@ module RubyRabbitmqJanus
           @rabbit = RubyRabbitmqJanus::Rabbit::Connect.new
           @lock = Mutex.new
           @condition = ConditionVariable.new
-        rescue
-          raise Errors::Process::Concurencies::Initializer
         end
 
         private
 
+        attr_reader :lock, :condition, :rabbit
+
         def initialize_thread
           @rabbit.transaction_long { transaction_running }
         rescue Interrupt
-          ::Log.info "Stop transaction #{self.class.name}"
+          ::Log.warn "This process has been interupted #{class_name}"
+          ::Log.warn \
+            "Close a connection with RabbitMQ instance for #{class_name}"
           @rabbit.close
         end
 
         def info_thread
-          "Create an thread -- #{self.class.name}"
+          "Create an thread -- #{class_name}"
         end
 
-        attr_reader :lock, :condition, :rabbit
+        def class_name
+          self.class.name
+        end
       end
     end
   end

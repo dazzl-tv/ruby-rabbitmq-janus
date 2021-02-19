@@ -15,24 +15,8 @@ module RubyRabbitmqJanus
           rabbit.queue(Tools::Config.instance.queue_from)
         end
 
-        def subscribe_queue
-          rabbit.prefetch(1)
-          reply.bind(binding).subscribe(opts_subs) do |info, prop, payload|
-            info_subscribe(info, prop, payload)
-            synchronize_response(info, payload)
-          end
-        rescue => exception
-          raise RubyRabbitmqJanus::Errors::Rabbit::Listener::From::ListenEvents,
-                exception
-        end
-
-        def synchronize_response(info, payload)
-          lock.synchronize do
-            response = Janus::Responses::Event.new(JSON.parse(payload))
-            responses.push(response)
-          end
-          rabbit.acknowledge(info.delivery_tag, false)
-          semaphore.signal
+        def response_class(payload)
+          Janus::Responses::Event.new(JSON.parse(payload))
         end
       end
     end

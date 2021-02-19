@@ -18,8 +18,6 @@ module RubyRabbitmqJanus
           @exclusive = exclusive
           @handle = handle
           @instance = instance
-        rescue
-          raise Errors::Janus::TransactionHandle::Initialize
         end
 
         # Opening a long transaction with rabbitmq and is ending closing
@@ -35,8 +33,6 @@ module RubyRabbitmqJanus
             yield
           end
           handle
-        rescue
-          raise Errors::Janus::TransactionHandle::Connect
         end
 
         # Publish an message in handle
@@ -49,8 +45,6 @@ module RubyRabbitmqJanus
           msg = Janus::Messages::Standard.new(type, options.merge(opts))
           response = read_response(publisher.publish(msg))
           Janus::Responses::Standard.new(response)
-        rescue
-          raise Errors::Janus::TransactionHandle::PublishMessage
         end
 
         # Send a message detach
@@ -59,8 +53,6 @@ module RubyRabbitmqJanus
           ::Log.debug "Detach handle #{options}"
           publisher.publish(Janus::Messages::Standard.new('base::detach',
                                                           options))
-        rescue
-          raise Errors::Janus::TransactionHandle::Detach
         end
 
         # Send a message detach and disable session for deleting in
@@ -68,8 +60,6 @@ module RubyRabbitmqJanus
         def detach_for_deleting
           detach
           Models::JanusInstance.disable(opts['session_id'])
-        rescue
-          raise Errors::Janus::TransactionHandle::DetachForDeleting
         end
 
         private
@@ -80,11 +70,13 @@ module RubyRabbitmqJanus
           @handle = send_a_message_exclusive { msg }
         end
 
+        # rubocop:disable Style/ExplicitBlockArgument
         def send_a_message_exclusive
           Janus::Responses::Standard.new(read_response_exclusive do
             yield
           end).sender
         end
+        # rubocop:enable Style/ExplicitBlockArgument
 
         def read_response_exclusive
           chan = rabbit.channel

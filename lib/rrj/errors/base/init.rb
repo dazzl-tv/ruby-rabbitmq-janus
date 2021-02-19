@@ -20,14 +20,14 @@ module RubyRabbitmqJanus
         end
       end
 
-      # Error for RRJ#start_transaction
+      # Error for RRJ#session_endpoint_public
       class StartTransaction < RubyRabbitmqJanus::Errors::BaseRRJ
         def initialize(exclu, opts)
           super "Transaction failed with -- #{opts} in queue #{exclu}", :fatal
         end
       end
 
-      # Error for RRJ#start_transaction_handle
+      # Error for RRJ#session_endpoint_public_handle
       class StartTransactionHandle < RubyRabbitmqJanus::Errors::BaseRRJ
         def initialize(exclu, opts)
           super "Transaction handle failed with -- #{opts} in queue #{exclu}",

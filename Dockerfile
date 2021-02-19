@@ -1,6 +1,7 @@
-FROM ruby:2.5-alpine
+FROM ruby:2.6.4-alpine3.9
 
-MAINTAINER Jeremy VAILLANT <jeremy.vaillant@dazzl.tv>
+LABEL author="jeremy.vaillant@dazzl.tv"
+LABEL description="Container for execute RSpec in travis CI."
 
 WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus
@@ -14,7 +15,7 @@ RUN apk add --update --no-cache --virtual .build-dependencies \
   && apk add \
     sqlite-dev \
   && echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc \
-  && gem install bundler \
+  && gem install bundler:1.17.3 \
   && gem install json -v '1.8.6' \
   && gem install rainbow -v '2.2.1' \
   && gem install faraday_middleware -v '0.11.0' \

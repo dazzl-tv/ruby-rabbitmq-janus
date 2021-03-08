@@ -34,7 +34,7 @@ module RubyRabbitmqJanus
       def transaction_long
         raise Errors::Rabbit::Connect::MissingAction unless block_given?
 
-        Timeout.timeout(10) do
+        Timeout.timeout(60) do
           start
           yield
         end

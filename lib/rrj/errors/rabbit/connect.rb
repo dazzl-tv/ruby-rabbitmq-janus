@@ -27,8 +27,8 @@ module RubyRabbitmqJanus
 
         # Error When transaction timeout
         class TransactionTimeout < RubyRabbitmqJanus::Errors::Rabbit::BaseConnect
-          def initialize
-            super 'Transaction timeout.'
+          def initialize(error)
+            super error
           end
         end
       end

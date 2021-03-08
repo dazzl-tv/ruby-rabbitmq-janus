@@ -23,7 +23,7 @@ module RubyRabbitmqJanus
           response = transaction_long(&block)
         end
       rescue Timeout::Error
-        raise Errors::Rabbit::Connect::TransactionTimeout \
+        raise Errors::Rabbit::Connect::TransactionTimeout, \
           'The "Short transaction" have raised Timeout exception.'
       ensure
         close
@@ -39,7 +39,7 @@ module RubyRabbitmqJanus
           yield
         end
       rescue Timeout::Error
-        raise Errors::Rabbit::Connect::TransactionTimeout \
+        raise Errors::Rabbit::Connect::TransactionTimeout, \
           'The "Long transaction" have raised Timeout exception.'
       end
 

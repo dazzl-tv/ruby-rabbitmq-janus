@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [3.0.1] - 2021-03-09
+### [Fixed]
+- Raise an exception when transaction have timeout
+- Apply error when read config and return an error
+
+### [Deleted]
+- Remove useless error classes
+
 ## [3.0.0] - 2019-12-12
 ### [Deleted]
 - Remove deprecated methods

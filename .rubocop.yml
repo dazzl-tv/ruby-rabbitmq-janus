@@ -20,6 +20,9 @@ Layout/LineLength:
     - lib/rrj/rails.rb
 Layout/SpaceBeforeBrackets:
   Enabled: true
+Layout/ArgumentAlignment:
+  Exclude:
+    - lib/rrj/rabbit/connect.rb
 
 # Lint rules
 # ###
@@ -57,6 +60,9 @@ Lint/UnexpectedBlockArity:
   Enabled: true
 Lint/UnmodifiedReduceAccumulator:
   Enabled: true
+Lint/UselessMethodDefinition:
+  Exclude:
+    - lib/rrj/errors/rabbit/rabbit.rb
 
 # Metrics Rules
 # ###
@@ -64,7 +70,9 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
     - ruby_rabbitmq_janus.gemspec
-
+Metrics/MethodLength:
+  Exclude:
+    - lib/rrj/rabbit/connect.rb
 Metrics/CyclomaticComplexity:
   Exclude:
     - lib/rrj/tools/replaces/type.rb

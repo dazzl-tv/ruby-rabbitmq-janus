@@ -13,6 +13,8 @@ module RubyRabbitmqJanus
       # @return [String] read configuration fir queue admin
       def admin_pass
         @options['rabbit']['admin_pass'].to_s
+      rescue => exception
+        raise RubyRabbitmqJanus::Errors::Tools::AdminPassword
       end
 
       # @return [Symbol] read configuration for bunny log level

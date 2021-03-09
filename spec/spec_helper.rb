@@ -37,6 +37,7 @@ require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
+require 'rspec/retry'
 
 # Load gem RubyRabbitmqJanus
 require 'ruby_rabbitmq_janus'
@@ -115,4 +116,9 @@ RSpec.configure do |config|
   config.around(:each, type: :request) do |example|
     Timeout.timeout(5) { example.run }
   end
+
+  # show retry status in spec process
+  config.verbose_retry = true
+  # show exception that triggers a retry if verbose_retry is set to true
+  config.display_try_failure_messages = true
 end

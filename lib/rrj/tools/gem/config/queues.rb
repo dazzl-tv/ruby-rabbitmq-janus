@@ -11,21 +11,29 @@ module RubyRabbitmqJanus
       # @return [String] Get to name queue_from (pattern)
       def queue_from
         @options['queues']['standard']['from'].to_s
+      rescue => exception
+        raise RubyRabbitmqJanus::Errors::Tools::QueueFrom
       end
 
       # @return [String] Get to name queue_to (pattern)
       def queue_to
         @options['queues']['standard']['to'].to_s
+      rescue => exception
+        raise RubyRabbitmqJanus::Errors::Tools::QueueTo
       end
 
       # @return [String] Get to name queue_admin_from (pattern)
       def queue_admin_from
         @options['queues']['admin']['from'].to_s
+      rescue => exception
+        raise RubyRabbitmqJanus::Errors::Tools::QueueAdminFrom
       end
 
       # @return [String] Get to name queue_admin_from (pattern)
       def queue_admin_to
         @options['queues']['admin']['to'].to_s
+      rescue => exception
+        raise RubyRabbitmqJanus::Errors::Tools::QueueAdminTo
       end
     end
   end

@@ -23,7 +23,8 @@ module RubyRabbitmqJanus
           response = transaction_long(&block)
         end
       rescue Timeout::Error
-        ::Log.error 'The "Short transaction" have raised Timeout exception.'
+        raise Errors::Rabbit::Connect::TransactionTimeout, \
+          'The "Short transaction" have raised Timeout exception.'
       ensure
         close
         response
@@ -33,12 +34,13 @@ module RubyRabbitmqJanus
       def transaction_long
         raise Errors::Rabbit::Connect::MissingAction unless block_given?
 
-        Timeout.timeout(10) do
+        Timeout.timeout(60) do
           start
           yield
         end
       rescue Timeout::Error
-        ::Log.error 'The "Long transaction" have raised Timeout exception.'
+        raise Errors::Rabbit::Connect::TransactionTimeout, \
+          'The "Long transaction" have raised Timeout exception.'
       end
 
       # Opening a connection with RabbitMQ

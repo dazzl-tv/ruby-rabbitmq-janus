@@ -34,9 +34,11 @@ module RubyRabbitmqJanus
   end
 end
 
-require 'rrj/errors/base/base'
 require 'rrj/errors/janus/janus'
+
 require 'rrj/errors/process/event'
 require 'rrj/errors/process/event_admin'
+
 require 'rrj/errors/tools/tools'
+
 require 'rrj/errors/rabbit/rabbit'

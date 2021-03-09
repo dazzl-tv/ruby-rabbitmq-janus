@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     module Janus
       module Responses
         module Standard
-          class Base < RubyRabbitmqJanus::Errors::Janus::Responses::Base
+          class Base < RubyRabbitmqJanus::Errors::BaseJanus
             def initialize(message)
               super 'Standard', message
             end

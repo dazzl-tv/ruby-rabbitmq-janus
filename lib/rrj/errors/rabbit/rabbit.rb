@@ -8,19 +8,46 @@ module RubyRabbitmqJanus
         super "[Rabbit]#{message}", level
       end
     end
+
+    module Connect
+      # Error when transaction hs no block
+      class MissingAction < RubyRabbitmqJanus::Errors::BaseRabbit
+        def initialize
+          super 'Transaction failed, missing block'
+        end
+      end
+
+      # Error When transaction timeout
+      class TransactionTimeout < RubyRabbitmqJanus::Errors::BaseRabbit
+        def initialize(error)
+          super error
+        end
+      end
+    end
+
+    module Listener
+      # Error when response is empty
+      class ResponseEmpty < RubyRabbitmqJanus::Errors::BaseRabbit
+        def initialize(response)
+          super "Response is empty ! (#{response})"
+        end
+      end
+
+      # Error when response is nil
+      class ResponseNil < RubyRabbitmqJanus::Errors::BaseRabbit
+        def initialize(response)
+          super "Response is nil ! (#{response})"
+        end
+      end
+    end
+
+    module Publisher
+      # Error when correlation string is not equal
+      class TestCorrelation < RubyRabbitmqJanus::Errors::BaseRabbit
+        def initialize(message, propertie)
+          super "Correlation doesn't equal (msg: #{message}) != (prp: #{propertie})"
+        end
+      end
+    end
   end
 end
-
-require 'rrj/errors/rabbit/base_event'
-require 'rrj/errors/rabbit/connect'
-require 'rrj/errors/rabbit/propertie'
-
-require 'rrj/errors/rabbit/listener/base'
-require 'rrj/errors/rabbit/listener/from'
-require 'rrj/errors/rabbit/listener/from_admin'
-
-require 'rrj/errors/rabbit/publisher/base'
-require 'rrj/errors/rabbit/publisher/admin'
-require 'rrj/errors/rabbit/publisher/exclusive'
-require 'rrj/errors/rabbit/publisher/keepalive'
-require 'rrj/errors/rabbit/publisher/non_exclusive'

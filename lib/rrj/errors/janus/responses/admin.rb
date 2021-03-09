@@ -5,7 +5,7 @@ module RubyRabbitmqJanus
     module Janus
       module Responses
         module Admin
-          class Base < RubyRabbitmqJanus::Errors::Janus::Responses::Base
+          class Base < RubyRabbitmqJanus::Errors::BaseJanus
             def initialize(message)
               super 'Admin', message
             end

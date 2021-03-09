@@ -33,7 +33,6 @@ This gem is product by [Dazzl.tv](http://dazzl.tv)
     * [Read documentation](#read-documentation)
     * [Generate developer documentation](#generate-developer-documentation)
 * [Contributing](#contributing)
-* [Plus](#plus)
 
 ## How to use
 
@@ -281,8 +280,3 @@ Bug reports and pull requests are welcome on GitHub at
 https://github.com/dazzl-tv/ruby-rabbitmq-janus This project is intended to be a
 safe, welcoming space for collaboration, and contributors are expected to adhere
 to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## Plus
-
-Janus Admin Monitor project use this gem for manage data in Janus Meetecho with
-Admin/Monitor API.

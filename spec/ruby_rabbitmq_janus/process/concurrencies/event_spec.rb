@@ -3,7 +3,8 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Process::Concurrencies::Event, type: :thread,
-                                                           name: :event do
+                                                           name: :event,
+                                                           retry: 3 do
   let(:publish_name) { :pub_classic }
   let(:listener) { RubyRabbitmqJanus::Rabbit::Listener::From }
   let(:exception_runner) { RubyRabbitmqJanus::Errors::Process::Event::Run }

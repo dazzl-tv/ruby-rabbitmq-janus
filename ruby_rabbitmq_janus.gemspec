@@ -59,6 +59,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'reek'
   spec.add_development_dependency 'remote_syslog_logger'
   spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec-retry'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'rubocop-rspec'

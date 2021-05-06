@@ -1,0 +1,43 @@
+---
+
+name: RSpec
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.6', '2.7', '3.0']
+        mongodb-version: [3.6, 4.0, 4.2, 4.4]
+        database: ['MONGO', 'SQLITE']
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setu up rabbitMQ
+      uses: nijel/rabbitmq-action@v1.0.0
+      with:
+        rabbitmq version: '5'
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true
+    - name: Start MongoDB v${{ matrix.mongodb-version }}
+      uses: supercharge/mongodb-github-action@1.2.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+    - name: Set up Janus Gateway
+      uses: dazzl-tv/janus-gateway-action@v1
+    - name: Run tests
+      run: bundle exec rake
+    - name: Publish code coverage
+      uses: paambaati/codeclimate-action@v2.7.5
+      env:
+        CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
+      with:
+        coverageLocations: |
+          ${{github.workspace}}/coverage/coverage.json:simplecov

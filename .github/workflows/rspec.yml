@@ -30,7 +30,7 @@ jobs:
       shell: bash
       run: |
         docker pull canyan/janus-gateway:latest
-        docker run -d --link="${{ job.services.rabbit }}" --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" canyan/janus-gateway:latest
+        docker run -d --link="${{ job.services.rabbit.name }}" --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" canyan/janus-gateway:latest
     - name: Run tests
       run: bundle exec rake
     - name: Publish code coverage

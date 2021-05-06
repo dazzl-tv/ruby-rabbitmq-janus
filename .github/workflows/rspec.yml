@@ -28,6 +28,7 @@ jobs:
         bundler-cache: true
     - name: Set up Janus Gateway
       uses: dazzl-tv/janus-gateway-action@v1.0.1
+      run: docker run -d --link="rabbit"
     - name: Run tests
       run: bundle exec rake
     - name: Publish code coverage

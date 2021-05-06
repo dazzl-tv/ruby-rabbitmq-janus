@@ -16,15 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.6', '2.7', '3.0']
-        mongodb-version: [3.6, 4.0, 4.2, 4.4]
-        database: ['MONGO', 'SQLITE']
+        ruby-version: ['2.6']
+        # mongodb-version: [3.6, 4.0, 4.2, 4.4]
+        # ruby-version: ['2.6', '2.7', '3.0']
+        # mongodb-version: [3.6, 4.0, 4.2, 4.4]
+        # database: ['MONGO', 'SQLITE']
     steps:
     - uses: actions/checkout@v2
-    - name: Setu up rabbitMQ
-      uses: nijel/rabbitmq-action@v1.0.0
-      with:
-        rabbitmq version: '5'
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
@@ -45,3 +43,9 @@ jobs:
       with:
         coverageLocations: |
           ${{github.workspace}}/coverage/coverage.json:simplecov
+
+    services:
+      rabbit:
+        image: rabbitmq
+        ports:
+          - 5672:5672

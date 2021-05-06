@@ -42,7 +42,7 @@ jobs:
       mongo:
         image: mongo
       mysql:
-        image: maraidb
+        image: mariadb
       rabbit:
         image: rabbitmq
         ports:

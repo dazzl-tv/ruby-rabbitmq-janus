@@ -34,7 +34,7 @@ jobs:
     - name: Run tests
       run: |
         cp .github/default.yml config/
-        bundle exec rake
+        SPEC_DEBUG=true bundle exec rake
     - name: Publish code coverage
       uses: paambaati/codeclimate-action@v2.7.5
       env:

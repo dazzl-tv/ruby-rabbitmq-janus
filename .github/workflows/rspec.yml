@@ -27,11 +27,10 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
     - name: Set up Janus Gateway
-      # uses: dazzl-tv/janus-gateway-action@v1.0.1
       shell: bash
       run: |
         docker pull canyan/janus-gateway:latest
-        docker run -d --link="rabbit" --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" canyan/janus-gateway:latest
+        docker run -d --link="{{ services.rabbit.name }}" --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" canyan/janus-gateway:latest
     - name: Run tests
       run: bundle exec rake
     - name: Publish code coverage

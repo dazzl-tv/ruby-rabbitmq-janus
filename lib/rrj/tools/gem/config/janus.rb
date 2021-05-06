@@ -19,7 +19,7 @@ module RubyRabbitmqJanus
       # @return [String] read configuration for plugin with index
       def plugin_at(index = 0)
         @options['janus']['plugins'][index].to_s
-      rescue => exception
+      rescue
         raise RubyRabbitmqJanus::Errors::Tools::Plugins, index
       end
 

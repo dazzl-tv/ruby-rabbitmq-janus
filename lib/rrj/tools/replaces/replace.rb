@@ -56,11 +56,11 @@ module RubyRabbitmqJanus
         end
 
         def rewrite_key_to_string(node)
-          Hash[
+          [
             node.map do |key, value|
               [key.to_s, value?(value)]
             end
-          ]
+          ].to_h
         end
 
         def value?(value)

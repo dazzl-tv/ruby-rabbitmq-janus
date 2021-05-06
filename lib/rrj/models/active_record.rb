@@ -32,11 +32,9 @@ module RubyRabbitmqJanus
       #
       # @return [Hash] Current model
       #
-      # rubocop:disable Style/HashTransformValues
       def unset(attributes)
-        Hash[attributes.map { |key, _value| [key, nil] }]
+        [attributes.map { |key, _value| [key, nil] }].to_h
       end
-      # rubocop:enable Style/HashTransformValues
     end
   end
 end

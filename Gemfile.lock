@@ -318,6 +318,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.3)
   ruby_rabbitmq_janus!
   simplecov (~> 0.21.2)
+  simplecov_json_formatter (~> 0.1.3)
   sqlite3 (~> 1.4, >= 1.4.2)
   yard (~> 0.9.26)
 

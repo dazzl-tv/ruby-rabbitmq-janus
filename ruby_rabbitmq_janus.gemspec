@@ -7,7 +7,8 @@ require 'rrj/info'
 
 Gem::Specification.new do |spec|
   spec.version       = if ENV['GITHUB_REF'].eql?('refs/heads/develop')
-                         "#{RubyRabbitmqJanus::VERSION}.pre.#{ENV['GITHUB_RUN_ID']}"
+                         "#{RubyRabbitmqJanus::VERSION}" \
+                           ".pre.#{ENV['GITHUB_RUN_ID']}"
                        else
                          RubyRabbitmqJanus::VERSION
                        end

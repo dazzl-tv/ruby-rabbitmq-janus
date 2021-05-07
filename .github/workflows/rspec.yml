@@ -22,14 +22,12 @@ jobs:
         database: ['false']
     steps:
       - uses: actions/checkout@v2
+      - name: Up rabbitmq
+        run: docker-compose up -d rabbit mongo
       - name: Build the container
         run: docker-compose build
-      - name: Up rabbitmq
-        run: docker-compose up -d rabbit
-      - name: Up mongo
-        run: docker-compose up -d mongo
       - name: Up janus
-        run: docker-compose up -d janus janus_token
+        run: docker-compose up janus janus_token
       - name: Test classic
         run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake classic
       - name: Test concurrency

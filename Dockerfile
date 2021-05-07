@@ -5,8 +5,6 @@ LABEL description="Container for execute RSpec in travis CI."
 
 WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus
-COPY .travis/default.yml /ruby_rabbitmq_janus/lib/config/default.yml
-COPY .travis/rspec.rb /ruby_rabbitmq_janus/lib/rrj/rspec.rb
 
 RUN apk add --update --no-cache --virtual .build-dependencies \
     make \

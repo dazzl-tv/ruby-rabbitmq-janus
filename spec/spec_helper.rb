@@ -32,6 +32,7 @@ require 'pry'
 require 'json-schema-rspec'
 require 'rails'
 require 'factory_bot'
+require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
@@ -99,6 +100,12 @@ RSpec.configure do |config|
   # Load factory bot definition
   config.before(:suite) do
     FactoryBot.find_definitions
+  end
+
+  # Configure Initializer RRJ and create session with Janus Instance
+  config.before do |example|
+    RubyRabbitmqJanus::Models::JanusInstance.delete_all \
+      unless example.metadata[:type].match?(/tools/)
   end
 
   # Use timeout for requester

@@ -2,7 +2,7 @@ general: {
   configs_folder = "/usr/local/etc/janus"
   plugins_folder = "/usr/local/lib/janus/plugins"
   transports_folder = "/usr/local/lib/janus/transports"
-  debug_level = 4
+  debug_level = 7
   debug_timestamps = false
   debug_colors = true
   admin_secret = "janusoverlord"

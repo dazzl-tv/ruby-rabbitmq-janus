@@ -32,7 +32,6 @@ require 'pry'
 require 'json-schema-rspec'
 require 'rails'
 require 'factory_bot'
-require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
 require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'

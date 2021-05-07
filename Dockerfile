@@ -15,10 +15,6 @@ RUN apk add --update --no-cache --virtual .build-dependencies \
   && apk add \
     sqlite-dev \
   && echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc \
-  && gem install bundler:1.17.3 \
-  && gem install json -v '1.8.6' \
-  && gem install rainbow -v '2.2.1' \
-  && gem install faraday_middleware -v '0.11.0' \
   && bundle install \
   && apk del .build-dependencies \
   && rm -rf /var/cache/apk/*

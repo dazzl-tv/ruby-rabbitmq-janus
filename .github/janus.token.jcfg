@@ -7,7 +7,7 @@ general: {
   debug_colors = true
   admin_secret = "janusoverlord"
   server_name = "janus"
-  token_auth = false
+  token_auth = true
 }
 
 media: {

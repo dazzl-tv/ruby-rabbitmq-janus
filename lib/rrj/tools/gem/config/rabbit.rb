@@ -24,14 +24,14 @@ module RubyRabbitmqJanus
 
       # @return [Hash] Format hash for bunny settings
       def server_settings
-        [%w[host port pass user vhost log_level].map do |value|
+        Hash[%w[host port pass user vhost log_level].map do |value|
           key = value.to_sym
           j_value = @options['rabbit'][rabbitmq_conf(value)]
 
           raise Errors::Tools::Config::Rabbitmq value if j_value.blank?
 
           [key, j_value]
-        end].to_h
+        end]
       end
 
       private

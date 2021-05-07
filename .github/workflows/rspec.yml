@@ -31,7 +31,7 @@ jobs:
       shell: bash
       run: |
         docker pull canyan/janus-gateway:latest
-        docker run -d --network="${{ job.services.rabbit.network }}" \
+        docker run  --network="${{ job.services.rabbit.network }}" \
                     --link="${{ job.services.rabbit.id }}:rabbit" \
                     --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" \
                     --volume="$(pwd)/.github/janus.jcfg:/usr/local/etc/janus/janus.jcfg" \

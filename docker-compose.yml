@@ -17,20 +17,19 @@ services:
     image: rabbitmq:alpine
 
   janus:
-    build:
-      context: .travis
-      dockerfile: janus.1.dockerfile
+    image: canyan/janus-gateway:latest
     links:
       - rabbit
     container_name: janus
 
   janus_token:
-    build:
-      context: .travis
-      dockerfile: janus.2.dockerfile
+    image: canyan/janus-gateway:latest
     links:
       - rabbit
     container_name: janus_token
+    volumes:
+      - ./.github/janus.jcfg:/usr/local/etc/janus/janus.jcfg
+      - ./.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg
 
   mongo:
     image: mongo

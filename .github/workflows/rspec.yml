@@ -21,41 +21,61 @@ jobs:
         # database: ['true', 'false']
         database: ['false']
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true
-    - name: Set up Janus Gateway
-      shell: bash
-      run: |
-        docker pull canyan/janus-gateway:latest
-        docker run  --network="${{ job.services.rabbit.network }}" \
-                    --link="${{ job.services.rabbit.id }}:rabbit" \
-                    --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" \
-                    --volume="$(pwd)/.github/janus.jcfg:/usr/local/etc/janus/janus.jcfg" \
-                    canyan/janus-gateway:latest
-    - name: Run tests
-      run: |
-        cp .github/default.yml config/
-        bundle exec rake
-      env:
-        MONGO: ${{ matrix.database }}
-    - name: Publish code coverage
-      uses: paambaati/codeclimate-action@v2.7.5
-      env:
-        CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
-      with:
-        coverageLocations: |
-          ${{github.workspace}}/coverage/coverage.json:simplecov
-
-    services:
-      mongo:
-        image: mongo
-        ports:
-          - 27017:27017
-      rabbit:
-        image: rabbitmq
-        ports:
-          - 5672:5672
+      - uses: actions/checkout@v2
+      - name: Build the container
+        run: docker-compose build
+      - name: Up rabbitmq
+        run: docker-compose up -d rabbit
+      - name: Up mongo
+        run: docker-compose up -d mongo
+      - name: Up janus
+        run: docker-compose up -d janus janus_token
+      - name: Test classic
+        run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake classic
+      - name: Test concurrency
+        run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake concurrency
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/coverage/coverage.json:simplecov
+#     - uses: actions/checkout@v2
+#     - name: Set up Ruby
+#       uses: ruby/setup-ruby@v1
+#       with:
+#         ruby-version: ${{ matrix.ruby-version }}
+#         bundler-cache: true
+#     - name: Set up Janus Gateway
+#       shell: bash
+#       run: |
+#         docker pull canyan/janus-gateway:latest
+#         docker run  --network="${{ job.services.rabbit.network }}" \
+#                     --link="${{ job.services.rabbit.id }}:rabbit" \
+#                     --volume="$(pwd)/.github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg" \
+#                     --volume="$(pwd)/.github/janus.jcfg:/usr/local/etc/janus/janus.jcfg" \
+#                     canyan/janus-gateway:latest
+#     - name: Run tests
+#       run: |
+#         cp .github/default.yml config/
+#         bundle exec rake
+#       env:
+#         MONGO: ${{ matrix.database }}
+#     - name: Publish code coverage
+#       uses: paambaati/codeclimate-action@v2.7.5
+#       env:
+#         CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
+#       with:
+#         coverageLocations: |
+#           ${{github.workspace}}/coverage/coverage.json:simplecov
+# 
+#     services:
+#       mongo:
+#         image: mongo
+#         ports:
+#           - 27017:27017
+#       rabbit:
+#         image: rabbitmq
+#         ports:
+#           - 5672:5672

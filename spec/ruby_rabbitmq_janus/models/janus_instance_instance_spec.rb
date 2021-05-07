@@ -16,7 +16,7 @@ describe RubyRabbitmqJanus::Models::JanusInstance, type: :model,
   let(:id) { first.id }
 
   context 'when Janus instances are activated.' do
-    let(:instances) { FactoryBot.create_list(:janus_instance, size) }
+    let(:instances) { FactoryBot.create_list(:janus_instance, size, enable: true) }
     let(:count_enabled) { size }
     let(:count_destroyed) { 0 }
     let(:count_disabled) { 0 }

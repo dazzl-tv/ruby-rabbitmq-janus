@@ -18,7 +18,8 @@ jobs:
       matrix:
         ruby-version: ['2.6']
         # ruby-version: ['2.6', '2.7', '3.0']
-        database: ['true', 'false']
+        # database: ['true', 'false']
+        database: ['false']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby

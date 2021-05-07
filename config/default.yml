@@ -13,7 +13,7 @@ rabbit:
   # Password for admin request
   admin_pass: janusoverlord
   # Logger level for rabbitmq message
-  level: info
+  level: error
 
 # RabbitMQ Queue information
 queues:
@@ -53,12 +53,12 @@ gem:
   log:
     # Define level to log
     # UNKNOW, FATAL, ERROR, WARN, INFO, DEBUG
-    level: debug
+    level: info
     # Precise type logger
     # stdout    : Output standard.
     # file      : Create log file in path 'log/ruby-rabbitmq-janus.log'.
     # remote    : Use RemoteSyslogLogger (for papertrail)
-    type: file
+    type: stdout
     # Used with type. Complete missing data :
     # stdout    : no option
     # file      : filename used
@@ -73,7 +73,7 @@ gem:
   environment : 'development'
   # Precise ORM used :
   # mongoid or active_record
-  orm: 'mongoid'
+  orm: <%= ENV['MONGO'].eql?('true') ? 'mongoid' : 'active_record' %>
   # Read response json for RSpec
   response_path: 'spec/supports/rrj/responses'
   # Number of process read public queue

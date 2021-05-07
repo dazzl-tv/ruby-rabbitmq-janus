@@ -27,7 +27,7 @@ jobs:
       - name: Build the container
         run: docker-compose build
       - name: Up janus
-        run: docker-compose up janus janus_token
+        run: docker-compose up -d janus janus_token
       - name: Test classic
         run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake classic
       - name: Test concurrency

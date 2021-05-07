@@ -62,7 +62,6 @@ RSpec.configure do |config|
                      else
                        false
                      end
-  DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 
   config.expect_with :rspec do |c|
@@ -101,13 +100,6 @@ RSpec.configure do |config|
   # Load factory bot definition
   config.before(:suite) do
     FactoryBot.find_definitions
-  end
-
-  # Configure Initializer RRJ and create session with Janus Instance
-  config.before do |example|
-    # rubocop:disable Performance/StringInclude
-    after_load_database unless example.metadata[:type].match?(/tools/)
-    # rubocop:enable Performance/StringInclude
   end
 
   # Use timeout for requester

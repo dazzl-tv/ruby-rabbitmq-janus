@@ -24,3 +24,8 @@ end
 def load_mongo
   Mongoid.load!('./spec/config/mongoid.yml', :test)
 end
+
+# :reek:UtilityFunction
+def after_load_database
+  DatabaseCleaner.clean
+end

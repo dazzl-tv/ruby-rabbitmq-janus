@@ -33,7 +33,14 @@ require 'json-schema-rspec'
 require 'rails'
 require 'factory_bot'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
-require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
+if ENV['MONGO'] == 'true'
+  require 'mongoid'
+  require 'database_cleaner/mongoid'
+else
+  require 'active_record'
+  require 'database_cleaner/active_record'
+end
+# require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
 
 # Load gem RubyRabbitmqJanus
@@ -101,10 +108,10 @@ RSpec.configure do |config|
     FactoryBot.find_definitions
   end
 
-  # Configure Initializer RRJ and create session with Janus Instance
+  # Clean database before execute an example
+  DatabaseCleaner.strategy = ENV['MONGO'] == 'true' ? :deletion : :truncation
   config.before do |example|
-    RubyRabbitmqJanus::Models::JanusInstance.delete_all \
-      unless example.metadata[:type].match?(/tools/)
+    after_load_database unless example.metadata[:type].match?(/tools/)
   end
 
   # Use timeout for requester

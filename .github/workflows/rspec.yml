@@ -16,10 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.6']
-        # ruby-version: ['2.6', '2.7', '3.0']
-        # database: ['true', 'false']
-        database: ['false']
+        ruby-version: ['2.6', '2.7', '3.0']
+        database: ['true', 'false']
     steps:
       - uses: actions/checkout@v2
       - name: Up rabbitmq
@@ -32,11 +30,19 @@ jobs:
         run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake classic
       - name: Test concurrency
         run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake concurrency
+      - uses: actions/upload-artifact@master
+        with:
+          name: coverage
+          path: coverage/coverage.json
   coverage:
     needs: [ test ]
     name: coverage
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/upload-artifact@master
+        with:
+          name: coverage
+          path: coverage/coverage.json
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:

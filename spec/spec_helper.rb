@@ -23,7 +23,7 @@ SimpleCov.start do
   use_merging true
 
   # Formatter
-  formatter = SimpleCov::Formatter::JSONFormatter
+  formatter SimpleCov::Formatter::JSONFormatter
 end
 
 # Load gems dependencies

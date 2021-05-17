@@ -3,9 +3,6 @@
 require 'simplecov'
 require 'simplecov_json_formatter'
 
-SimpleCov.start
-SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
-
 SimpleCov.start do
   # Folders exclude
   add_filter '/errors/'
@@ -24,6 +21,9 @@ SimpleCov.start do
 
   # Merge result
   use_merging true
+
+  # Formatter
+  formatter = SimpleCov::Formatter::JSONFormatter
 end
 
 # Load gems dependencies

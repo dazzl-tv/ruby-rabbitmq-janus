@@ -6,11 +6,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rrj/info'
 
 Gem::Specification.new do |spec|
-  spec.version       = if ENV['GITHUB_REF'].eql?('refs/heads/develop')
+  spec.version       = if ENV['GITHUB_REF'].eql?('refs/heads/master')
+                         RubyRabbitmqJanus::VERSION
+                       else
                          "#{RubyRabbitmqJanus::VERSION}" \
                            ".pre.#{ENV['GITHUB_RUN_ID']}"
-                       else
-                         RubyRabbitmqJanus::VERSION
                        end
   spec.name          = RubyRabbitmqJanus::GEM_NAME
   spec.authors       = RubyRabbitmqJanus::AUTHORS

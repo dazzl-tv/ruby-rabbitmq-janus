@@ -5,6 +5,7 @@ name: Ruby Gem
 on:
   push:
     branches:
+      - feature/use-github-actions-instead-travis
       - master
       - develop
 

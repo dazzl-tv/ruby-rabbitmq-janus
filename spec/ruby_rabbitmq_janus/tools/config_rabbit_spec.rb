@@ -22,7 +22,7 @@ describe RubyRabbitmqJanus::Tools::ConfigRabbit, type: :tools,
     context 'with server_settings setting' do
       let(:method) { cfg.server_settings }
 
-      it_behaves_like 'type and default value', Hash, host: 'localhost', port: 5672, vhost: '/', user: 'guest', pass: 'guest', log_level: 'error'
+      it_behaves_like 'type and default value', Hash, host: 'rabbit', port: 5672, vhost: '/', user: 'guest', pass: 'guest', log_level: 'error'
     end
   end
 end

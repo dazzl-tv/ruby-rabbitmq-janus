@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJ, type: :request,
                                  level: :admin,
+                                 broken: true,
                                  name: :destroy do
   before { helper_janus_instance_without_token }
 

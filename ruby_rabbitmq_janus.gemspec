@@ -46,6 +46,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'appraisal', '~> 2.4'
   spec.add_development_dependency 'aruba', '~> 1.1'
   spec.add_development_dependency 'bigdecimal', '~> 3.0', '>= 3.0.2'
+  spec.add_development_dependency 'database_cleaner-active_record', '~> 2.0'
+  spec.add_development_dependency 'database_cleaner-mongoid', '~> 2.0', '>= 2.0.1'
   spec.add_development_dependency 'factory_bot', '~> 6.1'
   spec.add_development_dependency 'json-schema', '~> 2.8', '>= 2.8.1'
   spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'

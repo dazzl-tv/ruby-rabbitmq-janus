@@ -9,28 +9,32 @@ services:
       - rabbit
       - mongo
     volumes:
+      - .github/default.yml:/ruby_rabbitmq_janus/lib/config/default.yml
+      - .github/rspec.rb:/ruby_rabbitmq_janus/lib/rrj/rspec.rb
       - ./lib/rrj/:/ruby_rabbitmq_janus/lib/rrj
       - ./spec/:/ruby_rabbitmq_janus/spec
-      - ./tmp/:/ruby_rabbitmq_janus/tmp
+      - ./coverage/:/ruby_rabbitmq_janus/coverage
 
   rabbit:
     image: rabbitmq:alpine
 
   janus:
-    build:
-      context: .travis
-      dockerfile: janus.1.dockerfile
+    image: canyan/janus-gateway:latest
     links:
       - rabbit
     container_name: janus
+    volumes:
+      - .github/janus.jcfg:/usr/local/etc/janus/janus.jcfg
+      - .github/janus.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg
 
   janus_token:
-    build:
-      context: .travis
-      dockerfile: janus.2.dockerfile
+    image: canyan/janus-gateway:latest
     links:
       - rabbit
     container_name: janus_token
+    volumes:
+      - .github/janus.token.jcfg:/usr/local/etc/janus/janus.jcfg
+      - .github/janus.token.transport.rabbitmq.jcfg:/usr/local/etc/janus/janus.transport.rabbitmq.jcfg
 
   mongo:
     image: mongo

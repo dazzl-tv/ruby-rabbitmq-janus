@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [4.0.0] - 2021-05-17
+### [Fixed]
+- Test with ruby 3
+- Change compatibility for rails 6 (and activerecord)
+- Change compatibility for mongoid 7
+
 ## [3.0.1] - 2021-03-09
 ### [Fixed]
 - Raise an exception when transaction have timeout

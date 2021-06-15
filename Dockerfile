@@ -5,8 +5,6 @@ LABEL description="Container for execute RSpec in travis CI."
 
 WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus
-COPY .travis/default.yml /ruby_rabbitmq_janus/lib/config/default.yml
-COPY .travis/rspec.rb /ruby_rabbitmq_janus/lib/rrj/rspec.rb
 
 RUN apk add --update --no-cache --virtual .build-dependencies \
     make \
@@ -15,10 +13,8 @@ RUN apk add --update --no-cache --virtual .build-dependencies \
   && apk add \
     sqlite-dev \
   && echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc \
-  && gem install bundler:1.17.3 \
-  && gem install json -v '1.8.6' \
-  && gem install rainbow -v '2.2.1' \
-  && gem install faraday_middleware -v '0.11.0' \
+  && gem install bundler:2.2.17 \
+  && bundle update --bundler \
   && bundle install \
   && apk del .build-dependencies \
   && rm -rf /var/cache/apk/*

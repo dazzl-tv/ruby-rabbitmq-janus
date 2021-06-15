@@ -1,31 +1,6 @@
 # frozen_string_literal: true
 
-unless ENV['TRAVIS'].eql?('true')
-  require 'simplecov'
-
-  SimpleCov.start do
-    # Folders exclude
-    add_filter '/errors/'
-    add_filter 'lib/rrj/info.rb'
-    add_filter '/generators/'
-    add_filter '/spec/'
-    add_filter '/tasks/'
-
-    # Path for result
-    coverage_dir 'tmp/coverage'
-
-    # Define groups
-    add_group 'Entry Point',    [%w[admin init rails railtie rspec task task_admin].map { |fi| "lib/rrj/#{fi}.rb" }, 'lib/ruby_rabbitmq_janus.rb']
-    add_group 'Janus',          'lib/rrj/janus'
-    add_group 'Models',         'lib/rrj/models'
-    add_group 'Process',        'lib/rrj/process'
-    add_group 'RabbitMQ',       'lib/rrj/rabbit'
-    add_group 'Tools',          'lib/rrj/tools'
-
-    # Merge result
-    use_merging true
-  end
-end
+require 'simplecov'
 
 # Load gems dependencies
 require 'bundler/setup'
@@ -33,11 +8,16 @@ require 'pry'
 require 'json-schema-rspec'
 require 'rails'
 require 'factory_bot'
-require 'database_cleaner'
 ENV['MONGO'] = 'true' if ENV['MONGO'].nil?
-require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
+if ENV['MONGO'] == 'true'
+  require 'mongoid'
+  require 'database_cleaner/mongoid'
+else
+  require 'active_record'
+  require 'database_cleaner/active_record'
+end
+# require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
-require 'rspec/retry'
 
 # Load gem RubyRabbitmqJanus
 require 'ruby_rabbitmq_janus'
@@ -64,7 +44,6 @@ RSpec.configure do |config|
                      else
                        false
                      end
-  DatabaseCleaner.strategy = :truncation
   ENV['MONGO'].match?('true') ? load_mongo : load_active_record
 
   config.expect_with :rspec do |c|
@@ -105,20 +84,14 @@ RSpec.configure do |config|
     FactoryBot.find_definitions
   end
 
-  # Configure Initializer RRJ and create session with Janus Instance
+  # Clean database before execute an example
+  DatabaseCleaner.strategy = ENV['MONGO'] == 'true' ? :deletion : :truncation
   config.before do |example|
-    # rubocop:disable Performance/StringInclude
     after_load_database unless example.metadata[:type].match?(/tools/)
-    # rubocop:enable Performance/StringInclude
   end
 
   # Use timeout for requester
   config.around(:each, type: :request) do |example|
     Timeout.timeout(5) { example.run }
   end
-
-  # show retry status in spec process
-  config.verbose_retry = true
-  # show exception that triggers a retry if verbose_retry is set to true
-  config.display_try_failure_messages = true
 end

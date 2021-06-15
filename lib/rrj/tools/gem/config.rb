@@ -34,7 +34,7 @@ module RubyRabbitmqJanus
 
       # Define HOME RRJ gem
       RRJ_HOME = File.realpath(File.join(File.dirname(__FILE__),
-                                         '..', '..', '..'))
+                                         '..', '..', '..', '..'))
 
       # Define a default name to file configuration
       CONF_DEFAULT = 'config/default.yml'

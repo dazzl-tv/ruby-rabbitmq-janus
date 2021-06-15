@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJAdmin, type: :request,
                                       level: :admin,
+                                      broken: true,
                                       name: :set_log_level do
   before { helper_janus_instance_without_token }
 

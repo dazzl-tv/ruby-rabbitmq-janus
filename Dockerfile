@@ -6,6 +6,8 @@ LABEL description="Container for execute RSpec in travis CI."
 WORKDIR /ruby_rabbitmq_janus
 ADD . /ruby_rabbitmq_janus
 
+ENV GITHUB_RUN_ID=42
+
 RUN apk add --update --no-cache --virtual .build-dependencies \
     make \
     g++ \

@@ -15,6 +15,7 @@ AllCops:
 Layout/LineLength:
   Max: 80
   Exclude:
+    - ruby_rabbitmq_janus.gemspec
     - spec/**/*
     - lib/rrj/errors/**/*
     - lib/rrj/rails.rb
@@ -61,6 +62,9 @@ Style/StringLiterals:
     - gemfiles/*
 Style/RescueStandardError:
   Enabled: false
+Style/HashConversion:
+  Exclude:
+    - lib/rrj/tools/gem/config/rabbit.rb
 
 # RSpec
 # ###

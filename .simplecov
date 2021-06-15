@@ -20,7 +20,12 @@ SimpleCov.start do
   add_filter '/tasks/'
 
   # Define groups
-  add_group 'Entry Point',    [%w[admin init rails railtie rspec task task_admin].map { |fi| "lib/rrj/#{fi}.rb" }, 'lib/ruby_rabbitmq_janus.rb']
+  add_group 'Entry Point', [
+    %w[admin init rails railtie rspec task task_admin].map do |fi|
+      "lib/rrj/#{fi}.rb"
+    end,
+    'lib/ruby_rabbitmq_janus.rb'
+  ]
   add_group 'Janus',          'lib/rrj/janus'
   add_group 'Models',         'lib/rrj/models'
   add_group 'Process',        'lib/rrj/process'

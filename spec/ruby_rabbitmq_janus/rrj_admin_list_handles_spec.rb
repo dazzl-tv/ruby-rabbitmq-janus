@@ -13,7 +13,7 @@ describe RubyRabbitmqJanus::RRJAdmin, type: :request,
   let(:schema_success) { type }
   let(:parameter) { {} }
 
-  context 'request #list_handles' do
+  context 'when request #list_handles' do
     context 'when no session/handle' do
       let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::InvalidRequestPath }
       let(:exception_message) { "[457] Reason : Unhandled request 'list_handles' at this path" }

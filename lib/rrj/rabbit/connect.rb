@@ -32,7 +32,8 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and not close
       def transaction_long
-        raise RubyRabbitmqJanus::Errors::Connect::MissingAction unless block_given?
+        raise RubyRabbitmqJanus::Errors::Connect::MissingAction \
+          unless block_given?
 
         Timeout.timeout(60) do
           start

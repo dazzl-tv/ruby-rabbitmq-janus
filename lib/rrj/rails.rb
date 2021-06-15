@@ -22,8 +22,8 @@ module RubyRabbitmqJanus
 
       Log.debug "[RRJ] Create process : #{number}"
       process = RubyRabbitmqJanus::Process::Concurrencies
-      actions = RubyRabbitmqJanus::ActionEvents.new.actions
-      admin_actions = RubyRabbitmqJanus::ActionAdminEvents.new.actions
+      actions = ActionEvents.new.actions
+      admin_actions = ActionAdminEvents.new.actions
 
       listeners = []
       (1..number).each do

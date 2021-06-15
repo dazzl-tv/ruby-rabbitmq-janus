@@ -3,11 +3,9 @@
 name: RSpec
 
 on:
-  pull_request:
-    branches:
-      - develop
   push:
     branches-ignore:
+      - bugfix/*
       - master
       - develop
 
@@ -30,23 +28,24 @@ jobs:
         run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake classic
       - name: Test concurrency
         run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake concurrency
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v2
         with:
-          name: coverage
-          path: coverage/coverage.json
+          name: result-test
+          path: ${{ github.workspace }}/coverage/
+          if-no-files-found: error
   coverage:
     needs: [ test ]
     name: coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/upload-artifact@master
+      - uses: actions/download-artifact@v2
         with:
-          name: coverage
-          path: coverage/coverage.json
+          name: result-test
+          path: coverage/
       - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.1
+        uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
         with:
           coverageLocations: |
-            ${{github.workspace}}/coverage/coverage.json:simplecov
+            ${{ github.workspace }}/coverage/coverage.json:simplecov

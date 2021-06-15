@@ -4,10 +4,10 @@ name: gitleaks
 
 on:
   push:
-    branches-ignore:
+    branches:
+      - bugfix/*
       - master
       - develop
-      - feature/use-github-actions-instead-travis
 
 jobs:
   gitleaks:

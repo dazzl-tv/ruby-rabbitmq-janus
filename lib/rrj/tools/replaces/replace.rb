@@ -46,8 +46,7 @@ module RubyRabbitmqJanus
         end
 
         def replace_other
-          values = @opts['replace']
-          running_hash(rewrite_key_to_string(values))
+          running_hash(rewrite_key_to_string(@opts['replace'])[0].to_h)
         end
 
         def add_other
@@ -56,7 +55,6 @@ module RubyRabbitmqJanus
         end
 
         def rewrite_key_to_string(node)
-          p "Rewrite key to string"
           [
             node.map do |key, value|
               [key.to_s, value?(value)]

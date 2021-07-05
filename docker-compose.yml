@@ -23,12 +23,7 @@ services:
       - rabbit
       - mongo
     volumes:
-      - .github/default.yml:/ruby_rabbitmq_janus/lib/config/default.yml
-      - .github/rspec.rb:/ruby_rabbitmq_janus/lib/rrj/rspec.rb
-      - ./lib/rrj/:/ruby_rabbitmq_janus/lib/rrj
-      - ./spec/:/ruby_rabbitmq_janus/spec
-      - ./coverage/:/ruby_rabbitmq_janus/coverage
-      - ./log/:/ruby_rabbitmq_janus/log
+      - ./:/ruby_rabbitmq_janus/
 
   rabbit:
     image: rabbitmq:management-alpine

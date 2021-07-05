@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe RubyRabbitmqJanus::Rabbit::Publisher::NonExclusive, type: :rabbit,
-                                                             broken: true,
                                                              name: :non_exclusive do
   let(:publish) { described_class.new }
 

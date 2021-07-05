@@ -26,6 +26,18 @@ def load_mongo
 end
 
 # :reek:UtilityFunction
-def after_load_database
+def clean_db_and_queues
   DatabaseCleaner.clean
+
+  rb = RubyRabbitmqJanus::Rabbit::Connect.new
+  rb.start
+
+  channel = rb.channel
+
+  %w[from-janus from-janus-admin].each do |queue_name|
+    queue = channel.queue(queue_name, auto_delete: false)
+    queue.purge
+  end
+
+  rb.close
 end

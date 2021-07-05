@@ -95,6 +95,6 @@ end
 
 require 'rrj/janus/responses/error'
 require 'rrj/janus/responses/standard'
-require 'rrj/janus/responses/admin'
 require 'rrj/janus/responses/event'
+require 'rrj/janus/responses/admin'
 require 'rrj/janus/responses/rspec'

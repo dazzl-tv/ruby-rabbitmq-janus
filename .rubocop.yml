@@ -5,7 +5,7 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   RubyInterpreters:
     - ruby
   NewCops: enable
@@ -15,51 +15,16 @@ AllCops:
 Layout/LineLength:
   Max: 80
   Exclude:
+    - ruby_rabbitmq_janus.gemspec
     - spec/**/*
     - lib/rrj/errors/**/*
     - lib/rrj/rails.rb
-Layout/SpaceBeforeBrackets:
-  Enabled: true
-Layout/ArgumentAlignment:
-  Exclude:
-    - lib/rrj/rabbit/connect.rb
 
 # Lint rules
 # ###
-Lint/AmbiguousAssignment:
-  Enabled: true
-Lint/DeprecatedConstants:
-  Enabled: true
-Lint/DuplicateBranch:
-  Enabled: true
-Lint/DuplicateRegexpCharacterClassElement:
-  Enabled: true
 Lint/EmptyBlock:
-  Enabled: true
   Exclude:
     - spec/ruby_rabbitmq_janus/rabbit/**/*.rb
-Lint/EmptyClass:
-  Enabled: true
-Lint/LambdaWithoutLiteralBlock:
-  Enabled: true
-Lint/NoReturnInBeginEndBlocks:
-  Enabled: true
-Lint/NumberedParameterAssignment:
-  Enabled: true
-Lint/OrAssignmentToConstant:
-  Enabled: true
-Lint/RedundantDirGlobSort:
-  Enabled: true
-Lint/SymbolConversion:
-  Enabled: true
-Lint/ToEnumArguments:
-  Enabled: true
-Lint/TripleQuotes:
-  Enabled: true
-Lint/UnexpectedBlockArity:
-  Enabled: true
-Lint/UnmodifiedReduceAccumulator:
-  Enabled: true
 Lint/UselessMethodDefinition:
   Exclude:
     - lib/rrj/errors/rabbit/rabbit.rb
@@ -76,99 +41,32 @@ Metrics/MethodLength:
 Metrics/CyclomaticComplexity:
   Exclude:
     - lib/rrj/tools/replaces/type.rb
+Metrics/MethodLength:
+  Exclude:
+    - lib/rrj/rabbit/connect.rb
 
 # Naming rules
 # ###
 Naming/RescuedExceptionsVariableName:
   PreferredName: exception
-  Enabled: true
-
-# Performance rules
-# ###
-Performance/AncestorsInclude:
-  Enabled: true
-Performance/BigDecimalWithNumericArgument:
-  Enabled: true
-Performance/BlockGivenWithExplicitBlock:
-  Enabled: true
-Performance/CollectionLiteralInLoop:
-  Enabled: true
-Performance/ConstantRegexp:
-  Enabled: true
-Performance/MethodObjectAsBlock:
-  Enabled: true
-Performance/RedundantSortBlock:
-  Enabled: true
-Performance/RedundantStringChars:
-  Enabled: true
-Performance/ReverseFirst:
-  Enabled: true
-Performance/SortReverse:
-  Enabled: true
-Performance/Squeeze:
-  Enabled: true
-Performance/StringInclude:
-  Enabled: true
-Performance/Sum:
-  Enabled: true
 
 # Styles rules
 # ###
 Style/Documentation:
-  Enabled: true
   Exclude:
     - lib/rrj/errors/**/*
-Style/Encoding:
-  Enabled: true
 Style/FrozenStringLiteralComment:
-  Enabled: true
   Exclude:
     - bin/ruby_rabbitmq_janus
-    - gemfiles/*
-Style/StringLiterals:
-  Enabled: true
+Style/HashConversion:
   Exclude:
-    - gemfiles/*
-Style/RescueStandardError:
-  Enabled: false
-Style/ArgumentsForwarding:
-  Enabled: true
-Style/CollectionCompact:
-  Enabled: true
-Style/DocumentDynamicEvalDefinition:
-  Enabled: true
-Style/EndlessMethod:
-  Enabled: true
-Style/HashExcept:
-  Enabled: true
-Style/IfWithBooleanLiteralBranches:
-  Enabled: true
-Style/NegatedIfElseCondition:
-  Enabled: true
-Style/NilLambda:
-  Enabled: true
-Style/RedundantArgument:
-  Enabled: true
-Style/SwapValues:
-  Enabled: true
+    - lib/rrj/tools/gem/config/rabbit.rb
 
 # RSpec
 # ###
-RSpec/BeforeAfterAll:
-  Exclude:
-    - spec/ruby_rabbitmq_janus/tools/config_spec.rb
-RSpec/DescribeClass:
-  Exclude:
-    - spec/request/**/*
 RSpec/EmptyExampleGroup:
-  Enabled: false
-RSpec/InstanceVariable:
   Enabled: false
 RSpec/NestedGroups:
   Max: 4
 RSpec/MultipleMemoizedHelpers:
   Max: 10
-RSpec/FilePath:
-  Exclude:
-    - spec/ruby_rabbitmq_janus/rabbit/listener/from_spec.rb
-    - spec/ruby_rabbitmq_janus/rabbit/publisher/base_spec.rb

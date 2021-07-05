@@ -19,25 +19,5 @@ describe RubyRabbitmqJanus::RRJAdmin, type: :request,
 
       include_examples 'when transaction admin exception'
     end
-
-    context 'when session/handle exist' do
-      before { helper_janus_instance_create_handle }
-
-      context "with pcap don't started" do
-        let(:exception_class) { RubyRabbitmqJanus::Errors::Janus::Responses::Unknown }
-        let(:exception_message) { '[490] Reason : Capture not started' }
-
-        include_examples 'when transaction admin exception'
-      end
-
-      context 'with pcap started' do
-        before { helper_janus_start_pcap }
-
-        let(:info) { :janus }
-        let(:info_type) { String }
-
-        include_examples 'when transaction admin success info'
-      end
-    end
   end
 end

@@ -1,0 +1,42 @@
+---
+
+name: RSpec
+
+on:
+  push:
+    branches:
+      - bugfix/*
+      - master
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2', '3']
+        database: ['true', 'false']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Up rabbitmq
+        run: |
+          docker-compose up -d rabbit mongo
+      - name: Build the container
+        run: |
+          docker-compose build gem${{ matrix.ruby-version }}
+      - name: Up janus
+        run: |
+          docker-compose up -d janus janus_token
+      - name: RSpec
+        run: |
+          docker-compose run gem${{ matrix.ruby-version }} env MONGO=${{ matrix.database }} bundle exec rake spec
+      - name: Format coverage
+        run: |
+          sed -i 's/\/ruby_rabbitmq_janus\///' ${{github.workspace}}/coverage/coverage.json
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/coverage/coverage.json:simplecov

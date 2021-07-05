@@ -12,8 +12,7 @@ module RubyRabbitmqJanus
         #
         # @param [String] exchange Exchange used for the transaction
         def initialize(exchange)
-          @reply = exchange.queue('', exclusive: true)
-          # @reply = exchange.queue(Tools::Config.instance.queue_admin_from)
+          @reply = exchange.queue(Tools::Config.instance.queue_admin_from)
           super(exchange)
           subscribe_to_queue
         end

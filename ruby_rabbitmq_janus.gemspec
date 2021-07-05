@@ -7,15 +7,14 @@ require 'rrj/info'
 
 Gem::Specification.new do |spec|
   version = RubyRabbitmqJanus::VERSION
-
+  spec.version       = if ENV['GITHUB_REF'].eql?('refs/heads/master')
+                         version
+                       else
+                         "#{version}.pre.#{ENV['GITHUB_RUN_ID']}"
+                       end
   spec.name          = RubyRabbitmqJanus::GEM_NAME
   spec.authors       = RubyRabbitmqJanus::AUTHORS
   spec.email         = RubyRabbitmqJanus::EMAILS
-  spec.version       = if ENV['TRAVIS'] && !ENV['TRAVIS_BRANCH'].eql?('master')
-                         "#{version}-#{ENV['TRAVIS_BUILD_NUMBER']}"
-                       else
-                         version
-                       end
 
   spec.summary       = RubyRabbitmqJanus::SUMMARY
   spec.description   = RubyRabbitmqJanus::DESCRIPTION
@@ -41,35 +40,33 @@ Gem::Specification.new do |spec|
 
   spec.executables << 'ruby_rabbitmq_janus'
 
-  spec.required_ruby_version = '>= 2.6.0'
+  spec.required_ruby_version = '>= 2.7.0'
 
-  spec.add_development_dependency 'activerecord'
-  spec.add_development_dependency 'appraisal'
-  spec.add_development_dependency 'aruba'
-  spec.add_development_dependency 'bigdecimal', '~> 1.4', '>= 1.4.4'
-  spec.add_development_dependency 'database_cleaner'
-  spec.add_development_dependency 'factory_bot'
-  spec.add_development_dependency 'json-schema'
-  spec.add_development_dependency 'json-schema-rspec'
-  spec.add_development_dependency 'mongoid'
-  spec.add_development_dependency 'overcommit'
-  spec.add_development_dependency 'pry-byebug'
-  spec.add_development_dependency 'rails', '~> 4.2'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'reek'
-  spec.add_development_dependency 'remote_syslog_logger'
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'rspec-retry'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'rubocop-performance'
-  spec.add_development_dependency 'rubocop-rspec'
-  spec.add_development_dependency 'simplecov', '~> 0.17.1'
-  spec.add_development_dependency 'sqlite3', '= 1.3.13'
-  spec.add_development_dependency 'travis'
-  spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'activerecord', '~> 6.1', '>= 6.1.3.1'
+  spec.add_development_dependency 'aruba', '~> 1.1'
+  spec.add_development_dependency 'bigdecimal', '~> 3.0', '>= 3.0.2'
+  spec.add_development_dependency 'database_cleaner-active_record', '~> 2.0'
+  spec.add_development_dependency 'database_cleaner-mongoid', '~> 2.0', '>= 2.0.1'
+  spec.add_development_dependency 'factory_bot', '~> 6.1'
+  spec.add_development_dependency 'json-schema', '~> 2.8', '>= 2.8.1'
+  spec.add_development_dependency 'json-schema-rspec', '~> 0.0.4'
+  spec.add_development_dependency 'mongoid', '~> 7.2', '>= 7.2.2'
+  spec.add_development_dependency 'pry-byebug', '~> 3.9'
+  spec.add_development_dependency 'rails', '~> 6.1', '>= 6.1.3.1'
+  spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.3'
+  spec.add_development_dependency 'reek', '~> 6.0', '>= 6.0.4'
+  spec.add_development_dependency 'remote_syslog_logger', '~> 1.0', '>= 1.0.4'
+  spec.add_development_dependency 'rspec', '~> 3.10'
+  spec.add_development_dependency 'rubocop', '~> 1.13'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.11', '>= 1.11.1'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.3'
+  spec.add_development_dependency 'simplecov', '~> 0.21.2'
+  spec.add_development_dependency 'simplecov_json_formatter', '~> 0.1.3'
+  spec.add_development_dependency 'sqlite3', '~> 1.4', '>= 1.4.2'
+  spec.add_development_dependency 'yard', '~> 0.9.26'
 
-  spec.add_runtime_dependency 'activesupport'
-  spec.add_runtime_dependency 'bunny', '~> 2.17'
+  spec.add_runtime_dependency 'activesupport', '~> 6.1', '>= 6.1.3.1'
+  spec.add_runtime_dependency 'bunny', '~> 2.19'
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'parallel', '~> 1.20'
   spec.add_runtime_dependency 'semaphore', '~> 0.0.1'

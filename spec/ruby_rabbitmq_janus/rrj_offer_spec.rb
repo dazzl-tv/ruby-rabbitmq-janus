@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJ, type: :request,
                                  level: :peer,
+                                 broken: true,
                                  name: :offer do
   before do
     helper_janus_instance_without_token

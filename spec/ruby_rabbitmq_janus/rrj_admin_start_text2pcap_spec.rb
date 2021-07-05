@@ -25,14 +25,5 @@ describe RubyRabbitmqJanus::RRJAdmin, type: :request,
 
       include_examples 'when transaction admin exception'
     end
-
-    context 'when session/handle exist' do
-      before { helper_janus_instance_create_handle }
-
-      let(:info) { :janus }
-      let(:info_type) { String }
-
-      include_examples 'when transaction admin success info'
-    end
   end
 end

@@ -1,4 +1,11 @@
-# Ruby RabbitMQ Janus | [![Build Status](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus.svg?branch=master)](https://travis-ci.org/dazzl-tv/ruby-rabbitmq-janus) [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus) [![inline docs](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](http://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus) [![Known Vulnerabilities](https://snyk.io/test/github/dazzl-tv/ruby-rabbitmq-janus/badge.svg)](https://snyk.io/test/github/dazzl-tv/ruby-rabbitmq-janus)
+# Ruby RabbitMQ Janus
+  [![RSpec](https://github.com/dazzl-tv/ruby-rabbitmq-janus/actions/workflows/rspec.yml/badge.svg)](https://github.com/dazzl-tv/ruby-rabbitmq-janus/actions/workflows/rspec.yml)
+  [![Linter](https://github.com/dazzl-tv/ruby-rabbitmq-janus/actions/workflows/linter.yml/badge.svg)](https://github.com/dazzl-tv/ruby-rabbitmq-janus/actions/workflows/linter.yml)
+  [![Gem Version](https://badge.fury.io/rb/ruby_rabbitmq_janus.svg)](https://badge.fury.io/rb/ruby_rabbitmq_janus)
+  [![Docs](https://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus.svg)](https://inch-ci.org/github/dazzl-tv/ruby-rabbitmq-janus)
+  [![Maintainability](https://api.codeclimate.com/v1/badges/44e8680ad5e96d109be2/maintainability)](https://codeclimate.com/github/dazzl-tv/ruby-rabbitmq-janus/maintainability)
+  [![Test Coverage](https://api.codeclimate.com/v1/badges/44e8680ad5e96d109be2/test_coverage)](https://codeclimate.com/github/dazzl-tv/ruby-rabbitmq-janus/test_coverage)
+  [![Known Vulnerabilities](https://snyk.io/test/github/dazzl-tv/ruby-rabbitmq-janus/badge.svg)](https://snyk.io/test/github/dazzl-tv/ruby-rabbitmq-janus)
 
 Ruby Gem for Janus WebRTC Gateway integration using RabbitMQ message queue
 

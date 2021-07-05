@@ -203,5 +203,4 @@ task spec: %I[config thread set_session_timeout disallow_token admin
               janus_instance detach destroy trickles standard message errors
               event response list_handles list_tokens keepalive logger
               replace set_max_nack_queue tricke handle_info connect listener
-              base_event publisher_admin non_exclusive exclusive propertie
-]
+              base_event publisher_admin non_exclusive exclusive propertie]

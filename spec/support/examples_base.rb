@@ -55,20 +55,6 @@ RSpec.shared_examples 'when transaction not exclusive success' do
   include_examples 'when transaction not exclusive'
 
   it { expect(transaction.to_json).to eql('{}') }
-
-=begin
-  describe 'read listener' do
-    before do
-      listener
-      transaction
-    end
-
-    let(:listener) { @act = Actions.new.actions }
-    let(:response) { RubyRabbitmqJanus::Process::Concurrencies::Event.new.run(&@act) }
-
-    it { expect(response).to match_json_schema(schema_success) }
-  end
-=end
 end
 
 RSpec.shared_examples 'when transaction not exclusive exception' do

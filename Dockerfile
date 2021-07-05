@@ -17,7 +17,7 @@ RUN apk add --update --no-cache --virtual .build-dependencies \
   && apk add \
     sqlite-dev \
   && echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc \
-  && gem install bundler:2.2.17 \
+  && gem install bundler:2.2.20 \
   && bundle update --bundler \
   && bundle install \
   && apk del .build-dependencies \

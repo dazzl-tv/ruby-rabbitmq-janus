@@ -56,10 +56,6 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Exclude:
     - bin/ruby_rabbitmq_janus
-    - gemfiles/*
-Style/StringLiterals:
-  Exclude:
-    - gemfiles/*
 Style/HashConversion:
   Exclude:
     - lib/rrj/tools/gem/config/rabbit.rb

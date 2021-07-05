@@ -4,7 +4,12 @@ SimpleCov.start do
   # Add branch coverage measurement statistics
   enable_coverage :branch
 
-  formatter SimpleCov::Formatter::HTMLFormatter
+  formatter SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::JSONFormatter
+    ]
+  )
 
   # Folders exclude
   add_filter '/errors/'

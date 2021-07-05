@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJAdmin, type: :request,
                                       level: :admin,
-                                      broken: true,
                                       name: :list_tokens do
   let(:type) { 'admin::list_tokens' }
   let(:number) { '2' }

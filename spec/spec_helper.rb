@@ -87,7 +87,7 @@ RSpec.configure do |config|
   # Clean database before execute an example
   DatabaseCleaner.strategy = ENV['MONGO'] == 'true' ? :deletion : :truncation
   config.before do |example|
-    after_load_database unless example.metadata[:type].include?(:tools)
+    clean_db_and_queues unless example.metadata[:type].eql?(:tools)
   end
 
   # Use timeout for requester

@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJAdmin, type: :request,
                                       level: :admin,
-                                      broken: true,
                                       name: :allow_token do
   let(:type) { 'admin::allow_token' }
   let(:token) { [*('a'..'z'), *('0'..'9')].sample(24).join }

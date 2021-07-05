@@ -10,7 +10,5 @@ class EventTest
   end
 end
 
-# Initialize listener
-# actions = EventTest.new.actions
-# @event = RubyRabbitmqJanus::Process::Concurrencies::Event.new
-# @event.run(&actions)
+require_relative '../support/actions'
+require_relative '../support/admin_actions'

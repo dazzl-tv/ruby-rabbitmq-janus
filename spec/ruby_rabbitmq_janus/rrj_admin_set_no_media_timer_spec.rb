@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJAdmin, type: :request,
                                       level: :admin,
-                                      broken: true,
                                       name: :set_no_media_timer do
   before { helper_janus_instance_without_token }
 

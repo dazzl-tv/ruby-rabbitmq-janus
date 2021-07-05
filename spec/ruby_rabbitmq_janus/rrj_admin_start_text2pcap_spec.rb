@@ -4,7 +4,6 @@ require 'spec_helper'
 
 describe RubyRabbitmqJanus::RRJAdmin, type: :request,
                                       level: :admin,
-                                      broken: true,
                                       name: :start_text2pcap do
   before { helper_janus_instance_without_token }
 
@@ -25,15 +24,6 @@ describe RubyRabbitmqJanus::RRJAdmin, type: :request,
       let(:exception_message) { "[457] Reason : Unhandled request 'start_text2pcap' at this path" }
 
       include_examples 'when transaction admin exception'
-    end
-
-    context 'when session/handle exist' do
-      before { helper_janus_instance_create_handle }
-
-      let(:info) { :janus }
-      let(:info_type) { String }
-
-      include_examples 'when transaction admin success info'
     end
   end
 end

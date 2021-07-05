@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 require 'simplecov'
+require 'simplecov_json_formatter'
+
+SimpleCov.start
+SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 
 # Load gems dependencies
 require 'bundler/setup'
@@ -16,7 +20,6 @@ else
   require 'active_record'
   require 'database_cleaner/active_record'
 end
-# require ENV['MONGO'].match?('true') ? 'mongoid' : 'active_record'
 require 'timeout'
 
 # Load gem RubyRabbitmqJanus

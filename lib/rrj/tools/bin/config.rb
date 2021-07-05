@@ -14,7 +14,8 @@ begin
     Config.load_and_set_settings(config_conf)
   end
 rescue LoadError => exception
-  p "Don't use gem config : #{exception}"
-rescue => exception
-  p exception
+  puts 'Custom configuration is not present,' \
+       " use default configuration. (#{exception})"
+rescue StandardError => exception
+  puts exception
 end

@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe RubyRabbitmqJanus::Rabbit::Publisher, type: :rabbit,
+describe RubyRabbitmqJanus::Rabbit::BaseEvent, type: :rabbit,
                                                name: :base_event do
-  let(:publish) { RubyRabbitmqJanus::Rabbit::BaseEvent.new }
+  let(:publish) { described_class.new }
 
   describe 'BaseEvent' do
     describe '#new' do

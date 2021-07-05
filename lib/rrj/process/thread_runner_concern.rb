@@ -38,7 +38,7 @@ module RubyRabbitmqJanus
               loop do
                 @thread.thread_variable_get(name_publisher)
                        .listen_events(&block)
-              rescue => exception
+              rescue StandardError => exception
                 ::Log.warn exception
               end
             end

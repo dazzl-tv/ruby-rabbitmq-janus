@@ -13,7 +13,7 @@ module RubyRabbitmqJanus
       # @return [String] read configuration fir queue admin
       def admin_pass
         @options['rabbit']['admin_pass'].to_s
-      rescue
+      rescue StandardError
         raise RubyRabbitmqJanus::Errors::Tools::AdminPassword
       end
 

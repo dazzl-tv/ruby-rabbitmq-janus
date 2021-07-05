@@ -60,29 +60,15 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   Exclude:
     - gemfiles/*
-Style/RescueStandardError:
-  Enabled: false
 Style/HashConversion:
   Exclude:
     - lib/rrj/tools/gem/config/rabbit.rb
 
 # RSpec
 # ###
-RSpec/BeforeAfterAll:
-  Exclude:
-    - spec/ruby_rabbitmq_janus/tools/config_spec.rb
-RSpec/DescribeClass:
-  Exclude:
-    - spec/request/**/*
 RSpec/EmptyExampleGroup:
-  Enabled: false
-RSpec/InstanceVariable:
   Enabled: false
 RSpec/NestedGroups:
   Max: 4
 RSpec/MultipleMemoizedHelpers:
   Max: 10
-RSpec/FilePath:
-  Exclude:
-    - spec/ruby_rabbitmq_janus/rabbit/listener/from_spec.rb
-    - spec/ruby_rabbitmq_janus/rabbit/publisher/base_spec.rb

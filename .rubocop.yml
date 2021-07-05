@@ -35,7 +35,9 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
     - ruby_rabbitmq_janus.gemspec
-
+Metrics/MethodLength:
+  Exclude:
+    - lib/rrj/rabbit/connect.rb
 Metrics/CyclomaticComplexity:
   Exclude:
     - lib/rrj/tools/replaces/type.rb

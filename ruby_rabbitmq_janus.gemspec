@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
 
   spec.executables << 'ruby_rabbitmq_janus'
 
-  spec.required_ruby_version = '>= 2.6.0'
+  spec.required_ruby_version = '>= 2.7.0'
 
   spec.add_development_dependency 'activerecord', '~> 6.1', '>= 6.1.3.1'
   spec.add_development_dependency 'appraisal', '~> 2.4'
@@ -67,7 +67,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.9.26'
 
   spec.add_runtime_dependency 'activesupport', '~> 6.1', '>= 6.1.3.1'
-  spec.add_runtime_dependency 'bunny', '~> 2.17'
+  spec.add_runtime_dependency 'bunny', '~> 2.19'
   spec.add_runtime_dependency 'key_path', '~> 1.2'
   spec.add_runtime_dependency 'parallel', '~> 1.20'
   spec.add_runtime_dependency 'semaphore', '~> 0.0.1'

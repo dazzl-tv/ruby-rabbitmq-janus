@@ -6,7 +6,7 @@ module RubyRabbitmqJanus
       # Response for admin request
       #
       # @see Example request response https://janus.conf.meetecho.com/docs/admin.html
-      class Admin < Standard
+      class Admin < Event
         # @return [Array] List of sessions running in Janus Instance.
         def sessions
           read_data(__method__.to_s)

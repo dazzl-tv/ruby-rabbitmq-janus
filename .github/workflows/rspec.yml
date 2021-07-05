@@ -26,10 +26,14 @@ jobs:
         run: docker-compose up -d janus janus_token
       - name: RSpec
         run: docker-compose run gem${{ matrix.ruby-version }} env MONGO=${{ matrix.database }} bundle exec rake spec
+      - name: List files coverage
+        run: |
+          ls -la
+          ls -la ${{github.workspace}}/coverage
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: "${{secrets.CC_TEST_REPORTER_ID}}"
         with:
           coverageLocations: |
-            ${{ github.workspace }}/coverage/coverage.json:simplecov
+            ${{github.workspace}}/coverage/coverage.json:simplecov

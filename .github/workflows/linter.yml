@@ -17,10 +17,10 @@ jobs:
         linter: ['rubocop', 'reek --single-line .']
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
+    - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.6.x
+        ruby-version: 2.7.x
     - name: Install gems
       run: |
         gem install --no-document bundler:2.2.16

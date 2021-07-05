@@ -14,34 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.6', '2.7', '3.0']
+        ruby-version: ['2', '3']
         database: ['true', 'false']
     steps:
       - uses: actions/checkout@v2
       - name: Up rabbitmq
         run: docker-compose up -d rabbit mongo
       - name: Build the container
-        run: docker-compose build
+        run: docker-compose build gem${{ matrix.ruby-version }}
       - name: Up janus
         run: docker-compose up -d janus janus_token
-      - name: Test classic
-        run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake classic
-      - name: Test concurrency
-        run: docker-compose run gem env MONGO=${{ matrix.database }} bundle exec rake concurrency
-      - uses: actions/upload-artifact@v2
-        with:
-          name: result-test
-          path: ${{ github.workspace }}/coverage/
-          if-no-files-found: error
-  coverage:
-    needs: [ test ]
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: result-test
-          path: coverage/
+      - name: RSpec
+        run: docker-compose run gem${{ matrix.ruby-version }} env MONGO=${{ matrix.database }} bundle exec rake spec
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:

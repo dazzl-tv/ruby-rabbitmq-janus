@@ -30,8 +30,8 @@ gem:
     enabled: true
   log:
     level: info
-    type: stdout
-    option: ''
+    type: file
+    option: 'log/ruby-rabbitmq-janus.log'
   listener:
     public: 'app/ruby_rabbitmq_janus/action_events'
     admin: 'app/ruby_rabbitmq_janus/action_admin_events'

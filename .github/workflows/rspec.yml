@@ -26,9 +26,9 @@ jobs:
         run: docker-compose up -d janus janus_token
       - name: RSpec
         run: docker-compose run gem${{ matrix.ruby-version }} env MONGO=${{ matrix.database }} bundle exec rake spec
-      - name: List files coverage
+      - name: Format coverage
         run: |
-          ls -la
+          sed -i 's/\/ruby_rabbitmq_janus\///g' ${{github.workspace}}/coverage/coverage.json
           ls -la ${{github.workspace}}/coverage
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5

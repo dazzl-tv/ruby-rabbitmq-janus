@@ -1,10 +1,24 @@
 version: '3'
 
 services:
-  gem:
+  gem2:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VERSION: 2-alpine
+    links:
+      - rabbit
+      - mongo
+    volumes:
+      - ./:/ruby_rabbitmq_janus/
+
+  gem3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: 3-alpine
     links:
       - rabbit
       - mongo
@@ -14,9 +28,12 @@ services:
       - ./lib/rrj/:/ruby_rabbitmq_janus/lib/rrj
       - ./spec/:/ruby_rabbitmq_janus/spec
       - ./coverage/:/ruby_rabbitmq_janus/coverage
+      - ./log/:/ruby_rabbitmq_janus/log
 
   rabbit:
-    image: rabbitmq:alpine
+    image: rabbitmq:management-alpine
+    ports:
+      - 15672:15672
 
   janus:
     image: canyan/janus-gateway:latest

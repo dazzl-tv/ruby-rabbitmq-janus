@@ -1,4 +1,6 @@
-FROM ruby:2.6.4-alpine3.9
+ARG VERSION
+
+FROM ruby:${VERSION}
 
 LABEL author="jeremy.vaillant@dazzl.tv"
 LABEL description="Container for execute RSpec in travis CI."

@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
     # Class for manage connection with RabbitMQ
-    class Rabbit::Connect
+    class Connect
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(bunny_conf)
@@ -15,7 +15,8 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short(&block)
-        raise RubyRabbitmqJanus::Errors::Rabbit::Connect::MissingAction unless block
+        raise RubyRabbitmqJanus::Errors::Rabbit::Connect::MissingAction \
+          unless block
 
         response = nil
 

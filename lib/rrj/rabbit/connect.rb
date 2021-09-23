@@ -7,7 +7,7 @@ module RubyRabbitmqJanus
     # @author VAILLANT Jeremy <jeremy.vaillant@dazzl.tv>
     #
     # Class for manage connection with RabbitMQ
-    class Connect
+    class Rabbit::Connect
       # Initialize connection to server RabbitMQ
       def initialize
         @rabbit = Bunny.new(bunny_conf)
@@ -15,7 +15,7 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and close after response is received
       def transaction_short(&block)
-        raise RubyRabbitmqJanus::Errors::Connect::MissingAction unless block
+        raise RubyRabbitmqJanus::Errors::Rabbit::Connect::MissingAction unless block
 
         response = nil
 
@@ -23,7 +23,7 @@ module RubyRabbitmqJanus
           response = transaction_long(&block)
         end
       rescue Timeout::Error
-        raise RubyRabbitmqJanus::Errors::Connect::TransactionTimeout, \
+        raise RubyRabbitmqJanus::Errors::Rabbit::Connect::TransactionTimeout, \
               'The "Short transaction" have raised Timeout exception.'
       ensure
         close
@@ -32,7 +32,7 @@ module RubyRabbitmqJanus
 
       # Create an transaction with rabbitmq and not close
       def transaction_long
-        raise RubyRabbitmqJanus::Errors::Connect::MissingAction \
+        raise RubyRabbitmqJanus::Errors::Rabbit::Connect::MissingAction \
           unless block_given?
 
         Timeout.timeout(60) do
@@ -40,7 +40,7 @@ module RubyRabbitmqJanus
           yield
         end
       rescue Timeout::Error
-        raise RubyRabbitmqJanus::Errors::Connect::TransactionTimeout, \
+        raise RubyRabbitmqJanus::Errors::Rabbit::Connect::TransactionTimeout, \
               'The "Long transaction" have raised Timeout exception.'
       end
 
